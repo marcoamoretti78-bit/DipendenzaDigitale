@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dipendenza Digitale</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="libs/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz: Dipendenza Digitale</h1>
+        <div id="quiz-container">
+            <div id="question"></div>
+            <div id="answers"></div>
+            <button id="next-btn">Prossima domanda</button>
+        </div>
+        <div id="result-container" style="display:none;">
+            <h2>Il tuo punteggio: <span id="score"></span></h2>
+            <canvas id="resultChart"></canvas>
+            <button id="download-pdf">Scarica PDF</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
