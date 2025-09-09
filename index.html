@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dipendenza Digitale</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="libs/chart.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dipendenza Digitale</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Quiz: Dipendenza Digitale</h1>
-        <div id="quiz-container">
-            <div id="question"></div>
-            <div id="answers"></div>
-            <button id="next-btn">Prossima domanda</button>
-        </div>
-        <div id="result-container" style="display:none;">
-            <h2>Il tuo punteggio: <span id="score"></span></h2>
-            <canvas id="resultChart"></canvas>
-            <button id="download-pdf">Scarica PDF</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
+  <nav class="navbar">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <span class="title">Dipendenza Digitale</span>
+  </nav>
+
+  <main>
+    <h1>Analisi della Dipendenza Digitale</h1>
+    <section class="chart-wrap">
+      <canvas id="pieChart"></canvas>
+    </section>
+  </main>
+
+  <script src="scripts.js"></script>
 </body>
 </html>

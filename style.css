@@ -1,44 +1,9 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
-
-#answers button {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    background: #007BFF;
-    color: #fff;
-    cursor: pointer;
-}
-
-#answers button:hover {
-    background: #0056b3;
-}
-
-#next-btn, #download-pdf {
-    margin-top: 20px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background: #28a745;
-    color: #fff;
-    cursor: pointer;
-}
-1
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; margin:0; background:#f7f9fc; color:#102a43; text-align:center; }
+.navbar { display:flex; align-items:center; gap:12px; background:#003366; color:#fff; padding:12px 18px; }
+.logo { height:44px; width:auto; display:block; }
+.title { font-weight:700; font-size:1.1rem; }
+main { max-width:880px; margin:36px auto; padding:0 16px; }
+.chart-wrap { background:#fff; padding:20px; border-radius:10px; box-shadow:0 6px 18px rgba(16,42,67,0.08); max-width:520px; margin:20px auto; }
+canvas { width:100% !important; height:auto !important; }
+@media(min-width:900px){ main { margin-top:60px; } }
