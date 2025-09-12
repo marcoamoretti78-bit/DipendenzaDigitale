@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dipendenza Digitale</title>
+  <title>Dipendenza Digitale – Quiz</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <nav class="navbar">
-    <img src="assets/logo.png" alt="Logo" class="logo">
+    <img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
     <span class="title">Dipendenza Digitale</span>
   </nav>
 
-  <main>
-    <h1>Analisi della Dipendenza Digitale</h1>
-    <section class="chart-wrap">
-      <canvas id="pieChart"></canvas>
+  <main class="container">
+    <section class="intro">
+      <h1>Quiz sulla Dipendenza Digitale</h1>
+      <p>Rispondi a 20 domande. Al termine vedrai il tuo punteggio, la percentuale di rischio e un grafico con la distribuzione delle risposte.</p>
+    </section>
+
+    <form id="quizForm" class="quiz">
+      <!-- Le domande verranno generate via JS -->
+    </form>
+
+    <div class="actions">
+      <button id="calculateBtn" type="button">Calcola il risultato</button>
+      <button id="resetBtn" type="button" class="outline">Azzera risposte</button>
+    </div>
+
+    <section id="results" class="results hidden">
+      <h2>Il tuo risultato</h2>
+      <p id="scoreText" class="score"></p>
+      <canvas id="resultsChart"></canvas>
     </section>
   </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Dipendenza Digitale</p>
+  </footer>
 
   <script src="scripts.js"></script>
 </body>
