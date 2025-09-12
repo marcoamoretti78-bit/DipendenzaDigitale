@@ -8,7 +8,6 @@
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- PayPal Sandbox (client-id=sb) -->
   <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
 </head>
 <body>
@@ -34,15 +33,17 @@
       <button id="resetBtn" type="button" class="btn outline">Azzera risposte</button>
     </div>
 
-    <!-- Teaser bloccato -->
     <section id="paywall" class="paywall hidden">
       <h2>Il tuo risultato è pronto</h2>
-      <p class="teaser">Scarica il <strong>Report Premium in PDF</strong> con punteggio, percentuale, grafico e consigli pratici personalizzati.</p>
+      <p class="teaser">
+        Scarica il <strong>Report Premium in PDF</strong> con punteggio, percentuale,
+        grafico e consigli pratici personalizzati.
+      </p>
+      <p class="price">💳 Prezzo: <strong>1,99 €</strong></p>
       <div id="paypal-button-container"></div>
       <p class="secure-note">Pagamento sicuro con PayPal (Sandbox di test).</p>
     </section>
 
-    <!-- Canvas nascosto per il grafico del PDF -->
     <canvas id="pdfChart" width="600" height="400" class="hidden"></canvas>
   </main>
 
