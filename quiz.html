@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- PayPal Sandbox (client-id=sb) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -17,22 +20,30 @@
   <main class="container">
     <section class="intro">
       <h1>Quiz sulla Dipendenza Digitale</h1>
-      <p>Rispondi a 20 domande. Al termine vedrai il tuo punteggio, la percentuale di rischio e un grafico con la distribuzione delle risposte.</p>
+      <p>Rispondi a 20 domande. Al termine potrai acquistare il <strong>Report Premium in PDF</strong> con punteggio dettagliato, grafico e consigli personalizzati.</p>
+      <label class="name-field">
+        <span>Nome (opzionale):</span>
+        <input id="userName" type="text" placeholder="Es. Marco" />
+      </label>
     </section>
 
-    <form id="quizForm" class="quiz">
-    </form>
+    <form id="quizForm" class="quiz"></form>
 
     <div class="actions">
-      <button id="calculateBtn" type="button">Calcola il risultato</button>
-      <button id="resetBtn" type="button" class="outline">Azzera risposte</button>
+      <button id="calculateBtn" type="button" class="btn primary">Calcola il risultato</button>
+      <button id="resetBtn" type="button" class="btn outline">Azzera risposte</button>
     </div>
 
-    <section id="results" class="results hidden">
-      <h2>Il tuo risultato</h2>
-      <p id="scoreText" class="score"></p>
-      <canvas id="resultsChart"></canvas>
+    <!-- Teaser bloccato -->
+    <section id="paywall" class="paywall hidden">
+      <h2>Il tuo risultato è pronto</h2>
+      <p class="teaser">Scarica il <strong>Report Premium in PDF</strong> con punteggio, percentuale, grafico e consigli pratici personalizzati.</p>
+      <div id="paypal-button-container"></div>
+      <p class="secure-note">Pagamento sicuro con PayPal (Sandbox di test).</p>
     </section>
+
+    <!-- Canvas nascosto per il grafico del PDF -->
+    <canvas id="pdfChart" width="600" height="400" class="hidden"></canvas>
   </main>
 
   <footer class="footer">
