@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dipendenza Digitale – Quiz</title>
+  <title>Dipendenza Digitale – Valuta il tuo rapporto con lo smartphone</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -14,32 +13,46 @@
     <span class="title">Dipendenza Digitale</span>
   </nav>
 
-  <main class="container">
-    <section class="intro">
-      <h1>Quiz sulla Dipendenza Digitale</h1>
-      <p>Rispondi a 20 domande. Al termine vedrai il tuo punteggio, la percentuale di rischio e un grafico con la distribuzione delle risposte.</p>
-    </section>
-
-    <form id="quizForm" class="quiz">
-      <!-- Le domande verranno generate via JS -->
-    </form>
-
-    <div class="actions">
-      <button id="calculateBtn" type="button">Calcola il risultato</button>
-      <button id="resetBtn" type="button" class="outline">Azzera risposte</button>
+  <header class="hero">
+    <h1>Valuta la tua Dipendenza Digitale</h1>
+    <p>Scopri in pochi minuti quanto il tuo smartphone influenza la tua vita quotidiana.</p>
+    <div class="cta">
+      <a href="quiz.html" class="btn primary">Fai il quiz</a>
+      <a href="#rischi" class="btn outline">Scopri di più</a>
     </div>
+  </header>
 
-    <section id="results" class="results hidden">
-      <h2>Il tuo risultato</h2>
-      <p id="scoreText" class="score"></p>
-      <canvas id="resultsChart"></canvas>
-    </section>
-  </main>
+  <section class="features">
+    <h2>Perché è importante</h2>
+    <p>La dipendenza da smartphone e dispositivi digitali è un fenomeno in crescita che può influenzare benessere, relazioni e produttività.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>⏰ Perdita di tempo</h3>
+        <p>Ore spese online senza accorgersene, sottratte ad attività più significative.</p>
+      </div>
+      <div class="card">
+        <h3>😰 Stress e ansia</h3>
+        <p>Notifiche continue e timore di essere disconnessi possono aumentare l’ansia.</p>
+      </div>
+      <div class="card">
+        <h3>💔 Relazioni compromesse</h3>
+        <p>L’uso eccessivo del telefono riduce la qualità del tempo con gli altri.</p>
+      </div>
+      <div class="card">
+        <h3>💤 Disturbi del sonno</h3>
+        <p>L’uso serale dello smartphone compromette il riposo e la concentrazione.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rischi" class="info">
+    <h2>I rischi della dipendenza digitale</h2>
+    <p>Riconoscere i segnali è il primo passo per cambiare. Con il nostro test gratuito potrai misurare il tuo livello di rischio.</p>
+    <a href="quiz.html" class="btn primary">Inizia ora il quiz</a>
+  </section>
 
   <footer class="footer">
-    <p>&copy; 2025 Dipendenza Digitale</p>
+    <p>&copy; 2025 Dipendenza Digitale | <a href="mailto:info@dipendenzadigitale.com">info@dipendenzadigitale.com</a></p>
   </footer>
-
-  <script src="scripts.js"></script>
 </body>
 </html>

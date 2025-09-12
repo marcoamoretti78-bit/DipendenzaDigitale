@@ -22,7 +22,6 @@ const questions = [
   "Pensi spesso al telefono anche quando non lo stai usando?"
 ];
 
-// Opzioni comuni per tutte le domande
 const choices = [
   { label: "Mai", value: 0 },
   { label: "Raramente", value: 1 },
@@ -30,13 +29,11 @@ const choices = [
   { label: "Quasi sempre / Sempre", value: 3 }
 ];
 
-// Genera il form
 const form = document.getElementById("quizForm");
 questions.forEach((q, idx) => {
   const qWrap = document.createElement("div");
   qWrap.className = "question";
   qWrap.innerHTML = `<h3>${idx + 1}. ${q}</h3>`;
-
   const opts = document.createElement("div");
   opts.className = "options";
   choices.forEach((c, cidx) => {
@@ -44,15 +41,13 @@ questions.forEach((q, idx) => {
     const row = document.createElement("label");
     row.innerHTML = `
       <input type="radio" name="q${idx}" id="${id}" value="${c.value}">
-      <span>${c.label}</span>
-    `;
+      <span>${c.label}</span>`;
     opts.appendChild(row);
   });
   qWrap.appendChild(opts);
   form.appendChild(qWrap);
 });
 
-// Calcolo risultato
 const calcBtn = document.getElementById("calculateBtn");
 const resetBtn = document.getElementById("resetBtn");
 const resultsEl = document.getElementById("results");
@@ -62,41 +57,30 @@ let chartRef = null;
 calcBtn.addEventListener("click", () => {
   let total = 0;
   let answered = 0;
-
-  // Conta la distribuzione per la torta
-  const distribution = { low: 0, mid: 0, high: 0, max: 0 };
-
+  const distribution = { low: 0, mid: 0, high: 0 };
   questions.forEach((_, idx) => {
     const checked = document.querySelector(`input[name="q${idx}"]:checked`);
     if (checked) {
       const val = parseInt(checked.value, 10);
       total += val;
-      answered += 1;
-      // Distribuzione: 0-1 = basso; 2 = medio; 3 = alto
-      if (val <= 1) distribution.low += 1;
-      else if (val === 2) distribution.mid += 1;
-      else distribution.high += 1;
+      answered++;
+      if (val <= 1) distribution.low++;
+      else if (val === 2) distribution.mid++;
+      else distribution.high++;
     }
   });
-
   if (answered < questions.length) {
-    const missing = questions.length - answered;
-    alert(`Hai tralasciato ${missing} domanda/e. Completa il quiz per un risultato accurato.`);
+    alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
     return;
   }
-
-  const maxScore = questions.length * 3; // max 3 punti per domanda
+  const maxScore = questions.length * 3;
   const percentage = Math.round((total / maxScore) * 100);
-
   let level = "";
   if (percentage < 33) level = "Basso rischio";
   else if (percentage < 67) level = "Rischio medio";
   else level = "Rischio alto";
-
   scoreText.textContent = `Punteggio: ${total}/${maxScore} — Rischio: ${percentage}% (${level})`;
   resultsEl.classList.remove("hidden");
-
-  // Disegna/aggiorna il grafico
   const ctx = document.getElementById("resultsChart").getContext("2d");
   if (chartRef) chartRef.destroy();
   chartRef = new Chart(ctx, {
