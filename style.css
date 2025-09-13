@@ -21,6 +21,8 @@ body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--text)}
 .container{max-width:900px;margin:28px auto;padding:0 16px}
 .quiz{display:grid;gap:14px}
 .question{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.05)}
+.options{display:flex;flex-direction:column;gap:6px}
+.options label{display:flex;align-items:center;gap:8px;cursor:pointer}
 .actions{display:flex;gap:10px;justify-content:center;margin:20px 0}
 .paywall{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);margin-top:18px;text-align:center}
 .price{font-size:1.1rem;font-weight:600;color:var(--text);margin:10px 0}
