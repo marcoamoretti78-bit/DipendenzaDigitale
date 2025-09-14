@@ -107,18 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = 20;
     let y = margin;
 
-    // Titolo e Nome utente grande
+    // Titolo e Nome utente ENORME
     doc.setFont("Helvetica", "bold");
-    doc.setFontSize(22); // Grande evidenza
-    const who = resultData.name ? `Report personalizzato per ${resultData.name}` : "Report personalizzato";
+    doc.setFontSize(32); // ENORME
+    const who = resultData.name ? `Report per ${resultData.name}` : "Report personalizzato";
     doc.text(who, margin, y);
-    y += 28;
+    y += 36;
 
     // Data
     doc.setFont("Helvetica", "normal");
-    doc.setFontSize(12);
+    doc.setFontSize(14);
     doc.text(`Data: ${resultData.dateStr}`, margin, y);
-    y += 12;
+    y += 16;
 
     // Punteggio
     doc.setFontSize(14);
@@ -127,78 +127,3 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.text(`Percentuale: ${resultData.percentage}%`, margin, y);
     y += 14;
 
-    // Livello di rischio
-    let livello = "";
-    if (resultData.percentage < 30) livello = "Basso";
-    else if (resultData.percentage < 60) livello = "Medio";
-    else livello = "Alto";
-    doc.text(`Livello di rischio: ${livello}`, margin, y);
-    y += 20;
-
-    // Consigli
-    doc.setFont("Helvetica", "bold");
-    doc.text("Consigli personalizzati:", margin, y);
-    doc.setFont("Helvetica", "normal");
-    y += 10;
-    const consigli = {
-      Basso: "Continua così! Mantieni abitudini sane e controlla regolarmente il tempo speso sul telefono.",
-      Medio: "Presta attenzione: stabilisci limiti di tempo giornalieri e prova a disattivare le notifiche superflue.",
-      Alto: "È importante agire subito: valuta momenti senza telefono, applicazioni detox e supporto da professionisti."
-    };
-    const text = consigli[livello];
-    const lines = doc.splitTextToSize(text, 170);
-    doc.text(lines, margin, y);
-    y += lines.length * 7 + 10;
-
-    // Checklist
-    doc.setFont("Helvetica", "bold");
-    doc.text("Checklist quotidiana:", margin, y);
-    doc.setFont("Helvetica", "normal");
-    y += 10;
-    const checklist = [
-      "📵 Niente telefono 30 min dopo il risveglio",
-      "🌙 Modalità notturna 1h prima di dormire",
-      "✅ Limite massimo 2h social al giorno",
-      "🤝 Attività offline ogni giorno"
-    ];
-    checklist.forEach(item => { doc.text(item, margin, y); y += 8; });
-    y += 10;
-
-    // Piano Detox
-    doc.setFont("Helvetica", "bold");
-    doc.text("Piano Digital Detox (7 giorni):", margin, y);
-    doc.setFont("Helvetica", "normal");
-    y += 10;
-    const detox = [
-      "Giorno 1: Spegni le notifiche non necessarie",
-      "Giorno 2: Tieni il telefono fuori dalla camera da letto",
-      "Giorno 3: Pausa di 2h senza telefono",
-      "Giorno 4: Attività all’aperto senza telefono",
-      "Giorno 5: Diario cartaceo al posto delle note digitali",
-      "Giorno 6: Un pasto intero senza smartphone",
-      "Giorno 7: Giornata con solo 1h di utilizzo"
-    ];
-    detox.forEach(item => { doc.text(item, margin, y); y += 8; });
-    y += 10;
-
-    // Risorse
-    doc.setFont("Helvetica", "bold");
-    doc.text("Risorse consigliate:", margin, y);
-    doc.setFont("Helvetica", "normal");
-    y += 10;
-    const risorse = [
-      "App: Forest, Digital Detox",
-      "Libro: 'Digital Minimalism' di Cal Newport",
-      "Articolo: OMS – Uso consapevole delle tecnologie"
-    ];
-    risorse.forEach(item => { doc.text(item, margin, y); y += 8; });
-    y += 10;
-
-    // Disclaimer
-    doc.setFont("Helvetica", "italic");
-    doc.text("Disclaimer: Questo report ha scopo informativo e non sostituisce la valutazione di un professionista.", margin, y);
-
-    // Salva
-    doc.save("Report_DipendenzaDigitale.pdf");
-  }
-});
