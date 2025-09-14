@@ -1,22 +1,15 @@
-import os, zipfile, textwrap
-
-base_dir = "/mnt/data/DipendenzaDigitale_full_v2"
-assets_dir = os.path.join(base_dir, "assets")
-os.makedirs(assets_dir, exist_ok=True)
-
-index_html = textwrap.dedent("""\
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dipendenza Digitale – Valuta il tuo rapporto con lo smartphone</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dipendenza Digitale – Valuta la tua dipendenza dallo smartphone</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 </head>
 <body>
   <nav class="navbar">
-    <img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+    <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"></a>
     <span class="title">Dipendenza Digitale</span>
   </nav>
 
@@ -31,41 +24,89 @@ index_html = textwrap.dedent("""\
 
   <section class="features">
     <h2>Perché è importante</h2>
-    <p>La dipendenza da smartphone e dispositivi digitali è un fenomeno in crescita che può influenzare benessere, relazioni e produttività.</p>
+    <p>La dipendenza da smartphone è in crescita e può incidere su rendimento, relazioni e benessere psicofisico.</p>
     <div class="cards">
       <div class="card">
         <h3>⏰ Perdita di tempo</h3>
-        <p>Ore spese online senza accorgersene, sottratte ad attività più significative.</p>
+        <p>Scroll infinito e micro-interruzioni erodono ore preziose ogni settimana.</p>
       </div>
       <div class="card">
         <h3>😰 Stress e ansia</h3>
-        <p>Notifiche continue e timore di essere disconnessi possono aumentare l’ansia.</p>
+        <p>Notifiche costanti e FOMO possono aumentare tensione e irrequietezza.</p>
       </div>
       <div class="card">
-        <h3>💔 Relazioni compromesse</h3>
-        <p>L’uso eccessivo del telefono riduce la qualità del tempo con gli altri.</p>
+        <h3>💤 Sonno compromesso</h3>
+        <p>Luce blu serale e iperstimolazione peggiorano qualità e durata del riposo.</p>
       </div>
       <div class="card">
-        <h3>💤 Disturbi del sonno</h3>
-        <p>L’uso serale dello smartphone compromette il riposo e la concentrazione.</p>
+        <h3>🤝 Relazioni</h3>
+        <p>Phubbing e distrazioni riducono la qualità del tempo con gli altri.</p>
       </div>
     </div>
   </section>
 
-  <section id="scopri" class="more">
+  <section id="scopri" class="deep-info">
     <h2>Scopri di più</h2>
-    <p class="lead">Il nostro test misura il tuo <strong>livello di rischio</strong> di dipendenza digitale con 20 domande mirate. Al termine puoi ottenere un <strong>Report Premium in PDF</strong> con analisi e consigli pratici.</p>
-    <div class="grid two">
+    <p class="lead">Riconoscere i segnali è il primo passo per cambiare abitudini e recuperare focus, sonno e relazioni.</p>
+
+    <div class="grid-2">
       <div class="panel">
-        <h3>Cosa ottieni</h3>
-        <ul>
-          <li>Punteggio complessivo e <strong>percentuale di rischio</strong>.</li>
-          <li><strong>Grafico a torta</strong> della distribuzione delle risposte.</li>
-          <li>Consigli personalizzati, <strong>checklist</strong> e <strong>piano 7 giorni</strong>.</li>
-          <li>PDF scaricabile subito dopo il pagamento: <strong>1,99 €</strong>.</li>
+        <h3>Segnali comuni</h3>
+        <ul class="list">
+          <li>Controllo compulsivo del telefono appena sveglio.</li>
+          <li>Uso durante pasti/conversazioni o mentre si lavora/studia.</li>
+          <li>Ansia/irrequietezza quando non è a portata di mano.</li>
+          <li>Stanchezza mattutina per uso serale/notturno.</li>
+          <li>Sensazione di “non avere tempo” per attività importanti.</li>
         </ul>
       </div>
+
       <div class="panel">
-        <h3>Come funziona</h3>
+        <h3>Come funziona il test</h3>
         <ol class="steps">
-          <li>Rispondi alle
+          <li>Rispondi a <strong>20 domande</strong> (2–3 minuti).</li>
+          <li>Calcoliamo il punteggio e la tua <strong>percentuale di rischio</strong>.</li>
+          <li>Puoi acquistare il <strong>Report Premium (1,99 €)</strong> con analisi, grafico e consigli personalizzati.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="panel highlight">
+      <h3>Cosa include il <span class="badge">Report Premium – 1,99 €</span></h3>
+      <ul class="list">
+        <li>Punteggio, <strong>percentuale di rischio</strong> e interpretazione (basso/medio/alto).</li>
+        <li><strong>Grafico a torta</strong> della distribuzione delle risposte.</li>
+        <li><strong>Consigli pratici</strong> mirati al tuo profilo.</li>
+        <li><strong>Checklist quotidiana</strong> pronta all’uso.</li>
+        <li><strong>Piano Detox 7 giorni</strong> passo-passo.</li>
+        <li>PDF scaricabile e stampabile.</li>
+      </ul>
+      <a href="quiz.html" class="btn primary">Inizia ora</a>
+    </div>
+
+    <div class="faq">
+      <h3>Domande frequenti</h3>
+      <details>
+        <summary>Quanto dura il test?</summary>
+        <p>In media 2–3 minuti. Le domande sono rapide e intuitive.</p>
+      </details>
+      <details>
+        <summary>Il risultato è affidabile?</summary>
+        <p>È uno screening orientativo, non una diagnosi clinica. Offre indicazioni pratiche per migliorare le abitudini digitali.</p>
+      </details>
+      <details>
+        <summary>Come avviene il pagamento?</summary>
+        <p>Pagamento sicuro con PayPal. Il PDF è generato subito dopo la conferma.</p>
+      </details>
+      <details>
+        <summary>Come trattate i dati?</summary>
+        <p>Usiamo solo le risposte per calcolare il punteggio. Il nome è facoltativo ed è inserito solo nel PDF.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 Dipendenza Digitale | <a href="mailto:info@dipendenzadigitale.com">info@dipendenzadigitale.com</a></p>
+  </footer>
+</body>
+</html>

@@ -6,17 +6,27 @@
   --muted:#627d98;
   --accent:#22c55e;
 }
-body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--text)}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}
 .navbar{display:flex;align-items:center;gap:12px;background:var(--primary);color:#fff;padding:12px 16px}
 .logo{height:40px;width:auto}
 .title{font-weight:700;font-size:1.05rem}
 .hero{padding:60px 20px;text-align:center;background:linear-gradient(135deg,#003366,#2563eb);color:#fff}
+.hero h1{font-size:2rem;margin-bottom:12px}
+.hero p{font-size:1.1rem;max-width:680px;margin:0 auto 20px}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block}
 .btn.primary{background:var(--accent);color:#0b3b1a;border:2px solid transparent}
+.btn.primary:hover{filter:brightness(0.95)}
 .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-.features,.info{max-width:1000px;margin:40px auto;padding:0 20px}
+.features,.info{max-width:1100px;margin:40px auto;padding:0 20px}
+.cards{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.05)}
 .container{max-width:900px;margin:28px auto;padding:0 16px}
+.intro{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,.05);margin-bottom:18px}
+.name-field{display:flex;gap:10px;align-items:center;margin-top:10px}
+.name-field input{padding:8px 10px;border-radius:8px;border:1px solid #cbd5e1;flex:1}
 .quiz{display:grid;gap:14px}
 .question{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.05)}
 .options{display:flex;flex-direction:column;gap:6px}
@@ -24,4 +34,21 @@ body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--text)}
 .actions{display:flex;gap:10px;justify-content:center;margin:20px 0}
 .paywall{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);margin-top:18px;text-align:center}
 .price{font-size:1.1rem;font-weight:600;color:var(--text);margin:10px 0}
+.secure-note{color:var(--muted);font-size:.9rem;margin-top:8px}
+.hidden{display:none}
 .footer{text-align:center;color:var(--muted);font-size:.9rem;margin:40px 0 20px}
+.deep-info{max-width:1100px;margin:40px auto;padding:0 20px}
+.deep-info .lead{color:var(--muted);margin:6px 0 18px}
+.grid-2{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.panel{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.05)}
+.panel.highlight{border:2px solid #e6eefc}
+.list{margin:0;padding-left:18px}
+.list li{margin:8px 0}
+.steps{counter-reset: step; margin:0; padding-left:0; list-style:none}
+.steps li{position:relative;margin:10px 0 10px 36px}
+.steps li::before{counter-increment: step; content: counter(step); position:absolute; left:-36px; top:0; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700;}
+.badge{background:#eef2ff;color:#1e40af;padding:3px 8px;border-radius:999px;font-size:.9rem}
+.faq details{background:var(--card);border-radius:10px;padding:12px 14px;margin:10px 0;box-shadow:0 4px 10px rgba(0,0,0,.04)}
+.faq summary{cursor:pointer;font-weight:600}
+.faq p{margin:8px 0 0 0;color:var(--text)}
+@media (min-width:900px){.hero h1{font-size:2.6rem}}
