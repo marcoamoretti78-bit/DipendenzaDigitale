@@ -1,3 +1,10 @@
+import os, zipfile, textwrap
+
+base_dir = "/mnt/data/DipendenzaDigitale_full_v2"
+assets_dir = os.path.join(base_dir, "assets")
+os.makedirs(assets_dir, exist_ok=True)
+
+index_html = textwrap.dedent("""\
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -18,23 +25,47 @@
     <p>Scopri in pochi minuti quanto il tuo smartphone influenza la tua vita quotidiana.</p>
     <div class="cta">
       <a href="quiz.html" class="btn primary">Fai il quiz</a>
-      <a href="#rischi" class="btn outline">Scopri di più</a>
+      <a href="#scopri" class="btn outline">Scopri di più</a>
     </div>
   </header>
 
   <section class="features">
     <h2>Perché è importante</h2>
     <p>La dipendenza da smartphone e dispositivi digitali è un fenomeno in crescita che può influenzare benessere, relazioni e produttività.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>⏰ Perdita di tempo</h3>
+        <p>Ore spese online senza accorgersene, sottratte ad attività più significative.</p>
+      </div>
+      <div class="card">
+        <h3>😰 Stress e ansia</h3>
+        <p>Notifiche continue e timore di essere disconnessi possono aumentare l’ansia.</p>
+      </div>
+      <div class="card">
+        <h3>💔 Relazioni compromesse</h3>
+        <p>L’uso eccessivo del telefono riduce la qualità del tempo con gli altri.</p>
+      </div>
+      <div class="card">
+        <h3>💤 Disturbi del sonno</h3>
+        <p>L’uso serale dello smartphone compromette il riposo e la concentrazione.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="rischi" class="info">
-    <h2>I rischi della dipendenza digitale</h2>
-    <p>Riconoscere i segnali è il primo passo per cambiare. Con il nostro test potrai misurare il tuo livello di rischio.</p>
-    <a href="quiz.html" class="btn primary">Inizia ora il quiz</a>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2025 Dipendenza Digitale | <a href="mailto:info@dipendenzadigitale.com">info@dipendenzadigitale.com</a></p>
-  </footer>
-</body>
-</html>
+  <section id="scopri" class="more">
+    <h2>Scopri di più</h2>
+    <p class="lead">Il nostro test misura il tuo <strong>livello di rischio</strong> di dipendenza digitale con 20 domande mirate. Al termine puoi ottenere un <strong>Report Premium in PDF</strong> con analisi e consigli pratici.</p>
+    <div class="grid two">
+      <div class="panel">
+        <h3>Cosa ottieni</h3>
+        <ul>
+          <li>Punteggio complessivo e <strong>percentuale di rischio</strong>.</li>
+          <li><strong>Grafico a torta</strong> della distribuzione delle risposte.</li>
+          <li>Consigli personalizzati, <strong>checklist</strong> e <strong>piano 7 giorni</strong>.</li>
+          <li>PDF scaricabile subito dopo il pagamento: <strong>1,99 €</strong>.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Come funziona</h3>
+        <ol class="steps">
+          <li>Rispondi alle
