@@ -52,3 +52,20 @@ a{text-decoration:none;color:inherit}
 .faq summary{cursor:pointer;font-weight:600}
 .faq p{margin:8px 0 0 0;color:var(--text)}
 @media (min-width:900px){.hero h1{font-size:2.6rem}}
+/* Campo nome utente più grande */
+.name-field {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.name-field span {
+  font-size: 1rem; /* etichetta */
+  margin-bottom: 6px;
+}
+
+#userName {
+  font-size: 1.2rem;   /* <--- aumenta la grandezza del testo inserito */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc
