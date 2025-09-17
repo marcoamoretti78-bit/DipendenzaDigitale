@@ -1,76 +1,249 @@
-const quizData = [
-    {question: "Quanto tempo passi sul telefono ogni giorno?", answers: ["<1h","1-3h","3-5h",">5h"], score: [1,2,3,4]},
-    {question: "Controlli il telefono appena sveglio?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi lo smartphone durante i pasti?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti senti ansioso senza telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi app social più di 2h al giorno?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti capita di perdere sonno per usare il telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Hai provato a ridurre l’uso del telefono?", answers: ["No","Sì, ma senza successo","Sì, con successo","Non necessario"], score: [1,2,3,1]},
-    {question: "Ti distrai facilmente dal lavoro per controllare il telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi il telefono in bagno?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti senti nervoso quando il telefono non funziona?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Invii messaggi mentre cammini?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi il telefono a tavola con amici/famiglia?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi il telefono prima di dormire?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti senti dipendente dai social?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Controlli notifiche anche senza suono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Hai provato a disinstallare app per ridurre l’uso?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti annoi senza il telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Usi il telefono mentre guidi?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti capita di ignorare persone per guardare il telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]},
-    {question: "Ti senti meglio dopo aver ridotto l’uso del telefono?", answers: ["Mai","A volte","Spesso","Sempre"], score: [1,2,3,4]}
-];
+// scripts.js - Dipendenza Digitale (final release)
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("quizForm");
+  const calcBtn = document.getElementById("calculateBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const paywall = document.getElementById("paywall");
+  const userNameEl = document.getElementById("userName");
 
-let currentQuestion = 0;
-let totalScore = 0;
+  const questions = [
+    "Controlli il telefono appena sveglio/a?",
+    "Perdi la cognizione del tempo mentre scorri social o video?",
+    "Interrompi attività importanti per controllare notifiche?",
+    "Usi lo smartphone durante i pasti o in conversazioni dal vivo?",
+    "Ti senti irritato/a o ansioso/a quando non puoi usare il telefono?",
+    "Hai provato a ridurre l'uso dello smartphone senza riuscirci?",
+    "Usi il telefono oltre l’orario previsto prima di dormire?",
+    "Le tue relazioni hanno risentito dell’uso del telefono?",
+    "Usi il telefono mentre cammini, guidi o fai attività rischiose?",
+    "Controlli spesso il telefono anche senza notifiche reali?",
+    "Ti distrai frequentemente a causa di social, giochi o chat?",
+    "Ti senti in colpa per il tempo passato sullo smartphone?",
+    "Metti lo smartphone in modalità silenziosa per 'isolarti'?",
+    "Preferisci spesso lo smartphone ad attività sociali dal vivo?",
+    "Ricevi feedback negativi da familiari/amici sul tuo uso del telefono?",
+    "Usi lo smartphone per sfuggire a noia, stress o tristezza?",
+    "Spendi soldi in app/abbonamenti in modo impulsivo?",
+    "Hai disturbi del sonno legati all’uso serale del telefono?",
+    "Ti agiti se ti separi dal telefono per alcune ore?",
+    "Pensi spesso al telefono anche quando non lo stai usando?"
+  ];
+  const choices = [
+    { label: "Mai", value: 0 },
+    { label: "Raramente", value: 1 },
+    { label: "Spesso", value: 2 },
+    { label: "Quasi sempre / Sempre", value: 3 }
+  ];
 
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const nextBtn = document.getElementById("next-btn");
-const resultContainer = document.getElementById("result-container");
-const scoreEl = document.getElementById("score");
-const resultChart = document.getElementById("resultChart");
-const downloadPdfBtn = document.getElementById("download-pdf");
-
-function loadQuestion() {
-    questionEl.innerText = quizData[currentQuestion].question;
-    answersEl.innerHTML = "";
-    quizData[currentQuestion].answers.forEach((ans, idx) => {
-        const btn = document.createElement("button");
-        btn.innerText = ans;
-        btn.onclick = () => {
-            totalScore += quizData[currentQuestion].score[idx];
-            currentQuestion++;
-            if(currentQuestion < quizData.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
-        };
-        answersEl.appendChild(btn);
+  if (form) {
+    questions.forEach((q, idx) => {
+      const qWrap = document.createElement("div");
+      qWrap.className = "question";
+      qWrap.innerHTML = `<p>${idx + 1}. ${q}</p>`;
+      const opts = document.createElement("div");
+      opts.className = "options";
+      choices.forEach((c, cidx) => {
+        const id = `q${idx}_c${cidx}`;
+        const row = document.createElement("label");
+        row.innerHTML = `<input type="radio" name="q${idx}" id="${id}" value="${c.value}"> <span>${c.label}</span>`;
+        opts.appendChild(row);
+      });
+      qWrap.appendChild(opts);
+      form.appendChild(qWrap);
     });
-}
+  }
 
-function showResult() {
-    document.getElementById("quiz-container").style.display = "none";
-    resultContainer.style.display = "block";
-    scoreEl.innerText = totalScore;
+  let resultData = null;
+  let pdfChartInstance = null;
 
-    new Chart(resultChart, {
-        type: 'bar',
-        data: {
-            labels: ["Dipendenza"],
-            datasets: [{
-                label: 'Punteggio',
-                data: [totalScore],
-                backgroundColor: ['#007BFF']
+  calcBtn?.addEventListener("click", () => {
+    let total = 0;
+    let answered = 0;
+    const distribution = { low: 0, mid: 0, high: 0 };
+
+    questions.forEach((_, idx) => {
+      const checked = document.querySelector(`input[name="q${idx}"]:checked`);
+      if (checked) {
+        const val = parseInt(checked.value, 10);
+        total += val;
+        answered += 1;
+        if (val <= 1) distribution.low += 1;
+        else if (val === 2) distribution.mid += 1;
+        else distribution.high += 1;
+      }
+    });
+
+    if (answered < questions.length) {
+      alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
+      return;
+    }
+
+    const maxScore = questions.length * 3;
+    const percentage = Math.round((total / maxScore) * 100);
+    let level = "";
+    if (percentage < 33) level = "Basso rischio";
+    else if (percentage < 67) level = "Rischio medio";
+    else level = "Rischio alto";
+
+    resultData = {
+      name: (userNameEl?.value || "").trim(),
+      total, maxScore, percentage, level, answered,
+      distribution,
+      dateStr: new Date().toLocaleDateString("it-IT")
+    };
+
+    paywall?.classList.remove("hidden");
+
+    const container = document.getElementById("paypal-button-container");
+    if (container) {
+      container.innerHTML = "";
+      if (window.paypal && paypal.Buttons) {
+        paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+          createOrder: (data, actions) => actions.order.create({
+            purchase_units: [{
+              amount: { currency_code: "EUR", value: "1.99" },
+              description: "Report Premium – Dipendenza Digitale"
             }]
-        }
+          }),
+          onApprove: (data, actions) => actions.order.capture().then(() => generatePDF()),
+          onError: (err) => { console.error(err); alert("Pagamento non completato. Riprova."); }
+        }).render('#paypal-button-container');
+      } else {
+        container.innerHTML = "<p>Impossibile caricare PayPal. Ricarica la pagina e riprova.</p>";
+      }
+    }
+    window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+    paywall?.classList.add("hidden");
+    resultData = null;
+  });
+
+  async function generatePDF() {
+    if (!resultData) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 40;
+    let y = margin;
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(40);
+    const who = resultData.name ? `Report per ${resultData.name}` : "Report personalizzato";
+    doc.text(who, margin, y);
+    y += 46;
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(`Data: ${resultData.dateStr}`, margin, y);
+    y += 20;
+    doc.setDrawColor(200);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 20;
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Risultato", margin, y); y += 18;
+    doc.setFont("Helvetica", "normal");
+    doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y); y += 16;
+    doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y); y += 22;
+
+    const chartCanvas = document.getElementById("pdfChart");
+    const ctx = chartCanvas.getContext("2d");
+    if (window.__chart) { window.__chart.destroy(); }
+    window.__chart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["Basso (0–1)", "Medio (2)", "Alto (3)"],
+        datasets: [{
+          data: [resultData.distribution.low, resultData.distribution.mid, resultData.distribution.high]
+        }]
+      },
+      options: { animation: false, responsive: false }
     });
-}
+    await new Promise(r => setTimeout(r, 200));
+    const imgData = chartCanvas.toDataURL("image/png", 1.0);
+    doc.addImage(imgData, "PNG", margin, y, pageWidth - margin*2, 180);
+    y += 200;
 
-downloadPdfBtn.onclick = () => {
-    alert("Funzione PDF da implementare (puoi usare jsPDF o simili)");
-};
+    const wrap = (text, x, startY, lineHeight=16) => {
+      const maxWidth = pageWidth - margin*2;
+      const lines = doc.splitTextToSize(text, maxWidth);
+      lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
+      return startY;
+    };
 
-loadQuestion();
+    const analysisTexts = {
+      "Basso rischio":
+        "Il tuo rapporto con lo smartphone appare equilibrato. Mantieni routine sane: momenti senza telefono (pasti, lavoro profondo), modalità non disturbare serale e limiti su app ad alto consumo. Resta vigile nei periodi di stress, quando l’uso potrebbe aumentare.",
+      "Rischio medio":
+        "Mostri alcuni segnali di dipendenza digitale. Stabilisci zone/orari liberi da smartphone (es. camera da letto). Imposta limiti per social e chat, e crea blocchi senza notifiche. Coltiva hobby offline appaganti e monitora l’andamento settimanale.",
+      "Rischio alto":
+        "L’uso dello smartphone appare problematico. Introduci sessioni di digital detox (anche brevi) e valuta app che bloccano temporaneamente quelle più distraenti. Se sonno, lavoro o relazioni ne risentono, valuta un confronto con uno specialista e coinvolgi un familiare o amico di supporto."
+    };
+
+    const checklist = [
+      "Spegni le notifiche non essenziali per alcune ore al giorno.",
+      "Stabilisci zone senza telefono (camera da letto, tavola).",
+      "Usa timer per limitare social e intrattenimento.",
+      "Stacca dallo schermo almeno 60 minuti prima di dormire.",
+      "Organizza attività offline che ti piacciono (sport, lettura, amici)."
+    ];
+
+    const plan7 = [
+      "Giorno 1 – Monitora: annota il tempo per app.",
+      "Giorno 2 – Notifiche: disattiva quelle non essenziali.",
+      "Giorno 3 – Zona libera: scegli un’area di casa senza smartphone.",
+      "Giorno 4 – Sonno: stop telefono 60’ prima di dormire.",
+      "Giorno 5 – Socialità: 2 ore con amici/famiglia senza telefono.",
+      "Giorno 6 – Movimento: camminata o sport senza telefono.",
+      "Giorno 7 – Revisione: valuta progressi e prossimi passi."
+    ];
+
+    const resources = [
+      "Screen Time (iOS) / Digital Wellbeing (Android).",
+      "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
+      "Tecniche: Pomodoro, blocchi Deep Work, journaling serale."
+    ];
+
+    doc.setFont("Helvetica", "bold");
+    doc.text("Analisi e consigli personalizzati", margin, y);
+    y += 18;
+    doc.setFont("Helvetica", "normal");
+    y = wrap(analysisTexts[resultData.level], margin, y);
+
+    y += 12;
+    doc.setFont("Helvetica", "bold");
+    doc.text("Checklist pratica", margin, y);
+    y += 18;
+    doc.setFont("Helvetica", "normal");
+    y = wrap(checklist.map(i => "• " + i).join("\n"), margin, y);
+
+    if (y > 680) { doc.addPage(); y = 40; }
+    doc.setFont("Helvetica", "bold");
+    doc.text("Piano 7 giorni di Digital Detox", margin, y);
+    y += 18;
+    doc.setFont("Helvetica", "normal");
+    y = wrap(plan7.map(i => "• " + i).join("\n"), margin, y);
+
+    y += 12;
+    doc.setFont("Helvetica", "bold");
+    doc.text("Risorse consigliate", margin, y);
+    y += 18;
+    doc.setFont("Helvetica", "normal");
+    y = wrap(resources.map(i => "• " + i).join("\n"), margin, y);
+
+    y += 22;
+    doc.setDrawColor(200);
+    doc.line(40, y, pageWidth - 40, y);
+    y += 16;
+    doc.setFontSize(10);
+    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", 40, y);
+
+    doc.save("Report_Dipendenza_Digitale.pdf");
+  }
+
+  window.__DD__ = { generatePDF, getResult: () => resultData };
+});
