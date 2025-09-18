@@ -56,6 +56,17 @@
   <footer class="footer">
     <p>&copy; 2025 Dipendenza Digitale</p>
   </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const link = document.getElementById('linkScopri');
+  if (link) {
+    link.addEventListener('click', function(e){
+      e.preventDefault();                 // blocca qualsiasi scroll
+      window.location.assign('/scopri.html'); // forza la navigazione
+    });
+  }
+});
+</script>
 
   <script src="scripts.js"></script>
 </body>
