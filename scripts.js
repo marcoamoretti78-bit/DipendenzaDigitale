@@ -131,14 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let y = margin;
 
     doc.setFont("Helvetica", "bold");
-    doc.setFontSize(32);
-    const who = resultData.name ? `Report per ${resultData.name}` : "Report personalizzato";
-    doc.text(who, margin, y);
-    y += 36;
-    doc.setFont("Helvetica", "normal");
-    doc.setFontSize(12);
-    doc.text(`Data: ${resultData.dateStr}`, margin, y);
-    y += 20;
+doc.setFontSize(28);
+doc.text("Report personalizzato", margin, y);
+y += 36;
+
+if (resultData.name) {
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(36); // nome utente più grande e ben visibile
+  doc.text(resultData.name, margin, y);
+  y += 40;
+}
+
     doc.setDrawColor(200);
     doc.line(margin, y, pageWidth - margin, y);
     y += 20;
