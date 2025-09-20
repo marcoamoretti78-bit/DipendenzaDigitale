@@ -97,19 +97,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("paypal-button-container");
     if (container) {
       container.innerHTML = "";
-      if (window.paypal && paypal.Buttons) {
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-    createOrder: (data, actions) => actions.order.create({
-      purchase_units: [{
-        amount: { currency_code: "EUR", value: "1.99" },
-        description: "Report Premium – Dipendenza Digitale"
-      }]
-    }),
-    onApprove: (data, actions) => actions.order.capture().then(() => generatePDF()),
-    onError: (err) => { console.error(err); alert("Pagamento non completato. Riprova."); }
-  }).render('#paypal-button-container');
+      if (container) {
+  container.innerHTML = "";
+  const fakeBtn = document.createElement("button");
+  fakeBtn.textContent = "Scarica Report Premium (TEST)";
+  fakeBtn.className = "btn primary";
+  fakeBtn.onclick = () => {
+    alert("⚡ Modalità test attiva – generazione report senza pagamento.");
+    generatePDF();
+  };
+  container.appendChild(fakeBtn);
 }
+
+    
 
           
       } else {
