@@ -167,9 +167,10 @@ if (resultData.name) {
       options: { animation: false, responsive: false }
     });
     await new Promise(r => setTimeout(r, 200));
-    const imgData = chartCanvas.toDataURL("image/png", 1.0);
-    doc.addImage(imgData, "PNG", margin, y, pageWidth - margin*2, 180);
-    y += 200;
+    const chartSize = 250; // lato quadrato per mantenere il grafico rotondo
+doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
+y += chartSize + 20;
+
 
     const wrap = (text, x, startY, lineHeight=16) => {
       const maxWidth = pageWidth - margin*2;
