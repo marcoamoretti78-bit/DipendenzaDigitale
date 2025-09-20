@@ -98,17 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (container) {
       container.innerHTML = "";
       if (window.paypal && paypal.Buttons) {
-        paypal.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-          createOrder: (data, actions) => actions.order.create({
-            purchase_units: [{
-              amount: { currency_code: "EUR", value: "1.99" },
-              description: "Report Premium – Dipendenza Digitale"
-            }]
-          }),
-          onApprove: (data, actions) => actions.order.capture().then(() => generatePDF()),
-          onError: (err) => { console.error(err); alert("Pagamento non completato. Riprova."); }
-        }).render('#paypal-button-container');
+  paypal.Buttons({
+    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{
+        amount: { currency_code: "EUR", value: "1.99" },
+        description: "Report Premium – Dipendenza Digitale"
+      }]
+    }),
+    onApprove: (data, actions) => actions.order.capture().then(() => generatePDF()),
+    onError: (err) => { console.error(err); alert("Pagamento non completato. Riprova."); }
+  }).render('#paypal-button-container');
+}
+
+          
       } else {
         container.innerHTML = "<p>Impossibile caricare PayPal. Ricarica la pagina e riprova.</p>";
       }
