@@ -95,19 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
     paywall?.classList.remove("hidden");
 
     const container = document.getElementById("paypal-button-container");
-    if (container) {
-      container.innerHTML = "";
-      if (container) {
+if (container) {
   container.innerHTML = "";
   const fakeBtn = document.createElement("button");
-  fakeBtn.textContent = "Scarica Report Premium (TEST)";
+  fakeBtn.type = "button";
   fakeBtn.className = "btn primary";
-  fakeBtn.onclick = () => {
+  fakeBtn.textContent = "Scarica Report Premium (TEST)";
+  fakeBtn.addEventListener("click", () => {
     alert("⚡ Modalità test attiva – generazione report senza pagamento.");
     generatePDF();
-  };
+  });
   container.appendChild(fakeBtn);
 }
+
+
 
     
 
