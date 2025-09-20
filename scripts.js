@@ -167,9 +167,9 @@ if (resultData.name) {
       options: { animation: false, responsive: false }
     });
     await new Promise(r => setTimeout(r, 200));
-    const chartSize = 250; // lato quadrato per mantenere il grafico rotondo
+    const chartSize = 220; // lato quadrato per mantenere il grafico rotondo
 doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
-y += chartSize + 20;
+y += chartSize + 30;
 
 
     const wrap = (text, x, startY, lineHeight=16) => {
@@ -240,8 +240,9 @@ y += chartSize + 20;
     y = wrap(resources.map(i => "• " + i).join("\n"), margin, y);
 
     y += 22;
+    if (y > 750) { doc.addPage(); y = 40; }
     doc.setDrawColor(200);
-    doc.line(40, y, pageWidth - 40, y);
+    doc.line(margin, y, pageWidth - margin, y);
     y += 16;
     doc.setFontSize(10);
     doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", 40, y);
