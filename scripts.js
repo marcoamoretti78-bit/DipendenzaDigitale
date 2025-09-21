@@ -235,14 +235,24 @@ const wrap = (text, x, startY, lineHeight = 16) => {
 
 
     // Testi di analisi
+
     const analysisTexts = {
-      "Basso rischio":
-        "Il tuo rapporto con lo smartphone appare equilibrato. Mantieni routine sane: momenti senza telefono (pasti, lavoro profondo), modalità non disturbare serale e limiti su app ad alto consumo. Resta vigile nei periodi di stress, quando l’uso potrebbe aumentare.",
-      "Rischio medio":
-        "Mostri alcuni segnali di dipendenza digitale. Stabilisci zone/orari liberi da smartphone (es. camera da letto). Imposta limiti per social e chat, e crea blocchi senza notifiche. Coltiva hobby offline appaganti e monitora l’andamento settimanale.",
-      "Rischio alto":
-        "L’uso dello smartphone appare problematico. Introduci sessioni di digital detox (anche brevi) e valuta app che bloccano temporaneamente quelle più distraenti. Se sonno, lavoro o relazioni ne risentono, valuta un confronto con uno specialista e coinvolgi un familiare o amico di supporto."
-    };
+  "Basso rischio":
+    "Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
+    "Mantenere questa consapevolezza è fondamentale: stabilisci momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggi gli spazi di qualità con le persone.\n\n" +
+    "Coltiva attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini. Resta vigile nei periodi di stress o cambiamento, quando l’uso del telefono può aumentare senza che te ne accorga.",
+
+  "Rischio medio":
+    "Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza: probabilmente lo smartphone tende a entrare in momenti poco opportuni, influenzando concentrazione, sonno o relazioni.\n\n" +
+    "È il momento giusto per intervenire: imposta zone/orari liberi da telefono (es. camera da letto e tavola), limita social e chat con timer e monitora l’uso settimanale per avere feedback chiari.\n\n" +
+    "Introduci piccole sessioni quotidiane di digital detox e punta su hobby offline che ti aiutino a staccare. Agendo ora, riduci il rischio di scivolare verso abitudini più problematiche.",
+
+  "Rischio alto":
+    "Il punteggio indica una dipendenza digitale significativa: l’uso dello smartphone sta impattando sonno, attenzione, produttività o relazioni.\n\n" +
+    "Agisci subito: programma finestre di disconnessione totale (anche 30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera. Valuta app che bloccano temporaneamente social o giochi più distraenti.\n\n" +
+    "Se noti che lavoro, studio o legami personali ne risentono, considera il supporto di uno specialista. Coinvolgere un familiare o un amico può darti responsabilità e motivazione costante."
+};
+
 
     const checklist = [
       "Spegni le notifiche non essenziali per alcune ore al giorno.",
