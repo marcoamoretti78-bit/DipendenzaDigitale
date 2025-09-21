@@ -221,12 +221,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Helper testo a capo
-    const wrap = (text, x, startY, lineHeight = 16) => {
-      const maxWidth = pageWidth - margin * 2;
-      const lines = doc.splitTextToSize(text, maxWidth);
-      lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
-      return startY;
-    };
+    // Sostituisci la tua wrap con questa versione "paragraph-aware"
+const wrap = (text, x, startY, lineHeight = 16) => {
+  const maxWidth = pageWidth - margin * 2;
+  const paragraphs = String(text).split(/\n\n/); // rispetta i paragrafi
+  paragraphs.forEach((p, i) => {
+    const lines = doc.splitTextToSize(p, maxWidth);
+    lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
+    if (i < paragraphs.length - 1) startY += lineHeight; // riga vuota tra paragrafi
+  });
+  return startY;
+};
+
 
     // Testi di analisi
     const analysisTexts = {
