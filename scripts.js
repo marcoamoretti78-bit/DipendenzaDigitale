@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await new Promise(r => setTimeout(r, 200)); // tempo per il render
 
     const imgData = chartCanvas.toDataURL("image/png", 1.0);
-    const chartSize = 220; // quadrato per evitare schiacciamenti
+    const chartSize = 250; // quadrato per evitare schiacciamenti
     doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
     y += chartSize + 30;
 
