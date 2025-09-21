@@ -1,4 +1,4 @@
-// scripts.js - Dipendenza Digitale (final release)
+// scripts.js - Dipendenza Digitale (final test mode)
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("quizForm");
   const calcBtn = document.getElementById("calculateBtn");
@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const paywall = document.getElementById("paywall");
   const userNameEl = document.getElementById("userName");
 
+  // ----- Domande & Opzioni -----
   const questions = [
     "Controlli il telefono appena sveglio/a?",
     "Perdi la cognizione del tempo mentre scorri social o video?",
@@ -35,27 +36,52 @@ document.addEventListener("DOMContentLoaded", () => {
     { label: "Quasi sempre / Sempre", value: 3 }
   ];
 
+  // Costruzione dinamica del quiz (evita duplicati)
   if (form) {
+    form.innerHTML = "";
     questions.forEach((q, idx) => {
       const qWrap = document.createElement("div");
       qWrap.className = "question";
       qWrap.innerHTML = `<p>${idx + 1}. ${q}</p>`;
+
       const opts = document.createElement("div");
-      opts.className = "options";
+      opts.className = "options"; // stile verticale gestito da CSS
+
       choices.forEach((c, cidx) => {
         const id = `q${idx}_c${cidx}`;
         const row = document.createElement("label");
-        row.innerHTML = `<input type="radio" name="q${idx}" id="${id}" value="${c.value}"> <span>${c.label}</span>`;
+        row.innerHTML = `
+          <input type="radio" name="q${idx}" id="${id}" value="${c.value}">
+          <span>${c.label}</span>
+        `;
         opts.appendChild(row);
       });
+
       qWrap.appendChild(opts);
       form.appendChild(qWrap);
     });
   }
 
+  // ----- Stato risultato -----
   let resultData = null;
-  let pdfChartInstance = null;
 
+  // Utility: ottieni/crea un canvas per il grafico PDF
+  function getPdfCanvas() {
+    let c = document.getElementById("pdfChart");
+    if (!c) {
+      c = document.createElement("canvas");
+      c.id = "pdfChart";
+      c.width = 400;
+      c.height = 400;
+      c.style.position = "fixed";
+      c.style.left = "-99999px";
+      c.style.top = "-99999px";
+      document.body.appendChild(c);
+    }
+    return c;
+  }
+
+  // ----- Calcolo quiz -----
   calcBtn?.addEventListener("click", () => {
     let total = 0;
     let answered = 0;
@@ -92,40 +118,36 @@ document.addEventListener("DOMContentLoaded", () => {
       dateStr: new Date().toLocaleDateString("it-IT")
     };
 
+    // Mostra paywall + bottone TEST (senza PayPal)
     paywall?.classList.remove("hidden");
-
     const container = document.getElementById("paypal-button-container");
-if (container) {
-  container.innerHTML = "";
-  const fakeBtn = document.createElement("button");
-  fakeBtn.type = "button";
-  fakeBtn.className = "btn primary";
-  fakeBtn.textContent = "Scarica Report Premium (TEST)";
-  fakeBtn.addEventListener("click", () => {
-    alert("⚡ Modalità test attiva – generazione report senza pagamento.");
-    generatePDF();
-  });
-  container.appendChild(fakeBtn);
-}
-
-
-
-    
-
-          
-      } else {
-        container.innerHTML = "<p>Impossibile caricare PayPal. Ricarica la pagina e riprova.</p>";
-      }
+    if (container) {
+      container.innerHTML = "";
+      const fakeBtn = document.createElement("button");
+      fakeBtn.type = "button";
+      fakeBtn.className = "btn primary";
+      fakeBtn.textContent = "Scarica Report Premium (TEST)";
+      fakeBtn.addEventListener("click", () => {
+        alert("⚡ Modalità test attiva – generazione report senza pagamento.");
+        generatePDF();
+      });
+      container.appendChild(fakeBtn);
     }
-    window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
+
+    // scroll al paywall
+    if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
   });
 
+  // ----- Reset -----
   resetBtn?.addEventListener("click", () => {
-    document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+    document.querySelectorAll('input[type="radio"]').forEach(i => (i.checked = false));
     paywall?.classList.add("hidden");
+    const container = document.getElementById("paypal-button-container");
+    if (container) container.innerHTML = "";
     resultData = null;
   });
 
+  // ----- PDF -----
   async function generatePDF() {
     if (!resultData) return;
     const { jsPDF } = window.jspdf;
@@ -134,32 +156,44 @@ if (container) {
     const margin = 40;
     let y = margin;
 
+    // Branding: titolo + nome grande
     doc.setFont("Helvetica", "bold");
-doc.setFontSize(28);
-doc.text("Report personalizzato", margin, y);
-y += 36;
+    doc.setFontSize(28);
+    doc.text("Report personalizzato", margin, y);
+    y += 36;
 
-if (resultData.name) {
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(36); // nome utente più grande e ben visibile
-  doc.text(resultData.name, margin, y);
-  y += 40;
-}
+    if (resultData.name) {
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(36); // nome utente ben visibile
+      doc.text(resultData.name, margin, y);
+      y += 40;
+    }
+
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(`Data: ${resultData.dateStr}`, margin, y);
+    y += 20;
 
     doc.setDrawColor(200);
     doc.line(margin, y, pageWidth - margin, y);
     y += 20;
 
+    // Risultato
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(14);
-    doc.text("Risultato", margin, y); y += 18;
-    doc.setFont("Helvetica", "normal");
-    doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y); y += 16;
-    doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y); y += 22;
+    doc.text("Risultato", margin, y);
+    y += 18;
 
-    const chartCanvas = document.getElementById("pdfChart");
+    doc.setFont("Helvetica", "normal");
+    doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y);
+    y += 16;
+    doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
+    y += 22;
+
+    // Grafico a torta (rotondo)
+    const chartCanvas = getPdfCanvas();
     const ctx = chartCanvas.getContext("2d");
-    if (window.__chart) { window.__chart.destroy(); }
+    if (window.__chart) window.__chart.destroy();
     window.__chart = new Chart(ctx, {
       type: "pie",
       data: {
@@ -170,19 +204,22 @@ if (resultData.name) {
       },
       options: { animation: false, responsive: false }
     });
-    await new Promise(r => setTimeout(r, 200));
-    const chartSize = 220; // lato quadrato per mantenere il grafico rotondo
-doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
-y += chartSize + 30;
+    await new Promise(r => setTimeout(r, 200)); // tempo per il render
 
+    const imgData = chartCanvas.toDataURL("image/png", 1.0);
+    const chartSize = 220; // quadrato per evitare schiacciamenti
+    doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
+    y += chartSize + 30;
 
-    const wrap = (text, x, startY, lineHeight=16) => {
-      const maxWidth = pageWidth - margin*2;
+    // Helper testo a capo
+    const wrap = (text, x, startY, lineHeight = 16) => {
+      const maxWidth = pageWidth - margin * 2;
       const lines = doc.splitTextToSize(text, maxWidth);
       lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
       return startY;
     };
 
+    // Testi di analisi
     const analysisTexts = {
       "Basso rischio":
         "Il tuo rapporto con lo smartphone appare equilibrato. Mantieni routine sane: momenti senza telefono (pasti, lavoro profondo), modalità non disturbare serale e limiti su app ad alto consumo. Resta vigile nei periodi di stress, quando l’uso potrebbe aumentare.",
@@ -216,6 +253,7 @@ y += chartSize + 30;
       "Tecniche: Pomodoro, blocchi Deep Work, journaling serale."
     ];
 
+    // Analisi + sezioni
     doc.setFont("Helvetica", "bold");
     doc.text("Analisi e consigli personalizzati", margin, y);
     y += 18;
@@ -243,16 +281,26 @@ y += chartSize + 30;
     doc.setFont("Helvetica", "normal");
     y = wrap(resources.map(i => "• " + i).join("\n"), margin, y);
 
-    y += 22;
+    // Footer + disclaimer (con controllo pagina)
     if (y > 750) { doc.addPage(); y = 40; }
     doc.setDrawColor(200);
     doc.line(margin, y, pageWidth - margin, y);
     y += 16;
     doc.setFontSize(10);
-    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", 40, y);
+    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
 
     doc.save("Report_Dipendenza_Digitale.pdf");
   }
 
+  // Esport per debugging
   window.__DD__ = { generatePDF, getResult: () => resultData };
 });
+
+  
+
+          
+
+
+ 
+
+   
