@@ -12,15 +12,13 @@
 </head>
 <body>
   <nav class="navbar">
-  <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"></a>
-  <span class="title">Dipendenza Digitale</span>
-  <div class="nav-links">
-    <a href="quiz.html" class="active">Quiz</a>
-    <a id="linkScopri" href="/scopri.html">Scopri di più</a>
-  </div>
-</nav>
-
-
+    <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"></a>
+    <span class="title">Dipendenza Digitale</span>
+    <div class="nav-links">
+      <a href="quiz.html" class="active">Quiz</a>
+      <a id="linkScopri" href="/scopri.html">Scopri di più</a>
+    </div>
+  </nav>
 
   <main class="container">
     <section class="intro">
@@ -51,24 +49,27 @@
     </section>
 
     <canvas id="pdfChart" width="400" height="400" style="display:none;"></canvas>
-
   </main>
 
   <footer class="footer">
     <p>&copy; 2025 Dipendenza Digitale</p>
   </footer>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  const link = document.getElementById('linkScopri');
-  if (link) {
-    link.addEventListener('click', function(e){
-      e.preventDefault();                 // blocca qualsiasi scroll
-      window.location.assign('/scopri.html'); // forza la navigazione
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const link = document.getElementById('linkScopri');
+      if (link) {
+        link.addEventListener('click', function(e){
+          e.preventDefault(); // blocca qualsiasi scroll
+          window.location.assign('/scopri.html'); // forza la navigazione
+        });
+      }
     });
-  }
-});
-</script>
-<script src="scripts.js?v=4"></script>
+  </script>
+  <script src="scripts.js?v=4"></script>
 </body>
 </html>
+
+
+
 
