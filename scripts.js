@@ -191,9 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     y += 22;
 
     // Grafico a torta (rotondo)
-    const chartCanvas = getPdfCanvas();
+        const chartCanvas = document.getElementById("pdfChart");
     const ctx = chartCanvas.getContext("2d");
-    if (window.__chart) window.__chart.destroy();
+    if (window.__chart) { window.__chart.destroy(); }
     window.__chart = new Chart(ctx, {
       type: "pie",
       data: {
@@ -204,12 +204,21 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       options: { animation: false, responsive: false }
     });
-    await new Promise(r => setTimeout(r, 200)); // tempo per il render
 
+    // Aspetta un attimo per permettere il rendering
+    await new Promise(r => setTimeout(r, 200));
+
+    // Esporta il grafico come immagine
     const imgData = chartCanvas.toDataURL("image/png", 1.0);
-    const chartSize = 250; // quadrato per evitare schiacciamenti
-    doc.addImage(imgData, "PNG", margin, y, chartSize, chartSize);
-    y += chartSize + 30;
+
+    // larghezza disponibile nel PDF
+    const maxWidth = pageWidth - margin * 2;
+
+    // aggiungi immagine mantenendo proporzioni corrette
+    doc.addImage(imgData, "PNG", margin, y, maxWidth, 0);
+
+    y += maxWidth + 30;
+
 
     // Helper testo a capo
     const wrap = (text, x, startY, lineHeight = 16) => {
