@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Ti agiti se ti separi dal telefono per alcune ore?",
     "Pensi spesso al telefono anche quando non lo stai usando?"
   ];
-  const choices = [
+  const choices = [   
     { label: "Mai", value: 0 },
     { label: "Raramente", value: 1 },
     { label: "Spesso", value: 2 },
@@ -148,176 +148,167 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ----- PDF -----
-  async function generatePDF() {
-    if (!resultData) return;
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: "pt", format: "a4" });
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 40;
-    let y = margin;
+  // ----- PDF -----
+async function generatePDF() {
+  if (!resultData) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 40;
+  let y = margin;
 
-    // Branding: titolo + nome grande
+  // Branding: titolo + versione + nome
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(28);
+  doc.text("Report personalizzato", margin, y);
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text("Build v6", pageWidth - margin - 60, margin);
+  y += 36;
+
+  if (resultData.name) {
     doc.setFont("Helvetica", "bold");
-    doc.setFontSize(28);
-    doc.text("Report personalizzato", margin, y);
-    y += 36;
-    doc.setFont("Helvetica", "normal");
-    doc.setFontSize(10);
-    doc.text("Build v5", pageWidth - margin - 60, margin);
+    doc.setFontSize(36);
+    doc.text(resultData.name, margin, y);
+    y += 40;
+  }
 
-    if (resultData.name) {
-      doc.setFont("Helvetica", "bold");
-      doc.setFontSize(36); // nome utente ben visibile
-      doc.text(resultData.name, margin, y);
-      y += 40;
-    }
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(12);
+  doc.text(`Data: ${resultData.dateStr}`, margin, y);
+  y += 20;
 
-    doc.setFont("Helvetica", "normal");
-    doc.setFontSize(12);
-    doc.text(`Data: ${resultData.dateStr}`, margin, y);
-    y += 20;
+  doc.setDrawColor(200);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 20;
 
-    doc.setDrawColor(200);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 20;
+  // Risultato
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text("Risultato", margin, y);
+  y += 18;
 
-    // Risultato
-    doc.setFont("Helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Risultato", margin, y);
-    y += 18;
+  doc.setFont("Helvetica", "normal");
+  doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y);
+  y += 16;
+  doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
+  y += 22;
 
-    doc.setFont("Helvetica", "normal");
-    doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y);
-    y += 16;
-    doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
-    y += 22;
-
-    // Grafico a torta (rotondo)
-        const chartCanvas = document.getElementById("pdfChart");
-    const ctx = chartCanvas.getContext("2d");
-    if (window.__chart) { window.__chart.destroy(); }
-    window.__chart = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels: ["Basso (0–1)", "Medio (2)", "Alto (3)"],
-        datasets: [{
-          data: [resultData.distribution.low, resultData.distribution.mid, resultData.distribution.high]
-        }]
-      },
-      options: { animation: false, responsive: false }
-    });
-
-    // Aspetta un attimo per permettere il rendering
-    await new Promise(r => setTimeout(r, 200));
-
-    // Esporta il grafico come immagine
-    const imgData = chartCanvas.toDataURL("image/png", 1.0);
-
-    // larghezza disponibile nel PDF
-    const maxWidth = pageWidth - margin * 2;
-
-    // aggiungi immagine mantenendo proporzioni corrette
-    doc.addImage(imgData, "PNG", margin, y, maxWidth, 0);
-
-    y += maxWidth + 30;
-
-
-    // Helper testo a capo
-    // Sostituisci la tua wrap con questa versione "paragraph-aware"
-const wrap = (text, x, startY, lineHeight = 16) => {
-  const maxWidth = pageWidth - margin * 2;
-  const paragraphs = String(text).split(/\n\n/); // divide per paragrafi
-  paragraphs.forEach((p, i) => {
-    const lines = doc.splitTextToSize(p, maxWidth);
-    lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
-    if (i < paragraphs.length - 1) startY += lineHeight; // aggiunge spazio extra tra paragrafi
+  // Grafico a torta
+  const chartCanvas = document.getElementById("pdfChart");
+  const ctx = chartCanvas.getContext("2d");
+  if (window.__chart) window.__chart.destroy();
+  window.__chart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Basso (0–1)", "Medio (2)", "Alto (3)"],
+      datasets: [{
+        data: [resultData.distribution.low, resultData.distribution.mid, resultData.distribution.high]
+      }]
+    },
+    options: { animation: false, responsive: false }
   });
-  return startY;
-};
 
+  await new Promise(r => setTimeout(r, 200));
+  const imgData = chartCanvas.toDataURL("image/png", 1.0);
+  const maxWidth = pageWidth - margin * 2;
+  doc.addImage(imgData, "PNG", margin, y, maxWidth, 0);
+  y += maxWidth + 30;
 
-    // Testi di analisi
+  // Helper testo a capo
+  const wrap = (text, x, startY, lineHeight = 16) => {
+    const maxWidth = pageWidth - margin * 2;
+    const paragraphs = String(text).split(/\n\n/);
+    paragraphs.forEach((p, i) => {
+      const lines = doc.splitTextToSize(p, maxWidth);
+      lines.forEach(line => { doc.text(line, x, startY); startY += lineHeight; });
+      if (i < paragraphs.length - 1) startY += lineHeight;
+    });
+    return startY;
+  };
 
-    const analysisTexts = {
-  "Basso rischio":
-    "Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
-    "Mantenere questa consapevolezza è fondamentale: stabilisci momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggi gli spazi di qualità con le persone.\n\n" +
-    "Coltiva attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini. Resta vigile nei periodi di stress o cambiamento, quando l’uso del telefono può aumentare senza che te ne accorga.",
+  // --- Frasi nuove ---
+  const analysisTexts = {
+    "Basso rischio":
+      "✅ Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
+      "Mantenere questa consapevolezza è fondamentale: stabilisci momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggi gli spazi di qualità con le persone.\n\n" +
+      "Coltiva attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini.",
 
-  "Rischio medio":
-    "Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza: probabilmente lo smartphone tende a entrare in momenti poco opportuni, influenzando concentrazione, sonno o relazioni.\n\n" +
-    "È il momento giusto per intervenire: imposta zone/orari liberi da telefono (es. camera da letto e tavola), limita social e chat con timer e monitora l’uso settimanale per avere feedback chiari.\n\n" +
-    "Introduci piccole sessioni quotidiane di digital detox e punta su hobby offline che ti aiutino a staccare. Agendo ora, riduci il rischio di scivolare verso abitudini più problematiche.",
+    "Rischio medio":
+      "⚠️ Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza.\n\n" +
+      "Probabilmente lo smartphone tende a entrare in momenti poco opportuni, influenzando concentrazione, sonno o relazioni.\n\n" +
+      "È il momento giusto per intervenire: imposta zone/orari liberi da telefono, limita social e chat con timer e monitora l’uso settimanale.",
 
-  "Rischio alto":
-    "Il punteggio indica una dipendenza digitale significativa: l’uso dello smartphone sta impattando sonno, attenzione, produttività o relazioni.\n\n" +
-    "Agisci subito: programma finestre di disconnessione totale (anche 30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera. Valuta app che bloccano temporaneamente social o giochi più distraenti.\n\n" +
-    "Se noti che lavoro, studio o legami personali ne risentono, considera il supporto di uno specialista. Coinvolgere un familiare o un amico può darti responsabilità e motivazione costante."
-};
+    "Rischio alto":
+      "🚨 Il punteggio indica una dipendenza digitale significativa.\n\n" +
+      "L’uso dello smartphone sta impattando sonno, attenzione, produttività o relazioni.\n\n" +
+      "Agisci subito: programma finestre di disconnessione totale (30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera.\n\n" +
+      "Se noti che lavoro, studio o legami personali ne risentono, valuta il supporto di uno specialista."
+  };
 
+  const checklist = [
+    "Spegni le notifiche non essenziali per alcune ore al giorno.",
+    "Stabilisci zone senza telefono (camera da letto, tavola).",
+    "Usa timer per limitare social e intrattenimento.",
+    "Stacca dallo schermo almeno 60 minuti prima di dormire.",
+    "Organizza attività offline che ti piacciono (sport, lettura, amici)."
+  ];
 
-    const checklist = [
-      "Spegni le notifiche non essenziali per alcune ore al giorno.",
-      "Stabilisci zone senza telefono (camera da letto, tavola).",
-      "Usa timer per limitare social e intrattenimento.",
-      "Stacca dallo schermo almeno 60 minuti prima di dormire.",
-      "Organizza attività offline che ti piacciono (sport, lettura, amici)."
-    ];
+  const plan7 = [
+    "Giorno 1 – Monitora: annota il tempo per app.",
+    "Giorno 2 – Notifiche: disattiva quelle non essenziali.",
+    "Giorno 3 – Zona libera: scegli un’area di casa senza smartphone.",
+    "Giorno 4 – Sonno: stop telefono 60’ prima di dormire.",
+    "Giorno 5 – Socialità: 2 ore con amici/famiglia senza telefono.",
+    "Giorno 6 – Movimento: camminata o sport senza telefono.",
+    "Giorno 7 – Revisione: valuta progressi e prossimi passi."
+  ];
 
-    const plan7 = [
-      "Giorno 1 – Monitora: annota il tempo per app.",
-      "Giorno 2 – Notifiche: disattiva quelle non essenziali.",
-      "Giorno 3 – Zona libera: scegli un’area di casa senza smartphone.",
-      "Giorno 4 – Sonno: stop telefono 60’ prima di dormire.",
-      "Giorno 5 – Socialità: 2 ore con amici/famiglia senza telefono.",
-      "Giorno 6 – Movimento: camminata o sport senza telefono.",
-      "Giorno 7 – Revisione: valuta progressi e prossimi passi."
-    ];
+  const resources = [
+    "Screen Time (iOS) / Digital Wellbeing (Android).",
+    "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
+    "Tecniche: Pomodoro, blocchi Deep Work, journaling serale."
+  ];
 
-    const resources = [
-      "Screen Time (iOS) / Digital Wellbeing (Android).",
-      "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
-      "Tecniche: Pomodoro, blocchi Deep Work, journaling serale."
-    ];
+  // Analisi personalizzata
+  doc.setFont("Helvetica", "bold");
+  doc.text("Analisi e consigli personalizzati", margin, y);
+  y += 18;
+  doc.setFont("Helvetica", "normal");
+  y = wrap(analysisTexts[resultData.level], margin, y);
 
-    // Analisi + sezioni
-    doc.setFont("Helvetica", "bold");
-    doc.text("Analisi e consigli personalizzati", margin, y);
-    y += 18;
-    doc.setFont("Helvetica", "normal");
-    y = wrap(analysisTexts[resultData.level], margin, y);
+  y += 12;
+  doc.setFont("Helvetica", "bold");
+  doc.text("Checklist pratica", margin, y);
+  y += 18;
+  doc.setFont("Helvetica", "normal");
+  y = wrap(checklist.map(i => "• " + i).join("\n"), margin, y);
 
-    y += 12;
-    doc.setFont("Helvetica", "bold");
-    doc.text("Checklist pratica", margin, y);
-    y += 18;
-    doc.setFont("Helvetica", "normal");
-    y = wrap(checklist.map(i => "• " + i).join("\n"), margin, y);
+  if (y > 680) { doc.addPage(); y = 40; }
+  doc.setFont("Helvetica", "bold");
+  doc.text("Piano 7 giorni di Digital Detox", margin, y);
+  y += 18;
+  doc.setFont("Helvetica", "normal");
+  y = wrap(plan7.map(i => "• " + i).join("\n"), margin, y);
 
-    if (y > 680) { doc.addPage(); y = 40; }
-    doc.setFont("Helvetica", "bold");
-    doc.text("Piano 7 giorni di Digital Detox", margin, y);
-    y += 18;
-    doc.setFont("Helvetica", "normal");
-    y = wrap(plan7.map(i => "• " + i).join("\n"), margin, y);
+  y += 12;
+  doc.setFont("Helvetica", "bold");
+  doc.text("Risorse consigliate", margin, y);
+  y += 18;
+  doc.setFont("Helvetica", "normal");
+  y = wrap(resources.map(i => "• " + i).join("\n"), margin, y);
 
-    y += 12;
-    doc.setFont("Helvetica", "bold");
-    doc.text("Risorse consigliate", margin, y);
-    y += 18;
-    doc.setFont("Helvetica", "normal");
-    y = wrap(resources.map(i => "• " + i).join("\n"), margin, y);
+  // Footer
+  if (y > 750) { doc.addPage(); y = 40; }
+  doc.setDrawColor(200);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 16;
+  doc.setFontSize(10);
+  doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
 
-    // Footer + disclaimer (con controllo pagina)
-    if (y > 750) { doc.addPage(); y = 40; }
-    doc.setDrawColor(200);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 16;
-    doc.setFontSize(10);
-    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
+  doc.save("Report_Dipendenza_Digitale.pdf");
+}
 
-    doc.save("Report_Dipendenza_Digitale.pdf");
   }
 
   // Esport per debugging
