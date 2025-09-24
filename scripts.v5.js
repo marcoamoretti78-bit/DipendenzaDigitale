@@ -161,6 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(28);
     doc.text("Report personalizzato", margin, y);
     y += 36;
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text("Build v5", pageWidth - margin - 60, margin);
 
     if (resultData.name) {
       doc.setFont("Helvetica", "bold");
