@@ -252,6 +252,8 @@ y += 20;
       "Agisci subito: programma finestre di disconnessione totale (30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera.\n\n" +
       "Se noti che lavoro, studio o legami personali ne risentono, valuta il supporto di uno specialista."
   };
+  window.__analysisTexts = analysisTexts;
+
 
   const checklist = [
     "Spegni le notifiche non essenziali per alcune ore al giorno.",
@@ -285,7 +287,8 @@ y += 20;
   doc.setFont("Helvetica", "normal");
   console.log("DEBUG livello:", resultData.level);
 console.log("DEBUG testo:", analysisTexts[resultData.level]);
- y = wrap(analysisTexts[resultData.level], margin, y);
+ y = wrap(window.__analysisTexts[resultData.level], margin, y);
+
 
   y += 12;
   doc.setFont("Helvetica", "bold");
