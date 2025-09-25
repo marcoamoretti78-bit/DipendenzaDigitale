@@ -259,7 +259,8 @@ y += 20;
     "Usa timer per limitare social e intrattenimento.",
     "Stacca dallo schermo almeno 60 minuti prima di dormire.",
     "Organizza attività offline che ti piacciono (sport, lettura, amici)."
-  ];
+  ];  window.__analysisTexts = analysisTexts;
+
 
   const plan7 = [
     "Giorno 1 – Monitora: annota il tempo per app.",
