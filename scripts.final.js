@@ -161,10 +161,17 @@ async function generatePDF() {
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(28);
   doc.text("Report personalizzato", margin, y);
-  doc.setFont("Helvetica", "normal");
-  doc.setFontSize(10);
-  doc.text("Build v6", pageWidth - margin - 60, margin);
-  y += 36;
+doc.setFont("Helvetica", "normal");
+doc.setFontSize(10);
+doc.text("Build v6", pageWidth - margin - 60, margin);
+y += 36;
+
+// 🔴 Debug temporaneo
+doc.setFont("Helvetica", "italic");
+doc.setFontSize(14);
+doc.text("TEST FRASE NUOVA - vFinal", margin, y);
+y += 20;
+
 
   if (resultData.name) {
     doc.setFont("Helvetica", "bold");
