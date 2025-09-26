@@ -324,6 +324,7 @@ console.log("DEBUG testo:", analysisTexts[resultData.level]);
   
   // Esport per debugging
   window.__DD__ = { generatePDF, getResult: () => resultData };
+  window.__analysisTexts = analysisTexts;
 });
 
   
