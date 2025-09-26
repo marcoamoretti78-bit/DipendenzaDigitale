@@ -261,7 +261,7 @@ y += 20;
     "Usa timer per limitare social e intrattenimento.",
     "Stacca dallo schermo almeno 60 minuti prima di dormire.",
     "Organizza attività offline che ti piacciono (sport, lettura, amici)."
-  ];  window.__analysisTexts = analysisTexts;
+  ]; 
 
 
   const plan7 = [
@@ -287,7 +287,8 @@ y += 20;
   doc.setFont("Helvetica", "normal");
   console.log("DEBUG livello:", resultData.level);
 console.log("DEBUG testo:", analysisTexts[resultData.level]);
- y = wrap(window.__analysisTexts[resultData.level], margin, y);
+ y = wrap(analysisTexts[resultData.level], margin, y);
+
 
 
   y += 12;
