@@ -253,6 +253,7 @@ y += 20;
       "Se noti che lavoro, studio o legami personali ne risentono, valuta il supporto di uno specialista."
   };
   window.__analysisTexts = analysisTexts;
+ console.log("✅ Frasi caricate:", analysisTexts);
 
 
   const checklist = [
