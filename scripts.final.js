@@ -150,6 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----- PDF -----
   // ----- PDF -----
 async function generatePDF() {
+  console.log(">>> STO USANDO LA VERSIONE GIUSTA DI generatePDF <<<");
+
   if (!resultData) return;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: "pt", format: "a4" });
