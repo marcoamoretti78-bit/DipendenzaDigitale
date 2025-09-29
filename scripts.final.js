@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fakeBtn.className = "btn primary";
       fakeBtn.textContent = "Scarica Report Premium (TEST)";
       fakeBtn.addEventListener("click", () => {
-        alert("⚡ Modalità test attiva – generazione report senza pagamento.");
+        alert(" Modalità test attiva – generazione report senza pagamento.");
         generatePDF();
       });
       container.appendChild(fakeBtn);
@@ -168,7 +168,7 @@ doc.setFontSize(10);
 doc.text("Build v6", pageWidth - margin - 60, margin);
 y += 36;
 
-// 🔴 Debug temporaneo
+//  Debug temporaneo
 doc.setFont("Helvetica", "italic");
 doc.setFontSize(14);
 doc.text("TEST FRASE NUOVA - vFinal", margin, y);
@@ -239,23 +239,23 @@ y += 20;
   // --- Frasi nuove ---
   const analysisTexts = {
     "Basso rischio":
-      "✅ Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
+      " Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
       "Mantenere questa consapevolezza è fondamentale: stabilisci momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggi gli spazi di qualità con le persone.\n\n" +
       "Coltiva attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini.",
 
     "Rischio medio":
-      "⚠️ Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza.\n\n" +
+      " Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza.\n\n" +
       "Probabilmente lo smartphone tende a entrare in momenti poco opportuni, influenzando concentrazione, sonno o relazioni.\n\n" +
       "È il momento giusto per intervenire: imposta zone/orari liberi da telefono, limita social e chat con timer e monitora l’uso settimanale.",
 
     "Rischio alto":
-      "🚨 Il punteggio indica una dipendenza digitale significativa.\n\n" +
+      " Il punteggio indica una dipendenza digitale significativa.\n\n" +
       "L’uso dello smartphone sta impattando sonno, attenzione, produttività o relazioni.\n\n" +
       "Agisci subito: programma finestre di disconnessione totale (30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera.\n\n" +
       "Se noti che lavoro, studio o legami personali ne risentono, valuta il supporto di uno specialista."
   };
   window.__analysisTexts = analysisTexts;
- console.log("✅ Frasi caricate:", analysisTexts);
+ console.log(" Frasi caricate:", analysisTexts);
 
 
   const checklist = [
