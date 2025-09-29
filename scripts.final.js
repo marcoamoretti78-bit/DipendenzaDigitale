@@ -1,4 +1,4 @@
-// scripts.js - Dipendenza Digitale (final test mode)
+// scripts.final.js - Dipendenza Digitale (final test mode)
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("quizForm");
   const calcBtn = document.getElementById("calculateBtn");
