@@ -290,9 +290,10 @@ y += 20;
   doc.setFont("Helvetica", "normal");
   const testoCorrente = analysisTexts[resultData.level];
 console.log("DEBUG livello:", resultData.level);
-console.log("TESTO USATO NEL PDF:", testoCorrente);
+y = wrap(analysisTexts[resultData.level], margin, y);
 
-// 🔴 Debug visibile nel PDF
+
+
 doc.setFont("Helvetica", "italic");
 doc.setFontSize(10);
 doc.text("[DEBUG PDF] " + testoCorrente.slice(0, 50), margin, y);
