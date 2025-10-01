@@ -285,12 +285,14 @@ y += 20;
 
   // Analisi personalizzata
   doc.setFont("Helvetica", "bold");
-  doc.text("Analisi e consigli personalizzati", margin, y);
-  y += 18;
-  doc.setFont("Helvetica", "normal");
-  const testoCorrente = analysisTexts[resultData.level];
+doc.text("Analisi e consigli personalizzati", margin, y);
+y += 18;
+
+doc.setFont("Helvetica", "normal");
 console.log("DEBUG livello:", resultData.level);
+console.log("DEBUG testo:", analysisTexts[resultData.level]);
 y = wrap(analysisTexts[resultData.level], margin, y);
+
 
 
 
