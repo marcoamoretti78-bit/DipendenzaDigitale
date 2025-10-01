@@ -288,13 +288,23 @@ y += 20;
 doc.text("Analisi e consigli personalizzati", margin, y);
 y += 18;
 
-doc.setFont("Helvetica", "bold");
-doc.text("Analisi e consigli personalizzati", margin, y);
-y += 18;
-
 doc.setFont("Helvetica", "normal");
 const testoCorrente = analysisTexts[resultData.level];
-y = wrap(testoCorrente, margin, y);
+
+const maxWidth   = pageWidth - margin * 2;
+const lineHeight = 16;
+const pageBottom = doc.internal.pageSize.getHeight() - margin;
+
+const lines = doc.splitTextToSize(testoCorrente, maxWidth);
+lines.forEach(line => {
+  if (y > pageBottom) {
+    doc.addPage();
+    y = margin;
+  }
+  doc.text(line, margin, y);
+  y += lineHeight;
+});
+
 
 
 
