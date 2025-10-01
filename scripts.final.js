@@ -328,9 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   doc.save("Report_Dipendenza_Digitale.pdf");
 }
-
-
-}
   
   // Esport per debugging
   window.__DD__ = { generatePDF, getResult: () => resultData };
