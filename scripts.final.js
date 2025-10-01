@@ -288,11 +288,20 @@ y += 20;
   doc.text("Analisi e consigli personalizzati", margin, y);
   y += 18;
   doc.setFont("Helvetica", "normal");
-  console.log("DEBUG livello:", resultData.level);
-console.log("DEBUG testo:", analysisTexts[resultData.level]);
- const testo = analysisTexts[resultData.level];
-console.log("🟢 TESTO USATO NEL PDF:", testo);
-y = wrap(testo, margin, y);
+  const testoCorrente = analysisTexts[resultData.level];
+console.log("DEBUG livello:", resultData.level);
+console.log("TESTO USATO NEL PDF:", testoCorrente);
+
+// 🔴 Debug visibile nel PDF
+doc.setFont("Helvetica", "italic");
+doc.setFontSize(10);
+doc.text("[DEBUG PDF] " + testoCorrente.slice(0, 50), margin, y);
+y += 18;
+
+// ✅ Testo corretto nel PDF
+doc.setFont("Helvetica", "normal");
+y = wrap(testoCorrente, margin, y);
+
 
 
 
