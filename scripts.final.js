@@ -288,11 +288,14 @@ y += 20;
 doc.text("Analisi e consigli personalizzati", margin, y);
 y += 18;
 
+doc.setFont("Helvetica", "bold");
+doc.text("Analisi e consigli personalizzati", margin, y);
+y += 18;
+
 doc.setFont("Helvetica", "normal");
 const testoCorrente = analysisTexts[resultData.level];
-console.log("DEBUG livello:", resultData.level);
-console.log("DEBUG testo:", analysisTexts[resultData.level]);
-y = wrap(analysisTexts[resultData.level], margin, y);
+y = wrap(testoCorrente, margin, y);
+
 
 
 
