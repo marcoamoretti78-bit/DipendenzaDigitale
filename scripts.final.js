@@ -290,7 +290,10 @@ y += 20;
   doc.setFont("Helvetica", "normal");
   console.log("DEBUG livello:", resultData.level);
 console.log("DEBUG testo:", analysisTexts[resultData.level]);
- y = wrap(analysisTexts[resultData.level], margin, y);
+ const testo = analysisTexts[resultData.level];
+console.log("🟢 TESTO USATO NEL PDF:", testo);
+y = wrap(testo, margin, y);
+
 
 
 
