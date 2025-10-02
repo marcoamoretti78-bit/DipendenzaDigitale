@@ -225,13 +225,15 @@ document.addEventListener("DOMContentLoaded", () => {
   y += imgHeight + 30;
 
   // --- Helper per testo multi-paragrafo con gestione pagina
-  const writeParagraphs = (text) => {
-    const maxTextWidth = pageWidth - margin * 2;
-    const lineHeight   = 18;
-    const paragraphs   = String(text).split(/\n\n/);
-    paragraphs.forEach((p, i) => {
-      const lines = doc.splitTextToSize(p, maxTextWidth);
-      lines.forEach(line => {
+  const writeParagraphs = (text) => {
+    // Imposta la dimensione font esplicitamente per aiutare splitTextToSize
+    doc.setFontSize(12); 
+    const maxTextWidth = pageWidth - margin * 2;
+    const lineHeight   = 18;
+    const paragraphs   = String(text).split(/\n\n/);
+    paragraphs.forEach((p, i) => {
+      const lines = doc.splitTextToSize(p, maxTextWidth);
+      lines.forEach(line => {
         if (y + lineHeight > pageHeight - margin) { // Logica corretta
           doc.addPage();
           y = margin;
@@ -239,9 +241,10 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(line, margin, y);
         y += lineHeight;
       });
-      if (i < paragraphs.length - 1) y += 8; // Spazio extra ridotto tra paragrafi (per non interferire col wrap)
-    });
-  };
+      // Spazio ridotto tra i paragrafi di analisi per non interferire col word-wrap
+      if (i < paragraphs.length - 1) y += 8; 
+    });
+  };
 
   // --- Testi NUOVI
   const analysisTexts = {
