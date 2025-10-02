@@ -232,13 +232,16 @@ document.addEventListener("DOMContentLoaded", () => {
     paragraphs.forEach((p, i) => {
       const lines = doc.splitTextToSize(p, maxTextWidth);
       lines.forEach(line => {
-        if (y > pageHeight - margin) {
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(line, margin, y);
-        y += lineHeight;
-      });
+        // Nuova versione della inner loop di writeParagraphs
+      lines.forEach(line => {
+        // PRIMA controlla se c'è spazio sufficiente per disegnare la riga CORRENTE
+        if (y + lineHeight > pageHeight - margin) { // 🎯 La correzione chiave
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(line, margin, y);
+        y += lineHeight; // Aggiorna y per la riga SUCCESSIVA
+      });
       if (i < paragraphs.length - 1) y += lineHeight; // spazio tra paragrafi
     });
   };
