@@ -227,14 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Helper per testo multi-paragrafo con gestione pagina
   const writeParagraphs = (text) => {
     const maxTextWidth = pageWidth - margin * 2;
-    const lineHeight   = 16;
+    const lineHeight   = 18;
     const paragraphs   = String(text).split(/\n\n/);
     paragraphs.forEach((p, i) => {
       const lines = doc.splitTextToSize(p, maxTextWidth);
-      // Nuova versione (corretta):
-      lines.forEach(line => {
-        // Controlla se la riga successiva (y + lineHeight) supererà il margine
-        if (y + lineHeight > pageHeight - margin) { 
+      lines.forEach(line => {
+        if (y + lineHeight > pageHeight - margin) { // Logica corretta
           doc.addPage();
           y = margin;
         }
@@ -310,9 +308,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "Giorno 7 – Revisione: valuta progressi e prossimi passi."
   ];
   writeParagraphs(plan7.map(i => "• " + i).join("\n"));
-
-  // --- Risorse
   y += 12;
+  // --- Risorse
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(14);
   doc.text("Risorse consigliate", margin, y);
