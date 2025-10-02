@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(line, margin, y);
         y += lineHeight;
       });
-      if (i < paragraphs.length - 1) y += lineHeight; // spazio tra paragrafi
+      if (i < paragraphs.length - 1) y += 8; // Spazio extra ridotto tra paragrafi (per non interferire col wrap)
     });
   };
 
