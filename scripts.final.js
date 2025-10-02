@@ -213,7 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
     options: { animation: false, responsive: false }
   });
   await new Promise(r => setTimeout(r, 200));
-  // ...
+  const imgData = chartCanvas.toDataURL("image/png", 1.0);
+  const maxWidth = pageWidth - margin * 2;
   doc.addImage(imgData, "PNG", margin, y, maxWidth, 0);
 
   // Calcola l'altezza *reale* dell'immagine
@@ -221,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const imgHeight = (imgProps.height * maxWidth) / imgProps.width;
 
   // Sposta la coordinata y in base all'altezza *calcolata* dell'immagine
-  y += imgHeight + 30; // Aggiungi l'altezza reale + 30pt di spazio
+  y += imgHeight + 30;
 
   // --- Helper per testo multi-paragrafo con gestione pagina
   const writeParagraphs = (text) => {
