@@ -231,16 +231,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const paragraphs   = String(text).split(/\n\n/);
     paragraphs.forEach((p, i) => {
       const lines = doc.splitTextToSize(p, maxTextWidth);
-      lines.forEach(line => {
-        // Nuova versione della inner loop di writeParagraphs
+      // Nuova versione (corretta):
       lines.forEach(line => {
-        // PRIMA controlla se c'è spazio sufficiente per disegnare la riga CORRENTE
-        if (y + lineHeight > pageHeight - margin) { // 🎯 La correzione chiave
+        // Controlla se la riga successiva (y + lineHeight) supererà il margine
+        if (y + lineHeight > pageHeight - margin) { 
           doc.addPage();
           y = margin;
         }
         doc.text(line, margin, y);
-        y += lineHeight; // Aggiorna y per la riga SUCCESSIVA
+        y += lineHeight;
       });
       if (i < paragraphs.length - 1) y += lineHeight; // spazio tra paragrafi
     });
@@ -275,9 +274,9 @@ document.addEventListener("DOMContentLoaded", () => {
   doc.setFontSize(12);
   const testoCorrente = analysisTexts[resultData.level];
   writeParagraphs(testoCorrente);
-
-  // --- Checklist
   y += 12;
+    
+  // --- Checklist
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(14);
   doc.text("Checklist pratica", margin, y);
@@ -292,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Organizza attività offline che ti piacciono (sport, lettura, amici)."
   ];
   writeParagraphs(checklist.map(i => "• " + i).join("\n"));
-
+  y += 12;
   // --- Piano 7 giorni
   if (y > pageHeight - 120) { doc.addPage(); y = margin; }
   doc.setFont("Helvetica", "bold");
