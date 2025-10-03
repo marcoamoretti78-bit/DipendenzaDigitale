@@ -156,25 +156,8 @@ document.addEventListener("DOMContentLoaded", () => {
             dateStr: new Date().toLocaleDateString("it-IT")
         };
 
-        // Mostra paywall + bottone TEST (simulazione acquisto)
-        paywall?.classList.remove("hidden");
-        const container = document.getElementById("paypal-button-container");
-        if (container) {
-            container.innerHTML = "";
-            const fakeBtn = document.createElement("button");
-            fakeBtn.type = "button";
-            fakeBtn.className = "btn primary";
-            fakeBtn.textContent = "Scarica Report Premium (TEST)";
-            fakeBtn.addEventListener("click", () => {
-                alert("Modalità test attiva – generazione report simulata.");
-                generatePDF();
-            });
-            container.appendChild(fakeBtn);
-        }
-
-        // scroll al paywall
-        if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });  
-
+       
+         });
     // Mostra paywall + bottone TEST (senza PayPal)
     paywall?.classList.remove("hidden");
     const container = document.getElementById("paypal-button-container");
