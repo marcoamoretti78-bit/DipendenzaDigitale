@@ -82,41 +82,98 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Calcolo quiz -----
-  calcBtn?.addEventListener("click", () => {
-    let total = 0;
-    let answered = 0;
-    const distribution = { low: 0, mid: 0, high: 0 };
+       let total = 0;
+        let answered = 0;
 
-    questions.forEach((_, idx) => {
-      const checked = document.querySelector(`input[name="q${idx}"]:checked`);
-      if (checked) {
-        const val = parseInt(checked.value, 10);
-        total += val;
-        answered += 1;
-        if (val <= 1) distribution.low += 1;
-        else if (val === 2) distribution.mid += 1;
-        else distribution.high += 1;
-      }
-    });
+        // Mappa da indice di domanda (0-19) al nome dell'asse del radar
+        const finalAxisMap = {
+            0: 'Sonno e Rituali', 1: 'Attenzione e Produttività', 2: 'Attenzione e Produttività', 3: 'Relazioni e Socialità',
+            4: 'Relazioni e Socialità', 5: 'Fuga ed Emozioni', 6: 'Sonno e Rituali', 7: 'Sonno e Rituali',
+            8: 'Relazioni e Socialità', 9: 'Attenzione e Produttività', 10: 'Controllo e Tempo', 11: 'Fuga ed Emozioni',
+            12: 'Fuga ed Emozioni', 13: 'Relazioni e Socialità', 14: 'Relazioni e Socialità', 15: 'Fuga ed Emozioni',
+            16: 'Attenzione e Produttività', 17: 'Controllo e Tempo', 18: 'Controllo e Tempo', 19: 'Controllo e Tempo',
+        };
+        const finalAxes = {
+            'Sonno e Rituali': [],
+            'Fuga ed Emozioni': [],
+            'Attenzione e Produttività': [],
+            'Relazioni e Socialità': [],
+            'Controllo e Tempo': [],
+        };
 
-    if (answered < questions.length) {
-      alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
-      return;
-    }
+        questions.forEach((_, idx) => {
+            const checked = document.querySelector(`input[name="q${idx}"]:checked`);
+            if (checked) {
+                const val = parseInt(checked.value, 10);
+                total += val;
+                answered += 1;
+                
+                // Distribuzione dei punteggi per l'Asse Radar
+                const axisName = finalAxisMap[idx];
+                if (finalAxes[axisName]) {
+                    finalAxes[axisName].push(val);
+                }
+            }
+        });
 
-    const maxScore = questions.length * 3;
-    const percentage = Math.round((total / maxScore) * 100);
-    let level = "";
-    if (percentage < 33) level = "Basso rischio";
-    else if (percentage < 67) level = "Rischio medio";
-    else level = "Rischio alto";
+        if (answered < questions.length) {
+            alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
+            return;
+        }
+        
+        // Calcola la media per ogni Asse Radar (il valore da 0 a 3)
+        const radarScores = {};
+        let topScores = [];
 
-    resultData = {
-      name: (userNameEl?.value || "").trim(),
-      total, maxScore, percentage, level, answered,
-      distribution,
-      dateStr: new Date().toLocaleDateString("it-IT")
-    };
+        for (const [axis, scores] of Object.entries(finalAxes)) {
+            // Calcola la media (risultato da 0 a 3)
+            const average = scores.reduce((sum, val) => sum + val, 0) / scores.length;
+            radarScores[axis] = parseFloat(average.toFixed(2));
+            
+            // Per identificare le priorità (TOP 3)
+            const maxVal = scores.reduce((max, val) => Math.max(max, val), 0);
+            if (maxVal > 1) { // Considera solo gli assi con punteggio 'Spesso' o 'Sempre'
+                 topScores.push({ axis, score: average, maxResponse: maxVal });
+            }
+        }
+        
+        // Ordina e seleziona le 3 aree con il punteggio più alto
+        topScores.sort((a, b) => b.score - a.score);
+        const top3Priorities = topScores.slice(0, 3);
+
+        const maxScore = questions.length * 3;
+        const percentage = Math.round((total / maxScore) * 100);
+        let level = "";
+        if (percentage < 33) level = "Basso rischio";
+        else if (percentage < 67) level = "Rischio medio";
+        else level = "Rischio alto";
+
+        resultData = {
+            name: (userNameEl?.value || "").trim(),
+            total, maxScore, percentage, level, answered,
+            radarScores,
+            top3Priorities,
+            dateStr: new Date().toLocaleDateString("it-IT")
+        };
+
+        // Mostra paywall + bottone TEST (simulazione acquisto)
+        paywall?.classList.remove("hidden");
+        const container = document.getElementById("paypal-button-container");
+        if (container) {
+            container.innerHTML = "";
+            const fakeBtn = document.createElement("button");
+            fakeBtn.type = "button";
+            fakeBtn.className = "btn primary";
+            fakeBtn.textContent = "Scarica Report Premium (TEST)";
+            fakeBtn.addEventListener("click", () => {
+                alert("Modalità test attiva – generazione report simulata.");
+                generatePDF();
+            });
+            container.appendChild(fakeBtn);
+        }
+
+        // scroll al paywall
+        if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });  
 
     // Mostra paywall + bottone TEST (senza PayPal)
     paywall?.classList.remove("hidden");
@@ -197,32 +254,64 @@ document.addEventListener("DOMContentLoaded", () => {
   y += 16;
   doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
   y += 22;
+   // --- Grafico a Radar (NUOVO)
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("Analisi dettagliata per Asse di Rischio", margin, y);
+        y += 20;
 
-  // --- Grafico a torta
-  const chartCanvas = document.getElementById("pdfChart");
-  const ctx = chartCanvas.getContext("2d");
-  if (window.__chart) window.__chart.destroy();
-  window.__chart = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["Basso (0–1)", "Medio (2)", "Alto (3)"],
-      datasets: [{
-        data: [resultData.distribution.low, resultData.distribution.mid, resultData.distribution.high]
-      }]
-    },
-    options: { animation: false, responsive: false }
-  });
-  await new Promise(r => setTimeout(r, 200));
-  const imgData = chartCanvas.toDataURL("image/png", 1.0);
-  const maxWidth = pageWidth - margin * 2;
-  doc.addImage(imgData, "PNG", margin, y, maxWidth, 0);
+        const radarCanvas = getPdfCanvas(); // NOTA: Ho cambiato qui in getPdfCanvas()
+        const ctx = radarCanvas.getContext("2d");
+        if (window.__chart) window.__chart.destroy();
+        
+        // Raccogli i dati
+        const labels = Object.keys(resultData.radarScores);
+        const dataValues = Object.values(resultData.radarScores);
+        const maxScoreAxis = 3;
 
-  // Calcola l'altezza *reale* dell'immagine
-  const imgProps = doc.getImageProperties(imgData);
-  const imgHeight = (imgProps.height * maxWidth) / imgProps.width;
+        window.__chart = new Chart(ctx, {
+            type: "radar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Il Tuo Punteggio (Max 3)",
+                    data: dataValues,
+                    backgroundColor: 'rgba(0, 51, 102, 0.4)', // Colore tema
+                    borderColor: '#003366',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#22c55e' // Colore accento
+                }]
+            },
+            options: { 
+                animation: false, 
+                responsive: false, 
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: maxScoreAxis,
+                        ticks: { stepSize: 1, display: false },
+                        pointLabels: { font: { size: 10, weight: 'bold' } }
+                    }
+                },
+                plugins: {
+                    legend: { display: true, position: 'bottom' }
+                }
+            }
+        });
+        
+        await new Promise(r => setTimeout(r, 200)); // Attendi il rendering
+        
+        const radarImgData = radarCanvas.toDataURL("image/png", 1.0);
+        
+        // Dimensione e centratura
+        const radarSize = 350; 
+        const radarX = (pageWidth - radarSize) / 2;
+        doc.addImage(radarImgData, "PNG", radarX, y, radarSize, radarSize);
 
-  // Sposta la coordinata y in base all'altezza *calcolata* dell'immagine
-  y += imgHeight + 30;
+        y += radarSize + 30; // Spazio dopo il grafico
+  
 
   // --- Helper per testo multi-paragrafo con gestione pagina
   const writeParagraphs = (text) => {
@@ -276,23 +365,54 @@ document.addEventListener("DOMContentLoaded", () => {
   const testoCorrente = analysisTexts[resultData.level];
   writeParagraphs(testoCorrente);
   y += 12;
-    
-  // --- Checklist
-  doc.setFont("Helvetica", "bold");
-  doc.setFontSize(14);
-  doc.text("Checklist pratica", margin, y);
-  y += 18;
 
-  doc.setFont("Helvetica", "normal");
-  const checklist = [
-    "Spegni le notifiche non essenziali per alcune ore al giorno.",
-    "Stabilisci zone senza telefono (camera da letto, tavola).",
-    "Usa timer per limitare social e intrattenimento.",
-    "Stacca dallo schermo almeno 60 minuti prima di dormire.",
-    "Organizza attività offline che ti piacciono (sport, lettura, amici)."
-  ];
-  writeParagraphs(checklist.map(i => "• " + i).join("\n"));
-  y += 12;
+  // --- SEZIONE: LE TUE 3 PRIORITÀ (SOSTITUISCE CHECKLIST)
+        
+        // Controllo pagina prima della nuova sezione
+        if (y > pageHeight - 120) { doc.addPage(); y = margin; } 
+
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(16);
+        doc.setTextColor("#003366"); // Usa il colore primario
+        doc.text("⭐️ Il Tuo Piano d'Azione Prioritario", margin, y);
+        y += 20;
+
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(0); // Colore nero
+        
+        const priorityDescriptions = {
+            'Sonno e Rituali': 'Attiva la modalità "Non Disturbare" alle 22:00 e lascia il telefono fuori dalla camera da letto. La qualità del sonno è la tua priorità assoluta.',
+            'Fuga ed Emozioni': 'Non usare il telefono per fuggire dalla noia. Quando senti l\'impulso, fai 5 respiri profondi e trova un\'alternativa offline (libro, camminata).',
+            'Attenzione e Produttività': 'Usa l\'app Digital Wellbeing (o Screen Time) per limitare le app che rubano la tua attenzione (es. 30 minuti al giorno). Disattiva tutte le notifiche non essenziali.',
+            'Relazioni e Socialità': 'Istituisci "Zone senza Telefono" chiare: a tavola e durante le conversazioni faccia a faccia. Dai la priorità al tuo ambiente sociale reale.',
+            'Controllo e Tempo': 'Utilizza timer di 30 minuti (Tecnica Pomodoro) per l\'uso dei social media. Monitora il tuo tempo totale settimanale e imponiti un obiettivo di riduzione del 15%.'
+        };
+        
+        if (resultData.top3Priorities.length === 0) {
+             writeParagraphs("Non sono state identificate priorità di rischio " +
+                 "specifiche (punteggio basso). Passa direttamente al Piano 7 giorni.");
+        } else {
+            resultData.top3Priorities.forEach((p, index) => {
+                const title = `PRIORITÀ #${index + 1}: ${p.axis}`;
+                const description = priorityDescriptions[p.axis] || "Azioni specifiche non definite. Controlla la sezione Piano 7 giorni.";
+                
+                // Titolo della priorità
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(13);
+                doc.text(title, margin, y);
+                y += 16;
+                
+                // Descrizione azione
+                doc.setFont("Helvetica", "normal");
+                doc.setFontSize(12);
+                writeParagraphs(description);
+                y += 12; 
+            });
+        }
+        
+        // NOTA: il blocco 'Piano 7 giorni di Digital Detox' DEVE SEGUIRE QUI.
+ 
   // --- Piano 7 giorni
   if (y > pageHeight - 120) { doc.addPage(); y = margin; }
   doc.setFont("Helvetica", "bold");
