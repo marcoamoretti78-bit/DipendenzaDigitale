@@ -491,8 +491,7 @@ calcBtn?.addEventListener("click", () => {
   
   // Esport per debugging
   window.__DD__ = { generatePDF, getResult: () => resultData };
-  
-});
+  });
 
   
 
