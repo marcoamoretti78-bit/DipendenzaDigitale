@@ -82,7 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Calcolo quiz -----
-  calcBtn?.addEventListener("click", () => {
+
+// Sostituisci con (AGGIUNGI LA RIGA IN GRASSETTO):
+calcBtn?.addEventListener("click", () => {
+    // 1. Disabilita immediatamente il pulsante per prevenire doppi click/conflitti scroll
+    if (calcBtn) calcBtn.disabled = true; // <-- AGGIUNTA
+
+    // Inizia la logica del quiz
+    let total = 0;
+    // ... (il resto del codice)
        let total = 0;
         let answered = 0;
 
@@ -117,10 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        if (answered < questions.length) {
-            alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
-            return;
-        }
+        // Sostituisci con (AGGIUNGI LA RIGA IN GRASSETTO):
+        if (answered < questions.length) {
+            alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
+            if (calcBtn) calcBtn.disabled = false; // <-- RIATTIVA qui
+            return;
+        }
         
         // Calcola la media per ogni Asse Radar (il valore da 0 a 3)
         const radarScores = {};
