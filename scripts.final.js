@@ -1,5 +1,21 @@
 // scripts.final.js - Dipendenza Digitale (final test mode)
 document.addEventListener("DOMContentLoaded", () => {
+  // scripts.final.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- INIZIO CODICE SPOSTATO DA HTML ---
+    const link = document.getElementById('linkScopri');
+    if (link) {
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        window.location.assign('/scopri.html');
+      });
+    }
+    // --- FINE CODICE SPOSTATO DA HTML ---
+    
+    const form = document.getElementById("quizForm");
+    // ... il tuo script continua da qui
   const form = document.getElementById("quizForm");
   const calcBtn = document.getElementById("calculateBtn");
   const resetBtn = document.getElementById("resetBtn");
