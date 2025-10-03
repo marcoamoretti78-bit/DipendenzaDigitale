@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
     // --- FINE CODICE SPOSTATO DA HTML ---
-    
+  const form = document.getElementById("quizForm"); 
   const calcBtn = document.getElementById("calculateBtn");
   const resetBtn = document.getElementById("resetBtn");
   const paywall = document.getElementById("paywall");
