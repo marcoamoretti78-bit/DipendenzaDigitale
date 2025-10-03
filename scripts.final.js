@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Calcolo quiz -----
+  calcBtn?.addEventListener("click", () => {
        let total = 0;
         let answered = 0;
 
@@ -173,10 +174,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       container.appendChild(fakeBtn);
     }
-
+    });
+  
     // scroll al paywall
     if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
-  });
+  
 
   // ----- Reset -----
   resetBtn?.addEventListener("click", () => {
