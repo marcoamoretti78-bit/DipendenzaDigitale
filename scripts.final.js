@@ -99,6 +99,7 @@ calcBtn?.addEventListener("click", () => {
 
     // Inizia la logica del quiz
     let total = 0;
+    let answered = 0; 
     // ... (il resto del codice)
         
 
