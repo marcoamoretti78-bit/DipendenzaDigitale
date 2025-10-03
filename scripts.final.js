@@ -1,10 +1,6 @@
 // scripts.final.js - Dipendenza Digitale (final test mode)
 document.addEventListener("DOMContentLoaded", () => {
-  // scripts.final.js
-
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- INIZIO CODICE SPOSTATO DA HTML ---
+   // --- INIZIO CODICE SPOSTATO DA HTML ---
     const link = document.getElementById('linkScopri');
     if (link) {
       link.addEventListener('click', function(e){
@@ -14,9 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // --- FINE CODICE SPOSTATO DA HTML ---
     
-    const form = document.getElementById("quizForm");
-    // ... il tuo script continua da qui
-  const form = document.getElementById("quizForm");
   const calcBtn = document.getElementById("calculateBtn");
   const resetBtn = document.getElementById("resetBtn");
   const paywall = document.getElementById("paywall");
@@ -107,7 +100,7 @@ calcBtn?.addEventListener("click", () => {
     // Inizia la logica del quiz
     let total = 0;
     // ... (il resto del codice)
-        let answered = 0;
+        
 
         // Mappa da indice di domanda (0-19) al nome dell'asse del radar
         const finalAxisMap = {
