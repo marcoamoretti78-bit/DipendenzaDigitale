@@ -306,7 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFontSize(12); 
     const maxTextWidth = pageWidth - margin * 2;
     const lineHeight   = 18;
-    const paragraphs   = String(text).split(/\n\n/);
+    // Usa qualsiasi salto di riga (o doppio salto di riga) come separatore logico di blocco.
+    const paragraphs   = String(text).split(/\n+/);
     paragraphs.forEach((p, i) => {
       const lines = doc.splitTextToSize(p, maxTextWidth);
       lines.forEach(line => {
@@ -399,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // NOTA: il blocco 'Piano 7 giorni di Digital Detox' DEVE SEGUIRE QUI.
  
   // --- Piano 7 giorni
-  if (y > pageHeight - 120) { doc.addPage(); y = margin; }
+  
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(14);
   doc.text("Piano 7 giorni di Digital Detox", margin, y);
