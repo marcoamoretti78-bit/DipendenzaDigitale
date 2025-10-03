@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
             radarScores,
             top3Priorities,
             dateStr: new Date().toLocaleDateString("it-IT")
-       
+         };
 
        
          
