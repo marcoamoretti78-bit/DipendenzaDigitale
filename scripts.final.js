@@ -296,7 +296,9 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.addImage(radarImgData, "PNG", radarX, y, radarSize, radarSize);
 
         y += radarSize + 30; // Spazio dopo il grafico
-  
+         // FORZIAMO NUOVA PAGINA DOPO IL GRAFICO
+        doc.addPage();
+        y = margin;
 
   // --- Helper per testo multi-paragrafo con gestione pagina
   const writeParagraphs = (text) => {
@@ -320,25 +322,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // --- Testi NUOVI
-  const analysisTexts = {
-    "Basso rischio":
-      "Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo.\n\n" +
-      "Mantenere questa consapevolezza è fondamentale: stabilisci momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggi gli spazi di qualità con le persone.\n\n" +
-      "Coltiva attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini.",
+  // --- Testi NUOVI (ESPANSIONE)
+  const analysisTexts = {
+    "Basso rischio":
+      "Il tuo rapporto con lo smartphone appare equilibrato e sotto controllo. Le tue risposte indicano una **consapevolezza digitale matura** e una buona capacità di auto-regolazione. Mantieni questa consapevolezza come un patrimonio prezioso.\n\n" +
+      "È fondamentale stabilire momenti “offline” durante la giornata (pasti, lavoro profondo, pre-sonno) e proteggere gli spazi di qualità con le persone care. **La prevenzione è la tua migliore strategia.** Continua a coltivare attività alternative – lettura, sport, tempo con amici e famiglia – per rinforzare le buone abitudini e assicurarti che la tecnologia resti un **utile strumento**, e non diventi mai un padrone. Evita soprattutto le 'zone grigie' come lo scrolling per noia o l'uso del telefono come primo e ultimo gesto della giornata.",
 
-    "Rischio medio":
-      "Il tuo comportamento digitale mostra alcuni segnali di potenziale dipendenza.\n\n" +
-      "Probabilmente lo smartphone tende a entrare in momenti poco opportuni, influenzando concentrazione, sonno o relazioni.\n\n" +
-      "È il momento giusto per intervenire: imposta zone/orari liberi da telefono, limita social e chat con timer e monitora l’uso settimanale.",
+    "Rischio medio":
+      "Il tuo comportamento digitale mostra **segnali chiari di potenziale dipendenza**, specialmente nelle aree più colpite nel tuo grafico radar. Lo smartphone sta iniziando a invadere momenti e spazi che dovrebbero essere dedicati ad altro.\n\n" +
+      "Noti probabilmente che il telefono entra in momenti poco opportuni, influenzando concentrazione, sonno o relazioni. **Questo è il momento ideale per intervenire** prima che la situazione diventi critica e richieda supporto esterno. Devi impostare confini netti: definisci zone e orari liberi da telefono, limita l'uso di social e chat con timer e monitora l'uso settimanale con le app integrate nel tuo sistema operativo. Il tuo obiettivo deve essere la **disconnessione intenzionale** e non solo reattiva.",
 
-    "Rischio alto":
-      "Il punteggio indica una dipendenza digitale significativa.\n\n" +
-      "L’uso dello smartphone sta impattando sonno, attenzione, produttività o relazioni.\n\n" +
-      "Agisci subito: programma finestre di disconnessione totale (30–60 minuti al giorno), disattiva notifiche non essenziali e applica regole chiare per la sera.\n\n" +
-      "Se noti che lavoro, studio o legami personali ne risentono, valuta il supporto di uno specialista."
-  };
-
+    "Rischio alto":
+      "Il tuo punteggio indica una **dipendenza digitale significativa**. L'uso dello smartphone sta impattando negativamente sul sonno, l'attenzione, la produttività e le relazioni. Il telefono è diventato il tuo **meccanismo principale di fuga** da noia, stress o ansia, creando un circolo vizioso dannoso.\n\n" +
+      "È necessario un intervento immediato e rigoroso: programma finestre di **disconnessione totale** (30–60 minuti al giorno), disattiva *tutte* le notifiche non essenziali e applica regole chiare e non negoziabili per la sera. Se noti che il tuo lavoro, studio o i legami personali ne risentono gravemente, considera seriamente di valutare il supporto di uno specialista in dipendenze comportamentali. La priorità è **riprendere il controllo della tua vita**.",
+  };
   // --- Analisi (TITOLO una sola volta + testo NUOVO)
   doc.setFont("Helvetica", "bold");
   doc.setFontSize(14);
@@ -349,12 +346,15 @@ document.addEventListener("DOMContentLoaded", () => {
   doc.setFontSize(12);
   const testoCorrente = analysisTexts[resultData.level];
   writeParagraphs(testoCorrente);
-  y += 12;
+        y += 12;
 
-  // --- SEZIONE: LE TUE 3 PRIORITÀ (SOSTITUISCE CHECKLIST)
-        
-        // Controllo pagina prima della nuova sezione
-        if (y > pageHeight - 120) { doc.addPage(); y = margin; } 
+        // FORZIAMO NUOVA PAGINA DOPO L'ANALISI TESTUALE (PAGINA 3 -> 4)
+        doc.addPage();
+        y = margin;
+        // --- SEZIONE: LE TUE 3 PRIORITÀ (SOSTITUISCE CHECKLIST)
+        
+        // Controllo pagina prima della nuova sezione
+        if (y > pageHeight - 120) { doc.addPage(); y = margin; } // Questo controllo ora è un duplicato, ma è innocuo 
 
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(16);
