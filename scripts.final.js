@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setFontSize(14);
         doc.text("Analisi dettagliata per Asse di Rischio", margin, y);
 // ...
-
+   y += 20; 
         const radarCanvas = getPdfCanvas(); // NOTA: Ho cambiato qui in getPdfCanvas()
         const ctx = radarCanvas.getContext("2d");
         if (window.__chart) window.__chart.destroy();
