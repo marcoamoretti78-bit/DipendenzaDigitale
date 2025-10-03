@@ -91,7 +91,6 @@ calcBtn?.addEventListener("click", () => {
     // Inizia la logica del quiz
     let total = 0;
     // ... (il resto del codice)
-       let total = 0;
         let answered = 0;
 
         // Mappa da indice di domanda (0-19) al nome dell'asse del radar
