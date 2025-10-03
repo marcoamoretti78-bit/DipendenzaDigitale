@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(16);
         doc.setTextColor("#003366"); // Usa il colore primario
-        doc.text("⭐️ Il Tuo Piano d'Azione Prioritario", margin, y);
+        doc.text(" Il Tuo Piano d'Azione Prioritario", margin, y);
         y += 20;
 
         doc.setFont("Helvetica", "normal");
