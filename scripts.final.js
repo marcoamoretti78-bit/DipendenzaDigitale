@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
        
-         });
+         
     // Mostra paywall + bottone TEST (senza PayPal)
     paywall?.classList.remove("hidden");
     const container = document.getElementById("paypal-button-container");
