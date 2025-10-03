@@ -233,17 +233,44 @@ document.addEventListener("DOMContentLoaded", () => {
   doc.text("Risultato", margin, y);
   y += 18;
 
-  doc.setFont("Helvetica", "normal");
-  doc.setFontSize(12);
-  doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y);
-  y += 16;
-  doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
-  y += 22;
-   // --- Grafico a Radar (NUOVO)
-        doc.setFont("Helvetica", "bold");
-        doc.setFontSize(14);
-        doc.text("Analisi dettagliata per Asse di Rischio", margin, y);
-        y += 20;
+  // ... (Continua dal blocco Risultato)
+
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(12);
+  doc.text(`Punteggio: ${resultData.total}/${resultData.maxScore}`, margin, y);
+  y += 16;
+  doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
+  y += 22;
+
+// >>> INIZIO DEL NUOVO BLOCCO PROFILO UTENTE <<<
+  // --- Profilo Utente 
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text("Il tuo Profilo di Dipendenza Digitale", margin, y);
+  y += 18;
+
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(12);
+
+  const profileTexts = {
+    "Basso rischio": "Sei un utente consapevole. La tua tecnologia ti serve, non viceversa. Hai già una buona disciplina...",
+    // ... (il resto del testo di profileTexts)
+  };
+
+  const userProfile = profileTexts[resultData.level] || profileTexts["Rischio medio"];
+  writeParagraphs(userProfile);
+  y += 20;
+
+// >>> INSERIMENTO DELLA LINEA DIVISORIA CHE TI MANCA <<<
+  doc.setDrawColor(200);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 20;
+
+  // --- Grafico a Radar (NUOVO)
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("Analisi dettagliata per Asse di Rischio", margin, y);
+// ...
 
         const radarCanvas = getPdfCanvas(); // NOTA: Ho cambiato qui in getPdfCanvas()
         const ctx = radarCanvas.getContext("2d");
