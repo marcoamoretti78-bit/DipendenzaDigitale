@@ -382,12 +382,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // --- SEZIONE: LE TUE 3 PRIORITÀ (SOSTITUISCE CHECKLIST)
         
         // Controllo pagina prima della nuova sezione
-        if (y > pageHeight - 120) { doc.addPage(); y = margin; } // Questo controllo ora è un duplicato, ma è innocuo 
 
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(16);
         doc.setTextColor("#003366"); // Usa il colore primario
-        doc.text(" Il Tuo Piano di Azione Prioritario", margin, y);
+        doc.text("Il Tuo Piano di Azione Prioritario", margin, y);
         y += 20;
 
         doc.setFont("Helvetica", "normal");
