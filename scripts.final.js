@@ -1,4 +1,4 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 2.1 (Benchmark Integrato)
+// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 3.0 (Logica Upsell Integrata)
 document.addEventListener("DOMContentLoaded", () => {
     // --- INIZIO CODICE SPOSTATO DA HTML ---
     const link = document.getElementById('linkScopri');
@@ -196,21 +196,51 @@ document.addEventListener("DOMContentLoaded", () => {
            };
 
 
-        // Mostra paywall + bottone TEST (senza PayPal)
+        // Mostra paywall + pulsanti di scelta/upsell
         paywall?.classList.remove("hidden");
         const container = document.getElementById("paypal-button-container");
+
         if (container) {
-            container.innerHTML = "";
-            const fakeBtn = document.createElement("button");
-            fakeBtn.type = "button";
-            fakeBtn.className = "btn primary";
-            fakeBtn.textContent = "Scarica Report Premium (TEST)";
-            fakeBtn.addEventListener("click", () => {
-                alert(" Modalità test attiva – generazione report senza pagamento.");
+            container.innerHTML = ""; // Pulisci il container
+
+            // 1. BLOCCO UPSELL PREMIUM (Opzione principale)
+            const premiumWrap = document.createElement("div");
+            premiumWrap.className = "upsell-option premium"; // Classe CSS per evidenziare
+            premiumWrap.innerHTML = `
+                <h3>Sblocca l'Upgrade Premium (7,99 €)</h3>
+                <p>Ricevi il Report Dettagliato, il Piano d'Azione esteso a 30 giorni e il Kit di Strumenti di Monitoraggio.</p>
+            `;
+            const premiumBtn = document.createElement("button");
+            premiumBtn.type = "button";
+            premiumBtn.className = "btn primary large";
+            premiumBtn.textContent = "Acquista Upgrade Completo (TEST 7,99 €)";
+            premiumBtn.addEventListener("click", () => {
+                 alert("Modalità test attiva – Prodotto: Upgrade 30 Giorni (7,99 €).");
+                 // In un ambiente reale, qui andrebbe il codice per avviare il pagamento di 7.99
+                 generatePDF(); 
+            });
+            premiumWrap.appendChild(premiumBtn);
+            container.appendChild(premiumWrap);
+            
+            // 2. BLOCCO REPORT STANDARD (Opzione base)
+            const standardWrap = document.createElement("div");
+            standardWrap.className = "upsell-option standard";
+            standardWrap.innerHTML = `
+                <p>O scegli di scaricare solo la versione standard del report (1,99 €).</p>
+            `;
+            const standardBtn = document.createElement("button");
+            standardBtn.type = "button";
+            standardBtn.className = "btn secondary small";
+            standardBtn.textContent = "Scarica Report Standard (TEST 1,99 €)";
+            standardBtn.addEventListener("click", () => {
+                alert("Modalità test attiva – Prodotto: Report Base (1,99 €).");
+                // In un ambiente reale, qui andrebbe il codice per avviare il pagamento di 1.99
                 generatePDF();
             });
-            container.appendChild(fakeBtn);
+            standardWrap.appendChild(standardBtn);
+            container.appendChild(standardWrap);
         }
+        
         // scroll al paywall
         if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
     });
@@ -300,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
         y += 22;
         
-        // NUOVO BLOCCO: Confronto Benchmark Digitale (Utente Medio)
+        // BLOCCO: Confronto con l'Utente Medio (Benchmark)
         const AVERAGE_SCORE_BENCHMARK = 35; // Punteggio medio di riferimento (35/60)
 
         doc.setFont("Helvetica", "bold");
@@ -330,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
-        // Fine NUOVO BLOCCO
+        // Fine BLOCCO Benchmark
 
         // --- Profilo Utente
         doc.setFont("Helvetica", "bold");
@@ -456,7 +486,6 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 18;
 
         doc.setFont("Helvetica", "normal");
-        doc.setFontSize(12);
         const testoCorrente = analysisTexts[resultData.level];
         writeParagraphs(testoCorrente);
         y += 12;
@@ -577,12 +606,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Esport per debugging
     window.__DD__ = { generatePDF, getResult: () => resultData };
 });
-           
-           
-               
-        
-       
-       
-
-       
-                
