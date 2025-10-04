@@ -18,8 +18,8 @@ a{text-decoration:none;color:inherit}
 .hero h1{font-size:2rem;margin-bottom:12px}
 .hero p{font-size:1.1rem;max-width:680px;margin:0 auto 20px}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block; /* Aggiunto: reset per i tag button */ border: none; cursor: pointer; transition: filter 0.2s;} 
-.btn.primary{background:var(--accent);color:#0b3b1a;border:2px solid transparent}
+.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block;border: none; cursor: pointer; transition: filter 0.2s;} 
+.btn.primary{background:var(--accent);color:#0b3b1a;border:2px solid transparent} /* PULSANTI ACQUISTO VERDI */
 .btn.primary:hover{filter:brightness(0.95)}
 .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
 .btn.secondary{background:var(--primary);color:var(--card);border:2px solid var(--primary)} 
@@ -96,13 +96,13 @@ a{text-decoration:none;color:inherit}
 .btn.large {
     width: 100%;
     font-size: 1.1rem;
-    padding: 15px 20px; /* Più grande per l'Upsell */
+    padding: 15px 20px;
 }
 
 .btn.small {
     width: 100%;
     font-size: 0.95rem;
-    padding: 10px 15px; /* Più piccolo per l'opzione standard */
+    padding: 10px 15px;
 }
 /* --- FINE CLASSI PER UPSELL --- */
 
@@ -127,7 +127,7 @@ a{text-decoration:none;color:inherit}
 .faq p{margin:8px 0 0 0;color:var(--text)}
 @media (min-width:900px){.hero h1{font-size:2.6rem}}
 
-/* Campo nome utente - CORREZIONE DIMENSIONI */
+/* Campo nome utente - CORREZIONE DEFINITIVA */
 .name-field {
   display: flex;
   flex-direction: column;
@@ -135,13 +135,13 @@ a{text-decoration:none;color:inherit}
 }
 
 .name-field span {
-  font-size: 1rem; /* etichetta */
+  font-size: 1rem;
   margin-bottom: 6px;
 }
 
 #userName {
-  font-size: 1.4rem;   /* <--- AUMENTATO LA DIMENSIONE DEL FONT */
-  padding: 14px 10px; /* AUMENTATO IL PADDING */
+  font-size: 1.4rem;   /* GRANDEZZA AUMENTATA */
+  padding: 14px 10px; /* PADDING AUMENTATO */
   border-radius: 8px;
   border: 1px solid #ccc;
 }
