@@ -5,7 +5,7 @@
   --text:#102a43;
   --muted:#627d98;
   --accent:#22c55e;
-    /* Nuovo: Colore per l'highlight Premium */
+    /* Colore per l'highlight Premium */
     --premium-highlight: #ffc107; 
 }
 *{box-sizing:border-box}
@@ -18,10 +18,13 @@ a{text-decoration:none;color:inherit}
 .hero h1{font-size:2rem;margin-bottom:12px}
 .hero p{font-size:1.1rem;max-width:680px;margin:0 auto 20px}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block}
+.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block; /* Aggiunto: reset per i tag button */ border: none; cursor: pointer;} 
 .btn.primary{background:var(--accent);color:#0b3b1a;border:2px solid transparent}
 .btn.primary:hover{filter:brightness(0.95)}
 .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+/* Definiamo il secondary (anche se usiamo primary per gli acquisti) */
+.btn.secondary{background:var(--primary);color:var(--card);border:2px solid var(--primary)} 
+
 .features,.info{max-width:1100px;margin:40px auto;padding:0 20px}
 .cards{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.05)}
@@ -36,14 +39,14 @@ a{text-decoration:none;color:inherit}
 .actions{display:flex;gap:10px;justify-content:center;margin:20px 0}
 .paywall{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);margin-top:18px;text-align:center}
 
-/* INIZIO NUOVE CLASSI PER UPSELL */
+/* --- CLASSI PER UPSELL --- */
 
 #paypal-button-container {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Spazio tra le due opzioni */
+    gap: 20px; 
     margin: 20px auto;
-    max-width: 400px; /* Limita la larghezza del contenitore */
+    max-width: 400px; 
 }
 
 .upsell-option {
@@ -66,9 +69,9 @@ a{text-decoration:none;color:inherit}
 }
 
 .upsell-option.premium {
-    border: 3px solid var(--premium-highlight); /* Bordo spesso e colorato */
-    background: #fffbe6; /* Sfondo leggermente giallo per attrarre l'occhio */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra per farlo risaltare */
+    border: 3px solid var(--premium-highlight); 
+    background: #fffbe6; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
     position: relative;
 }
 
@@ -86,22 +89,24 @@ a{text-decoration:none;color:inherit}
 }
 
 .upsell-option.standard {
-    opacity: 0.8; /* Meno enfasi sull'opzione base */
+    opacity: 0.8; 
     border-color: #ddd;
 }
 
+/* DIMENSIONI DEI PULSANTI DI ACQUISTO */
 .btn.large {
     width: 100%;
     font-size: 1.1rem;
+    padding: 15px 20px; /* Più grande per l'Upsell */
 }
 
 .btn.small {
     width: 100%;
     font-size: 0.95rem;
-    padding: 8px 15px;
+    padding: 10px 15px; /* Più piccolo per l'opzione standard */
 }
+/* --- FINE CLASSI PER UPSELL --- */
 
-/* FINE NUOVE CLASSI PER UPSELL */
 
 .price{font-size:1.1rem;font-weight:600;color:var(--text);margin:10px 0}
 .secure-note{color:var(--muted);font-size:.9rem;margin-top:8px}
