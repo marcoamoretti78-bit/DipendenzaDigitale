@@ -1,4 +1,4 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 3.0 (Logica Upsell Integrata)
+// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 3.2 (Pulsanti e Logica Paywall Corretti)
 document.addEventListener("DOMContentLoaded", () => {
     // --- INIZIO CODICE SPOSTATO DA HTML ---
     const link = document.getElementById('linkScopri');
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (container) {
             container.innerHTML = ""; // Pulisci il container
 
-            // 1. BLOCCO UPSELL PREMIUM (Opzione principale)
+            // 1. BLOCCO UPSELL PREMIUM (Opzione principale: 7,99 €)
             const premiumWrap = document.createElement("div");
             premiumWrap.className = "upsell-option premium"; // Classe CSS per evidenziare
             premiumWrap.innerHTML = `
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             const premiumBtn = document.createElement("button");
             premiumBtn.type = "button";
-            premiumBtn.className = "btn primary large";
+            premiumBtn.className = "btn primary large"; // CLASSE VERDE (primary) e grande
             premiumBtn.textContent = "Acquista Upgrade Completo (TEST 7,99 €)";
             premiumBtn.addEventListener("click", () => {
                  alert("Modalità test attiva – Prodotto: Upgrade 30 Giorni (7,99 €).");
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             premiumWrap.appendChild(premiumBtn);
             container.appendChild(premiumWrap);
             
-            // 2. BLOCCO REPORT STANDARD (Opzione base)
+            // 2. BLOCCO REPORT STANDARD (Opzione base: 1,99 €)
             const standardWrap = document.createElement("div");
             standardWrap.className = "upsell-option standard";
             standardWrap.innerHTML = `
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             const standardBtn = document.createElement("button");
             standardBtn.type = "button";
-            standardBtn.className = "btn secondary small";
+            standardBtn.className = "btn primary small"; // CLASSE VERDE (primary) e piccola
             standardBtn.textContent = "Scarica Report Standard (TEST 1,99 €)";
             standardBtn.addEventListener("click", () => {
                 alert("Modalità test attiva – Prodotto: Report Base (1,99 €).");
