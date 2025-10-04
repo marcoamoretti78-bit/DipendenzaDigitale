@@ -1,4 +1,4 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 2.0
+// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 2.1 (Benchmark Integrato)
 document.addEventListener("DOMContentLoaded", () => {
     // --- INIZIO CODICE SPOSTATO DA HTML ---
     const link = document.getElementById('linkScopri');
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let total = 0;
         let answered = 0;
 
-        // OGGETTO: Contatori per calcolare il Punteggio Max per Asse (Nuovo)
+        // OGGETTO: Contatori per calcolare il Punteggio Max per Asse (Necessario per Impatto)
         const maxScoresAxes = {
             'Sonno e Rituali': 0,
             'Fuga ed Emozioni': 0,
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Calcola la media per ogni Asse Radar (il valore da 0 a 3) e l'Impatto (0-100%)
         const radarScores = {};
-        const impactScores = {}; // NUOVO: Punteggi di Impatto 0-100%
+        const impactScores = {}; // Punteggi di Impatto 0-100%
         let topScores = [];
 
         for (const [axis, scores] of Object.entries(finalAxes)) {
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalAxisScore = scores.reduce((sum, val) => sum + val, 0);
             const maxAxisScore = maxScoresAxes[axis];
             const impactPercentage = Math.round((totalAxisScore / maxAxisScore) * 100);
-            impactScores[axis] = impactPercentage; // AGGIUNTO IL DATO IMPATTO
+            impactScores[axis] = impactPercentage; 
 
             // Per identificare le priorità (TOP 3)
             const maxVal = scores.reduce((max, val) => Math.max(max, val), 0);
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function generatePDF() {
         if (!resultData) return;
 
-        // --- Helper per testo multi-paragrafo con gestione pagina (Spostata qui per evitare ReferenceError)
+        // --- Helper per testo multi-paragrafo con gestione pagina
         const writeParagraphs = (text) => {
             // Imposta la dimensione font esplicitamente per aiutare splitTextToSize
             doc.setFontSize(12);
@@ -299,6 +299,38 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 16;
         doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
         y += 22;
+        
+        // NUOVO BLOCCO: Confronto Benchmark Digitale (Utente Medio)
+        const AVERAGE_SCORE_BENCHMARK = 35; // Punteggio medio di riferimento (35/60)
+
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(13);
+        doc.text("Il Tuo Confronto con l'Utente Medio: ", margin, y);
+        
+        if (resultData.total > AVERAGE_SCORE_BENCHMARK) {
+            // Peggio della media (più motivazione ad agire)
+            doc.setTextColor(200, 0, 0); // Rosso per allarme
+            doc.text("INFERIORE ALLA MEDIA", margin + 250, y);
+            y += 18;
+            doc.setTextColor(0); // Nero
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(11);
+            writeParagraphs(`Il tuo punteggio di ${resultData.total} è più alto della media di ${AVERAGE_SCORE_BENCHMARK} punti calcolata sui nostri utenti. Questo indica che le tue abitudini richiedono un'attenzione immediata.`);
+        } else {
+            // Meglio della media (rassicurazione e autostima)
+            doc.setTextColor(34, 197, 94); // Verde per successo
+            doc.text("SUPERIORE ALLA MEDIA", margin + 250, y);
+            y += 18;
+            doc.setTextColor(0); // Nero
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(11);
+            writeParagraphs(`Il tuo punteggio di ${resultData.total} è più basso della media di ${AVERAGE_SCORE_BENCHMARK} punti calcolata sui nostri utenti. Hai una buona disciplina, ma è essenziale non abbassare la guardia.`);
+        }
+        y += 10;
+        doc.setDrawColor(200);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 20;
+        // Fine NUOVO BLOCCO
 
         // --- Profilo Utente
         doc.setFont("Helvetica", "bold");
@@ -474,7 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // --- Piano 7 giorni (ORA PERSONALIZZATO PER LIVELLO DI RISCHIO)
+        // --- Piano 7 giorni (PERSONALIZZATO PER LIVELLO DI RISCHIO)
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Piano 7 giorni di Digital Detox", margin, y);
@@ -482,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         doc.setFont("Helvetica", "normal");
 
-        const allPlanSets = { // DEFINIZIONE DEI PIANI PERSONALIZZATI
+        const allPlanSets = {
             "Basso rischio": [
                 "Giorno 1 – Monitoraggio Consapevole: Annota i momenti in cui usi il telefono senza scopo (scrolling per noia).",
                 "Giorno 2 – Notifiche Selettive: Disattiva TUTTE le notifiche dei social media, lasciando solo chiamate/SMS essenziali.",
@@ -545,13 +577,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Esport per debugging
     window.__DD__ = { generatePDF, getResult: () => resultData };
 });
-       
-   
-  
-  
-
-  
-      
-       
            
-   
+           
+               
+        
+       
+       
+
+       
+                
