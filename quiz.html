@@ -1,65 +1,54 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz – Dipendenza Digitale</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dipendenza Digitale</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
+
 </head>
 <body>
-  <nav class="navbar">
-    <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"></a>
-    <span class="title">Dipendenza Digitale</span>
-    <div class="nav-links">
-      <a href="quiz.html" class="active">Quiz</a>
-      <a id="linkScopri" href="/scopri.html">Scopri di più</a>
-    </div>
-  </nav>
 
-  <main class="container">
-    <section class="intro">
-      <h1>Quiz sulla Dipendenza Digitale</h1>
-      <p>Rispondi a 20 domande. Al termine potrai acquistare il <strong>Report Premium in PDF</strong> con punteggio dettagliato, percentuale, grafico e consigli personalizzati.</p>
-      <label class="name-field">
-        <span>Nome (opzionale):</span>
-        <input id="userName" type="text" placeholder="Es. Marco" />
-      </label>
-    </section>
-
-    <form id="quizForm" class="quiz"></form>
-
-    <div class="actions">
-      <button id="calculateBtn" type="button" class="btn primary">Calcola il risultato</button>
-      <button id="resetBtn" type="button" class="btn outline">Azzera risposte</button>
+    <div class="navbar">
+        <span class="title">Dipendenza Digitale</span>
     </div>
 
-    <section id="paywall" class="paywall hidden">
-      <h2>La Tua Analisi è Pronta: Sblocca l'Azione</h2>
-      <p class="teaser">
-        Scarica il **Report Premium di 5 pagine**. Avrai finalmente **chiarezza** sul tuo rischio e il tuo **Piano d'Attacco in 7 giorni** per riprendere subito il controllo.
-      </p>
-      <p class="price">Accesso Immediato: <strong>1,99 €</strong></p>
-      <div id="paypal-button-container"></div>
-      <p class="secure-note">Transazione protetta. Ricevi il PDF completo istantaneamente.</p>
-    </section>
+    <div class="container">
+        <div class="intro">
+            <h2>Verifica la Tua Relazione con lo Smartphone</h2>
+            <p>Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.</p>
+            
+            <div class="name-field">
+                <span>Inserisci il tuo nome (opzionale, per personalizzare il report):</span>
+                <input type="text" id="userName" placeholder="Il tuo nome">
+            </div>
+            </div>
 
-  </main>
+        <form id="quizForm" class="quiz"></form>
+        
+        <div class="actions">
+            <button type="button" id="calculateBtn" class="btn primary">Calcola Risultato</button>
+            <button type="button" id="resetBtn" class="btn outline">Reset</button>
+        </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 Dipendenza Digitale</p>
-  </footer>
+        <div id="paywall" class="paywall hidden">
+            <h3>Il tuo risultato è pronto!</h3>
+            <p>Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
+            
+            <div id="paypal-button-container">
+                </div>
+            
+            <p class="secure-note">Transazione sicura gestita in modalità test.</p>
+        </div>
+    </div>
 
-  
-  <script src="scripts.final.js"></script>
-
-
+    <div class="footer">
+        © 2025 Dipendenza Digitale. Tutti i diritti riservati.
+    </div>
+    
+    <script src="scripts.final.js"></script>
 </body>
 </html>
-
-
-
-
