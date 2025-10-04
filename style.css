@@ -18,11 +18,10 @@ a{text-decoration:none;color:inherit}
 .hero h1{font-size:2rem;margin-bottom:12px}
 .hero p{font-size:1.1rem;max-width:680px;margin:0 auto 20px}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block; /* Aggiunto: reset per i tag button */ border: none; cursor: pointer;} 
+.btn{padding:12px 20px;border-radius:10px;font-weight:600;display:inline-block; /* Aggiunto: reset per i tag button */ border: none; cursor: pointer; transition: filter 0.2s;} 
 .btn.primary{background:var(--accent);color:#0b3b1a;border:2px solid transparent}
 .btn.primary:hover{filter:brightness(0.95)}
 .btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-/* Definiamo il secondary (anche se usiamo primary per gli acquisti) */
 .btn.secondary{background:var(--primary);color:var(--card);border:2px solid var(--primary)} 
 
 .features,.info{max-width:1100px;margin:40px auto;padding:0 20px}
@@ -127,7 +126,8 @@ a{text-decoration:none;color:inherit}
 .faq summary{cursor:pointer;font-weight:600}
 .faq p{margin:8px 0 0 0;color:var(--text)}
 @media (min-width:900px){.hero h1{font-size:2.6rem}}
-/* Campo nome utente più grande */
+
+/* Campo nome utente - CORREZIONE DIMENSIONI */
 .name-field {
   display: flex;
   flex-direction: column;
@@ -140,8 +140,8 @@ a{text-decoration:none;color:inherit}
 }
 
 #userName {
-  font-size: 1.2rem;   /* <--- aumenta la grandezza del testo inserito */
-  padding: 10px;
+  font-size: 1.4rem;   /* <--- AUMENTATO LA DIMENSIONE DEL FONT */
+  padding: 14px 10px; /* AUMENTATO IL PADDING */
   border-radius: 8px;
-  border: 1px solid #ccc
+  border: 1px solid #ccc;
 }
