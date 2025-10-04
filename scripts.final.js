@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ----- Calcolo quiz -----
 
-// Sostituisci con (AGGIUNGI LA RIGA IN GRASSETTO):
 calcBtn?.addEventListener("click", () => {
     // 1. Disabilita immediatamente il pulsante per prevenire doppi click/conflitti scroll
     if (calcBtn) calcBtn.disabled = true; // <-- AGGIUNTA
