@@ -1,10 +1,12 @@
 :root{
-  --primary:#003366;
-  --bg:#f7f9fc;
-  --card:#ffffff;
-  --text:#102a43;
-  --muted:#627d98;
-  --accent:#22c55e;
+  --primary:#003366;
+  --bg:#f7f9fc;
+  --card:#ffffff;
+  --text:#102a43;
+  --muted:#627d98;
+  --accent:#22c55e;
+    /* Nuovo: Colore per l'highlight Premium */
+    --premium-highlight: #ffc107; 
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -33,6 +35,74 @@ a{text-decoration:none;color:inherit}
 .options label{display:flex;align-items:center;gap:8px;cursor:pointer}
 .actions{display:flex;gap:10px;justify-content:center;margin:20px 0}
 .paywall{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,.06);margin-top:18px;text-align:center}
+
+/* INIZIO NUOVE CLASSI PER UPSELL */
+
+#paypal-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spazio tra le due opzioni */
+    margin: 20px auto;
+    max-width: 400px; /* Limita la larghezza del contenitore */
+}
+
+.upsell-option {
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--muted);
+    transition: all 0.2s ease-in-out;
+}
+
+.upsell-option h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.upsell-option p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.upsell-option.premium {
+    border: 3px solid var(--premium-highlight); /* Bordo spesso e colorato */
+    background: #fffbe6; /* Sfondo leggermente giallo per attrarre l'occhio */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra per farlo risaltare */
+    position: relative;
+}
+
+.upsell-option.premium::before {
+    content: "SCELTA CONSIGLIATA";
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    background: var(--premium-highlight);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.upsell-option.standard {
+    opacity: 0.8; /* Meno enfasi sull'opzione base */
+    border-color: #ddd;
+}
+
+.btn.large {
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+.btn.small {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 8px 15px;
+}
+
+/* FINE NUOVE CLASSI PER UPSELL */
+
 .price{font-size:1.1rem;font-weight:600;color:var(--text);margin:10px 0}
 .secure-note{color:var(--muted);font-size:.9rem;margin-top:8px}
 .hidden{display:none}
@@ -54,19 +124,19 @@ a{text-decoration:none;color:inherit}
 @media (min-width:900px){.hero h1{font-size:2.6rem}}
 /* Campo nome utente più grande */
 .name-field {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
 }
 
 .name-field span {
-  font-size: 1rem; /* etichetta */
-  margin-bottom: 6px;
+  font-size: 1rem; /* etichetta */
+  margin-bottom: 6px;
 }
 
 #userName {
-  font-size: 1.2rem;   /* <--- aumenta la grandezza del testo inserito */
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc
-  }
+  font-size: 1.2rem;   /* <--- aumenta la grandezza del testo inserito */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc
+}
