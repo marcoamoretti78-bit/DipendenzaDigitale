@@ -210,7 +210,27 @@ calcBtn?.addEventListener("click", () => {
   // ----- PDF -----
   async function generatePDF() {
   if (!resultData) return;
-
+  const writeParagraphs = (text) => {
+    // Imposta la dimensione font esplicitamente per aiutare splitTextToSize
+    doc.setFontSize(12); 
+    const maxTextWidth = pageWidth - margin * 2;
+    const lineHeight   = 18;
+    // Usa qualsiasi salto di riga (o doppio salto di riga) come separatore logico di blocco.
+    const paragraphs   = String(text).split(/\n+/);
+    paragraphs.forEach((p, i) => {
+      const lines = doc.splitTextToSize(p, maxTextWidth);
+      lines.forEach(line => {
+        if (y + lineHeight > pageHeight - margin) { // Logica corretta
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      });
+      // Spazio ridotto tra i paragrafi di analisi per non interferire col word-wrap
+      if (i < paragraphs.length - 1) y += 8; 
+    });
+  };
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: "pt", format: "a4" });
 
@@ -347,27 +367,7 @@ calcBtn?.addEventListener("click", () => {
         y = margin;
 
   // --- Helper per testo multi-paragrafo con gestione pagina
-  const writeParagraphs = (text) => {
-    // Imposta la dimensione font esplicitamente per aiutare splitTextToSize
-    doc.setFontSize(12); 
-    const maxTextWidth = pageWidth - margin * 2;
-    const lineHeight   = 18;
-    // Usa qualsiasi salto di riga (o doppio salto di riga) come separatore logico di blocco.
-    const paragraphs   = String(text).split(/\n+/);
-    paragraphs.forEach((p, i) => {
-      const lines = doc.splitTextToSize(p, maxTextWidth);
-      lines.forEach(line => {
-        if (y + lineHeight > pageHeight - margin) { // Logica corretta
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(line, margin, y);
-        y += lineHeight;
-      });
-      // Spazio ridotto tra i paragrafi di analisi per non interferire col word-wrap
-      if (i < paragraphs.length - 1) y += 8; 
-    });
-  };
+  
 
   // --- Testi NUOVI (ESPANSIONE)
   const analysisTexts = {
