@@ -560,7 +560,8 @@
         y += 12;
 
         // ******************************************************
-        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** // ******************************************************
+        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** // 
+        // ******************************************************
         if (isPremium) {
             if (y > pageHeight - 60) { doc.addPage(); y = margin; }
             doc.addPage();
@@ -651,45 +652,32 @@
             writeParagraphs(plan7.map(i => "• " + i).join("\n"));
             y += 12;
 
-            // --- Risorse
+            // --- Risorse (CORREZIONE: Rimosso doc.html per stabilità)
             if (y + 150 > pageHeight - margin) { doc.addPage(); y = margin; }
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Risorse consigliate", margin, y);
-            y += 10; 
+            y += 18; 
 
-            // Risorse in HTML per un layout più complesso
-            const resourcesHtml = `
-                <p><strong>App:</strong> Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.</p>
-                <p><strong>Libri:</strong> 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).</p>
-                <div style="margin-top: 15px;">
-                    <p><strong>Tecniche:</strong></p>
-                    <ul style="margin-left: 20px;">
-                        <li>**Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause.</li>
-                        <li>**Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni.</li>
-                        <li>**Journaling serale per l'ansia:** Scrivere a mano pensieri e preoccupazioni prima di dormire.</li>
-                    </ul>
-                </div>
-                <p><strong>Strumento:</strong> Sveglia tradizionale e orologio da polso per non dover guardare il telefono.</p>
-            `;
-            
-            // LOGICA DI SALVATAGGIO POTENZIATA PER IL PREMIUM (Promise)
-            const htmlToPdf = new Promise(resolve => {
-                doc.setFontSize(10);
-                doc.html(resourcesHtml, {
-                    x: margin,
-                    y: y,
-                    width: pageWidth - (2 * margin),
-                    callback: function (doc) {
-                        y = doc.previousAutoTable.finalY || (y + 120); 
-                        resolve(); 
-                    }
-                });
-            });
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(12);
 
-            await htmlToPdf; 
-            
-            // --- Footer (Aggiunto DOPO l'attesa del rendering HTML)
+            const resourcesText = `
+**App per il Controllo:** Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.
+
+**Libri Consigliati:**
+• 'Digital Minimalism' (Cal Newport)
+• 'How to Break Up with Your Phone' (C. Price)
+
+**Tecniche Avanzate:**
+• **Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause.
+• **Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni.
+• **Journaling serale:** Scrivere a mano pensieri e preoccupazioni prima di dormire, evitando lo smartphone.
+`;
+            writeParagraphs(resourcesText.trim());
+            y += 12;
+
+            // --- Footer 
             if (y > pageHeight - 60) { doc.addPage(); y = margin; }
             doc.setDrawColor(200);
             doc.line(margin, y, pageWidth - margin, y);
@@ -703,7 +691,8 @@
         } 
         
         // ******************************************************
-        // ***** SEZIONE PER REPORT STANDARD (1,99€) ************ // ******************************************************
+        // ***** SEZIONE PER REPORT STANDARD (1,99€) ************ // 
+        // ******************************************************
         
         if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
         
@@ -740,6 +729,9 @@
     };
 
 })(window);
-   
-                
+
+ 
                    
+
+
+    
