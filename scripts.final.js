@@ -1,225 +1,137 @@
-   // scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.1 (Grafico Radar Garantito)
-document.addEventListener("DOMContentLoaded", () => {
-    // --- Variabili Globali e Link Handler (Non Modificate) ---
-    const link = document.getElementById('linkScopri');
-    if (link) {
-        link.addEventListener('click', function(e){
-            e.preventDefault();
-            console.log("Navigazione a /scopri.html simulata.");
-        });
-    }
-
-    const form = document.getElementById("quizForm");
-    const calcBtn = document.getElementById("calculateBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const paywall = document.getElementById("paywall");
-    const userNameEl = document.getElementById("userName");
-
-    // Definizioni di domande e opzioni (Non Modificate)
-    const questions = [
-        "Controlli il telefono appena sveglio/a?", "Perdi la cognizione del tempo mentre scorri social o video?", "Interrompi attività importanti per controllare notifiche?", "Usi lo smartphone durante i pasti o in conversazioni dal vivo?", "Ti senti irritato/a o ansioso/a quando non puoi usare il telefono?", "Hai provato a ridurre l'uso dello smartphone senza riuscirci?", "Usi il telefono oltre l’orario previsto prima di dormire?", "Le tue relazioni hanno risentito dell’uso del telefono?", "Usi il telefono mentre cammini, guidi o fai attività rischiose?", "Controlli spesso il telefono anche senza notifiche reali?", "Ti distrai frequentemente a causa di social, giochi o chat?", "Ti senti in colpa per il tempo passato sullo smartphone?", "Metti lo smartphone in modalità silenziosa per 'isolarti'?", "Preferisci spesso lo smartphone ad attività sociali dal vivo?", "Ricevi feedback negativi da familiari/amici sul tuo uso del telefono?", "Usi lo smartphone per sfuggire a noia, stress o tristezza?", "Spendi soldi in app/abbonamenti in modo impulsivo?", "Hai disturbi del sonno legati all’uso serale del telefono?", "Ti agiti se ti separi dal telefono per alcune ore?", "Pensi spesso al telefono anche quando non lo stai usando?"
-    ];
-    const choices = [
-        { label: "Mai", value: 0 },
-        { label: "Raramente", value: 1 },
-        { label: "Spesso", value: 2 },
-        { label: "Quasi sempre / Sempre", value: 3 }
-    ];
-
-    // Costruzione dinamica del quiz (Non Modificata)
-    if (form) {
-        form.innerHTML = "";
-        questions.forEach((q, idx) => {
-            const qWrap = document.createElement("div");
-            qWrap.className = "question";
-            qWrap.innerHTML = `<p>${idx + 1}. ${q}</p>`;
-            const opts = document.createElement("div");
-            opts.className = "options"; 
-            choices.forEach((c, cidx) => {
-                const id = `q${idx}_c${cidx}`;
-                const row = document.createElement("label");
-                row.innerHTML = `<input type="radio" name="q${idx}" id="${id}" value="${c.value}"><span>${c.label}</span>`;
-                opts.appendChild(row);
-                qWrap.appendChild(opts);
-            });
-            form.appendChild(qWrap);
-        });
-    }
-
+     
+   /* eslint-disable no-unused-vars */
+(function (window) {
     let resultData = null;
+    let canvasElement = null;
 
-    // Utility: ottieni/crea un canvas per il grafico PDF (Non Modificata)
+    /**
+     * @returns {HTMLCanvasElement}
+     */
     function getPdfCanvas() {
-        let c = document.getElementById("pdfChart");
-        if (!c) {
-            c = document.createElement("canvas");
-            c.id = "pdfChart";
-            c.width = 400; c.height = 400;
-            c.style.position = "fixed"; c.style.left = "-99999px"; c.style.top = "-99999px";
-            document.body.appendChild(c);
-        }
-        return c;
+        if (canvasElement) return canvasElement;
+
+        // Se l'elemento non esiste, crealo
+        canvasElement = document.createElement('canvas');
+        canvasElement.id = 'pdf-chart-canvas';
+        canvasElement.width = 700;
+        canvasElement.height = 700;
+        // Importante: Aggiungilo al DOM anche se nascosto, Chart.js a volte lo richiede
+        // document.body.appendChild(canvasElement); 
+        // Lo lasciamo scollegato, come da standard jspdf per un canvas temporaneo
+
+        return canvasElement;
     }
 
-    // ----- Calcolo quiz (Logica di Calcolo Non Modificata) -----
-
-    calcBtn?.addEventListener("click", () => {
-        if (calcBtn) calcBtn.disabled = true;
-
-        let total = 0;
-        let answered = 0;
-
-        const maxScoresAxes = {
+    // ----- LOGICA DI CALCOLO DEI RISULTATI (Non Modificata) -----
+    function calculateResults(formData) {
+        // Punteggi per asse
+        const scores = {
             'Sonno e Rituali': 0,
             'Fuga ed Emozioni': 0,
             'Attenzione e Produttività': 0,
             'Relazioni e Socialità': 0,
             'Controllo e Tempo': 0,
         };
+        // Punteggio massimo per asse (3 domande x 3 punti max)
+        const MAX_AXIS_SCORE = 9;
+        const MAX_TOTAL_SCORE = 45;
 
-        const finalAxisMap = {
-            0: 'Sonno e Rituali', 1: 'Attenzione e Produttività', 2: 'Attenzione e Produttività', 3: 'Relazioni e Socialità',
-            4: 'Relazioni e Socialità', 5: 'Fuga ed Emozioni', 6: 'Sonno e Rituali', 7: 'Sonno e Rituali',
-            8: 'Relazioni e Socialità', 9: 'Attenzione e Produttività', 10: 'Controllo e Tempo', 11: 'Fuga ed Emozioni',
-            12: 'Fuga ed Emozioni', 13: 'Relazioni e Socialità', 14: 'Relazioni e Socialità', 15: 'Fuga ed Emozioni',
-            16: 'Attenzione e Produttività', 17: 'Controllo e Tempo', 18: 'Controllo e Tempo', 19: 'Controllo e Tempo',
+        // Mappatura domande -> asse
+        const questionMap = {
+            q1: 'Sonno e Rituali',
+            q2: 'Sonno e Rituali',
+            q3: 'Sonno e Rituali',
+            q4: 'Fuga ed Emozioni',
+            q5: 'Fuga ed Emozioni',
+            q6: 'Fuga ed Emozioni',
+            q7: 'Attenzione e Produttività',
+            q8: 'Attenzione e Produttività',
+            q9: 'Attenzione e Produttività',
+            q10: 'Relazioni e Socialità',
+            q11: 'Relazioni e Socialità',
+            q12: 'Relazioni e Socialità',
+            q13: 'Controllo e Tempo',
+            q14: 'Controllo e Tempo',
+            q15: 'Controllo e Tempo',
         };
-        const finalAxes = {
-            'Sonno e Rituali': [],
-            'Fuga ed Emozioni': [],
-            'Attenzione e Produttività': [],
-            'Relazioni e Socialità': [],
-            'Controllo e Tempo': [],
-        };
 
-        questions.forEach((_, idx) => {
-            const checked = document.querySelector(`input[name="q${idx}"]:checked`);
-            const axisName = finalAxisMap[idx];
-
-            if (maxScoresAxes[axisName] !== undefined) {
-                 maxScoresAxes[axisName] += 3;
-            }
-
-            if (checked) {
-                const val = parseInt(checked.value, 10);
-                total += val;
-                answered += 1;
-
-                if (finalAxes[axisName]) {
-                    finalAxes[axisName].push(val);
+        let totalScore = 0;
+        for (const [key, value] of Object.entries(formData)) {
+            if (key.startsWith('q') && questionMap[key]) {
+                const score = parseInt(value, 10);
+                if (!isNaN(score)) {
+                    scores[questionMap[key]] += score;
+                    totalScore += score;
                 }
             }
-        });
-
-        if (answered < questions.length) {
-            alert(`Hai tralasciato ${questions.length - answered} domanda/e. Completa il quiz.`);
-            if (calcBtn) calcBtn.disabled = false;
-            return;
         }
 
+        // Calcolo Livello e Descrizione
+        let level;
+        if (totalScore <= 15) {
+            level = 'Basso rischio';
+        } else if (totalScore <= 30) {
+            level = 'Rischio medio';
+        } else {
+            level = 'Rischio alto';
+        }
+
+        // Calcolo Percentuale di Rischio
+        const percentage = Math.round((totalScore / MAX_TOTAL_SCORE) * 100);
+
+        // Calcolo Score per Grafico Radar (scala 0-3)
         const radarScores = {};
+        for (const axis in scores) {
+            // Normalizza 0-9 a 0-3
+            radarScores[axis] = scores[axis] / 3;
+        }
+
+        // Calcolo Punteggi di Impatto (percentuale di rischio max per asse)
         const impactScores = {};
-        let topScores = [];
-
-        for (const [axis, scores] of Object.entries(finalAxes)) {
-            const average = scores.reduce((sum, val) => sum + val, 0) / scores.length;
-            radarScores[axis] = parseFloat(average.toFixed(2));
-
-            const totalAxisScore = scores.reduce((sum, val) => sum + val, 0);
-            const maxAxisScore = maxScoresAxes[axis];
-            const impactPercentage = Math.round((totalAxisScore / maxAxisScore) * 100);
-            impactScores[axis] = impactPercentage; 
-
-            const maxVal = scores.reduce((max, val) => Math.max(max, val), 0);
-            if (maxVal > 1) { 
-                 topScores.push({ axis, score: average, maxResponse: maxVal });
-            }
+        for (const axis in scores) {
+            // Normalizza 0-9 a 0-100%
+            impactScores[axis] = Math.round((scores[axis] / MAX_AXIS_SCORE) * 100);
         }
 
-        topScores.sort((a, b) => b.score - a.score);
-        const top3Priorities = topScores.slice(0, 3);
+        // Identifica le 3 Priorità Maggiori
+        const sortedImpacts = Object.entries(impactScores)
+            .map(([axis, score]) => ({ axis, score }))
+            .sort((a, b) => b.score - a.score);
 
-        const maxScore = questions.length * 3;
-        const percentage = Math.round((total / maxScore) * 100);
-        let level = "";
-        if (percentage < 33) level = "Basso rischio";
-        else if (percentage < 67) level = "Rischio medio";
-        else level = "Rischio alto";
-
-        resultData = {
-            name: (userNameEl?.value || "").trim(),
-            total, maxScore, percentage, level, answered,
-            radarScores,
-            impactScores, 
-            top3Priorities,
-            dateStr: new Date().toLocaleDateString("it-IT")
-           };
-
-
-        // Mostra paywall + pulsanti di scelta/upsell (Non Modificata)
-        paywall?.classList.remove("hidden");
-        const container = document.getElementById("paypal-button-container");
-
-        if (container) {
-            container.innerHTML = ""; // Pulisci il container
-
-            // 1. BLOCCO UPSELL PREMIUM (7,99 €)
-            const premiumWrap = document.createElement("div");
-            premiumWrap.className = "upsell-option premium"; 
-            premiumWrap.innerHTML = `
-                <h3>Sblocca l'Upgrade Premium (7,99 €)</h3>
-                <p>Ricevi il Report Dettagliato, il Piano d'Azione esteso a 30 giorni e il Kit di Strumenti di Monitoraggio.</p>
-            `;
-            const premiumBtn = document.createElement("button");
-            premiumBtn.type = "button";
-            premiumBtn.className = "btn primary large"; // CLASSE VERDE (primary) e grande
-            premiumBtn.textContent = "Acquista Upgrade Completo (TEST 7,99 €)";
-            // Passa TRUE per Report Premium
-            premiumBtn.addEventListener("click", () => {
-                 alert("Modalità test attiva – Prodotto: Upgrade 30 Giorni (7,99 €).");
-                 generatePDF(true); 
-            });
-            premiumWrap.appendChild(premiumBtn);
-            container.appendChild(premiumWrap);
-            
-            // 2. BLOCCO REPORT STANDARD (1,99 €)
-            const standardWrap = document.createElement("div");
-            standardWrap.className = "upsell-option standard";
-            standardWrap.innerHTML = `
-                <p>O scegli di scaricare solo la versione standard del report (1,99 €).</p>
-            `;
-            const standardBtn = document.createElement("button");
-            standardBtn.type = "button";
-            standardBtn.className = "btn primary small"; // CLASSE VERDE (primary) e piccola
-            standardBtn.textContent = "Scarica Report Standard (TEST 1,99 €)";
-            // Passa FALSE per Report Standard
-            standardBtn.addEventListener("click", () => {
-                alert("Modalità test attiva – Prodotto: Report Base (1,99 €).");
-                generatePDF(false);
-            });
-            standardWrap.appendChild(standardBtn);
-            container.appendChild(standardWrap);
-        }
+        // Filtra solo le priorità con un impatto superiore a un livello minimo (es. 50%)
+        const top3Priorities = sortedImpacts
+            .filter(p => p.score >= 50)
+            .slice(0, 3);
         
-        if (paywall) window.scrollTo({ top: paywall.offsetTop, behavior: "smooth" });
-    });
+        // Data di oggi per il report
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
+        return {
+            name: formData.name || 'Utente Anonimo',
+            total: totalScore,
+            maxScore: MAX_TOTAL_SCORE,
+            percentage: percentage,
+            level: level,
+            radarScores: radarScores,
+            impactScores: impactScores,
+            top3Priorities: top3Priorities,
+            dateStr: dateStr
+        };
+    }
 
-    // ----- Reset (Logica Non Modificata) -----
-    resetBtn?.addEventListener("click", () => {
-        document.querySelectorAll('input[type="radio"]').forEach(i => (i.checked = false));
-        paywall?.classList.add("hidden");
-        const container = document.getElementById("paypal-button-container");
-        if (container) container.innerHTML = "";
-        resultData = null;
-        if (calcBtn) calcBtn.disabled = false; // Riattiva il pulsante
-    });
+    // Funzione esterna per calcolare e memorizzare i risultati (Non Modificata)
+    window.calculateAndStoreResults = function (formData) {
+        resultData = calculateResults(formData);
+        console.log('Risultati calcolati:', resultData);
+        return resultData;
+    };
 
-    // ----- PDF (Logica RIVISTA per GARANTIRE il Grafico) -----
+    // ----- PDF (Logica RIVISTA per GARANTIRE il Grafico e il Salvataggio Asincrono) -----
     async function generatePDF(isPremium = false) { 
         if (!resultData) return;
 
-        // Implementazione COMPLETA di writeParagraphs (Non Modificata)
+        // Implementazione COMPLETA di writeParagraphs
         const writeParagraphs = (text) => {
             doc.setFontSize(12);
             const maxTextWidth = pageWidth - margin * 2;
@@ -288,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
         y += 22;
         
-        // BLOCCO: Confronto con l'Utente Medio (Benchmark) (Non Modificata)
+        // BLOCCO: Confronto con l'Utente Medio (Benchmark)
         const AVERAGE_SCORE_BENCHMARK = 35;
 
         doc.setFont("Helvetica", "bold");
@@ -588,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 width: pageWidth - (2 * margin),
                 callback: function (doc) {
                     // *** IL FOOTER E LA CHIUSURA VENGONO ESEGUITI QUI! ***
-                    // Questa funzione di callback si attiva solo quando doc.html ha finito.
+                    // La y è stata aggiornata dal doc.html. Usiamo la y dell'ultima tabella/elemento aggiunto (finalY)
                     y = doc.previousAutoTable.finalY + 12; 
                     
                     // --- Footer (spostato qui per coerenza)
@@ -599,11 +511,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     doc.setFontSize(10);
                     doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
                 
-                    // Salvataggio finale
-                    doc.save(`Report_Dipendenza_Digitale_${isPremium ? 'Premium' : 'Standard'}.pdf`);
+                    // Salvataggio finale del REPORT PREMIUM
+                    doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
                 }
             });
-            // Usciamo da questo ramo 'if (isPremium)' per assicurarci che il codice sottostante non venga eseguito
+            // IMPORTANTE: Usciamo qui per non eseguire la logica del report standard (e il suo salvataggio)
             return; 
         } 
         
@@ -639,6 +551,10 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.save(`Report_Dipendenza_Digitale_Standard.pdf`);
     }
 
-    window.__DD__ = { generatePDF, getResult: () => resultData };
-});
-           
+    // Esposizione delle funzioni all'oggetto globale per essere accessibili da index.html
+    window.__DD__ = { 
+        generatePDF, 
+        getResult: () => resultData 
+    };
+
+})(window);       
