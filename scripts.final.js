@@ -1,4 +1,4 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.1 (Grafico Radar Garantito)
+   // scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.1 (Grafico Radar Garantito)
 document.addEventListener("DOMContentLoaded", () => {
     // --- Variabili Globali e Link Handler (Non Modificate) ---
     const link = document.getElementById('linkScopri');
@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const row = document.createElement("label");
                 row.innerHTML = `<input type="radio" name="q${idx}" id="${id}" value="${c.value}"><span>${c.label}</span>`;
                 opts.appendChild(row);
+                qWrap.appendChild(opts);
             });
-            qWrap.appendChild(opts);
             form.appendChild(qWrap);
         });
     }
@@ -368,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         data: dataPoints,
                         // COLORI RIPRISTINATI AL BLU SCURO ORIGINALE (#003366)
                         backgroundColor: 'rgba(0, 51, 102, 0.2)', 
-                        borderColor: 'rgba(0, 51, 102, 1)',      
+                        borderColor: 'rgba(0, 51, 102, 1)', 
                         pointBackgroundColor: 'rgba(0, 51, 102, 1)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // **********************************************
         // ********* FINE LOGICA GRAFICO RADAR **********
         // **********************************************
-                   
+                        
 
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
@@ -468,8 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 12;
 
         // ******************************************************
-        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** (Logica di differenziazione Non Modificata)
-        // ******************************************************
+        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** // ******************************************************
         if (isPremium) {
             // Aggiungi una nuova pagina prima del Piano d'Azione
             doc.addPage();
@@ -557,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
             writeParagraphs(plan7.map(i => "• " + i).join("\n"));
             y += 12;
 
-            // --- Risorse (NUOVA VERSIONE CON SPIEGAZIONI)
+            // --- Risorse (NUOVA VERSIONE CON SPIEGAZIONI E FOOTER INTEGRATO)
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Risorse consigliate", margin, y);
@@ -588,38 +587,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 y: y,
                 width: pageWidth - (2 * margin),
                 callback: function (doc) {
-                    y = doc.previousAutoTable.finalY + 12; // Aggiorna y dopo l'HTML
+                    // *** IL FOOTER E LA CHIUSURA VENGONO ESEGUITI QUI! ***
+                    // Questa funzione di callback si attiva solo quando doc.html ha finito.
+                    y = doc.previousAutoTable.finalY + 12; 
                     
-                    // Controlla e aggiungi pagina se necessario prima di continuare
+                    // --- Footer (spostato qui per coerenza)
                     if (y > pageHeight - 60) { doc.addPage(); y = margin; }
-                    
-                    // Continua con il footer (che è fuori da questo blocco)
+                    doc.setDrawColor(200);
+                    doc.line(margin, y, pageWidth - margin, y);
+                    y += 16;
+                    doc.setFontSize(10);
+                    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
+                
+                    // Salvataggio finale
+                    doc.save(`Report_Dipendenza_Digitale_${isPremium ? 'Premium' : 'Standard'}.pdf`);
                 }
             });
-            // NOTA: il codice che segue (footer) è gestito nel callback
-            return; // Usciamo per evitare che il codice subito dopo venga eseguito prima del callback
-        } else {
-        } else {
-             // Messaggio di upsell nel report standard (1,99€)
-             if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
-             
-             doc.setDrawColor(200);
-             doc.line(margin, y, pageWidth - margin, y);
-             y += 20;
+            // Usciamo da questo ramo 'if (isPremium)' per assicurarci che il codice sottostante non venga eseguito
+            return; 
+        } 
+        
+        // ******************************************************
+        // ***** SEZIONE PER REPORT STANDARD (1,99€) ************ // ******************************************************
+        
+        // Messaggio di upsell nel report standard (1,99€)
+        if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
+        
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.setTextColor("#003366");
+        doc.text("Upgrade a Premium", margin, y);
+        y += 18;
 
-             doc.setFont("Helvetica", "bold");
-             doc.setFontSize(14);
-             doc.setTextColor(200, 0, 0); // Rosso per l'Upsell
-             doc.text("Contenuto Aggiuntivo Non Incluso (Upgrade Premium)", margin, y);
-             y += 18;
-             
-             doc.setFont("Helvetica", "normal");
-             doc.setFontSize(12);
-             doc.setTextColor(0); // Torna al nero
-             writeParagraphs("Le sezioni dettagliate come il 'Piano di Azione Prioritario', il 'Piano 7 giorni di Digital Detox' e le 'Risorse Consigliate' sono esclusive dell'Upgrade Premium da 7,99 €.");
-             y += 12;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(0);
+        writeParagraphs("Per sbloccare le tue 3 Priorità di Azione, il Piano 7 Giorni di Digital Detox, e le Risorse Dettagliate per la Disconnessione, effettua l'upgrade alla versione Premium.");
+        y += 12;
 
-        }
+        doc.setFont("Helvetica", "normal");
+
         // --- Footer
         if (y > pageHeight - 60) { doc.addPage(); y = margin; }
         doc.setDrawColor(200);
@@ -628,13 +635,10 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setFontSize(10);
         doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
 
-        doc.save(`Report_Dipendenza_Digitale_${isPremium ? 'Premium' : 'Standard'}.pdf`);
+        // Salvataggio per il report standard (NON PREMIUM)
+        doc.save(`Report_Dipendenza_Digitale_Standard.pdf`);
     }
 
     window.__DD__ = { generatePDF, getResult: () => resultData };
-});    
+});
            
-
-       
-       
-        
