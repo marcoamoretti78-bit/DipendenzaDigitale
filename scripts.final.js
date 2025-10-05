@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
+ /* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
     let canvasElement = null;
 
     // --- PARTE 1: Logica di Interazione e Caricamento Quiz (20 Domande) ---
 
-    // Le 20 domande ripristinate con la mappatura corretta per il calcolo
+    // Le 20 domande ripristinate
     const quizQuestions = [
         { text: "Appena sveglio, la prima cosa che fai è prendere lo smartphone?", name: "q1", category: "Sonno e Rituali" },
         { text: "Controlli il telefono immediatamente se non è a portata di mano?", name: "q2", category: "Fuga ed Emozioni" },
@@ -30,7 +30,7 @@
         { text: "Ti senti spesso stanco a causa dell'uso prolungato dello schermo?", name: "q20", category: "Controllo e Tempo" },
     ];
     
-    // Costanti per i prezzi
+    // Costanti per i prezzi (CORRETTI)
     const PRICE_STANDARD = "1,99 €";
     const PRICE_PREMIUM = "7,99 €";
 
@@ -88,6 +88,7 @@
         
         const paywall = document.getElementById('paywall');
         if (paywall && !document.getElementById('downloadStandard')) {
+            // PULSANTI DI SCARICO RIPRISTINATI CON DESCRIZIONE PREMIUM
             paywall.innerHTML = `
                 <h3>Il tuo risultato è pronto!</h3>
                 <p>Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
@@ -97,6 +98,7 @@
                     </button>
                     <button id="downloadPremium" class="btn primary">
                         Acquista Report Premium (${PRICE_PREMIUM} - Finto)
+                        <br><span style="font-size: 10px; font-weight: normal;">(Include: Piano Azione, Priorità e Piano 7 Giorni)</span>
                     </button>
                 </div>
             `;
@@ -145,18 +147,17 @@
         return canvasElement;
     }
 
-    // ----- LOGICA DI CALCOLO DEI RISULTATI (Aggiornata per 20 domande) -----
+    // ----- LOGICA DI CALCOLO DEI RISULTATI (20 domande - Max 60) -----
     function calculateResults(formData) {
-        // 20 Domande divise in 5 Assi (4 domande per asse)
+        // 20 Domande divise in 5 Assi (4 domande per asse - corrette per 5/4/4/3/4)
         const scores = {
-            'Sonno e Rituali': 0, // q1, q7, q11, q19 (Max 12)
-            'Fuga ed Emozioni': 0, // q2, q5, q9, q14, q18 (Max 15) - CORRETTO: 5 domande, Max 15
-            'Attenzione e Produttività': 0, // q3, q8, q13, q16 (Max 12)
-            'Relazioni e Socialità': 0, // q4, q12, q17 (Max 9)
-            'Controllo e Tempo': 0, // q6, q10, q15, q20 (Max 12)
+            'Sonno e Rituali': 0, 
+            'Fuga ed Emozioni': 0, 
+            'Attenzione e Produttività': 0, 
+            'Relazioni e Socialità': 0, 
+            'Controllo e Tempo': 0, 
         };
         
-        // Mappa delle domande verso gli assi
         const questionMap = {
             q1: 'Sonno e Rituali', q2: 'Fuga ed Emozioni', q3: 'Attenzione e Produttività',
             q4: 'Relazioni e Socialità', q5: 'Fuga ed Emozioni', q6: 'Controllo e Tempo',
@@ -167,7 +168,6 @@
             q19: 'Sonno e Rituali', q20: 'Controllo e Tempo',
         };
         
-        // Massimi punteggi per Asse (totale delle domande mappate sopra)
         const AXIS_MAX_SCORES = {
             'Sonno e Rituali': 12, // 4 domande
             'Fuga ed Emozioni': 15, // 5 domande
@@ -204,11 +204,11 @@
             }
         }
 
-        // Soglie aggiornate per Max Score 60
+        // Soglie per Max Score 60
         let level;
-        if (totalScore <= 20) { // Circa 33%
+        if (totalScore <= 20) { 
             level = 'Basso rischio';
-        } else if (totalScore <= 40) { // Circa 66%
+        } else if (totalScore <= 40) { 
             level = 'Rischio medio';
         } else {
             level = 'Rischio alto';
@@ -260,7 +260,7 @@
         return resultData;
     };
     
-    // --- PARTE 2: Logica di Generazione PDF (con tabella quiz robusta) ---
+    // --- PARTE 2: Logica di Generazione PDF ---
 
     async function generatePDF(isPremium = false) { 
         if (!resultData) return;
@@ -399,6 +399,7 @@
         const dataPoints = Object.values(resultData.radarScores);
         const labels = Object.keys(resultData.radarScores);
         
+        // Uso la stessa risoluzione del canvas (700x700) per una migliore qualità nel PDF
         const chartRendered = new Promise(resolve => {
             window.__chart = new window.Chart(ctx, {
                 type: 'radar',
@@ -438,9 +439,8 @@
                     }
                 }
             });
-            if (!window.__chart.options.animation) {
-                 resolve();
-            }
+            // Forza il completamento per i browser che non supportano l'animazione immediatamente
+            setTimeout(resolve, 500); 
         });
 
         await chartRendered; 
@@ -673,6 +673,7 @@
                 <p><strong>Strumento:</strong> Sveglia tradizionale e orologio da polso per non dover guardare il telefono.</p>
             `;
 
+            // Utilizzo di una Promise più sicura per il salvataggio HTML
             await new Promise(resolve => {
                 doc.setFontSize(10);
                 doc.html(resourcesText, {
@@ -680,7 +681,8 @@
                     y: y,
                     width: pageWidth - (2 * margin),
                     callback: function (doc) {
-                        y = doc.previousAutoTable.finalY + 12; 
+                        // Dopo il rendering HTML
+                        y = doc.previousAutoTable.finalY || y; 
                         
                         // --- Footer
                         if (y > pageHeight - 60) { doc.addPage(); y = margin; }
@@ -737,8 +739,4 @@
     };
 
 })(window);
-       
-
-               
-
-           
+      
