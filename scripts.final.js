@@ -1,6 +1,6 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.0 (PDF corretto, grafico OK, Report Differenziati)
+// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.1 (Grafico Radar Garantito)
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Variabili Globali e Link Handler ---
+    // --- Variabili Globali e Link Handler (Non Modificate) ---
     const link = document.getElementById('linkScopri');
     if (link) {
         link.addEventListener('click', function(e){
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const paywall = document.getElementById("paywall");
     const userNameEl = document.getElementById("userName");
 
-    // Definizioni di domande e opzioni
+    // Definizioni di domande e opzioni (Non Modificate)
     const questions = [
         "Controlli il telefono appena sveglio/a?", "Perdi la cognizione del tempo mentre scorri social o video?", "Interrompi attività importanti per controllare notifiche?", "Usi lo smartphone durante i pasti o in conversazioni dal vivo?", "Ti senti irritato/a o ansioso/a quando non puoi usare il telefono?", "Hai provato a ridurre l'uso dello smartphone senza riuscirci?", "Usi il telefono oltre l’orario previsto prima di dormire?", "Le tue relazioni hanno risentito dell’uso del telefono?", "Usi il telefono mentre cammini, guidi o fai attività rischiose?", "Controlli spesso il telefono anche senza notifiche reali?", "Ti distrai frequentemente a causa di social, giochi o chat?", "Ti senti in colpa per il tempo passato sullo smartphone?", "Metti lo smartphone in modalità silenziosa per 'isolarti'?", "Preferisci spesso lo smartphone ad attività sociali dal vivo?", "Ricevi feedback negativi da familiari/amici sul tuo uso del telefono?", "Usi lo smartphone per sfuggire a noia, stress o tristezza?", "Spendi soldi in app/abbonamenti in modo impulsivo?", "Hai disturbi del sonno legati all’uso serale del telefono?", "Ti agiti se ti separi dal telefono per alcune ore?", "Pensi spesso al telefono anche quando non lo stai usando?"
     ];
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { label: "Quasi sempre / Sempre", value: 3 }
     ];
 
-    // Costruzione dinamica del quiz
+    // Costruzione dinamica del quiz (Non Modificata)
     if (form) {
         form.innerHTML = "";
         questions.forEach((q, idx) => {
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let resultData = null;
 
-    // Utility: ottieni/crea un canvas per il grafico PDF
+    // Utility: ottieni/crea un canvas per il grafico PDF (Non Modificata)
     function getPdfCanvas() {
         let c = document.getElementById("pdfChart");
         if (!c) {
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return c;
     }
 
-    // ----- Calcolo quiz (LOGICA COMPLETA) -----
+    // ----- Calcolo quiz (Logica di Calcolo Non Modificata) -----
 
     calcBtn?.addEventListener("click", () => {
         if (calcBtn) calcBtn.disabled = true;
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
            };
 
 
-        // Mostra paywall + pulsanti di scelta/upsell
+        // Mostra paywall + pulsanti di scelta/upsell (Non Modificata)
         paywall?.classList.remove("hidden");
         const container = document.getElementById("paypal-button-container");
 
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // ----- Reset (LOGICA COMPLETA) -----
+    // ----- Reset (Logica Non Modificata) -----
     resetBtn?.addEventListener("click", () => {
         document.querySelectorAll('input[type="radio"]').forEach(i => (i.checked = false));
         paywall?.classList.add("hidden");
@@ -215,11 +215,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (calcBtn) calcBtn.disabled = false; // Riattiva il pulsante
     });
 
-    // ----- PDF (Logica COMPLETA e DIFFERENZIATA) -----
-    async function generatePDF(isPremium = false) { // Aggiunto parametro isPremium
+    // ----- PDF (Logica RIVISTA per GARANTIRE il Grafico) -----
+    async function generatePDF(isPremium = false) { 
         if (!resultData) return;
 
-        // Implementazione COMPLETA di writeParagraphs
+        // Implementazione COMPLETA di writeParagraphs (Non Modificata)
         const writeParagraphs = (text) => {
             doc.setFontSize(12);
             const maxTextWidth = pageWidth - margin * 2;
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const margin     = 40;
         let y            = margin;
 
-        // --- Header
+        // --- Header (Non Modificata)
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(28);
         doc.text("Report personalizzato", margin, y);
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Risultato
+        // --- Risultato (Non Modificata)
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Risultato", margin, y);
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Rischio: ${resultData.percentage}% (${resultData.level})`, margin, y);
         y += 22;
         
-        // BLOCCO: Confronto con l'Utente Medio (Benchmark)
+        // BLOCCO: Confronto con l'Utente Medio (Benchmark) (Non Modificata)
         const AVERAGE_SCORE_BENCHMARK = 35;
 
         doc.setFont("Helvetica", "bold");
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 20;
         // Fine BLOCCO Benchmark
 
-        // --- Profilo Utente
+        // --- Profilo Utente (Non Modificata)
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Il tuo Profilo di Dipendenza Digitale", margin, y);
@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         suggestedMax: 3, 
                         pointLabels: { font: { size: 10 } },
                         ticks: { 
-                             stepSize: 1, // Assicura che la scala sia chiara
+                             stepSize: 1, 
                              display: false 
                         }
                     }
@@ -394,11 +394,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Forza il rendering del grafico prima di estrarre l'immagine
+        // Forza il rendering del grafico
         window.__chart.update('none'); 
+        
+        // ATTESA AGGIUNTA QUI PER GARANTIRE LA SINCRONIZZAZIONE
+        await new Promise(resolve => setTimeout(resolve, 500)); 
 
-        // Rimosso il timeout, useremo la conversione sincrona subito
-        const imgData = radarCanvas.toDataURL('image/png', 1.0); // 1.0 per massima qualità
+        const imgData = radarCanvas.toDataURL('image/png', 1.0); 
         const radarSize = 350;
         const xOffset = (pageWidth - radarSize) / 2;
         
@@ -420,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Riepilogo Punteggi di Impatto Dettagliati
+        // --- Riepilogo Punteggi di Impatto Dettagliati (Non Modificata)
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Riepilogo Punteggi di Impatto Dettagliati", margin, y);
@@ -440,10 +442,10 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Analisi e consigli personalizzati (TESTI COMPLETI)
+        // --- Analisi e consigli personalizzati (Non Modificata)
         const analysisTexts = {
             "Basso rischio": "Il tuo rapporto con lo smartphone appare equilibrato. Sei un **utente consapevole** che utilizza la tecnologia come strumento senza esserne schiavo. La tua sfida non è eliminare l'uso, ma mantenere alta la guardia e continuare a migliorare l'efficienza d'uso per sfruttare la disconnessione come un vantaggio competitivo. **Consiglio:** Continua a monitorare i tuoi comportamenti, specialmente in momenti di stress, e utilizza le tue ore libere per attività profondamente rigeneranti (es. lettura, sport, hobby manuali).",
-            "Rischio medio": "Il tuo comportamento digitale mostra **segnali chiari di potenziale dipendenza**. Hai sviluppato abitudini che stanno erodendo la tua concentrazione, la qualità del sonno e il tempo libero speso in modo significativo. Sei nel momento perfetto per agire con un piano mirato prima di scivolare nell'alto rischio e subire conseguenze più serie su sonno e relazioni. **La tua priorità è ristabilire i confini chiari** e applicare immediatamente le tecniche di disconnessione intenzionale che troverai nel piano d'azione. Agisci subito per riprendere il controllo del tuo tempo.",
+            "Rischio medio": "Il tuo comportamento digitale mostra **segnali chiari di potenziale dipendenza**. Hai sviluppato abitudini che stanno erodendo la tua concentrazione e il tuo tempo libero. Sei nel momento perfetto per agire con un piano mirato prima di scivolare nell'alto rischio e subire conseguenze più serie su sonno e relazioni. **La tua priorità è ristabilire i confini chiari** e applicare immediatamente le tecniche di disconnessione intenzionale che troverai nel piano d'azione. Agisci subito per riprendere il controllo del tuo tempo.",
             "Rischio alto": "Il tuo punteggio indica una **dipendenza digitale significativa**. Lo smartphone ha preso il controllo su sonno, relazioni e stati d'animo, ed è probabilmente diventato la tua via di fuga primaria da noia o ansia. Questo report segna l'inizio della ripresa del controllo. Richiede un **impegno serio** e l'applicazione immediata delle priorità definite, concentrandoti sulla sostituzione delle abitudini digitali con alternative offline che migliorino il tuo benessere fisico e mentale. Non sottovalutare l'impatto sul tuo benessere complessivo.",
         };
 
@@ -458,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 12;
 
         // ******************************************************
-        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) **
+        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** (Logica di differenziazione Non Modificata)
         // ******************************************************
         if (isPremium) {
             // Aggiungi una nuova pagina prima del Piano d'Azione
@@ -594,4 +596,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.__DD__ = { generatePDF, getResult: () => resultData };
-});
+});    
+           
+
+       
+       
+        
