@@ -356,49 +356,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const dataPoints = Object.values(resultData.radarScores);
         const labels = Object.keys(resultData.radarScores);
-
-        // Disegna il grafico sul canvas nascosto
-        window.__chart = new window.Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Punteggio Rischio',
-                    data: dataPoints,
-                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
-                    borderColor: 'rgba(34, 197, 94, 1)',
-                    pointBackgroundColor: 'rgba(34, 197, 94, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(34, 197, 94, 1)'
-                }]
-            },
-            options: {
-                responsive: false,
-                maintainAspectRatio: true,
-                scales: {
-                    r: {
-                        angleLines: { display: true },
-                        suggestedMin: 0,
-                        suggestedMax: 3, 
-                        pointLabels: { font: { size: 10 } },
-                        ticks: { 
-                             stepSize: 1, 
-                             display: false 
-                        }
-                    }
+        
+        // Creiamo una Promessa che si risolve quando Chart.js finisce di disegnare
+        const chartRendered = new Promise(resolve => {
+            window.__chart = new window.Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Punteggio Rischio',
+                        data: dataPoints,
+                        // COLORI RIPRISTINATI AL BLU SCURO ORIGINALE (#003366)
+                        backgroundColor: 'rgba(0, 51, 102, 0.2)', 
+                        borderColor: 'rgba(0, 51, 102, 1)',      
+                        pointBackgroundColor: 'rgba(0, 51, 102, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 51, 102, 1)'
+                    }]
                 },
-                plugins: {
-                    legend: { display: false }
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: true,
+                    animation: {
+                        onComplete: resolve 
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 0,
+                            suggestedMax: 3, 
+                            pointLabels: { font: { size: 10 } },
+                            ticks: { 
+                                 stepSize: 1, 
+                                 display: false 
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false } 
+                    }
                 }
+            });
+            // Fallback se l'animazione non parte
+            if (!window.__chart.options.animation) {
+                 resolve();
             }
         });
 
-        // Forza il rendering del grafico
-        window.__chart.update('none'); 
-        
-        // ATTESA AGGIUNTA QUI PER GARANTIRE LA SINCRONIZZAZIONE
-        await new Promise(resolve => setTimeout(resolve, 500)); 
+        // Attendiamo che il grafico sia completato (la promessa si risolve)
+        await chartRendered; 
 
         const imgData = radarCanvas.toDataURL('image/png', 1.0); 
         const radarSize = 350;
@@ -417,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // **********************************************
         // ********* FINE LOGICA GRAFICO RADAR **********
         // **********************************************
+                   
 
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
