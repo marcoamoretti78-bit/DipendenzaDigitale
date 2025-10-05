@@ -557,20 +557,48 @@ document.addEventListener("DOMContentLoaded", () => {
             writeParagraphs(plan7.map(i => "• " + i).join("\n"));
             y += 12;
 
-            // --- Risorse
+            // --- Risorse (NUOVA VERSIONE CON SPIEGAZIONI)
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Risorse consigliate", margin, y);
-            y += 18;
+            y += 10; // Ridotto a 10px per far spazio
 
-            doc.setFont("Helvetica", "normal");
-            const resources = [
-                "Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.",
-                "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
-                "Tecniche: Pomodoro per il focus, blocchi Deep Work, journaling serale per l'ansia.",
-                "Strumento: Sveglia tradizionale e orologio da polso per non dover guardare il telefono."
-            ];
-            writeParagraphs(resources.map(i => "• " + i).join("\n"));
+            // Utilizzo di template literal per includere il testo HTML e le spiegazioni
+            const resourcesText = `
+                <p><strong>App:</strong> Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.</p>
+                
+                <p><strong>Libri:</strong> 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).</p>
+
+                <div style="margin-top: 15px;">
+                    <p><strong>Tecniche:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>**Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause, utile per allenare la concentrazione senza il telefono.</li>
+                        <li>**Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni per ricostruire l'attenzione.</li>
+                        <li>**Journaling serale per l'ansia:** Scrivere a mano pensieri e preoccupazioni prima di dormire, evitando di usare lo smartphone per placare l'irrequietezza.</li>
+                    </ul>
+                </div>
+                
+                <p><strong>Strumento:</strong> Sveglia tradizionale e orologio da polso per non dover guardare il telefono.</p>
+            `;
+
+            // Aggiungiamo il testo formattato al PDF usando doc.html()
+            doc.setFontSize(10);
+            doc.html(resourcesText, {
+                x: margin,
+                y: y,
+                width: pageWidth - (2 * margin),
+                callback: function (doc) {
+                    y = doc.previousAutoTable.finalY + 12; // Aggiorna y dopo l'HTML
+                    
+                    // Controlla e aggiungi pagina se necessario prima di continuare
+                    if (y > pageHeight - 60) { doc.addPage(); y = margin; }
+                    
+                    // Continua con il footer (che è fuori da questo blocco)
+                }
+            });
+            // NOTA: il codice che segue (footer) è gestito nel callback
+            return; // Usciamo per evitare che il codice subito dopo venga eseguito prima del callback
+        } else {
         } else {
              // Messaggio di upsell nel report standard (1,99€)
              if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
