@@ -52,11 +52,11 @@ body {
 .nav-links a {
     color: var(--primary);
     text-decoration: none;
-    padding: 8px 15px;
+    padding: 8px 18px; /* AUMENTATO: 18px invece di 15px */
     border-radius: 4px;
     transition: background-color 0.3s;
+    box-sizing: border-box; /* Garanzia di non superare la larghezza */
 }
-
 .nav-links a:hover,
 .nav-links a.active {
     background-color: var(--secondary);
