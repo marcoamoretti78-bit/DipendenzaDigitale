@@ -56,6 +56,10 @@ body {
     border-radius: 4px;
     transition: background-color 0.3s;
     box-sizing: border-box; /* Garanzia di non superare la larghezza */
+    /* Correggi lo spazio a destra del contenitore dei link */
+.nav-links {
+    padding-right: 10px; /* Aggiunge un po' di spazio a destra per non far "toccare" l'ultimo link */
+
 }
 .nav-links a:hover,
 .nav-links a.active {
