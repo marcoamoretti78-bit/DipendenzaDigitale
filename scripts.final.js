@@ -1,4 +1,4 @@
-// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 4.0 (PDF Grafico e Testi Completi)
+// scripts.final.js - Dipendenza Digitale (final test mode) - VERSIONE 5.0 (PDF corretto, grafico OK, Report Differenziati)
 document.addEventListener("DOMContentLoaded", () => {
     // --- Variabili Globali e Link Handler ---
     const link = document.getElementById('linkScopri');
@@ -174,10 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
             premiumBtn.type = "button";
             premiumBtn.className = "btn primary large"; // CLASSE VERDE (primary) e grande
             premiumBtn.textContent = "Acquista Upgrade Completo (TEST 7,99 €)";
+            // Passa TRUE per Report Premium
             premiumBtn.addEventListener("click", () => {
                  alert("Modalità test attiva – Prodotto: Upgrade 30 Giorni (7,99 €).");
-                 // Esecuzione della funzione PDF al click del 7,99€
-                 generatePDF(); 
+                 generatePDF(true); 
             });
             premiumWrap.appendChild(premiumBtn);
             container.appendChild(premiumWrap);
@@ -192,10 +192,10 @@ document.addEventListener("DOMContentLoaded", () => {
             standardBtn.type = "button";
             standardBtn.className = "btn primary small"; // CLASSE VERDE (primary) e piccola
             standardBtn.textContent = "Scarica Report Standard (TEST 1,99 €)";
+            // Passa FALSE per Report Standard
             standardBtn.addEventListener("click", () => {
                 alert("Modalità test attiva – Prodotto: Report Base (1,99 €).");
-                // Esecuzione della funzione PDF al click del 1,99€
-                generatePDF();
+                generatePDF(false);
             });
             standardWrap.appendChild(standardBtn);
             container.appendChild(standardWrap);
@@ -215,8 +215,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (calcBtn) calcBtn.disabled = false; // Riattiva il pulsante
     });
 
-    // ----- PDF (Logica COMPLETA per Grafico e Testi) -----
-    async function generatePDF() {
+    // ----- PDF (Logica COMPLETA e DIFFERENZIATA) -----
+    async function generatePDF(isPremium = false) { // Aggiunto parametro isPremium
         if (!resultData) return;
 
         // Implementazione COMPLETA di writeParagraphs
@@ -228,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
             paragraphs.forEach((p, i) => {
                 const lines = doc.splitTextToSize(p, maxTextWidth);
                 lines.forEach(line => {
+                    // Controllo di pagina prima di ogni riga
                     if (y + lineHeight > pageHeight - margin) {
                         doc.addPage();
                         y = margin;
@@ -235,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     doc.text(line, margin, y);
                     y += lineHeight;
                 });
+                // Spazio tra paragrafi
                 if (i < paragraphs.length - 1) y += 8;
             });
         };
@@ -340,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y += 20;
 
         // **********************************************
-        // ******* INIZIO LOGICA GRAFICO RADAR **********
+        // ******* INIZIO LOGICA GRAFICO RADAR CORRETTA *
         // **********************************************
         
         doc.setFont("Helvetica", "bold");
@@ -363,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 datasets: [{
                     label: 'Punteggio Rischio',
                     data: dataPoints,
-                    backgroundColor: 'rgba(34, 197, 94, 0.2)', // Verde tenue
+                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
                     borderColor: 'rgba(34, 197, 94, 1)',
                     pointBackgroundColor: 'rgba(34, 197, 94, 1)',
                     pointBorderColor: '#fff',
@@ -372,13 +374,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }]
             },
             options: {
+                responsive: false,
+                maintainAspectRatio: true,
                 scales: {
                     r: {
-                        angleLines: { display: false },
+                        angleLines: { display: true },
                         suggestedMin: 0,
-                        suggestedMax: 3, // Punteggio massimo per domanda
+                        suggestedMax: 3, 
                         pointLabels: { font: { size: 10 } },
-                        ticks: { display: false }
+                        ticks: { 
+                             stepSize: 1, // Assicura che la scala sia chiara
+                             display: false 
+                        }
                     }
                 },
                 plugins: {
@@ -387,13 +394,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Attendi che Chart.js abbia finito il disegno (importante!)
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Forza il rendering del grafico prima di estrarre l'immagine
+        window.__chart.update('none'); 
 
-        // Converte il canvas in immagine e la aggiunge al PDF
-        const imgData = radarCanvas.toDataURL('image/png');
+        // Rimosso il timeout, useremo la conversione sincrona subito
+        const imgData = radarCanvas.toDataURL('image/png', 1.0); // 1.0 per massima qualità
         const radarSize = 350;
         const xOffset = (pageWidth - radarSize) / 2;
+        
+        // Controllo di pagina prima di disegnare il grafico
+        if (y + radarSize + 30 > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+        }
+        
         doc.addImage(imgData, 'PNG', xOffset, y, radarSize, radarSize);
 
         y += radarSize + 30; 
@@ -443,106 +457,131 @@ document.addEventListener("DOMContentLoaded", () => {
         writeParagraphs(testoCorrente);
         y += 12;
 
-        // Aggiungi una nuova pagina prima del Piano d'Azione
-        doc.addPage();
-        y = margin;
+        // ******************************************************
+        // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) **
+        // ******************************************************
+        if (isPremium) {
+            // Aggiungi una nuova pagina prima del Piano d'Azione
+            doc.addPage();
+            y = margin;
 
-        // --- SEZIONE: LE TUE 3 PRIORITÀ
-        doc.setFont("Helvetica", "bold");
-        doc.setFontSize(16);
-        doc.setTextColor("#003366");
-        doc.text("Il Tuo Piano di Azione Prioritario", margin, y);
-        y += 20;
+            // --- SEZIONE: LE TUE 3 PRIORITÀ
+            doc.setFont("Helvetica", "bold");
+            doc.setFontSize(16);
+            doc.setTextColor("#003366");
+            doc.text("Il Tuo Piano di Azione Prioritario", margin, y);
+            y += 20;
 
-        doc.setFont("Helvetica", "normal");
-        doc.setFontSize(12);
-        doc.setTextColor(0);
+            doc.setFont("Helvetica", "normal");
+            doc.setFontSize(12);
+            doc.setTextColor(0);
 
-        const priorityDescriptions = {
-            'Sonno e Rituali': 'Attiva la modalità "Non Disturbare" alle 22:00 e lascia il telefono fuori dalla camera da letto. Sostituisci lo scrolling serale con la lettura di un libro fisico.',
-            'Fuga ed Emozioni': 'Non usare il telefono per fuggire dalla noia, dalla tristezza o dall\'ansia. Istituisci un "buffer" di 10 minuti: quando senti l\'impulso, aspetta 10 minuti e fai qualcosa di non digitale (es. breve camminata, bevanda calda).',
-            'Attenzione e Produttività': 'Usa l\'app Digital Wellbeing (o Screen Time) per limitare in modo rigido l\'uso delle app più distraenti (es. social, giochi) durante le ore di lavoro/studio.',
-            'Relazioni e Socialità': 'Istituisci "Zone senza Telefono" chiare: durante i pasti, conversazioni con partner/figli, e riunioni sociali. Metti il telefono in modalità aereo o in un\'altra stanza per disconnetterti completamente.',
-            'Controllo e Tempo': 'Utilizza timer di 30 minuti (Tecnica Pomodoro) quando lavori e usa il telefono solo durante le pause. Tieni il telefono fuori dalla vista (in una borsa o cassetto) quando non è strettamente necessario.'
-        };
+            const priorityDescriptions = {
+                'Sonno e Rituali': 'Attiva la modalità "Non Disturbare" alle 22:00 e lascia il telefono fuori dalla camera da letto. Sostituisci lo scrolling serale con la lettura di un libro fisico.',
+                'Fuga ed Emozioni': 'Non usare il telefono per fuggire dalla noia, dalla tristezza o dall\'ansia. Istituisci un "buffer" di 10 minuti: quando senti l\'impulso, aspetta 10 minuti e fai qualcosa di non digitale (es. breve camminata, bevanda calda).',
+                'Attenzione e Produttività': 'Usa l\'app Digital Wellbeing (o Screen Time) per limitare in modo rigido l\'uso delle app più distraenti (es. social, giochi) durante le ore di lavoro/studio.',
+                'Relazioni e Socialità': 'Istituisci "Zone senza Telefono" chiare: durante i pasti, conversazioni con partner/figli, e riunioni sociali. Metti il telefono in modalità aereo o in un\'altra stanza per disconnetterti completamente.',
+                'Controllo e Tempo': 'Utilizza timer di 30 minuti (Tecnica Pomodoro) quando lavori e usa il telefono solo durante le pause. Tieni il telefono fuori dalla vista (in una borsa o cassetto) quando non è strettamente necessario.'
+            };
 
-        if (resultData.top3Priorities.length === 0) {
-            writeParagraphs("Non sono state identificate priorità di rischio " +
-                "specifiche (punteggio basso). Passa direttamente al Piano 7 giorni.");
+            if (resultData.top3Priorities.length === 0) {
+                writeParagraphs("Non sono state identificate priorità di rischio " +
+                    "specifiche (punteggio basso). Passa direttamente al Piano 7 giorni.");
+            } else {
+                resultData.top3Priorities.forEach((p, index) => {
+                    const title = `PRIORITÀ #${index + 1}: ${p.axis}`;
+                    const description = priorityDescriptions[p.axis] || "Azioni specifiche non definite. Controlla la sezione Piano 7 giorni.";
+
+                    doc.setFont("Helvetica", "bold");
+                    doc.setFontSize(13);
+                    doc.text(title, margin, y);
+                    y += 16;
+
+                    doc.setFont("Helvetica", "normal");
+                    doc.setFontSize(12);
+                    writeParagraphs(description);
+                    y += 12;
+                });
+            }
+
+            // --- Piano 7 giorni 
+            doc.setFont("Helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("Piano 7 giorni di Digital Detox", margin, y);
+            y += 18;
+
+            doc.setFont("Helvetica", "normal");
+
+            const allPlanSets = {
+                "Basso rischio": [
+                    "Giorno 1 – Monitoraggio Consapevole: Per un giorno, prendi nota ogni volta che sblocchi il telefono e annota cosa stavi cercando.",
+                    "Giorno 2 – Notifiche Selettive: Disattiva tutte le notifiche tranne quelle essenziali per il lavoro o la famiglia. Mantieni attive solo 3 app di messaggistica.",
+                    "Giorno 3 – Il Pasto Sacro: Durante tutti i pasti, il telefono va in modalità aereo e fuori dalla vista. Concentrati sul cibo e sulla conversazione.",
+                    "Giorno 4 – Alternativa Offline: Scegli un'attività (es. leggere, disegnare, cucinare) che farai al posto di scorrere il telefono per 30 minuti al giorno.",
+                    "Giorno 5 – Spazio di Lavoro: Rimuovi lo smartphone dal tuo campo visivo mentre lavori/studi. Tienilo in un cassetto o in un'altra stanza.",
+                    "Giorno 6 – Serata Sociale: Esci con gli amici e comunica loro che terrai il telefono in borsa/tasca. Goditi l'interazione dal vivo.",
+                    "Giorno 7 – Revisione e Mantenimento: Rivedi i tuoi progressi. Decidi quali nuove abitudini manterrai fisse per la prossima settimana."
+                ],
+                "Rischio medio": [
+                    "Giorno 1 – Hard Limit: Imposta un limite di tempo (es. 60 minuti totali) sulle app che ti distraggono di più (es. Instagram, TikTok) usando le impostazioni di sistema.",
+                    "Giorno 2 – Confine Notturno: Metti il telefono a caricare in una stanza diversa dalla tua camera da letto. Usa una sveglia tradizionale.",
+                    "Giorno 3 – Disconnessione Attiva: Istituisci un blocco di 90 minuti di 'Deep Work' in cui il telefono è in modalità aereo e fuori dalla portata della mano.",
+                    "Giorno 4 – Noia Produttiva: Quando provi noia, non prendere il telefono. Fai 5 minuti di stretching o pianifica i tuoi prossimi 3 obiettivi.",
+                    "Giorno 5 – Conversazione: Durante le conversazioni uno-a-uno, metti il telefono a testa in giù o in borsa. Esercitati a non controllare per l'intera durata della conversazione.",
+                    "Giorno 6 – Digital Detox di Mezza Giornata: Dalle 14:00 alla sera, spegni completamente il telefono e riaccendilo solo in caso di emergenza.",
+                    "Giorno 7 – Revisione e Riflessione: Scrivi un riepilogo su come ti sei sentito questa settimana. Quali sono stati i benefici? Cosa è stato più difficile?"
+                ],
+                "Rischio alto": [
+                    "Giorno 1 – Decontaminazione Visiva: Sposta tutte le app di social media, notizie e giochi in una cartella secondaria e nascondila. Metti solo app di utilità sulla schermata principale.",
+                    "Giorno 2 – Disattivazione Totale: Disinstalla temporaneamente l'app più problematica (quella che usi compulsivamente).",
+                    "Giorno 3 – La Regola delle 20:00: Alle 20:00, metti il telefono in modalità aereo e in un cassetto. Non riaccenderlo fino alla colazione del giorno dopo.",
+                    "Giorno 4 – Ritorno al Corpo: Pratica 15 minuti di mindfulness o fai una passeggiata senza cuffie né telefono. Riconosci l'ansia da disconnessione senza cedere.",
+                    "Giorno 5 – Riscopri la Voce: Invece di mandare messaggi o email per questioni che richiedono più di due scambi, chiama la persona.",
+                    "Giorno 6 – Detox di un Giorno Intero: Spegni lo smartphone completamente e lascialo a casa per un'intera giornata, dedicandoti solo ad attività all'aperto o con le persone care.",
+                    "Giorno 7 – Supporto Esterno: Condividi il tuo piano e i tuoi risultati con un amico o familiare. Chiedi loro di farti da 'responsabile' (accountability partner)."
+                ]
+            };
+
+            const plan7 = allPlanSets[resultData.level];
+
+            writeParagraphs(plan7.map(i => "• " + i).join("\n"));
+            y += 12;
+
+            // --- Risorse
+            doc.setFont("Helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("Risorse consigliate", margin, y);
+            y += 18;
+
+            doc.setFont("Helvetica", "normal");
+            const resources = [
+                "Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.",
+                "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
+                "Tecniche: Pomodoro per il focus, blocchi Deep Work, journaling serale per l'ansia.",
+                "Strumento: Sveglia tradizionale e orologio da polso per non dover guardare il telefono."
+            ];
+            writeParagraphs(resources.map(i => "• " + i).join("\n"));
         } else {
-            resultData.top3Priorities.forEach((p, index) => {
-                const title = `PRIORITÀ #${index + 1}: ${p.axis}`;
-                const description = priorityDescriptions[p.axis] || "Azioni specifiche non definite. Controlla la sezione Piano 7 giorni.";
+             // Messaggio di upsell nel report standard (1,99€)
+             if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
+             
+             doc.setDrawColor(200);
+             doc.line(margin, y, pageWidth - margin, y);
+             y += 20;
 
-                doc.setFont("Helvetica", "bold");
-                doc.setFontSize(13);
-                doc.text(title, margin, y);
-                y += 16;
+             doc.setFont("Helvetica", "bold");
+             doc.setFontSize(14);
+             doc.setTextColor(200, 0, 0); // Rosso per l'Upsell
+             doc.text("Contenuto Aggiuntivo Non Incluso (Upgrade Premium)", margin, y);
+             y += 18;
+             
+             doc.setFont("Helvetica", "normal");
+             doc.setFontSize(12);
+             doc.setTextColor(0); // Torna al nero
+             writeParagraphs("Le sezioni dettagliate come il 'Piano di Azione Prioritario', il 'Piano 7 giorni di Digital Detox' e le 'Risorse Consigliate' sono esclusive dell'Upgrade Premium da 7,99 €.");
+             y += 12;
 
-                doc.setFont("Helvetica", "normal");
-                doc.setFontSize(12);
-                writeParagraphs(description);
-                y += 12;
-            });
         }
-
-        // --- Piano 7 giorni 
-        doc.setFont("Helvetica", "bold");
-        doc.setFontSize(14);
-        doc.text("Piano 7 giorni di Digital Detox", margin, y);
-        y += 18;
-
-        doc.setFont("Helvetica", "normal");
-
-        const allPlanSets = {
-            "Basso rischio": [
-                "Giorno 1 – Monitoraggio Consapevole: Per un giorno, prendi nota ogni volta che sblocchi il telefono e annota cosa stavi cercando.",
-                "Giorno 2 – Notifiche Selettive: Disattiva tutte le notifiche tranne quelle essenziali per il lavoro o la famiglia. Mantieni attive solo 3 app di messaggistica.",
-                "Giorno 3 – Il Pasto Sacro: Durante tutti i pasti, il telefono va in modalità aereo e fuori dalla vista. Concentrati sul cibo e sulla conversazione.",
-                "Giorno 4 – Alternativa Offline: Scegli un'attività (es. leggere, disegnare, cucinare) che farai al posto di scorrere il telefono per 30 minuti al giorno.",
-                "Giorno 5 – Spazio di Lavoro: Rimuovi lo smartphone dal tuo campo visivo mentre lavori/studi. Tienilo in un cassetto o in un'altra stanza.",
-                "Giorno 6 – Serata Sociale: Esci con gli amici e comunica loro che terrai il telefono in borsa/tasca. Goditi l'interazione dal vivo.",
-                "Giorno 7 – Revisione e Mantenimento: Rivedi i tuoi progressi. Decidi quali nuove abitudini manterrai fisse per la prossima settimana."
-            ],
-            "Rischio medio": [
-                "Giorno 1 – Hard Limit: Imposta un limite di tempo (es. 60 minuti totali) sulle app che ti distraggono di più (es. Instagram, TikTok) usando le impostazioni di sistema.",
-                "Giorno 2 – Confine Notturno: Metti il telefono a caricare in una stanza diversa dalla tua camera da letto. Usa una sveglia tradizionale.",
-                "Giorno 3 – Disconnessione Attiva: Istituisci un blocco di 90 minuti di 'Deep Work' in cui il telefono è in modalità aereo e fuori dalla portata della mano.",
-                "Giorno 4 – Noia Produttiva: Quando provi noia, non prendere il telefono. Fai 5 minuti di stretching o pianifica i tuoi prossimi 3 obiettivi.",
-                "Giorno 5 – Conversazione: Durante le conversazioni uno-a-uno, metti il telefono a testa in giù o in borsa. Esercitati a non controllare per l'intera durata della conversazione.",
-                "Giorno 6 – Digital Detox di Mezza Giornata: Dalle 14:00 alla sera, spegni completamente il telefono e riaccendilo solo in caso di emergenza.",
-                "Giorno 7 – Revisione e Riflessione: Scrivi un riepilogo su come ti sei sentito questa settimana. Quali sono stati i benefici? Cosa è stato più difficile?"
-            ],
-            "Rischio alto": [
-                "Giorno 1 – Decontaminazione Visiva: Sposta tutte le app di social media, notizie e giochi in una cartella secondaria e nascondila. Metti solo app di utilità sulla schermata principale.",
-                "Giorno 2 – Disattivazione Totale: Disinstalla temporaneamente l'app più problematica (quella che usi compulsivamente).",
-                "Giorno 3 – La Regola delle 20:00: Alle 20:00, metti il telefono in modalità aereo e in un cassetto. Non riaccenderlo fino alla colazione del giorno dopo.",
-                "Giorno 4 – Ritorno al Corpo: Pratica 15 minuti di mindfulness o fai una passeggiata senza cuffie né telefono. Riconosci l'ansia da disconnessione senza cedere.",
-                "Giorno 5 – Riscopri la Voce: Invece di mandare messaggi o email per questioni che richiedono più di due scambi, chiama la persona.",
-                "Giorno 6 – Detox di un Giorno Intero: Spegni lo smartphone completamente e lascialo a casa per un'intera giornata, dedicandoti solo ad attività all'aperto o con le persone care.",
-                "Giorno 7 – Supporto Esterno: Condividi il tuo piano e i tuoi risultati con un amico o familiare. Chiedi loro di farti da 'responsabile' (accountability partner)."
-            ]
-        };
-
-        const plan7 = allPlanSets[resultData.level];
-
-        writeParagraphs(plan7.map(i => "• " + i).join("\n"));
-        y += 12;
-        // --- Risorse
-        doc.setFont("Helvetica", "bold");
-        doc.setFontSize(14);
-        doc.text("Risorse consigliate", margin, y);
-        y += 18;
-
-        doc.setFont("Helvetica", "normal");
-        const resources = [
-            "Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.",
-            "Libri: 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).",
-            "Tecniche: Pomodoro per il focus, blocchi Deep Work, journaling serale per l'ansia.",
-            "Strumento: Sveglia tradizionale e orologio da polso per non dover guardare il telefono."
-        ];
-        writeParagraphs(resources.map(i => "• " + i).join("\n"));
-
         // --- Footer
         if (y > pageHeight - 60) { doc.addPage(); y = margin; }
         doc.setDrawColor(200);
@@ -551,9 +590,8 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.setFontSize(10);
         doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
 
-        doc.save("Report_Dipendenza_Digitale.pdf");
+        doc.save(`Report_Dipendenza_Digitale_${isPremium ? 'Premium' : 'Standard'}.pdf`);
     }
 
     window.__DD__ = { generatePDF, getResult: () => resultData };
 });
-    
