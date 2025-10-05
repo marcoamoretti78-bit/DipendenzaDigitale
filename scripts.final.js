@@ -1,5 +1,5 @@
      
-   /* eslint-disable no-unused-vars */
+ /* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
     let canvasElement = null;
@@ -15,14 +15,11 @@
         canvasElement.id = 'pdf-chart-canvas';
         canvasElement.width = 700;
         canvasElement.height = 700;
-        // Importante: Aggiungilo al DOM anche se nascosto, Chart.js a volte lo richiede
-        // document.body.appendChild(canvasElement); 
-        // Lo lasciamo scollegato, come da standard jspdf per un canvas temporaneo
-
+        
         return canvasElement;
     }
 
-    // ----- LOGICA DI CALCOLO DEI RISULTATI (Non Modificata) -----
+    // ----- LOGICA DI CALCOLO DEI RISULTATI (Corretta con Dettagli Quiz) -----
     function calculateResults(formData) {
         // Punteggi per asse
         const scores = {
@@ -38,30 +35,34 @@
 
         // Mappatura domande -> asse
         const questionMap = {
-            q1: 'Sonno e Rituali',
-            q2: 'Sonno e Rituali',
-            q3: 'Sonno e Rituali',
-            q4: 'Fuga ed Emozioni',
-            q5: 'Fuga ed Emozioni',
-            q6: 'Fuga ed Emozioni',
-            q7: 'Attenzione e Produttività',
-            q8: 'Attenzione e Produttività',
-            q9: 'Attenzione e Produttività',
-            q10: 'Relazioni e Socialità',
-            q11: 'Relazioni e Socialità',
-            q12: 'Relazioni e Socialità',
-            q13: 'Controllo e Tempo',
-            q14: 'Controllo e Tempo',
-            q15: 'Controllo e Tempo',
+            q1: 'Sonno e Rituali', q2: 'Sonno e Rituali', q3: 'Sonno e Rituali',
+            q4: 'Fuga ed Emozioni', q5: 'Fuga ed Emozioni', q6: 'Fuga ed Emozioni',
+            q7: 'Attenzione e Produttività', q8: 'Attenzione e Produttività', q9: 'Attenzione e Produttività',
+            q10: 'Relazioni e Socialità', q11: 'Relazioni e Socialità', q12: 'Relazioni e Socialità',
+            q13: 'Controllo e Tempo', q14: 'Controllo e Tempo', q15: 'Controllo e Tempo',
         };
 
         let totalScore = 0;
+        const quizDetails = []; // ARRAY PER I DETTAGLI QUIZ
+
         for (const [key, value] of Object.entries(formData)) {
-            if (key.startsWith('q') && questionMap[key]) {
+            if (key.startsWith('q')) {
                 const score = parseInt(value, 10);
-                if (!isNaN(score)) {
-                    scores[questionMap[key]] += score;
+                const questionNumber = key;
+                const axis = questionMap[key];
+
+                if (!isNaN(score) && axis) {
+                    scores[axis] += score;
                     totalScore += score;
+                    
+                    // Salva i dettagli per la tabella PDF
+                    const answerText = value === '0' ? 'Mai/Raramente' : (value === '1' ? 'A volte' : (value === '2' ? 'Spesso' : 'Sempre'));
+
+                    quizDetails.push({
+                        question: `Q${questionNumber.substring(1)} (${axis})`, 
+                        answer: answerText,
+                        score: score
+                    });
                 }
             }
         }
@@ -116,18 +117,19 @@
             radarScores: radarScores,
             impactScores: impactScores,
             top3Priorities: top3Priorities,
-            dateStr: dateStr
+            dateStr: dateStr,
+            quizDetails: quizDetails // NUOVA PROPRIETÀ
         };
     }
 
-    // Funzione esterna per calcolare e memorizzare i risultati (Non Modificata)
+    // Funzione esterna per calcolare e memorizzare i risultati
     window.calculateAndStoreResults = function (formData) {
         resultData = calculateResults(formData);
         console.log('Risultati calcolati:', resultData);
         return resultData;
     };
 
-    // ----- PDF (Logica RIVISTA per GARANTIRE il Grafico e il Salvataggio Asincrono) -----
+    // ----- PDF (Logica COMPLETA) -----
     async function generatePDF(isPremium = false) { 
         if (!resultData) return;
 
@@ -161,7 +163,7 @@
         const margin     = 40;
         let y            = margin;
 
-        // --- Header (Non Modificata)
+        // --- Header
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(28);
         doc.text("Report personalizzato", margin, y);
@@ -187,7 +189,7 @@
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Risultato (Non Modificata)
+        // --- Risultato
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Risultato", margin, y);
@@ -230,7 +232,7 @@
         y += 20;
         // Fine BLOCCO Benchmark
 
-        // --- Profilo Utente (Non Modificata)
+        // --- Profilo Utente
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Il tuo Profilo di Dipendenza Digitale", margin, y);
@@ -254,7 +256,7 @@
         y += 20;
 
         // **********************************************
-        // ******* INIZIO LOGICA GRAFICO RADAR CORRETTA *
+        // ******* INIZIO LOGICA GRAFICO RADAR **********
         // **********************************************
         
         doc.setFont("Helvetica", "bold");
@@ -278,7 +280,6 @@
                     datasets: [{
                         label: 'Punteggio Rischio',
                         data: dataPoints,
-                        // COLORI RIPRISTINATI AL BLU SCURO ORIGINALE (#003366)
                         backgroundColor: 'rgba(0, 51, 102, 0.2)', 
                         borderColor: 'rgba(0, 51, 102, 1)', 
                         pointBackgroundColor: 'rgba(0, 51, 102, 1)',
@@ -337,12 +338,11 @@
         // ********* FINE LOGICA GRAFICO RADAR **********
         // **********************************************
                         
-
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Riepilogo Punteggi di Impatto Dettagliati (Non Modificata)
+        // --- Riepilogo Punteggi di Impatto Dettagliati
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Riepilogo Punteggi di Impatto Dettagliati", margin, y);
@@ -362,7 +362,61 @@
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // --- Analisi e consigli personalizzati (Non Modificata)
+        // **********************************************
+        // ******* INIZIO LOGICA QUIZ COMPLETA **********
+        // **********************************************
+        
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("Le Tue Risposte Dettagliate al Quiz", margin, y);
+        y += 18;
+
+        // Estrai le risposte fornite in un formato per la tabella
+        const tableData = resultData.quizDetails.map(item => [
+            item.question,
+            item.answer,
+            item.score
+        ]);
+
+        // Impostazioni per la tabella
+        doc.autoTable({
+            startY: y,
+            head: [['Domanda', 'Risposta Fornita', 'Punteggio']],
+            body: tableData,
+            theme: 'striped',
+            headStyles: { 
+                fillColor: [0, 51, 102], // Blu scuro 
+                textColor: 255, 
+                fontStyle: 'bold' 
+            },
+            styles: { 
+                fontSize: 10, 
+                lineColor: 200, 
+                lineWidth: 0.5 
+            },
+            columnStyles: {
+                0: { cellWidth: 200 }, // Larghezza Domanda
+                1: { cellWidth: 150 }, // Larghezza Risposta
+                2: { cellWidth: 70, halign: 'center' } // Larghezza Punteggio centrato
+            },
+            didDrawPage: function(data) {
+                // Aggiorna y per sapere dove riprendere dopo la tabella
+                y = data.cursor.y + 20;
+            }
+        });
+
+        // Dopo la tabella, devi aggiornare la variabile 'y' in base all'ultima posizione
+        y = doc.autoTable.previous.finalY + 20;
+
+        doc.setDrawColor(200);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 20;
+
+        // **********************************************
+        // ********* FINE LOGICA QUIZ COMPLETA **********
+        // **********************************************
+
+        // --- Analisi e consigli personalizzati
         const analysisTexts = {
             "Basso rischio": "Il tuo rapporto con lo smartphone appare equilibrato. Sei un **utente consapevole** che utilizza la tecnologia come strumento senza esserne schiavo. La tua sfida non è eliminare l'uso, ma mantenere alta la guardia e continuare a migliorare l'efficienza d'uso per sfruttare la disconnessione come un vantaggio competitivo. **Consiglio:** Continua a monitorare i tuoi comportamenti, specialmente in momenti di stress, e utilizza le tue ore libere per attività profondamente rigeneranti (es. lettura, sport, hobby manuali).",
             "Rischio medio": "Il tuo comportamento digitale mostra **segnali chiari di potenziale dipendenza**. Hai sviluppato abitudini che stanno erodendo la tua concentrazione e il tuo tempo libero. Sei nel momento perfetto per agire con un piano mirato prima di scivolare nell'alto rischio e subire conseguenze più serie su sonno e relazioni. **La tua priorità è ristabilire i confini chiari** e applicare immediatamente le tecniche di disconnessione intenzionale che troverai nel piano d'azione. Agisci subito per riprendere il controllo del tuo tempo.",
@@ -474,7 +528,7 @@
             doc.text("Risorse consigliate", margin, y);
             y += 10; // Ridotto a 10px per far spazio
 
-            // Utilizzo di template literal per includere il testo HTML e le spiegazioni
+            // Testo HTML con le spiegazioni dettagliate
             const resourcesText = `
                 <p><strong>App:</strong> Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.</p>
                 
@@ -500,10 +554,9 @@
                 width: pageWidth - (2 * margin),
                 callback: function (doc) {
                     // *** IL FOOTER E LA CHIUSURA VENGONO ESEGUITI QUI! ***
-                    // La y è stata aggiornata dal doc.html. Usiamo la y dell'ultima tabella/elemento aggiunto (finalY)
                     y = doc.previousAutoTable.finalY + 12; 
                     
-                    // --- Footer (spostato qui per coerenza)
+                    // --- Footer
                     if (y > pageHeight - 60) { doc.addPage(); y = margin; }
                     doc.setDrawColor(200);
                     doc.line(margin, y, pageWidth - margin, y);
@@ -515,7 +568,7 @@
                     doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
                 }
             });
-            // IMPORTANTE: Usciamo qui per non eseguire la logica del report standard (e il suo salvataggio)
+            // IMPORTANTE: Usciamo qui per non eseguire la logica del report standard
             return; 
         } 
         
@@ -557,4 +610,4 @@
         getResult: () => resultData 
     };
 
-})(window);       
+})(window);
