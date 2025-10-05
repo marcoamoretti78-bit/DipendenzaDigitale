@@ -1,8 +1,129 @@
-/* eslint-disable no-unused-vars */
+
+    /* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
     let canvasElement = null;
 
+    // --- PARTE 1: Logica di Interazione e Caricamento Quiz ---
+
+    const quizQuestions = [
+        { text: "Appena sveglio, la prima cosa che fai è prendere lo smartphone?", name: "q1", category: "Sonno e Rituali" },
+        { text: "Controlli il telefono immediatamente se non è a portata di mano?", name: "q2", category: "Fuga ed Emozioni" },
+        { text: "Hai difficoltà a concentrarti su un compito senza controllare le notifiche?", name: "q3", category: "Attenzione e Produttività" },
+        { text: "Interrompi conversazioni o pasti per rispondere a messaggi o guardare lo schermo?", name: "q4", category: "Relazioni e Socialità" },
+        { text: "Ti senti ansioso o irritabile se devi stare senza telefono per ore?", name: "q5", category: "Fuga ed Emozioni" },
+        { text: "Lo usi come unica fonte di intrattenimento (es. quando sei in fila, in bagno o sul divano)?", name: "q6", category: "Controllo e Tempo" },
+        { text: "Guardare lo schermo è l'ultima cosa che fai prima di dormire?", name: "q7", category: "Sonno e Rituali" },
+        { text: "Ti capita di sbloccare il telefono senza un motivo preciso?", name: "q8", category: "Attenzione e Produttività" },
+        { text: "Ti senti obbligato a controllare i social network per paura di perderti qualcosa (FOMO)?", name: "q9", category: "Fuga ed Emozioni" },
+        { text: "Hai difficoltà a stabilire limiti di tempo per l'uso delle app?", name: "q10", category: "Controllo e Tempo" },
+        { text: "Hai mai avuto problemi a dormire o a svegliarti a causa dell'uso notturno?", name: "q11", category: "Sonno e Rituali" },
+        { text: "I tuoi amici/familiari ti hanno criticato per l'uso eccessivo del telefono?", name: "q12", category: "Relazioni e Socialità" },
+        { text: "Lo tieni a portata di mano anche quando lavori o studi su un PC?", name: "q13", category: "Attenzione e Produttività" },
+        { text: "Ti accorgi di usare il telefono come meccanismo di fuga da emozioni negative (noia, ansia)?", name: "q14", category: "Fuga ed Emozioni" },
+        { text: "Ti capita di usare il telefono in auto, anche se non strettamente necessario?", name: "q15", category: "Controllo e Tempo" },
+    ];
+
+    function renderQuiz() {
+        const formElement = document.getElementById('quizForm');
+        if (!formElement) return;
+
+        let html = '';
+        quizQuestions.forEach((q, index) => {
+            // Mapping categorie (per i colori nel tuo CSS, se esistente)
+            const categoryClass = q.category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            
+            html += `
+                <div class="question-block ${categoryClass}" data-category="${q.category}">
+                    <h4>${index + 1}. ${q.text}</h4>
+                    <div class="options">
+                        <label><input type="radio" name="${q.name}" value="0" required> Mai/Raramente (0)</label>
+                        <label><input type="radio" name="${q.name}" value="1" required> A volte (1)</label>
+                        <label><input type="radio" name="${q.name}" value="2" required> Spesso (2)</label>
+                        <label><input type="radio" name="${q.name}" value="3" required> Sempre (3)</label>
+                    </div>
+                </div>
+            `;
+        });
+        formElement.innerHTML = html;
+    }
+
+    function getFormData() {
+        const form = document.getElementById('quizForm');
+        const formData = {};
+        const inputs = form.querySelectorAll('input[type="radio"]:checked');
+
+        inputs.forEach(input => {
+            formData[input.name] = input.value;
+        });
+
+        formData.name = document.getElementById('userName').value.trim();
+        return formData;
+    }
+
+    function handleCalculate() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("Per favore, rispondi a tutte le domande prima di calcolare il risultato.");
+            form.reportValidity();
+            return;
+        }
+
+        const formData = getFormData();
+        
+        // Chiama la funzione di calcolo
+        window.calculateAndStoreResults(formData); 
+        
+        // Mostra i pulsanti di download
+        document.getElementById('paywall').classList.remove('hidden');
+        document.getElementById('calculateBtn').classList.add('hidden');
+        document.getElementById('resetBtn').classList.add('hidden');
+        
+        // Aggiunta dei pulsanti di download al paywall se non esistono
+        const paywall = document.getElementById('paywall');
+        if (paywall && !document.getElementById('downloadStandard')) {
+            paywall.innerHTML = `
+                <h3>Il tuo risultato è pronto!</h3>
+                <p>Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
+                <div class="cta-buttons" style="margin-top: 20px;">
+                    <button id="downloadStandard" class="btn outline" style="margin-right: 10px;">
+                        Scarica Report Base (GRATUITO)
+                    </button>
+                    <button id="downloadPremium" class="btn primary">
+                        Acquista Report Premium (1,99 € - Finto)
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('downloadStandard').addEventListener('click', () => {
+                window.__DD__.generatePDF(false); 
+            });
+
+            document.getElementById('downloadPremium').addEventListener('click', () => {
+                alert("Simulazione di acquisto completata. Generazione Report Premium.");
+                window.__DD__.generatePDF(true); 
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        
+        const calculateBtn = document.getElementById('calculateBtn');
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', handleCalculate);
+        }
+        
+        const resetBtn = document.getElementById('resetBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => window.location.reload());
+        }
+    });
+    
+    // --- FINE PARTE 1: Logica di Interazione ---
+    
+    // --------------------------------------------------------------------------------------
+    
     /**
      * @returns {HTMLCanvasElement}
      */
@@ -20,7 +141,6 @@
 
     // ----- LOGICA DI CALCOLO DEI RISULTATI -----
     function calculateResults(formData) {
-        // Punteggi per asse
         const scores = {
             'Sonno e Rituali': 0,
             'Fuga ed Emozioni': 0,
@@ -28,11 +148,8 @@
             'Relazioni e Socialità': 0,
             'Controllo e Tempo': 0,
         };
-        // Punteggio massimo per asse (3 domande x 3 punti max)
         const MAX_AXIS_SCORE = 9;
         const MAX_TOTAL_SCORE = 45;
-
-        // Mappatura domande -> asse
         const questionMap = {
             q1: 'Sonno e Rituali', q2: 'Sonno e Rituali', q3: 'Sonno e Rituali',
             q4: 'Fuga ed Emozioni', q5: 'Fuga ed Emozioni', q6: 'Fuga ed Emozioni',
@@ -42,7 +159,7 @@
         };
 
         let totalScore = 0;
-        const quizDetails = []; // ARRAY PER I DETTAGLI QUIZ
+        const quizDetails = []; 
 
         for (const [key, value] of Object.entries(formData)) {
             if (key.startsWith('q')) {
@@ -54,7 +171,6 @@
                     scores[axis] += score;
                     totalScore += score;
                     
-                    // Salva i dettagli per la tabella PDF
                     const answerMap = {
                          '0': 'Mai/Raramente', 
                          '1': 'A volte', 
@@ -72,7 +188,6 @@
             }
         }
 
-        // Calcolo Livello e Descrizione
         let level;
         if (totalScore <= 15) {
             level = 'Basso rischio';
@@ -82,34 +197,25 @@
             level = 'Rischio alto';
         }
 
-        // Calcolo Percentuale di Rischio
         const percentage = Math.round((totalScore / MAX_TOTAL_SCORE) * 100);
-
-        // Calcolo Score per Grafico Radar (scala 0-3)
         const radarScores = {};
         for (const axis in scores) {
-            // Normalizza 0-9 a 0-3
             radarScores[axis] = scores[axis] / 3;
         }
 
-        // Calcolo Punteggi di Impatto (percentuale di rischio max per asse)
         const impactScores = {};
         for (const axis in scores) {
-            // Normalizza 0-9 a 0-100%
             impactScores[axis] = Math.round((scores[axis] / MAX_AXIS_SCORE) * 100);
         }
 
-        // Identifica le 3 Priorità Maggiori
         const sortedImpacts = Object.entries(impactScores)
             .map(([axis, score]) => ({ axis, score }))
             .sort((a, b) => b.score - a.score);
 
-        // Filtra solo le priorità con un impatto superiore a un livello minimo (es. 50%)
         const top3Priorities = sortedImpacts
             .filter(p => p.score >= 50)
             .slice(0, 3);
         
-        // Data di oggi per il report
         const today = new Date();
         const dateStr = today.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
@@ -123,7 +229,7 @@
             impactScores: impactScores,
             top3Priorities: top3Priorities,
             dateStr: dateStr,
-            quizDetails: quizDetails // L'ARRAY CON I DETTAGLI DEL QUIZ
+            quizDetails: quizDetails 
         };
     }
 
@@ -134,36 +240,11 @@
         return resultData;
     };
     
-    // Funzione di utilità per trasformare una tabella HTML in un'immagine (sincrona)
-    async function htmlToImage(htmlContent, width) {
-        const div = document.createElement('div');
-        div.style.width = `${width}px`;
-        div.style.padding = '0';
-        div.style.margin = '0';
-        div.style.backgroundColor = 'white'; // Sfondo per evitare trasparenze
-        div.innerHTML = htmlContent;
-        // Aggiungi temporaneamente al corpo per permettere il rendering
-        document.body.appendChild(div);
+    // --- PARTE 2: Logica di Generazione PDF (con tabella quiz robusta) ---
 
-        // Usa html2canvas 
-        const canvas = await window.html2canvas(div, { 
-            scale: 2, 
-            logging: false,
-            width: width,
-            useCORS: true 
-        });
-        
-        // Rimuovi l'elemento temporaneo
-        document.body.removeChild(div);
-        
-        return canvas.toDataURL('image/png');
-    }
-
-    // ----- PDF (Logica COMPLETA e AGGIORNATA) -----
     async function generatePDF(isPremium = false) { 
         if (!resultData) return;
 
-        // Implementazione COMPLETA di writeParagraphs
         const writeParagraphs = (text) => {
             doc.setFontSize(12);
             const maxTextWidth = pageWidth - margin * 2;
@@ -172,7 +253,6 @@
             paragraphs.forEach((p, i) => {
                 const lines = doc.splitTextToSize(p, maxTextWidth);
                 lines.forEach(line => {
-                    // Controllo di pagina prima di ogni riga
                     if (y + lineHeight > pageHeight - margin) {
                         doc.addPage();
                         y = margin;
@@ -180,7 +260,6 @@
                     doc.text(line, margin, y);
                     y += lineHeight;
                 });
-                // Spazio tra paragrafi
                 if (i < paragraphs.length - 1) y += 8;
             });
         };
@@ -260,7 +339,6 @@
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
-        // Fine BLOCCO Benchmark
 
         // --- Profilo Utente
         doc.setFont("Helvetica", "bold");
@@ -301,7 +379,6 @@
         const dataPoints = Object.values(resultData.radarScores);
         const labels = Object.keys(resultData.radarScores);
         
-        // Creiamo una Promessa che si risolve quando Chart.js finisce di disegnare
         const chartRendered = new Promise(resolve => {
             window.__chart = new window.Chart(ctx, {
                 type: 'radar',
@@ -341,20 +418,17 @@
                     }
                 }
             });
-            // Fallback se l'animazione non parte
             if (!window.__chart.options.animation) {
                  resolve();
             }
         });
 
-        // Attendiamo che il grafico sia completato (la promessa si risolve)
         await chartRendered; 
 
         const imgData = radarCanvas.toDataURL('image/png', 1.0); 
         const radarSize = 350;
         const xOffset = (pageWidth - radarSize) / 2;
         
-        // Controllo di pagina prima di disegnare il grafico
         if (y + radarSize + 30 > pageHeight - margin) {
             doc.addPage();
             y = margin;
@@ -393,85 +467,60 @@
         y += 20;
 
         // ************************************************************
-        // ******* INIZIO LOGICA QUIZ (SOLUZIONE ROBÚSTA HTML->IMAGE) *
+        // ******* INIZIO LOGICA QUIZ (SOLUZIONE DOC.TEXT) ************
         // ************************************************************
         
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
         doc.text("Le Tue Risposte Dettagliate al Quiz", margin, y);
         y += 18;
-
-        // 1. Costruisci l'HTML della tabella
-        const tableWidth = pageWidth - (2 * margin);
-        let tableHTML = `
-            <style>
-                table { width: ${tableWidth}pt; border-collapse: collapse; font-size: 10pt; font-family: sans-serif; }
-                th, td { border: 1px solid #ccc; padding: 6px; }
-                th { background-color: #003366; color: white; text-align: left; }
-                /* Imposta larghezze fisse per HTML->Canvas */
-                td:nth-child(3) { text-align: center; width: 20%; }
-                td:nth-child(2) { width: 30%; }
-                td:nth-child(1) { width: 50%; } 
-            </style>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 50%;">Domanda</th>
-                        <th style="width: 30%;">Risposta Fornita</th>
-                        <th style="width: 20%; text-align: center;">Punteggio</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
         
-        resultData.quizDetails.forEach(item => {
-            tableHTML += `
-                <tr>
-                    <td>${item.question}</td>
-                    <td>${item.answer}</td>
-                    <td style="text-align: center;">${item.score}</td>
-                </tr>
-            `;
-        });
+        doc.setFontSize(10);
+        doc.setFont("Helvetica", "bold");
         
-        tableHTML += `</tbody></table>`;
+        const col1Pos = margin;
+        const col2Pos = margin + 200;
+        const col3Pos = pageWidth - margin - 50;
+        const lineHeightQuiz = 16;
+        
+        // Intestazioni
+        if (y + lineHeightQuiz > pageHeight - margin) { doc.addPage(); y = margin; }
+        doc.setFillColor(200, 200, 200); 
+        doc.rect(margin, y - 10, pageWidth - margin * 2, lineHeightQuiz + 4, 'F');
+        doc.text("Domanda", col1Pos, y);
+        doc.text("Risposta Fornita", col2Pos, y);
+        doc.text("Punteggio", col3Pos, y, { align: 'center' });
+        y += lineHeightQuiz + 4;
+        
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
 
-        // 2. Converti l'HTML in immagine
-        if (typeof window.html2canvas !== 'undefined') {
-            const tableImgData = await htmlToImage(tableHTML, tableWidth);
+        resultData.quizDetails.forEach((item, index) => {
+             // Cambio di pagina se necessario
+            if (y + lineHeightQuiz > pageHeight - margin) {
+                doc.addPage();
+                y = margin + 10; 
+            }
             
-            // Calcola le dimensioni nel PDF
-            const pdfWidth = tableWidth;
-            // Dobbiamo caricare l'immagine per avere le sue dimensioni originali
-            const tempImg = await new Promise(resolve => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.src = tableImgData;
-            });
+            // Colore di sfondo alternato
+            if (index % 2 === 0) {
+                 doc.setFillColor(245, 245, 245); 
+                 doc.rect(margin, y - 10, pageWidth - margin * 2, lineHeightQuiz, 'F');
+            }
 
-            const pdfHeight = tempImg.height * (pdfWidth / tempImg.width);
+            doc.text(item.question, col1Pos, y);
+            doc.text(item.answer, col2Pos, y);
+            doc.text(String(item.score), col3Pos, y, { align: 'center' });
+            y += lineHeightQuiz;
+        });
 
-            // Controlla il cambio pagina prima di inserire la tabella
-            if (y + pdfHeight + 20 > pageHeight - margin) { doc.addPage(); y = margin; }
-
-            // Aggiungi l'immagine al PDF
-            doc.addImage(tableImgData, 'PNG', margin, y, pdfWidth, pdfHeight);
-            y += pdfHeight + 20; // Aggiorna Y
-
-        } else {
-             // Fallback nel caso in cui html2canvas non sia caricato
-             doc.setFont("Helvetica", "normal");
-             doc.setFontSize(12);
-             writeParagraphs("Impossibile visualizzare la tabella dei quiz: libreria html2canvas mancante. Controlla il tuo index.html.");
-             y += 20;
-        }
-
+        y += 10;
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
         // ************************************************************
-        // ********* FINE LOGICA QUIZ (SOLUZIONE ROBÚSTA HTML->IMAGE) *
+        // ********* FINE LOGICA QUIZ (SOLUZIONE DOC.TEXT) ************
         // ************************************************************
 
         // --- Analisi e consigli personalizzati
@@ -483,6 +532,8 @@
 
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
+        
+        if (y + 40 > pageHeight - margin) { doc.addPage(); y = margin; }
         doc.text("Analisi e consigli personalizzati", margin, y);
         y += 18;
 
@@ -494,7 +545,6 @@
         // ******************************************************
         // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** // ******************************************************
         if (isPremium) {
-            // Aggiungi una nuova pagina prima del Piano d'Azione
             if (y > pageHeight - 60) { doc.addPage(); y = margin; }
             doc.addPage();
             y = margin;
@@ -584,14 +634,13 @@
             writeParagraphs(plan7.map(i => "• " + i).join("\n"));
             y += 12;
 
-            // --- Risorse (NUOVA VERSIONE CON SPIEGAZIONI E FOOTER INTEGRATO)
+            // --- Risorse
             if (y + 150 > pageHeight - margin) { doc.addPage(); y = margin; }
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Risorse consigliate", margin, y);
             y += 10; 
 
-            // Testo HTML con le spiegazioni dettagliate
             const resourcesText = `
                 <p><strong>App:</strong> Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.</p>
                 
@@ -609,7 +658,6 @@
                 <p><strong>Strumento:</strong> Sveglia tradizionale e orologio da polso per non dover guardare il telefono.</p>
             `;
 
-            // Aggiungiamo il testo formattato al PDF usando doc.html()
             await new Promise(resolve => {
                 doc.setFontSize(10);
                 doc.html(resourcesText, {
@@ -639,7 +687,6 @@
         // ******************************************************
         // ***** SEZIONE PER REPORT STANDARD (1,99€) ************ // ******************************************************
         
-        // Messaggio di upsell nel report standard (1,99€)
         if (y + 100 > pageHeight - margin) { doc.addPage(); y = margin; }
         
         doc.setFont("Helvetica", "bold");
@@ -674,4 +721,4 @@
         getResult: () => resultData 
     };
 
-})(window);
+})(window);   
