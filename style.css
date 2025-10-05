@@ -1,4 +1,4 @@
-/* style.css - Dipendenza Digitale - Versione Finale (Tutte le correzioni incluse) */
+/* style.css - Dipendenza Digitale - Versione FINALE e STABILE */
 
 :root {
     --primary: #003366; /* Blu scuro */
@@ -10,25 +10,24 @@
     --max-width: 900px;
 }
 
-/* --- Body (Corretto per Non Centrare la Navbar) --- */
+/* --- Body (Pulito per non interferire con la centratura) --- */
 body {
     font-family: Arial, sans-serif;
-    margin: 0; /* NON USARE 'AUTO' per non centrare globalmente */
+    margin: 0; 
     padding: 0;
     background-color: var(--secondary);
     color: var(--text-color);
     line-height: 1.6;
     min-height: 100vh; 
-    /* Tutte le regole di centratura globale (flex, align-items) sono state rimosse. */
 }
 
-/* --- Navigazione (Corretta per stare al 100% a Sinistra) --- */
+/* --- Navigazione (100% a Sinistra) --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     
-    /* Nessun max-width o margin: auto per permettere l'espansione al 100% */
+    /* Forza l'espansione al 100% */
     width: 100%; 
     max-width: none; 
 
@@ -52,15 +51,11 @@ body {
 .nav-links a {
     color: var(--primary);
     text-decoration: none;
-    padding: 8px 18px; /* AUMENTATO: 18px invece di 15px */
+    padding: 8px 15px; /* Padding originale per i link */
     border-radius: 4px;
     transition: background-color 0.3s;
-    box-sizing: border-box; /* Garanzia di non superare la larghezza */
-    /* Correggi lo spazio a destra del contenitore dei link */
-.nav-links {
-    padding-right: 10px; /* Aggiunge un po' di spazio a destra per non far "toccare" l'ultimo link */
-
 }
+
 .nav-links a:hover,
 .nav-links a.active {
     background-color: var(--secondary);
@@ -71,11 +66,11 @@ header.hero,
 section.features,
 section.deep-info,
 footer.footer {
-    max-width: var(--max-width); /* Limita la larghezza massima a 900px */
-    margin-left: auto;          /* Centra il blocco orizzontalmente */
-    margin-right: auto;         /* Centra il blocco orizzontalmente */
+    max-width: var(--max-width); 
+    margin-left: auto;          
+    margin-right: auto;         
     width: 100%;
-    padding: 20px; /* Spazio sui lati */
+    padding: 20px; 
     box-sizing: border-box;
 }
 
@@ -97,7 +92,7 @@ footer.footer {
     margin-bottom: 20px;
 }
 
-/* --- CAMPO NOME UTENTE --- */
+/* --- CAMPO NOME UTENTE (Corretto) --- */
 .name-field {
     display: flex;
     flex-direction: column;
@@ -295,7 +290,7 @@ footer.footer {
 }
 
 
-/* --- Footer (Corretto per la pagina informativa) --- */
+/* --- Footer (Include centratura per la pagina informativa e quiz) --- */
 .footer {
     max-width: var(--max-width);
     margin: 20px auto;
