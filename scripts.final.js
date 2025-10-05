@@ -1,4 +1,4 @@
- /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
     let canvasElement = null;
@@ -59,7 +59,7 @@
                          '0': 'Mai/Raramente', 
                          '1': 'A volte', 
                          '2': 'Spesso',
-                         '3': 'Sempre' // Assumendo che il range sia 0-3
+                         '3': 'Sempre' 
                     };
                     const answerText = answerMap[value] || 'Non risposto';
 
@@ -140,15 +140,17 @@
         div.style.width = `${width}px`;
         div.style.padding = '0';
         div.style.margin = '0';
+        div.style.backgroundColor = 'white'; // Sfondo per evitare trasparenze
         div.innerHTML = htmlContent;
         // Aggiungi temporaneamente al corpo per permettere il rendering
         document.body.appendChild(div);
 
-        // Usa html2canvas (assumendo sia caricato)
+        // Usa html2canvas 
         const canvas = await window.html2canvas(div, { 
             scale: 2, 
             logging: false,
-            width: width
+            width: width,
+            useCORS: true 
         });
         
         // Rimuovi l'elemento temporaneo
@@ -403,13 +405,13 @@
         const tableWidth = pageWidth - (2 * margin);
         let tableHTML = `
             <style>
-                table { width: ${tableWidth}pt; border-collapse: collapse; font-size: 10pt; table-layout: fixed; }
+                table { width: ${tableWidth}pt; border-collapse: collapse; font-size: 10pt; font-family: sans-serif; }
                 th, td { border: 1px solid #ccc; padding: 6px; }
                 th { background-color: #003366; color: white; text-align: left; }
                 /* Imposta larghezze fisse per HTML->Canvas */
-                td:nth-child(3) { text-align: center; width: 70pt; }
-                td:nth-child(2) { width: 150pt; }
-                td:nth-child(1) { width: ${tableWidth - 70 - 150}pt; } 
+                td:nth-child(3) { text-align: center; width: 20%; }
+                td:nth-child(2) { width: 30%; }
+                td:nth-child(1) { width: 50%; } 
             </style>
             <table>
                 <thead>
@@ -440,9 +442,17 @@
             
             // Calcola le dimensioni nel PDF
             const pdfWidth = tableWidth;
-            const tempImg = new Image();
-            tempImg.src = tableImgData;
+            // Dobbiamo caricare l'immagine per avere le sue dimensioni originali
+            const tempImg = await new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.src = tableImgData;
+            });
+
             const pdfHeight = tempImg.height * (pdfWidth / tempImg.width);
+
+            // Controlla il cambio pagina prima di inserire la tabella
+            if (y + pdfHeight + 20 > pageHeight - margin) { doc.addPage(); y = margin; }
 
             // Aggiungi l'immagine al PDF
             doc.addImage(tableImgData, 'PNG', margin, y, pdfWidth, pdfHeight);
@@ -452,7 +462,7 @@
              // Fallback nel caso in cui html2canvas non sia caricato
              doc.setFont("Helvetica", "normal");
              doc.setFontSize(12);
-             writeParagraphs("Impossibile visualizzare la tabella dei quiz: libreria html2canvas mancante.");
+             writeParagraphs("Impossibile visualizzare la tabella dei quiz: libreria html2canvas mancante. Controlla il tuo index.html.");
              y += 20;
         }
 
@@ -664,4 +674,4 @@
         getResult: () => resultData 
     };
 
-})(window);        
+})(window);
