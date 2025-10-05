@@ -10,13 +10,31 @@
     --max-width: 900px;
 }
 
+/* style.css - (Sezione Body) */
+
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: 0 auto; /* AGGIUNTO: Permette al body di centrare i contenuti se più piccolo dello schermo */
     padding: 0;
     background-color: var(--secondary);
     color: var(--text-color);
     line-height: 1.6;
+    /* Opzionale: se vuoi che lo sfondo si estenda, ma il contenuto rimanga centrato */
+    display: flex; /* AGGIUNTO: Per usare i flexbox per centrare il contenuto */
+    flex-direction: column; /* AGGIUNTO: Contenuto in colonna */
+    align-items: center; /* AGGIUNTO: Centra orizzontalmente il contenuto */
+    min-height: 100vh; /* AGGIUNTO: Copre l'intera altezza dello schermo */
+}
+
+/* Nota: IL BLOCCO .container DEVE RESTARE COSI' per avere la larghezza limitata */
+.container {
+    max-width: var(--max-width);
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Aggiunto per funzionare bene con align-items */
 }
 
 /* --- Navigazione --- */
