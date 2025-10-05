@@ -18,7 +18,7 @@
         return canvasElement;
     }
 
-    // ----- LOGICA DI CALCOLO DEI RISULTATI (Corretta con Dettagli Quiz) -----
+    // ----- LOGICA DI CALCOLO DEI RISULTATI -----
     function calculateResults(formData) {
         // Punteggi per asse
         const scores = {
@@ -55,12 +55,11 @@
                     totalScore += score;
                     
                     // Salva i dettagli per la tabella PDF
-                    // Assumendo che i valori siano 0, 1, 2, 3
                     const answerMap = {
                          '0': 'Mai/Raramente', 
                          '1': 'A volte', 
                          '2': 'Spesso',
-                         '3': 'Sempre'
+                         '3': 'Sempre' // Assumendo che il range sia 0-3
                     };
                     const answerText = answerMap[value] || 'Non risposto';
 
@@ -134,6 +133,29 @@
         console.log('Risultati calcolati:', resultData);
         return resultData;
     };
+    
+    // Funzione di utilità per trasformare una tabella HTML in un'immagine (sincrona)
+    async function htmlToImage(htmlContent, width) {
+        const div = document.createElement('div');
+        div.style.width = `${width}px`;
+        div.style.padding = '0';
+        div.style.margin = '0';
+        div.innerHTML = htmlContent;
+        // Aggiungi temporaneamente al corpo per permettere il rendering
+        document.body.appendChild(div);
+
+        // Usa html2canvas (assumendo sia caricato)
+        const canvas = await window.html2canvas(div, { 
+            scale: 2, 
+            logging: false,
+            width: width
+        });
+        
+        // Rimuovi l'elemento temporaneo
+        document.body.removeChild(div);
+        
+        return canvas.toDataURL('image/png');
+    }
 
     // ----- PDF (Logica COMPLETA e AGGIORNATA) -----
     async function generatePDF(isPremium = false) { 
@@ -368,9 +390,9 @@
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // **********************************************
-        // ******* INIZIO LOGICA QUIZ (FORZATA HTML) ****
-        // **********************************************
+        // ************************************************************
+        // ******* INIZIO LOGICA QUIZ (SOLUZIONE ROBÚSTA HTML->IMAGE) *
+        // ************************************************************
         
         doc.setFont("Helvetica", "bold");
         doc.setFontSize(14);
@@ -378,21 +400,23 @@
         y += 18;
 
         // 1. Costruisci l'HTML della tabella
+        const tableWidth = pageWidth - (2 * margin);
         let tableHTML = `
             <style>
-                table { width: 100%; border-collapse: collapse; font-size: 10pt; table-layout: fixed; }
+                table { width: ${tableWidth}pt; border-collapse: collapse; font-size: 10pt; table-layout: fixed; }
                 th, td { border: 1px solid #ccc; padding: 6px; }
                 th { background-color: #003366; color: white; text-align: left; }
+                /* Imposta larghezze fisse per HTML->Canvas */
                 td:nth-child(3) { text-align: center; width: 70pt; }
                 td:nth-child(2) { width: 150pt; }
-                td:nth-child(1) { width: 200pt; }
+                td:nth-child(1) { width: ${tableWidth - 70 - 150}pt; } 
             </style>
             <table>
                 <thead>
                     <tr>
-                        <th>Domanda</th>
-                        <th>Risposta Fornita</th>
-                        <th>Punteggio</th>
+                        <th style="width: 50%;">Domanda</th>
+                        <th style="width: 30%;">Risposta Fornita</th>
+                        <th style="width: 20%; text-align: center;">Punteggio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -403,35 +427,42 @@
                 <tr>
                     <td>${item.question}</td>
                     <td>${item.answer}</td>
-                    <td>${item.score}</td>
+                    <td style="text-align: center;">${item.score}</td>
                 </tr>
             `;
         });
         
         tableHTML += `</tbody></table>`;
 
-        // 2. Inietta l'HTML nel PDF
-        // Usiamo un callback per determinare la nuova posizione Y, ma salviamo dopo
-        await new Promise(resolve => {
-            doc.html(tableHTML, {
-                x: margin,
-                y: y,
-                width: pageWidth - (2 * margin),
-                callback: function (doc) {
-                    y = doc.previousAutoTable.finalY + 20; // Aggiorna y basandoci sull'altezza della tabella
-                    resolve();
-                }
-            });
-        });
+        // 2. Converti l'HTML in immagine
+        if (typeof window.html2canvas !== 'undefined') {
+            const tableImgData = await htmlToImage(tableHTML, tableWidth);
+            
+            // Calcola le dimensioni nel PDF
+            const pdfWidth = tableWidth;
+            const tempImg = new Image();
+            tempImg.src = tableImgData;
+            const pdfHeight = tempImg.height * (pdfWidth / tempImg.width);
+
+            // Aggiungi l'immagine al PDF
+            doc.addImage(tableImgData, 'PNG', margin, y, pdfWidth, pdfHeight);
+            y += pdfHeight + 20; // Aggiorna Y
+
+        } else {
+             // Fallback nel caso in cui html2canvas non sia caricato
+             doc.setFont("Helvetica", "normal");
+             doc.setFontSize(12);
+             writeParagraphs("Impossibile visualizzare la tabella dei quiz: libreria html2canvas mancante.");
+             y += 20;
+        }
 
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
-        // **********************************************
-        // ********* FINE LOGICA QUIZ (FORZATA HTML) ****
-        // **********************************************
-
+        // ************************************************************
+        // ********* FINE LOGICA QUIZ (SOLUZIONE ROBÚSTA HTML->IMAGE) *
+        // ************************************************************
 
         // --- Analisi e consigli personalizzati
         const analysisTexts = {
@@ -454,6 +485,7 @@
         // ***** SEZIONI EXTRA SOLO PER REPORT PREMIUM (7,99€) ** // ******************************************************
         if (isPremium) {
             // Aggiungi una nuova pagina prima del Piano d'Azione
+            if (y > pageHeight - 60) { doc.addPage(); y = margin; }
             doc.addPage();
             y = margin;
 
@@ -486,6 +518,8 @@
 
                     doc.setFont("Helvetica", "bold");
                     doc.setFontSize(13);
+                    
+                    if (y + 40 > pageHeight - margin) { doc.addPage(); y = margin; }
                     doc.text(title, margin, y);
                     y += 16;
 
@@ -497,6 +531,7 @@
             }
 
             // --- Piano 7 giorni 
+            if (y + 40 > pageHeight - margin) { doc.addPage(); y = margin; }
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Piano 7 giorni di Digital Detox", margin, y);
@@ -540,10 +575,11 @@
             y += 12;
 
             // --- Risorse (NUOVA VERSIONE CON SPIEGAZIONI E FOOTER INTEGRATO)
+            if (y + 150 > pageHeight - margin) { doc.addPage(); y = margin; }
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
             doc.text("Risorse consigliate", margin, y);
-            y += 10; // Ridotto a 10px per far spazio
+            y += 10; 
 
             // Testo HTML con le spiegazioni dettagliate
             const resourcesText = `
@@ -564,29 +600,29 @@
             `;
 
             // Aggiungiamo il testo formattato al PDF usando doc.html()
-            doc.setFontSize(10);
-            doc.html(resourcesText, {
-                x: margin,
-                y: y,
-                width: pageWidth - (2 * margin),
-                callback: function (doc) {
-                    // *** IL FOOTER E LA CHIUSURA VENGONO ESEGUITI QUI! ***
-                    // Usiamo la y dell'ultima operazione doc.html()
-                    y = doc.previousAutoTable.finalY + 12; 
+            await new Promise(resolve => {
+                doc.setFontSize(10);
+                doc.html(resourcesText, {
+                    x: margin,
+                    y: y,
+                    width: pageWidth - (2 * margin),
+                    callback: function (doc) {
+                        y = doc.previousAutoTable.finalY + 12; 
+                        
+                        // --- Footer
+                        if (y > pageHeight - 60) { doc.addPage(); y = margin; }
+                        doc.setDrawColor(200);
+                        doc.line(margin, y, pageWidth - margin, y);
+                        y += 16;
+                        doc.setFontSize(10);
+                        doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
                     
-                    // --- Footer
-                    if (y > pageHeight - 60) { doc.addPage(); y = margin; }
-                    doc.setDrawColor(200);
-                    doc.line(margin, y, pageWidth - margin, y);
-                    y += 16;
-                    doc.setFontSize(10);
-                    doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
-                
-                    // Salvataggio finale del REPORT PREMIUM
-                    doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
-                }
+                        // Salvataggio finale del REPORT PREMIUM
+                        doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
+                        resolve();
+                    }
+                });
             });
-            // IMPORTANTE: Usciamo qui per non eseguire la logica del report standard
             return; 
         } 
         
@@ -628,4 +664,4 @@
         getResult: () => resultData 
     };
 
-})(window);
+})(window);        
