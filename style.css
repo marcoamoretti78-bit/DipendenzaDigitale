@@ -42,10 +42,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     
-    /* REGOLE DI CENTRATURA RIMOSSE: la navbar torna al 100% di larghezza */
-    /* max-width: var(--max-width); */
-    /* margin: 0 auto; */
+    /* REGOLE DI ALLINEAMENTO A SINISTRA E DI ESPANSIONE: */
+    width: 100%; /* Forza la navbar a occupare l'intera larghezza */
+    max-width: none; /* Rimuove qualsiasi limite di larghezza */
+    margin-left: 0;  /* Allinea a sinistra se il body è centrato */
+    margin-right: 0; /* Rimuove margini auto non desiderati */
+}
 
     /* Regole estetiche originali */
     padding: 10px 20px;
