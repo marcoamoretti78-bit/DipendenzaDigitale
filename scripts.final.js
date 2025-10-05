@@ -652,7 +652,7 @@
             writeParagraphs(plan7.map(i => "• " + i).join("\n"));
             y += 12;
 
-            // --- Risorse (CORREZIONE: Rimosso doc.html per stabilità)
+            // --- Risorse (DESCRIZIONI AMPLIATE E STABILI)
             if (y + 150 > pageHeight - margin) { doc.addPage(); y = margin; }
             doc.setFont("Helvetica", "bold");
             doc.setFontSize(14);
@@ -663,16 +663,16 @@
             doc.setFontSize(12);
 
             const resourcesText = `
-**App per il Controllo:** Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.
+**App per il Controllo:** Screen Time (iOS) / Digital Wellbeing (Android) per monitorare e **limitare in modo rigido** il tempo speso sulle app che causano più distrazione.
 
 **Libri Consigliati:**
-• 'Digital Minimalism' (Cal Newport)
-• 'How to Break Up with Your Phone' (C. Price)
+• 'Digital Minimalism' (Cal Newport): Un testo fondamentale per riorganizzare la tua vita digitale, concentrandoti solo sull'uso intenzionale della tecnologia che aggiunge valore.
+• 'How to Break Up with Your Phone' (C. Price): Una guida pratica passo passo per costruire abitudini più sane e staccarsi dalla dipendenza.
 
 **Tecniche Avanzate:**
-• **Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause.
-• **Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni.
-• **Journaling serale:** Scrivere a mano pensieri e preoccupazioni prima di dormire, evitando lo smartphone.
+• **Tecnica del Pomodoro (per il Focus):** Consiste nel suddividere il lavoro in intervalli intensivi di 25 minuti (Pomodori) seguiti da brevi pause di 5 minuti. Fornisce un senso di urgenza e riduce la tentazione di controllare il telefono.
+• **Blocchi di Deep Work:** Dedicare lunghe sessioni (tipicamente 90 minuti) di lavoro intensivo e senza alcuna distrazione. Durante questi blocchi, il telefono deve essere in modalità aereo e fuori dalla vista.
+• **Journaling serale (per l'Ansia):** Scrivere a mano pensieri, preoccupazioni e il piano per il giorno successivo prima di dormire. Questo "svuota la mente" e riduce la necessità di prendere in mano lo smartphone per placare l'ansia notturna.
 `;
             writeParagraphs(resourcesText.trim());
             y += 12;
@@ -730,8 +730,9 @@
 
 })(window);
 
- 
-                   
-
+          
+     
+     
+         
 
     
