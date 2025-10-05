@@ -39,14 +39,19 @@ body {
 
 /* --- Navigazione --- */
 .navbar {
+    /* Il contenuto interno della navbar DEVE essere distribuito, come era prima */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* <-- DISTRIBUISCE LOGO/TITOLO A SINISTRA e LINK A DESTRA */
     align-items: center;
+    
+    /* Il blocco navbar COMPLETO viene centrato e limitato */
+    max-width: var(--max-width); /* Limita la larghezza a 900px */
+    margin: 0 auto;             /* Centra la navbar sullo schermo */
+    
+    /* Aggiungiamo padding e sfondo ai bordi della navbar (altrimenti il max-width la restringe troppo) */
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    max-width: var(--max-width); /* Limita la larghezza massima a 900px (o quella definita in :root) */
-    margin: 0 auto;             /* Centra il blocco orizzontalmente sullo schermo */
 }
 
 .navbar .logo {
