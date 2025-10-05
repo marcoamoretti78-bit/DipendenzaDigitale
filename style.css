@@ -45,6 +45,8 @@ body {
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-width: var(--max-width); /* Limita la larghezza massima a 900px (o quella definita in :root) */
+    margin: 0 auto;             /* Centra il blocco orizzontalmente sullo schermo */
 }
 
 .navbar .logo {
