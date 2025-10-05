@@ -429,7 +429,7 @@
                             suggestedMax: 3, 
                             pointLabels: { 
                                 font: { 
-                                    // LA MODIFICA È QUI: FONT SIZE A 14
+                                    // REIMPOSTATO AL VALORE DESIDERATO DI 14PX (stabile)
                                     size: 14, 
                                     weight: 'bold' 
                                 } 
@@ -735,18 +735,4 @@
     };
 
 })(window);
-
-   
-
-        
-                        
     
-   
-       
-      
-      
-  
-            
-      
-                       
-      
