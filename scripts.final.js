@@ -55,7 +55,14 @@
                     totalScore += score;
                     
                     // Salva i dettagli per la tabella PDF
-                    const answerText = value === '0' ? 'Mai/Raramente' : (value === '1' ? 'A volte' : (value === '2' ? 'Spesso' : 'Sempre'));
+                    // Assumendo che i valori siano 0, 1, 2, 3
+                    const answerMap = {
+                         '0': 'Mai/Raramente', 
+                         '1': 'A volte', 
+                         '2': 'Spesso',
+                         '3': 'Sempre'
+                    };
+                    const answerText = answerMap[value] || 'Non risposto';
 
                     quizDetails.push({
                         question: `Q${questionNumber.substring(1)} (${axis})`, 
@@ -117,7 +124,7 @@
             impactScores: impactScores,
             top3Priorities: top3Priorities,
             dateStr: dateStr,
-            quizDetails: quizDetails // <-- QUESTO ERA L'ERRORE! ORA È INCLUSO.
+            quizDetails: quizDetails // L'ARRAY CON I DETTAGLI DEL QUIZ
         };
     }
 
@@ -128,7 +135,7 @@
         return resultData;
     };
 
-    // ----- PDF (Logica COMPLETA) -----
+    // ----- PDF (Logica COMPLETA e AGGIORNATA) -----
     async function generatePDF(isPremium = false) { 
         if (!resultData) return;
 
@@ -362,7 +369,7 @@
         y += 20;
 
         // **********************************************
-        // ******* INIZIO LOGICA QUIZ COMPLETA **********
+        // ******* INIZIO LOGICA QUIZ (FORZATA HTML) ****
         // **********************************************
         
         doc.setFont("Helvetica", "bold");
@@ -370,51 +377,61 @@
         doc.text("Le Tue Risposte Dettagliate al Quiz", margin, y);
         y += 18;
 
-        // Estrai le risposte fornite in un formato per la tabella
-        // QUI USIAMO resultData.quizDetails che ora è garantito
-        const tableData = resultData.quizDetails.map(item => [
-            item.question,
-            item.answer,
-            item.score
-        ]);
-
-        // Impostazioni per la tabella
-        doc.autoTable({
-            startY: y,
-            head: [['Domanda', 'Risposta Fornita', 'Punteggio']],
-            body: tableData,
-            theme: 'striped',
-            headStyles: { 
-                fillColor: [0, 51, 102], // Blu scuro 
-                textColor: 255, 
-                fontStyle: 'bold' 
-            },
-            styles: { 
-                fontSize: 10, 
-                lineColor: 200, 
-                lineWidth: 0.5 
-            },
-            columnStyles: {
-                0: { cellWidth: 200 }, // Larghezza Domanda
-                1: { cellWidth: 150 }, // Larghezza Risposta
-                2: { cellWidth: 70, halign: 'center' } // Larghezza Punteggio centrato
-            },
-            didDrawPage: function(data) {
-                // Aggiorna y per sapere dove riprendere dopo la tabella
-                y = data.cursor.y + 20;
-            }
+        // 1. Costruisci l'HTML della tabella
+        let tableHTML = `
+            <style>
+                table { width: 100%; border-collapse: collapse; font-size: 10pt; table-layout: fixed; }
+                th, td { border: 1px solid #ccc; padding: 6px; }
+                th { background-color: #003366; color: white; text-align: left; }
+                td:nth-child(3) { text-align: center; width: 70pt; }
+                td:nth-child(2) { width: 150pt; }
+                td:nth-child(1) { width: 200pt; }
+            </style>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Domanda</th>
+                        <th>Risposta Fornita</th>
+                        <th>Punteggio</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
+        resultData.quizDetails.forEach(item => {
+            tableHTML += `
+                <tr>
+                    <td>${item.question}</td>
+                    <td>${item.answer}</td>
+                    <td>${item.score}</td>
+                </tr>
+            `;
         });
+        
+        tableHTML += `</tbody></table>`;
 
-        // Dopo la tabella, devi aggiornare la variabile 'y' in base all'ultima posizione
-        y = doc.autoTable.previous.finalY + 20;
+        // 2. Inietta l'HTML nel PDF
+        // Usiamo un callback per determinare la nuova posizione Y, ma salviamo dopo
+        await new Promise(resolve => {
+            doc.html(tableHTML, {
+                x: margin,
+                y: y,
+                width: pageWidth - (2 * margin),
+                callback: function (doc) {
+                    y = doc.previousAutoTable.finalY + 20; // Aggiorna y basandoci sull'altezza della tabella
+                    resolve();
+                }
+            });
+        });
 
         doc.setDrawColor(200);
         doc.line(margin, y, pageWidth - margin, y);
         y += 20;
 
         // **********************************************
-        // ********* FINE LOGICA QUIZ COMPLETA **********
+        // ********* FINE LOGICA QUIZ (FORZATA HTML) ****
         // **********************************************
+
 
         // --- Analisi e consigli personalizzati
         const analysisTexts = {
@@ -554,6 +571,7 @@
                 width: pageWidth - (2 * margin),
                 callback: function (doc) {
                     // *** IL FOOTER E LA CHIUSURA VENGONO ESEGUITI QUI! ***
+                    // Usiamo la y dell'ultima operazione doc.html()
                     y = doc.previousAutoTable.finalY + 12; 
                     
                     // --- Footer
@@ -610,5 +628,4 @@
         getResult: () => resultData 
     };
 
-})(window);    
- 
+})(window);
