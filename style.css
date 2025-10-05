@@ -1,4 +1,4 @@
-/* style.css - Dipendenza Digitale - Versione Finale */
+/* style.css - Dipendenza Digitale - Versione Finale (con colori grafico ripristinati) */
 
 :root {
     --primary: #003366; /* Blu scuro */
@@ -72,7 +72,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* --- CAMPO NOME UTENTE (CORREZIONE - RISOLVE IL PROBLEMA DEL CAMPO PICCOLO) --- */
+/* --- CAMPO NOME UTENTE --- */
 .name-field {
     display: flex;
     flex-direction: column;
@@ -91,7 +91,7 @@ body {
 
 #userName {
     padding: 10px 15px;
-    font-size: 1.1em; /* Reso più grande */
+    font-size: 1.1em;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     width: 100%;
@@ -103,7 +103,6 @@ body {
     border-color: var(--accent);
     outline: none;
 }
-/* -------------------------------------------------------------------------- */
 
 /* --- Quiz Structure --- */
 .question {
@@ -143,7 +142,7 @@ body {
     accent-color: var(--accent);
 }
 
-/* --- Pulsanti Azione (CORREZIONE - RISOLVE IL PROBLEMA DEI PULSANTI VERDI) --- */
+/* --- Pulsanti Azione --- */
 .actions {
     display: flex;
     justify-content: space-between;
@@ -163,12 +162,12 @@ body {
 }
 
 .btn.primary {
-    background-color: var(--accent); /* VERDE! */
+    background-color: var(--accent);
     color: white;
 }
 
 .btn.primary:hover {
-    background-color: #15803d; /* Verde più scuro all'hover */
+    background-color: #15803d;
 }
 
 .btn.outline {
@@ -185,7 +184,6 @@ body {
     opacity: 0.6;
     cursor: not-allowed;
 }
-/* ------------------------------------------------------------------------- */
 
 
 /* --- Paywall --- */
@@ -226,7 +224,7 @@ body {
     display: none !important;
 }
 
-/* Stili per i pulsanti upsell generati da JS (sono .btn.primary) */
+/* Stili per i pulsanti upsell generati da JS */
 #paypal-button-container {
     display: flex;
     flex-direction: column;
