@@ -330,3 +330,15 @@ body {
         margin-bottom: 10px;
     }
 }
+/* Centratura dei contenuti informativi di index.html */
+header.hero,
+section.features,
+section.deep-info,
+footer.footer {
+    max-width: var(--max-width); /* Limita la larghezza massima come il quiz (900px) */
+    margin-left: auto;          /* Centra il blocco orizzontalmente */
+    margin-right: auto;         /* Centra il blocco orizzontalmente */
+    width: 100%;
+    padding: 20px; /* Assicura un po' di spazio sui lati */
+    box-sizing: border-box;
+}
