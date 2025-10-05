@@ -1,4 +1,3 @@
-     
  /* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
@@ -118,7 +117,7 @@
             impactScores: impactScores,
             top3Priorities: top3Priorities,
             dateStr: dateStr,
-            quizDetails: quizDetails // NUOVA PROPRIETÀ
+            quizDetails: quizDetails // <-- QUESTO ERA L'ERRORE! ORA È INCLUSO.
         };
     }
 
@@ -372,6 +371,7 @@
         y += 18;
 
         // Estrai le risposte fornite in un formato per la tabella
+        // QUI USIAMO resultData.quizDetails che ora è garantito
         const tableData = resultData.quizDetails.map(item => [
             item.question,
             item.answer,
@@ -610,4 +610,5 @@
         getResult: () => resultData 
     };
 
-})(window);
+})(window);    
+ 
