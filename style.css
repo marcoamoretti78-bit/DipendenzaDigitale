@@ -1,4 +1,4 @@
-/* style.css - Dipendenza Digitale - Versione Finale (con colori grafico ripristinati) */
+/* style.css - Dipendenza Digitale - Versione Finale (Tutte le correzioni incluse) */
 
 :root {
     --primary: #003366; /* Blu scuro */
@@ -10,50 +10,28 @@
     --max-width: 900px;
 }
 
-/* style.css - (Sezione Body) */
-
+/* --- Body (Corretto per Non Centrare la Navbar) --- */
 body {
     font-family: Arial, sans-serif;
-    margin: 0 auto; /* AGGIUNTO: Permette al body di centrare i contenuti se più piccolo dello schermo */
+    margin: 0; /* NON USARE 'AUTO' per non centrare globalmente */
     padding: 0;
     background-color: var(--secondary);
     color: var(--text-color);
     line-height: 1.6;
-    /* Opzionale: se vuoi che lo sfondo si estenda, ma il contenuto rimanga centrato */
-    display: flex; /* AGGIUNTO: Per usare i flexbox per centrare il contenuto */
-    flex-direction: column; /* AGGIUNTO: Contenuto in colonna */
-    align-items: center; /* AGGIUNTO: Centra orizzontalmente il contenuto */
-    min-height: 100vh; /* AGGIUNTO: Copre l'intera altezza dello schermo */
+    min-height: 100vh; 
+    /* Tutte le regole di centratura globale (flex, align-items) sono state rimosse. */
 }
 
-/* Nota: IL BLOCCO .container DEVE RESTARE COSI' per avere la larghezza limitata */
-.container {
-    max-width: var(--max-width);
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Aggiunto per funzionare bene con align-items */
-}
-
-/* --- Navigazione --- */
+/* --- Navigazione (Corretta per stare al 100% a Sinistra) --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     
-    /* REGOLE DI ALLINEAMENTO A SINISTRA E DI ESPANSIONE: */
-    width: 100%; /* Forza la navbar a occupare l'intera larghezza */
-    max-width: none; /* Rimuove qualsiasi limite di larghezza */
-    margin-left: 0;  /* Allinea a sinistra se il body è centrato */
-    margin-right: 0; /* Rimuove margini auto non desiderati */
-}
+    /* Nessun max-width o margin: auto per permettere l'espansione al 100% */
+    width: 100%; 
+    max-width: none; 
 
-    /* Regole estetiche originali */
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -84,10 +62,23 @@ body {
     background-color: var(--secondary);
 }
 
-/* --- Contenitore Principale --- */
+/* --- Centratura dei Contenuti di index.html (Pagine Informative) --- */
+header.hero,
+section.features,
+section.deep-info,
+footer.footer {
+    max-width: var(--max-width); /* Limita la larghezza massima a 900px */
+    margin-left: auto;          /* Centra il blocco orizzontalmente */
+    margin-right: auto;         /* Centra il blocco orizzontalmente */
+    width: 100%;
+    padding: 20px; /* Spazio sui lati */
+    box-sizing: border-box;
+}
+
+/* --- Contenitore Principale (Pagina Quiz) --- */
 .container {
     max-width: var(--max-width);
-    margin: 20px auto;
+    margin: 20px auto; /* Centratura */
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -300,7 +291,7 @@ body {
 }
 
 
-/* --- Footer --- */
+/* --- Footer (Corretto per la pagina informativa) --- */
 .footer {
     max-width: var(--max-width);
     margin: 20px auto;
@@ -329,16 +320,4 @@ body {
         width: 100%;
         margin-bottom: 10px;
     }
-}
-/* Centratura dei contenuti informativi di index.html */
-header.hero,
-section.features,
-section.deep-info,
-footer.footer {
-    max-width: var(--max-width); /* Limita la larghezza massima come il quiz (900px) */
-    margin-left: auto;          /* Centra il blocco orizzontalmente */
-    margin-right: auto;         /* Centra il blocco orizzontalmente */
-    width: 100%;
-    padding: 20px; /* Assicura un po' di spazio sui lati */
-    box-sizing: border-box;
 }
