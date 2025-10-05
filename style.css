@@ -1,4 +1,4 @@
-/* style.css - Dipendenza Digitale - Versione FINALE e STABILE */
+/* style.css - Dipendenza Digitale - Versione FINALE STABILE (Layout e Funzionalità OK) */
 
 :root {
     --primary: #003366; /* Blu scuro */
@@ -51,7 +51,7 @@ body {
 .nav-links a {
     color: var(--primary);
     text-decoration: none;
-    padding: 8px 15px; /* Padding originale per i link */
+    padding: 8px 15px; /* Padding originale */
     border-radius: 4px;
     transition: background-color 0.3s;
 }
@@ -92,7 +92,7 @@ footer.footer {
     margin-bottom: 20px;
 }
 
-/* --- CAMPO NOME UTENTE (Corretto) --- */
+/* --- CAMPO NOME UTENTE --- */
 .name-field {
     display: flex;
     flex-direction: column;
@@ -290,7 +290,7 @@ footer.footer {
 }
 
 
-/* --- Footer (Include centratura per la pagina informativa e quiz) --- */
+/* --- Footer --- */
 .footer {
     max-width: var(--max-width);
     margin: 20px auto;
