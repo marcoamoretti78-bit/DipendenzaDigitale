@@ -1,4 +1,4 @@
- /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 (function (window) {
     let resultData = null;
     let canvasElement = null;
@@ -22,7 +22,6 @@
         { text: "Lo tieni a portata di mano anche quando lavori o studi su un PC?", name: "q13", category: "Attenzione e Produttività" },
         { text: "Ti accorgi di usare il telefono come meccanismo di fuga da emozioni negative (noia, ansia)?", name: "q14", category: "Fuga ed Emozioni" },
         { text: "Ti capita di usare il telefono in auto, anche se non strettamente necessario?", name: "q15", category: "Controllo e Tempo" },
-        // Le 5 domande aggiunte per arrivare a 20 e riequilibrare gli assi
         { text: "Controlli spesso il telefono anche quando non ricevi notifiche?", name: "q16", category: "Attenzione e Produttività" },
         { text: "Preferisci comunicare online piuttosto che di persona?", name: "q17", category: "Relazioni e Socialità" },
         { text: "Hai mai nascosto l'uso del telefono ad altre persone?", name: "q18", category: "Fuga ed Emozioni" },
@@ -30,7 +29,7 @@
         { text: "Ti senti spesso stanco a causa dell'uso prolungato dello schermo?", name: "q20", category: "Controllo e Tempo" },
     ];
     
-    // Costanti per i prezzi (CORRETTI)
+    // Costanti per i prezzi
     const PRICE_STANDARD = "1,99 €";
     const PRICE_PREMIUM = "7,99 €";
 
@@ -88,7 +87,7 @@
         
         const paywall = document.getElementById('paywall');
         if (paywall && !document.getElementById('downloadStandard')) {
-            // PULSANTI DI SCARICO RIPRISTINATI CON DESCRIZIONE PREMIUM
+            // HTML del pulsante Report Premium ESATTAMENTE come richiesto
             paywall.innerHTML = `
                 <h3>Il tuo risultato è pronto!</h3>
                 <p>Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
@@ -149,7 +148,7 @@
 
     // ----- LOGICA DI CALCOLO DEI RISULTATI (20 domande - Max 60) -----
     function calculateResults(formData) {
-        // 20 Domande divise in 5 Assi (4 domande per asse - corrette per 5/4/4/3/4)
+        // Punteggi per Asse
         const scores = {
             'Sonno e Rituali': 0, 
             'Fuga ed Emozioni': 0, 
@@ -158,6 +157,7 @@
             'Controllo e Tempo': 0, 
         };
         
+        // Mappa delle domande verso gli assi
         const questionMap = {
             q1: 'Sonno e Rituali', q2: 'Fuga ed Emozioni', q3: 'Attenzione e Produttività',
             q4: 'Relazioni e Socialità', q5: 'Fuga ed Emozioni', q6: 'Controllo e Tempo',
@@ -168,6 +168,7 @@
             q19: 'Sonno e Rituali', q20: 'Controllo e Tempo',
         };
         
+        // Massimi punteggi per Asse
         const AXIS_MAX_SCORES = {
             'Sonno e Rituali': 12, // 4 domande
             'Fuga ed Emozioni': 15, // 5 domande
@@ -399,7 +400,6 @@
         const dataPoints = Object.values(resultData.radarScores);
         const labels = Object.keys(resultData.radarScores);
         
-        // Uso la stessa risoluzione del canvas (700x700) per una migliore qualità nel PDF
         const chartRendered = new Promise(resolve => {
             window.__chart = new window.Chart(ctx, {
                 type: 'radar',
@@ -439,7 +439,6 @@
                     }
                 }
             });
-            // Forza il completamento per i browser che non supportano l'animazione immediatamente
             setTimeout(resolve, 500); 
         });
 
@@ -659,45 +658,47 @@
             doc.text("Risorse consigliate", margin, y);
             y += 10; 
 
-            const resourcesText = `
+            // Risorse in HTML per un layout più complesso
+            const resourcesHtml = `
                 <p><strong>App:</strong> Screen Time (iOS) / Digital Wellbeing (Android) per limitare le app.</p>
                 <p><strong>Libri:</strong> 'Digital Minimalism' (Cal Newport), 'How to Break Up with Your Phone' (C. Price).</p>
                 <div style="margin-top: 15px;">
                     <p><strong>Tecniche:</strong></p>
                     <ul style="margin-left: 20px;">
-                        <li>**Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause, utile per allenare la concentrazione senza il telefono.</li>
-                        <li>**Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni per ricostruire l'attenzione.</li>
-                        <li>**Journaling serale per l'ansia:** Scrivere a mano pensieri e preoccupazioni prima di dormire, evitando di usare lo smartphone per placare l'irrequietezza.</li>
+                        <li>**Pomodoro per il focus:** Metodo per suddividere il lavoro in intervalli di 25 minuti seguiti da brevi pause.</li>
+                        <li>**Blocchi Deep Work:** Dedicare lunghe sessioni (es. 90 min) di lavoro intensivo e senza distrazioni.</li>
+                        <li>**Journaling serale per l'ansia:** Scrivere a mano pensieri e preoccupazioni prima di dormire.</li>
                     </ul>
                 </div>
                 <p><strong>Strumento:</strong> Sveglia tradizionale e orologio da polso per non dover guardare il telefono.</p>
             `;
-
-            // Utilizzo di una Promise più sicura per il salvataggio HTML
-            await new Promise(resolve => {
+            
+            // LOGICA DI SALVATAGGIO POTENZIATA PER IL PREMIUM (Promise)
+            const htmlToPdf = new Promise(resolve => {
                 doc.setFontSize(10);
-                doc.html(resourcesText, {
+                doc.html(resourcesHtml, {
                     x: margin,
                     y: y,
                     width: pageWidth - (2 * margin),
                     callback: function (doc) {
-                        // Dopo il rendering HTML
-                        y = doc.previousAutoTable.finalY || y; 
-                        
-                        // --- Footer
-                        if (y > pageHeight - 60) { doc.addPage(); y = margin; }
-                        doc.setDrawColor(200);
-                        doc.line(margin, y, pageWidth - margin, y);
-                        y += 16;
-                        doc.setFontSize(10);
-                        doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
-                    
-                        // Salvataggio finale del REPORT PREMIUM
-                        doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
-                        resolve();
+                        y = doc.previousAutoTable.finalY || (y + 120); 
+                        resolve(); 
                     }
                 });
             });
+
+            await htmlToPdf; 
+            
+            // --- Footer (Aggiunto DOPO l'attesa del rendering HTML)
+            if (y > pageHeight - 60) { doc.addPage(); y = margin; }
+            doc.setDrawColor(200);
+            doc.line(margin, y, pageWidth - margin, y);
+            y += 16;
+            doc.setFontSize(10);
+            doc.text("Disclaimer: questo report ha scopo informativo e non sostituisce un consulto professionale.", margin, y);
+        
+            // Salvataggio finale del REPORT PREMIUM
+            doc.save(`Report_Dipendenza_Digitale_Premium.pdf`);
             return; 
         } 
         
@@ -739,4 +740,6 @@
     };
 
 })(window);
-      
+   
+                
+                   
