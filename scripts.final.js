@@ -429,8 +429,8 @@
                             suggestedMax: 3, 
                             pointLabels: { 
                                 font: { 
-                                    size: 10,
-                                    // MODIFICA PER GRASSETTO
+                                    // LA MODIFICA È QUI: FONT SIZE A 14
+                                    size: 14, 
                                     weight: 'bold' 
                                 } 
                             },
@@ -735,14 +735,14 @@
     };
 
 })(window);
-
-       
+  
+               
+   
+           
+ 
+        
+          
 
       
-       
-
-    
- 
-         
-
-           
+                       
+      
