@@ -87,7 +87,7 @@
         
         const paywall = document.getElementById('paywall');
         if (paywall && !document.getElementById('downloadStandard')) {
-            // HTML del pulsante Report Premium ESATTAMENTE come richiesto
+            // HTML del pulsante Report Premium AGGIORNATO con font più grande e colore ad alto contrasto (DA TELEFONO)
             paywall.innerHTML = `
                 <h3>Il tuo risultato è pronto!</h3>
                 <p>Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
@@ -97,7 +97,7 @@
                     </button>
                     <button id="downloadPremium" class="btn primary">
                         Acquista Report Premium (${PRICE_PREMIUM} - Finto)
-                        <br><span style="font-size: 10px; font-weight: normal;">(Include: Piano Azione, Priorità e Piano 7 Giorni)</span>
+                        <br><span style="font-size: 12px; font-weight: bold; color: #FFFFFF;">(Include: Piano Azione, Priorità e Piano 7 Giorni)</span>
                     </button>
                 </div>
             `;
@@ -385,7 +385,7 @@
         y += 20;
 
         // **********************************************
-        // ******* LOGICA GRAFICO RADAR *****************
+        // ******* LOGICA GRAFICO RADAR (MODIFICATA) ****
         // **********************************************
         
         doc.setFont("Helvetica", "bold");
@@ -427,7 +427,13 @@
                             angleLines: { display: true },
                             suggestedMin: 0,
                             suggestedMax: 3, 
-                            pointLabels: { font: { size: 10 } },
+                            pointLabels: { 
+                                font: { 
+                                    size: 10,
+                                    // MODIFICA PER GRASSETTO
+                                    weight: 'bold' 
+                                } 
+                            },
                             ticks: { 
                                  stepSize: 1, 
                                  display: false 
@@ -730,9 +736,13 @@
 
 })(window);
 
-          
-     
-     
-         
+       
+
+      
+       
 
     
+ 
+         
+
+           
