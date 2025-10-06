@@ -24,20 +24,19 @@ body {
 /* --- Navigazione (100% a Sinistra) --- */
 .navbar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: center; /* Centra verticalmente logo e titolo */
     
-    /* Forza l'espansione al 100% */
     width: 100%; 
     max-width: none; 
 
-    padding: 10px 20px;
+    padding: 15px 30px; /* Aumentato il padding per il logo */
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.navbar .logo {
-    height: 40px;
+/* CORREZIONE PER IL LOGO */
+.navbar-logo {
+    height: 35px; /* Dimensione richiesta */
     margin-right: 15px;
 }
 
@@ -51,7 +50,7 @@ body {
 .nav-links a {
     color: var(--primary);
     text-decoration: none;
-    padding: 8px 15px; /* Padding originale */
+    padding: 8px 15px;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
@@ -61,20 +60,7 @@ body {
     background-color: var(--secondary);
 }
 
-/* --- Centratura dei Contenuti di index.html (Pagine Informative) --- */
-header.hero,
-section.features,
-section.deep-info,
-footer.footer {
-    max-width: var(--max-width); 
-    margin-left: auto;          
-    margin-right: auto;         
-    width: 100%;
-    padding: 20px; 
-    box-sizing: border-box;
-}
-
-/* --- Contenitore Principale (Pagina Quiz) --- */
+/* --- Centratura dei Contenuti di index.html --- */
 .container {
     max-width: var(--max-width);
     margin: 20px auto; /* Centratura */
@@ -125,7 +111,7 @@ footer.footer {
 }
 
 /* --- Quiz Structure --- */
-.question {
+.question-item { /* Usiamo .question-item per i div generati dal JS */
     margin-bottom: 20px;
     padding: 15px;
     border: 1px solid var(--border-color);
@@ -133,19 +119,19 @@ footer.footer {
     background-color: #f9f9f9;
 }
 
-.question p {
+.question-text {
     font-weight: bold;
     margin-top: 0;
     margin-bottom: 10px;
     color: var(--primary);
 }
 
-.options {
+.options-group {
     display: flex;
     flex-direction: column;
 }
 
-.options label {
+.options-group label {
     display: flex;
     align-items: center;
     padding: 8px 0;
@@ -153,11 +139,11 @@ footer.footer {
     transition: background-color 0.2s;
 }
 
-.options label:hover {
+.options-group label:hover {
     background-color: #eee;
 }
 
-.options input[type="radio"] {
+.options-group input[type="radio"] {
     margin-right: 10px;
     accent-color: var(--accent);
 }
@@ -179,6 +165,7 @@ footer.footer {
     transition: background-color 0.3s, opacity 0.3s;
     font-weight: bold;
     text-align: center;
+    flex-grow: 1; /* Permette ai bottoni di espandersi nel contenitore actions */
 }
 
 .btn.primary {
@@ -216,79 +203,142 @@ footer.footer {
     background-color: #f7fff7;
 }
 
-.paywall h2 {
+.paywall h3 {
     color: var(--accent);
     font-size: 1.8em;
     margin-top: 0;
 }
 
-.paywall .teaser {
-    font-size: 1.1em;
-    margin-bottom: 20px;
+.paywall-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+    align-items: center;
 }
 
-.paywall .price {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--danger);
-    margin-bottom: 10px;
+.btn.large {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    width: 90%;
+    max-width: 450px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.btn.standard-btn {
+    background-color: #3b82f6; /* Blu */
+    color: white;
+}
+
+.btn.premium-btn {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.premium-subtitle {
+    margin-top: -10px;
+    font-style: italic;
+    color: #666;
 }
 
 .paywall .secure-note {
     font-size: 0.9em;
     color: #666;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* Stili per i pulsanti upsell generati da JS */
-#paypal-button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-    margin-top: 25px;
-}
-
-.upsell-option {
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 450px;
+/* --- Report Section (Nuovi Stili) --- */
+.report-container {
+    padding: 20px;
+    margin-top: 20px;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.upsell-option.premium {
-    border-color: var(--accent);
-    background-color: #e6ffe6;
+.report-header {
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.upsell-option h3 {
-    color: var(--primary);
-    margin-top: 0;
+.score-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
-/* Stili specifici per i pulsanti di acquisto */
-.btn.large {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 10px;
+.score-box {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn.small {
-    padding: 10px 20px;
-    font-size: 0.9em;
-    width: auto;
+.score-value, .risk-value {
+    font-size: 2.5em;
+    font-weight: bold;
     margin-top: 5px;
 }
 
+/* Stili essenziali per i livelli di rischio (RISOLTO) */
+.risk-low { background-color: #5cb85c; color: white; }
+.risk-medium { background-color: #f0ad4e; color: white; }
+.risk-high { background-color: var(--danger); color: white; }
+
+
+/* Premium Content */
+.premium-content {
+    border: 1px dashed var(--primary);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 8px;
+    background-color: #f8f8ff;
+}
+
+.priority-box {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Classi di colore per i 5 Assi (RISOLTO) */
+.sleep-and-rituals-bg { background-color: #fce4ec; border-left: 5px solid #e91e63; }
+.productivity-and-focus-bg { background-color: #fffde7; border-left: 5px solid #ffeb3b; }
+.escape-and-emotions-bg { background-color: #e3f2fd; border-left: 5px solid #2196f3; }
+.habit-and-compulsion-bg { background-color: #f3e5f5; border-left: 5px solid #9c27b0; }
+.social-and-presence-bg { background-color: #e8f5e9; border-left: 5px solid #4caf50; }
+
+.days-plan {
+    list-style: none;
+    padding: 0;
+}
+.days-plan li {
+    background-color: var(--secondary);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: var(--primary);
+    color: white;
+}
 
 /* --- Footer --- */
 .footer {
@@ -303,20 +353,19 @@ footer.footer {
 /* Responsive design */
 @media (max-width: 600px) {
     .navbar {
-        flex-direction: column;
-        text-align: center;
+        padding: 10px 15px;
     }
     .navbar .title {
-        margin-top: 10px;
+        font-size: 1.2em;
     }
-    .nav-links {
-        margin-top: 10px;
+    .score-grid {
+        flex-direction: column;
     }
     .actions {
         flex-direction: column;
     }
-    .btn {
+    .btn.large {
         width: 100%;
-        margin-bottom: 10px;
+        max-width: none;
     }
 }
