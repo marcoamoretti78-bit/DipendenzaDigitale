@@ -1,56 +1,134 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scopri di più – Dipendenza Digitale</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-i18n="FORM_TITLE">Valutazione della Dipendenza Digitale</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo"></a>
-    <span class="title">Dipendenza Digitale</span>
-    <div class="nav-links">
-      <a href="quiz.html">Quiz</a>
-      <a href="scopri.html" class="active">Scopri di più</a>
-    </div>
-  </nav>
+    <nav class="navbar">
+        <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo"></a>
+        <span class="title" data-i18n="SITE_TITLE">Dipendenza Digitale</span>
+        <div class="nav-links">
+            <a href="index.html" class="active" data-i18n="NAV_QUIZ">Quiz</a>
+            <a href="scopri.html" data-i18n="NAV_SCOPRI">Scopri di più</a>
+        </div>
+    </nav>
 
-  <main class="container">
-    <section class="intro">
-      <h1>Cos’è la dipendenza digitale?</h1>
-      <p>La dipendenza digitale è l’uso eccessivo e incontrollato di smartphone, social media, videogiochi e internet che compromette la vita quotidiana e il benessere psicofisico.</p>
-    </section>
+    <main class="container">
+        
+        <div id="language-selector" class="lang-selector-group" style="text-align: right; padding-bottom: 20px;">
+            </div>
 
-    <section>
-      <h2>⚠️ I rischi principali</h2>
-      <ul>
-        <li><strong>Riduzione della concentrazione:</strong> difficoltà a mantenere l’attenzione per periodi prolungati.</li>
-        <li><strong>Problemi di sonno:</strong> l’uso serale di dispositivi altera i ritmi circadiani.</li>
-        <li><strong>Stress e ansia:</strong> notifiche continue e iperconnessione aumentano la pressione mentale.</li>
-        <li><strong>Isolamento sociale:</strong> l’interazione virtuale sostituisce quella reale.</li>
-      </ul>
-    </section>
+        <section id="quiz-section" class="quiz-section">
+            <h1 data-i18n="FORM_TITLE">Valutazione della Dipendenza Digitale</h1>
+            <form id="quiz-form">
+                
+                <div class="user-info-input">
+                    <label for="userName">Il tuo nome (Opzionale):</label>
+                    <input type="text" id="userName" name="userName" placeholder="Mario Rossi">
+                </div>
 
-    <section>
-      <h2>💡 Consigli pratici</h2>
-      <ol>
-        <li>Imposta limiti giornalieri per le app più usate.</li>
-        <li>Disattiva le notifiche non necessarie.</li>
-        <li>Stabilisci momenti “senza telefono” (durante i pasti, prima di dormire).</li>
-        <li>Dedica tempo ad attività offline come sport, lettura o meditazione.</li>
-      </ol>
-    </section>
+                <div id="quiz-questions-container">
+                    </div>
+                
+                <button type="button" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Calcola Risultato</button>
+            </form>
+        </section>
 
-    <section class="cta">
-      <h2>Vuoi scoprire quanto sei a rischio?</h2>
-      <a href="quiz.html" class="btn primary">Fai subito il test</a>
-    </section>
-  </main>
+        <section id="paywall" class="paywall" style="display:none;">
+            <h3 id="paywall-h3" data-i18n="PAYWALL_H3">Il Tuo Risultato è Pronto!</h3>
+            <p id="paywall-p" data-i18n="PAYWALL_P">Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
+            
+            <div class="paywall-options">
+                <button id="btn-standard" class="btn standard-btn" data-i18n="BTN_STANDARD">Scarica Report Base (€1.99)</button>
+                <button id="btn-premium" class="btn primary-btn" data-i18n="BTN_PREMIUM">Acquista Report Premium (€7.99)</button>
+                <p class="premium-sub-text" data-i18n="BTN_PREMIUM_SUB">(Include: Piano d'Azione, Priorità e Piano 7 Giorni)</p>
+            </div>
+        </section>
 
-  <footer class="footer">
-    <p>&copy; 2025 Dipendenza Digitale</p>
-  </footer>
+        <section id="report" class="report-container" style="display:none;">
+            <header class="report-header">
+                <h1 data-i18n="TITLE">Report Personalizzato Digital Detox</h1>
+                <p data-i18n="SUBTITLE">Elaborazione Finale (20 Domande)</p>
+                <span id="report-date" class="report-date">Data: 01/01/2025</span>
+                <button id="download-pdf-btn" class="btn secondary">Scarica PDF</button>
+            </header>
+
+            <div class="summary-boxes">
+                <div class="score-box">
+                    <h3 data-i18n="SCORE_LABEL">Punteggio</h3>
+                    <p class="big-number"><span id="final-score">0</span>/<span id="max-score">60</span></p>
+                </div>
+                <div id="risk-level-container" class="score-box risk-low">
+                    <h3 data-i18n="RISK_LABEL">Rischio</h3>
+                    <p class="big-number"><span id="risk-level">Basso</span></p>
+                </div>
+            </div>
+
+            <div class="report-section profile-section">
+                <h2 data-i18n="PROFILE_TITLE">Il Tuo Profilo di Dipendenza Digitale</h2>
+                <p id="profile-text">...</p>
+            </div>
+
+            <div class="report-section analysis-section">
+                <h2 data-i18n="ANALYSIS_TITLE">Analisi e Consigli Personalizzati</h2>
+                <p id="analysis-text">...</p>
+            </div>
+
+            <div class="report-section detailed-analysis-section">
+                <h2 data-i18n="RADAR_TITLE">Analisi Dettagliata per Asse di Rischio</h2>
+                <div class="radar-chart-container">
+                    <canvas id="riskRadarChart"></canvas>
+                </div>
+
+                <h3 data-i18n="IMPACT_TITLE">Riepilogo Dettagliato dei Punteggi di Impatto</h3>
+                <ul id="impact-list" class="impact-list">
+                    </ul>
+            </div>
+
+            <div class="report-section premium-content">
+                <h2 data-i18n="PRIORITY_PLAN_TITLE">Il Tuo Piano d'Azione Prioritizzato</h2>
+                <div id="priority-action" class="priority-box">
+                    </div>
+
+                <h2 data-i18n="DAYS_PLAN_TITLE">Piano Digital Detox di 7 Giorni</h2>
+                <ol id="days-plan-list" class="days-plan-list">
+                    </ol>
+
+                <h2 data-i18n="RESOURCES_TITLE">Risorse Consigliate</h2>
+                <div id="resources-text">
+                    </div>
+            </div>
+
+            <div class="report-section">
+                <h3>Risposte Dettagliate del Quiz</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="QUIZ_Q_COL">Domanda</th>
+                            <th data-i18n="QUIZ_A_COL">Risposta Fornita</th>
+                            <th data-i18n="QUIZ_S_COL">Punteggio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quiz-answers-body">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="disclaimer-text">
+                <p data-i18n="DISCLAIMER">Disclaimer: Questo report è solo a scopo informativo e non sostituisce una consulenza professionale.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 <span data-i18n="SITE_TITLE">Dipendenza Digitale</span></p>
+    </footer>
+
+    <script src="scripts.final.js"></script>
 </body>
 </html>
