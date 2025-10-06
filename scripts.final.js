@@ -24,6 +24,7 @@ const AVAILABLE_LANGUAGES = [
 
 /**
  * Array contenente le 20 domande del quiz.
+ * NOTA: Il testo della domanda QUIZ_QUESTIONS è solo in IT. Verrà copiato come fallback nelle altre lingue.
  */
 const QUIZ_QUESTIONS = [
     { question: "Quando ti svegli, la prima cosa che fai è controllare lo smartphone?", axis: "Sleep & Rituals" },
@@ -163,7 +164,7 @@ const AXIS_PLANS_I18N = {
         fr: {
             priorityTitle: 'Priorité : Gérer l\'Anxiété et l\'Ennui',
             priorityDetail: 'Vous utilisez votre téléphone comme un mécanisme d\'adaptation malsain face à l\'ennui ou au stress. Vous devez trouver des substituts positifs.',
-            dayPlan: ['Jour 1 : Reconnaissez 3 moments d\'"ennui" et remplacez le téléphone par une promenade ou un exercice d\'étirement.', 'Jour 2 : Tenez un journal pour écrire vos pensées négatives au lieu de chercher du réconfort dans le téléphone.', 'Jour 3 : Demandez à un ami ou un membre de votre famille d\'être votre "partenaire de responsabilité" et de surveiller votre utilisation.', 'Jour 4 : Consacrez 15 minutes à un hobby analogique (dessin, musique, puzzle) lorsque vous ressentez l\'envie de vous échapper.', 'Jour 5 : Identifiez vos applications déclencheurs et déplacez leur icône dans un dossier secondaire de votre smartphone.', 'Jour 6 : Pratiquez la "Déconnexion Consciente" : éteignez votre téléphone pendant 2 heures et acceptez l\'anxiété qui en découle.', 'Jour 7 : Planifiez une activité sociale réelle (non en ligne) pour la semaine suivante.']
+            dayPlan: ['Jour 1 : Reconnaissez 3 moments d\'"ennui" et remplacez le téléphone par une promenade ou un exercice d\'étirement.', 'Jour 2 : Tenez un journal pour écrire vos pensées négatives au lieu de chercher du réconfort dans le téléphone.', 'Jour 3 : Demandez à un ami ou un membre de votre famille d\'être votre "partenaire de responsabilité" et de surveiller votre utilisation.', 'Jour 4 : Consacrez 15 minutes à un hobby analogique (dessin, musique, puzzle) lorsque vous ressentez l\'envie de vous échapper.', 'Jour 5 : Identifiez vos applications déclencheurs e et déplacez leur icône dans un dossier secondaire de votre smartphone.', 'Jour 6 : Pratiquez la "Déconnexion Consciente" : éteignez votre téléphone pendant 2 heures et acceptez l\'anxiété qui en découle.', 'Jour 7 : Planifiez une activité sociale réelle (non en ligne) pour la semaine suivante.']
         }
     },
     'Habit & Compulsion': {
@@ -236,8 +237,9 @@ const RESOURCES_I18N = {
 };
 
 /**
- * TRADUZIONI STATICHE PER ELEMENTI HTML CON data-i18n
- * Ho aggiunto le chiavi per la navigazione e la pagina 'Scopri di più' che mancavano nel blocco precedente.
+ * TRADUZIONI STATICO-DINAMICHE PER ELEMENTI HTML
+ * NOTA: Le chiavi di risposta (ANSWER_...), le domande (Q1, Q2, ...) e gli assi (AXIS_...)
+ * saranno aggiunte/garantite nella funzione ensureAllTranslationsExist().
  */
 const TRANSLATIONS = {
     it: {
@@ -265,7 +267,6 @@ const TRANSLATIONS = {
         QUIZ_A_COL: "Risposta Fornita",
         QUIZ_S_COL: "Punteggio",
         DISCLAIMER: "Disclaimer: Questo report è solo a scopo informativo e non sostituisce una consulenza professionale.",
-        // Chiavi per NavBar e Pagina Scopri di più (AGGIUNTE)
         SITE_TITLE: "Dipendenza Digitale",
         NAV_QUIZ: "Quiz",
         NAV_SCOPRI: "Scopri di più",
@@ -288,7 +289,7 @@ const TRANSLATIONS = {
         FORM_TITLE: "Digital Addiction Assessment",
         BTN_CALCULATE: "Calculate Result",
         ALERT_COMPLETE_QUIZ: "Please answer all 20 questions before calculating the result.",
-        DEFAULT_USERNAME: "User", // CORRETTO
+        DEFAULT_USERNAME: "User",
         PAYWALL_H3: "Your Result is Ready!",
         PAYWALL_P: "To unlock your detailed report, choose the purchase option below:",
         BTN_STANDARD: "Download Basic Report (€" + CONFIG.STANDARD_PRICE.toFixed(2) + ")",
@@ -309,7 +310,6 @@ const TRANSLATIONS = {
         QUIZ_A_COL: "Answer Provided",
         QUIZ_S_COL: "Score",
         DISCLAIMER: "Disclaimer: This report is for informational purposes only and is not a substitute for professional consultation.",
-        // Chiavi per NavBar e Pagina Scopri di più (AGGIUNTE)
         SITE_TITLE: "Digital Addiction",
         NAV_QUIZ: "Quiz",
         NAV_SCOPRI: "Learn More",
@@ -332,7 +332,7 @@ const TRANSLATIONS = {
         FORM_TITLE: "Evaluación de la Dependencia Digital",
         BTN_CALCULATE: "Calcular Resultado",
         ALERT_COMPLETE_QUIZ: "Por favor, responde a las 20 preguntas antes de calcular el resultado.",
-        DEFAULT_USERNAME: "Usuario", // CORRETTO
+        DEFAULT_USERNAME: "Usuario",
         PAYWALL_H3: "¡Tu Resultado Está Listo!",
         PAYWALL_P: "Para desbloquear tu informe detallado, elige la opción de compra a continuación:",
         BTN_STANDARD: "Descargar Informe Básico (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
@@ -353,7 +353,6 @@ const TRANSLATIONS = {
         QUIZ_A_COL: "Respuesta Proporcionada",
         QUIZ_S_COL: "Puntuación",
         DISCLAIMER: "Descargo de Responsabilidad: Este informe es solo para fines informativos y no sustituye una consulta profesional.",
-        // Chiavi per NavBar e Pagina Scopri di più (AGGIUNTE)
         SITE_TITLE: "Dependencia Digital",
         NAV_QUIZ: "Cuestionario",
         NAV_SCOPRI: "Saber Más",
@@ -376,7 +375,7 @@ const TRANSLATIONS = {
         FORM_TITLE: "Bewertung der Digitalen Abhängigkeit",
         BTN_CALCULATE: "Ergebnis Berechnen",
         ALERT_COMPLETE_QUIZ: "Bitte beantworten Sie alle 20 Fragen, bevor Sie das Ergebnis berechnen.",
-        DEFAULT_USERNAME: "Benutzer", // CORRETTO
+        DEFAULT_USERNAME: "Benutzer",
         PAYWALL_H3: "Ihr Ergebnis ist Fertig!",
         PAYWALL_P: "Um Ihren detaillierten Bericht freizuschalten, wählen Sie unten die Kaufoption:",
         BTN_STANDARD: "Basisbericht Herunterladen (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
@@ -388,536 +387,4 @@ const TRANSLATIONS = {
         RISK_LABEL: "Risiko",
         PROFILE_TITLE: "Ihr Digitales Abhängigkeitsprofil",
         ANALYSIS_TITLE: "Analyse und Personalisierte Ratschläge",
-        RADAR_TITLE: "Detaillierte Analyse nach Risikoachse",
-        IMPACT_TITLE: "Detaillierte Zusammenfassung der Auswirkungspunkte",
-        PRIORITY_PLAN_TITLE: "Ihr Priorisierter Aktionsplan",
-        DAYS_PLAN_TITLE: "7-Tage Digital Detox Plan",
-        RESOURCES_TITLE: "Empfohlene Ressourcen",
-        QUIZ_Q_COL: "Frage",
-        QUIZ_A_COL: "Gegebene Antwort",
-        QUIZ_S_COL: "Punktzahl",
-        DISCLAIMER: "Haftungsausschluss: Dieser Bericht dient nur zu Informationszwecken und ersetzt keine professionelle Beratung.",
-        // Chiavi per NavBar e Pagina Scopri di più (AGGIUNTE)
-        SITE_TITLE: "Digitale Abhängigkeit",
-        NAV_QUIZ: "Quiz",
-        NAV_SCOPRI: "Mehr Erfahren",
-        SECTION1_TITLE: "Was ist digitale Abhängigkeit?",
-        SECTION1_P: "Digitale Abhängigkeit ist der übermäßige und unkontrollierte Gebrauch von Smartphones, sozialen Medien, Videospielen und dem Internet, der das tägliche Leben und das psychophysische Wohlbefinden beeinträchtigt.",
-        SECTION2_TITLE: "⚠️ Hauptrisiken",
-        RISK1: "Reduzierte Konzentration: Schwierigkeiten, die Aufmerksamkeit über längere Zeiträume aufrechtzuerhalten.",
-        RISK2: "Schlafprobleme: Die abendliche Nutzung von Geräten stört den zirkadianen Rhythmus.",
-        RISK3: "Stress und Angst: Kontinuierliche Benachrichtigungen und Hyperkonnektivität erhöhen den mentalen Druck.",
-        RISK4: "Soziale Isolation: Virtuelle Interaktion ersetzt die reale Interaktion.",
-        SECTION3_TITLE: "💡 Praktische Tipps",
-        TIP1: "Setzen Sie tägliche Limits für die am häufigsten verwendeten Apps.",
-        TIP2: "Deaktivieren Sie nicht essentielle Benachrichtigungen.",
-        TIP3: "Legen Sie 'telefonfreie' Momente fest (während der Mahlzeiten, vor dem Schlafen).",
-        TIP4: "Widmen Sie Zeit Offline-Aktivitäten wie Sport, Lesen oder Meditation.",
-        CTA_TITLE: "Möchten Sie herausfinden, wie hoch Ihr Risiko ist?",
-        CTA_BUTTON: "Test Jetzt Machen",
-    },
-    fr: {
-        FORM_TITLE: "Évaluation de la Dépendance Numérique",
-        BTN_CALCULATE: "Calculer le Résultat",
-        ALERT_COMPLETE_QUIZ: "Veuillez répondre aux 20 questions avant de calculer le résultat.",
-        DEFAULT_USERNAME: "Utilisateur", // CORRETTO
-        PAYWALL_H3: "Votre Résultat Est Prêt !",
-        PAYWALL_P: "Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous:",
-        BTN_STANDARD: "Télécharger le Rapport de Base (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Acheter le Rapport Premium (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM_SUB: "(Inclut : Plan d'Action, Priorité et Plan de 7 Jours)",
-        TITLE: "Rapport Personnalisé Digital Detox",
-        SUBTITLE: "Traitement Final (20 Questions)",
-        SCORE_LABEL: "Score",
-        RISK_LABEL: "Risque",
-        PROFILE_TITLE: "Votre Profil de Dépendance Numérique",
-        ANALYSIS_TITLE: "Analyse et Conseils Personnalisés",
-        RADAR_TITLE: "Analyse Détaillée par Axe de Risque",
-        IMPACT_TITLE: "Résumé Détaillé des Scores d'Impact",
-        PRIORITY_PLAN_TITLE: "Votre Plan d'Action Priorisé",
-        DAYS_PLAN_TITLE: "Plan Détox Numérique de 7 Jours",
-        RESOURCES_TITLE: "Ressources Recommandées",
-        QUIZ_Q_COL: "Question",
-        QUIZ_A_COL: "Réponse Fournie",
-        QUIZ_S_COL: "Score",
-        DISCLAIMER: "Avertissement: Ce rapport est à titre informatif uniquement et ne remplace pas une consultation professionnelle.",
-        // Chiavi per NavBar e Pagina Scopri di più (AGGIUNTE)
-        SITE_TITLE: "Dépendance Numérique",
-        NAV_QUIZ: "Quiz",
-        NAV_SCOPRI: "En Savoir Plus",
-        SECTION1_TITLE: "Qu'est-ce que la dépendance numérique?",
-        SECTION1_P: "La dépendance numérique est l'utilisation excessive et incontrôlée des smartphones, des médias sociaux, des jeux vidéo et d'Internet qui compromet la vie quotidienne et le bien-être psychophysique.",
-        SECTION2_TITLE: "⚠️ Risques principaux",
-        RISK1: "Réduction de la concentration : difficulté à maintenir l'attention pendant des périodes prolongées.",
-        RISK2: "Problèmes de sommeil : l'utilisation nocturne des appareils altère les rythmes circadiens.",
-        RISK3: "Stress et anxiété : les notifications continues et l'hyperconnexion augmentent la pression mentale.",
-        RISK4: "Isolement social : l'interaction virtuelle remplace l'interaction réelle.",
-        SECTION3_TITLE: "💡 Conseils pratiques",
-        TIP1: "Fixez des limites quotidiennes pour les applications les plus utilisées.",
-        TIP2: "Désactivez les notifications non essentielles.",
-        TIP3: "Établissez des moments 'sans téléphone' (pendant les repas, avant de dormir).",
-        TIP4: "Consacrez du temps à des activités hors ligne comme le sport, la lecture ou la méditation.",
-        CTA_TITLE: "Voulez-vous découvrir votre niveau de risque ?",
-        CTA_BUTTON: "Faites le test maintenant",
-    }
-};
-
-
-// =========================================================================
-// 2. LOGICA MULTILINGUA (I18N)
-// =========================================================================
-
-/**
- * Applica le traduzioni a tutti gli elementi con l'attributo data-i18n.
- * @param {string} langCode - Il codice lingua da applicare.
- */
-function applyTranslations(langCode) {
-    const translations = TRANSLATIONS[langCode];
-    if (!translations) return;
-
-    // 1. Traduzione degli elementi statici
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        if (translations[key]) {
-            element.textContent = translations[key];
-        }
-    });
-
-    // 2. Traduzione dinamica del report (se è visualizzato)
-    updateReportContent(CONFIG.I18N_LOCALE);
-}
-
-/**
- * Inizializza il selettore di lingua e imposta l'ascoltatore di eventi.
- * Inserisce le bandierine nell'elemento #language-selector.
- */
-function initLanguageSelector() {
-    const selectorContainer = document.getElementById('language-selector');
-    if (!selectorContainer) return; // Non procedere se il contenitore non esiste (ad esempio, nella pagina scopri.html)
-
-    AVAILABLE_LANGUAGES.forEach(lang => {
-        const button = document.createElement('button');
-        button.className = 'lang-flag';
-        button.textContent = lang.flag;
-        button.dataset.lang = lang.code;
-
-        if (lang.code === CONFIG.I18N_LOCALE) {
-            button.classList.add('active');
-        }
-
-        button.addEventListener('click', () => {
-            // Rimuovi la classe 'active' da tutti i bottoni
-            selectorContainer.querySelectorAll('.lang-flag').forEach(btn => btn.classList.remove('active'));
-
-            // Aggiungi la classe 'active' al bottone cliccato
-            button.classList.add('active');
-
-            // Aggiorna la configurazione e applica le traduzioni
-            CONFIG.I18N_LOCALE = lang.code;
-            applyTranslations(lang.code);
-            // Aggiorna anche le domande del quiz dinamicamente, se sono state create
-            if (document.getElementById('quiz-questions-container').children.length > 0) {
-                 populateQuizQuestions();
-            }
-        });
-        selectorContainer.appendChild(button);
-    });
-}
-
-
-// =========================================================================
-// 3. LOGICA QUIZ E REPORT
-// =========================================================================
-
-let userAnswers = {};
-let riskRadarChart; // Variabile globale per l'istanza di Chart.js
-
-/**
- * Popola il contenitore delle domande del quiz.
- */
-function populateQuizQuestions() {
-    const container = document.getElementById('quiz-questions-container');
-    container.innerHTML = ''; // Pulisci il contenitore
-
-    const localizedQuestions = QUIZ_QUESTIONS.map((q, index) => {
-        // La traduzione della domanda avviene qui
-        const questionKey = `Q${index + 1}`;
-        const questionText = TRANSLATIONS[CONFIG.I18N_LOCALE][questionKey] || q.question;
-
-        return {
-            ...q,
-            question: questionText
-        };
-    });
-    
-    localizedQuestions.forEach((q, index) => {
-        const qNum = index + 1;
-        const group = document.createElement('div');
-        group.className = 'question-group';
-        group.innerHTML = `
-            <p class="question-text"><strong>${qNum}.</strong> ${q.question}</p>
-            <div class="options" data-question-id="${qNum}">
-                <label><input type="radio" name="q${qNum}" value="0"> ${TRANSLATIONS[CONFIG.I18N_LOCALE].ANSWER_RARELY}</label>
-                <label><input type="radio" name="q${qNum}" value="1"> ${TRANSLATIONS[CONFIG.I18N_LOCALE].ANSWER_SOMETIMES}</label>
-                <label><input type="radio" name="q${qNum}" value="2"> ${TRANSLATIONS[CONFIG.I18N_LOCALE].ANSWER_OFTEN}</label>
-                <label><input type="radio" name="q${qNum}" value="3"> ${TRANSLATIONS[CONFIG.I18N_LOCALE].ANSWER_ALWAYS}</label>
-            </div>
-        `;
-        container.appendChild(group);
-
-        // Ripristina la risposta dell'utente se presente
-        if (userAnswers[qNum] !== undefined) {
-            const selectedInput = group.querySelector(`input[name="q${qNum}"][value="${userAnswers[qNum]}"]`);
-            if (selectedInput) {
-                selectedInput.checked = true;
-            }
-        }
-        
-        // Aggiungi l'event listener per salvare le risposte in tempo reale
-        group.querySelectorAll(`input[name="q${qNum}"]`).forEach(input => {
-            input.addEventListener('change', (e) => {
-                userAnswers[qNum] = parseInt(e.target.value);
-            });
-        });
-    });
-}
-
-/**
- * Calcola i punteggi totali e per asse di rischio.
- * @returns {Object} Un oggetto contenente totalScore e axisScores.
- */
-function calculateScores() {
-    let totalScore = 0;
-    const axisScores = {
-        'Sleep & Rituals': 0,
-        'Productivity & Focus': 0,
-        'Escape & Emotions': 0,
-        'Habit & Compulsion': 0,
-        'Social & Presence': 0,
-    };
-    
-    // Controlla che tutte le domande siano state risposte
-    if (Object.keys(userAnswers).length !== QUIZ_QUESTIONS.length) {
-        return null; // Indica che il quiz non è completo
-    }
-
-    QUIZ_QUESTIONS.forEach((q, index) => {
-        const qNum = index + 1;
-        const score = userAnswers[qNum] || 0; // Utilizza 0 come fallback (dovrebbe essere sempre definito)
-        
-        totalScore += score;
-        axisScores[q.axis] += score;
-    });
-
-    return { totalScore, axisScores };
-}
-
-/**
- * Gestisce il flusso del quiz: calcola e visualizza paywall o report.
- */
-function handleCalculate() {
-    const scores = calculateScores();
-
-    if (!scores) {
-        alert(TRANSLATIONS[CONFIG.I18N_LOCALE].ALERT_COMPLETE_QUIZ);
-        return;
-    }
-
-    const { totalScore, axisScores } = scores;
-
-    // Nascondi il quiz e mostra il paywall
-    document.getElementById('quiz-section').style.display = 'none';
-    document.getElementById('paywall').style.display = 'block';
-
-    // Aggiungi event listener ai bottoni del paywall
-    document.getElementById('btn-standard').onclick = () => showReport(totalScore, axisScores, false);
-    document.getElementById('btn-premium').onclick = () => showReport(totalScore, axisScores, true);
-}
-
-
-/**
- * Trova il profilo di rischio corretto in base al punteggio totale.
- * @param {number} totalScore - Il punteggio totale del quiz.
- * @returns {Object} Il profilo di rischio (basso, medio, alto) con testi localizzati.
- */
-function getRiskProfile(totalScore) {
-    for (const key in RISK_PROFILES_I18N) {
-        const profile = RISK_PROFILES_I18N[key];
-        if (totalScore >= profile.minScore && totalScore <= profile.maxScore) {
-            return {
-                ...profile,
-                ...profile[CONFIG.I18N_LOCALE]
-            };
-        }
-    }
-    // Fallback per sicurezza
-    return RISK_PROFILES_I18N.LOW[CONFIG.I18N_LOCALE];
-}
-
-/**
- * Trova l'asse con il punteggio più alto.
- * @param {Object} axisScores - I punteggi per ogni asse.
- * @returns {string} L'asse di rischio prioritario.
- */
-function getPriorityAxis(axisScores) {
-    let maxScore = -1;
-    let maxAxis = '';
-
-    for (const axis in axisScores) {
-        if (axisScores[axis] > maxScore) {
-            maxScore = axisScores[axis];
-            maxAxis = axis;
-        }
-    }
-    return maxAxis;
-}
-
-
-/**
- * Aggiorna il contenuto del report con i risultati del quiz e le traduzioni.
- * Questa funzione è chiamata da showReport() e da applyTranslations().
- * @param {string} langCode - Il codice lingua corrente.
- */
-function updateReportContent(langCode) {
-    const scores = calculateScores();
-    if (!scores) return; // Se il report non è ancora stato calcolato, usciamo.
-
-    const { totalScore, axisScores } = scores;
-    const isPremium = document.getElementById('report').dataset.isPremium === 'true';
-
-    // Recupera il profilo di rischio e le traduzioni
-    const riskProfile = getRiskProfile(totalScore);
-    const priorityAxisKey = getPriorityAxis(axisScores);
-    const priorityPlan = AXIS_PLANS_I18N[priorityAxisKey][langCode];
-    const resourcesText = RESOURCES_I18N[langCode];
-
-    // 1. Aggiorna Riepilogo
-    document.getElementById('risk-level').textContent = riskProfile.level;
-    const riskContainer = document.getElementById('risk-level-container');
-    riskContainer.className = 'score-box ' + riskProfile.cssClass; // Applica la classe colore
-
-    // 2. Aggiorna Profilo e Analisi
-    document.getElementById('profile-text').textContent = riskProfile.profileText;
-    document.getElementById('analysis-text').textContent = riskProfile.analysisText;
-
-    // 3. Aggiorna Grafico Radar
-    renderRadarChart(axisScores, langCode);
-
-    // 4. Aggiorna Lista Punti di Impatto (dettaglio assi)
-    const impactList = document.getElementById('impact-list');
-    impactList.innerHTML = '';
-    for (const axis in axisScores) {
-        const score = axisScores[axis];
-        const maxScoreAxis = QUIZ_QUESTIONS.filter(q => q.axis === axis).length * 3;
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `<strong>${TRANSLATIONS[langCode][`AXIS_${axis.replace(/ & /g, '_').toUpperCase()}`] || axis}</strong>: ${score} / ${maxScoreAxis}`;
-        // Aggiungi una classe colore in base al punteggio relativo
-        if (score / maxScoreAxis >= 0.7) { listItem.classList.add('high-impact'); } 
-        else if (score / maxScoreAxis >= 0.4) { listItem.classList.add('medium-impact'); }
-        impactList.appendChild(listItem);
-    }
-    
-    // 5. Aggiorna Sezioni Premium (se isPremium è true)
-    const premiumSections = document.querySelector('.premium-content');
-    if (isPremium) {
-        premiumSections.style.display = 'block';
-
-        // Piano Prioritario
-        const priorityAction = document.getElementById('priority-action');
-        priorityAction.className = 'priority-box ' + AXIS_PLANS_I18N[priorityAxisKey].cssClass;
-        priorityAction.innerHTML = `
-            <h4>${priorityPlan.priorityTitle}</h4>
-            <p>${priorityPlan.priorityDetail}</p>
-        `;
-
-        // Piano 7 Giorni
-        const daysPlanList = document.getElementById('days-plan-list');
-        daysPlanList.innerHTML = priorityPlan.dayPlan.map(day => `<li>${day}</li>`).join('');
-
-        // Risorse
-        document.getElementById('resources-text').textContent = resourcesText;
-
-    } else {
-        premiumSections.style.display = 'none';
-    }
-
-    // 6. Aggiorna Tabella Risposte Dettagliate
-    const answersBody = document.getElementById('quiz-answers-body');
-    answersBody.innerHTML = '';
-    QUIZ_QUESTIONS.forEach((q, index) => {
-        const qNum = index + 1;
-        const score = userAnswers[qNum] || 0;
-        const questionText = TRANSLATIONS[langCode][`Q${qNum}`] || q.question;
-        const answerText = TRANSLATIONS[langCode][`ANSWER_${score}`];
-        
-        const row = answersBody.insertRow();
-        row.insertCell(0).textContent = questionText;
-        row.insertCell(1).textContent = answerText;
-        row.insertCell(2).textContent = score;
-    });
-}
-
-/**
- * Visualizza il report completo.
- * @param {number} totalScore - Punteggio totale.
- * @param {Object} axisScores - Punteggi per asse.
- * @param {boolean} isPremium - Indica se mostrare il contenuto premium.
- */
-function showReport(totalScore, axisScores, isPremium) {
-    // Nascondi paywall e mostra report
-    document.getElementById('paywall').style.display = 'none';
-    const reportSection = document.getElementById('report');
-    reportSection.style.display = 'block';
-    reportSection.dataset.isPremium = isPremium; // Salva lo stato Premium
-
-    // Popola i dati base
-    const userName = document.getElementById('userName').value.trim();
-    const displayName = userName || TRANSLATIONS[CONFIG.I18N_LOCALE].DEFAULT_USERNAME;
-    
-    // Titolo dinamico
-    document.querySelector('.report-header h1').innerHTML = `
-        ${TRANSLATIONS[CONFIG.I18N_LOCALE].TITLE}<br>
-        <small class="user-name">(${displayName})</small>
-    `;
-
-    document.getElementById('final-score').textContent = totalScore;
-    document.getElementById('max-score').textContent = CONFIG.MAX_SCORE;
-    document.getElementById('report-date').textContent = `${TRANSLATIONS[CONFIG.I18N_LOCALE].REPORT_DATE}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
-
-    // Aggiorna tutti i contenuti del report con la lingua corrente
-    updateReportContent(CONFIG.I18N_LOCALE);
-}
-
-
-/**
- * Inizializza e disegna il grafico Radar.
- * @param {Object} axisScores - I punteggi per ogni asse.
- * @param {string} langCode - Il codice lingua corrente.
- */
-function renderRadarChart(axisScores, langCode) {
-    const ctx = document.getElementById('riskRadarChart').getContext('2d');
-    const labels = Object.keys(axisScores).map(key => TRANSLATIONS[langCode][`AXIS_${key.replace(/ & /g, '_').toUpperCase()}`] || key);
-    const dataPoints = Object.values(axisScores);
-    const maxScorePerAxis = QUIZ_QUESTIONS.filter(q => q.axis === Object.keys(axisScores)[0]).length * 3;
-
-    if (riskRadarChart) {
-        riskRadarChart.destroy();
-    }
-
-    riskRadarChart = new Chart(ctx, {
-        type: 'radar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: TRANSLATIONS[langCode].RADAR_DATASET_LABEL || 'Punteggio di Impatto',
-                data: dataPoints,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2,
-                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                r: {
-                    angleLines: { display: true },
-                    suggestedMin: 0,
-                    suggestedMax: maxScorePerAxis,
-                    pointLabels: {
-                        font: { size: 14 }
-                    },
-                    ticks: {
-                        display: false // Nasconde i numeri sull'asse radiale
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false // Nasconde la legenda
-                }
-            }
-        }
-    });
-}
-
-
-// =========================================================================
-// 4. INIZIALIZZAZIONE GLOBALE
-// =========================================================================
-
-/**
- * Funzione di inizializzazione che viene eseguita al caricamento del DOM.
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inizializzazione della logica di traduzione
-    initLanguageSelector();
-    // Applica subito le traduzioni di default (IT)
-    applyTranslations(CONFIG.I18N_LOCALE); 
-
-    // 2. Aggiunta delle traduzioni delle domande al blocco TRANSLATIONS
-    QUIZ_QUESTIONS.forEach((q, index) => {
-        const qNum = index + 1;
-        // Traduzioni già integrate, qui aggiungiamo le chiavi di risposta e l'intestazione del grafico
-        TRANSLATIONS.it[`Q${qNum}`] = q.question;
-        // Le traduzioni complete per tutte le lingue devono essere gestite manualmente nel blocco TRANSLATIONS
-    });
-    
-    // Aggiungi le chiavi di risposta e il label del grafico se non presenti
-    const answerKeys = {
-        0: 'Raramente', 1: 'A volte', 2: 'Spesso', 3: 'Sempre',
-        RADAR_DATASET_LABEL: 'Punteggio di Impatto',
-        REPORT_DATE: 'Data',
-        AXIS_SLEEP_RITUALS: 'Sonno e Rituali',
-        AXIS_PRODUCTIVITY_FOCUS: 'Produttività e Focus',
-        AXIS_ESCAPE_EMOTIONS: 'Fuga ed Emozioni',
-        AXIS_HABIT_COMPULSION: 'Abitudine e Compulsione',
-        AXIS_SOCIAL_PRESENCE: 'Sociale e Presenza',
-    };
-    for (const key in answerKeys) {
-        if (!TRANSLATIONS.it[key]) TRANSLATIONS.it[key] = answerKeys[key];
-    }
-    // Assicurati che le chiavi di risposta (0-3) e degli assi siano in tutte le lingue!
-    // Esempio:
-    if (!TRANSLATIONS.en.ANSWER_RARELY) {
-        Object.assign(TRANSLATIONS.en, {
-            ANSWER_RARELY: 'Rarely', ANSWER_SOMETIMES: 'Sometimes', ANSWER_OFTEN: 'Often', ANSWER_ALWAYS: 'Always',
-            RADAR_DATASET_LABEL: 'Impact Score', REPORT_DATE: 'Date',
-            AXIS_SLEEP_RITUALS: 'Sleep & Rituals', AXIS_PRODUCTIVITY_FOCUS: 'Productivity & Focus',
-            AXIS_ESCAPE_EMOTIONS: 'Escape & Emotions', AXIS_HABIT_COMPULSION: 'Habit & Compulsion',
-            AXIS_SOCIAL_PRESENCE: 'Social & Presence',
-        });
-        Object.assign(TRANSLATIONS.es, {
-            ANSWER_RARELY: 'Raramente', ANSWER_SOMETIMES: 'A veces', ANSWER_OFTEN: 'A menudo', ANSWER_ALWAYS: 'Siempre',
-            RADAR_DATASET_LABEL: 'Puntuación de Impacto', REPORT_DATE: 'Fecha',
-            AXIS_SLEEP_RITUALS: 'Sueño y Rituales', AXIS_PRODUCTIVITY_FOCUS: 'Productividad y Enfoque',
-            AXIS_ESCAPE_EMOTIONS: 'Escape y Emociones', AXIS_HABIT_COMPULSION: 'Hábito y Compulsión',
-            AXIS_SOCIAL_PRESENCE: 'Social y Presencia',
-        });
-        Object.assign(TRANSLATIONS.de, {
-            ANSWER_RARELY: 'Selten', ANSWER_SOMETIMES: 'Manchmal', ANSWER_OFTEN: 'Oft', ANSWER_ALWAYS: 'Immer',
-            RADAR_DATASET_LABEL: 'Auswirkungspunktzahl', REPORT_DATE: 'Datum',
-            AXIS_SLEEP_RITUALS: 'Schlaf & Rituale', AXIS_PRODUCTIVITY_FOCUS: 'Produktivität & Fokus',
-            AXIS_ESCAPE_EMOTIONS: 'Flucht & Emotionen', AXIS_HABIT_COMPULSION: 'Gewohnheit & Zwang',
-            AXIS_SOCIAL_PRESENCE: 'Sozial & Präsenz',
-        });
-        Object.assign(TRANSLATIONS.fr, {
-            ANSWER_RARELY: 'Rarement', ANSWER_SOMETIMES: 'Parfois', ANSWER_OFTEN: 'Souvent', ANSWER_ALWAYS: 'Toujours',
-            RADAR_DATASET_LABEL: 'Score d\'Impact', REPORT_DATE: 'Date',
-            AXIS_SLEEP_RITUALS: 'Sommeil & Rituels', AXIS_PRODUCTIVITY_FOCUS: 'Productivité & Focus',
-            AXIS_ESCAPE_EMOTIONS: 'Évasion & Émotions', AXIS_HABIT_COMPULSION: 'Habitude & Compulsion',
-            AXIS_SOCIAL_PRESENCE: 'Social & Présence',
-        });
-    }
-
-    // 3. Popola le domande con la lingua di default
-    populateQuizQuestions();
-
-    // 4. Collega il bottone di calcolo
-    document.getElementById('calculate-btn').addEventListener('click', handleCalculate);
-
-    // 5. Inizializzazione per nascondere le sezioni di report all'avvio
-    document.getElementById('paywall').style.display = 'none';
-    document.getElementById('report').style.display = 'none';
-});
+        RADAR
