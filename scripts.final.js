@@ -388,6 +388,551 @@ const TRANSLATIONS = {
         PROFILE_TITLE: "Ihr Digitales Abhängigkeitsprofil",
         ANALYSIS_TITLE: "Analyse und Personalisierte Ratschläge",
         RADAR
+            // La parte tedesca ricominciava qui. Incolla il blocco completo qui sotto.
+                RADAR_TITLE: "Analyse Detailliert nach Risikobereich",
+                IMPACT_TITLE: "Detaillierte Zusammenfassung der Auswirkungs-Punktzahlen",
+                PRIORITY_PLAN_TITLE: "Ihr Priorisierter Aktionsplan",
+                DAYS_PLAN_TITLE: "7-Tage Digital Detox Plan",
+                RESOURCES_TITLE: "Empfohlene Ressourcen",
+                QUIZ_Q_COL: "Frage",
+                QUIZ_A_COL: "Gegebene Antwort",
+                QUIZ_S_COL: "Punktzahl",
+                DISCLAIMER: "Haftungsausschluss: Dieser Bericht dient nur zu Informationszwecken und ersetzt keine professionelle Beratung.",
+                SITE_TITLE: "Digitale Abhängigkeit",
+                NAV_QUIZ: "Quiz",
+                NAV_SCOPRI: "Mehr Erfahren",
+                SECTION1_TITLE: "Was ist digitale Abhängigkeit?",
+                SECTION1_P: "Digitale Abhängigkeit ist die übermäßige und unkontrollierte Nutzung von Smartphones, sozialen Medien, Videospielen und dem Internet, die das tägliche Leben und das psychophysische Wohlbefinden beeinträchtigt.",
+                SECTION2_TITLE: "⚠️ Hauptrisiken",
+                RISK1: "Reduzierte Konzentration: Schwierigkeiten, die Aufmerksamkeit über längere Zeiträume aufrechtzuerhalten.",
+                RISK2: "Schlafprobleme: Die abendliche Nutzung von Geräten stört den zirkadianen Rhythmus.",
+                RISK3: "Stress und Angst: Kontinuierliche Benachrichtigungen und Hyperkonnektivität erhöhen den mentalen Druck.",
+                RISK4: "Soziale Isolation: Virtuelle Interaktion ersetzt reale Interaktion.",
+                SECTION3_TITLE: "💡 Praktische Tipps",
+                TIP1: "Legen Sie tägliche Limits für die am häufigsten verwendeten Apps fest.",
+                TIP2: "Deaktivieren Sie nicht essentielle Benachrichtigungen.",
+                TIP3: "Richten Sie 'telefonfreie' Momente ein (während der Mahlzeiten, vor dem Schlafen).",
+                TIP4: "Widmen Sie Zeit Offline-Aktivitäten wie Sport, Lesen oder Meditation.",
+                CTA_TITLE: "Möchten Sie herausfinden, wie hoch Ihr Risiko ist?",
+                CTA_BUTTON: "Machen Sie jetzt den Test", // <-- DEVE ESSERCI UNA VIRGOLA QUI
+            }, // <-- CHIUDE IL BLOCCO DE
+    fr: {
+            FORM_TITLE: "Évaluation de la Dépendance Numérique",
+            BTN_CALCULATE: "Calculer le Résultat",
+            ALERT_COMPLETE_QUIZ: "Veuillez répondre aux 20 questions avant de calculer le résultat.",
+            DEFAULT_USERNAME: "Utilisateur",
+            PAYWALL_H3: "Votre Résultat est Prêt !",
+            PAYWALL_P: "Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous :",
+            BTN_STANDARD: "Télécharger le Rapport de Base (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
+            BTN_PREMIUM: "Acheter le Rapport Premium (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+            BTN_PREMIUM_SUB: "(Comprend : Plan d'Action, Priorité et Plan de 7 Jours)",
+            TITLE: "Rapport Personnalisé Digital Detox",
+            SUBTITLE: "Traitement Final (20 Questions)",
+            SCORE_LABEL: "Score",
+            RISK_LABEL: "Risque",
+            PROFILE_TITLE: "Votre Profil de Dépendance Numérique",
+            ANALYSIS_TITLE: "Analyse et Conseils Personnalisés",
+            RADAR_TITLE: "Analyse Détaillée par Axe de Risque",
+            IMPACT_TITLE: "Résumé Détaillé des Scores d'Impact",
+            PRIORITY_PLAN_TITLE: "Votre Plan d'Action Priorisé",
+            DAYS_PLAN_TITLE: "Plan Digital Detox de 7 Jours",
+            RESOURCES_TITLE: "Ressources Recommandées",
+            QUIZ_Q_COL: "Question",
+            QUIZ_A_COL: "Réponse Fournie",
+            QUIZ_S_COL: "Score",
+            DISCLAIMER: "Avertissement : Ce rapport est uniquement à titre informatif et ne remplace pas une consultation professionnelle.",
+            SITE_TITLE: "Dépendance Numérique",
+            NAV_QUIZ: "Quiz",
+            NAV_SCOPRI: "En Savoir Plus",
+            SECTION1_TITLE: "Qu'est-ce que la dépendance numérique ?",
+            SECTION1_P: "La dépendance numérique est l'utilisation excessive et incontrôlée des smartphones, des médias sociaux, des jeux vidéo et d'internet qui compromet la vie quotidienne et le bien-être psychophysique.",
+            SECTION2_TITLE: "⚠️ Principaux risques",
+            RISK1: "Réduction de la concentration : difficulté à maintenir l'attention pendant des périodes prolongées.",
+            RISK2: "Problèmes de sommeil : l'utilisation nocturne des appareils perturbe les rythmes circadiens.",
+            RISK3: "Stress et anxiété : les notifications continues et l'hyper-connectivité augmentent la pression mentale.",
+            RISK4: "Isolement social : l'interaction virtuelle remplace l'interaction réelle.",
+            SECTION3_TITLE: "💡 Conseils pratiques",
+            TIP1: "Fixez des limites quotidiennes pour les applications les plus utilisées.",
+            TIP2: "Désactivez les notifications non essentielles.",
+            TIP3: "Établissez des moments 'sans téléphone' (pendant les repas, avant de dormir).",
+            TIP4: "Consacrez du temps à des activités hors ligne comme le sport, la lecture ou la méditation.",
+            CTA_TITLE: "Voulez-vous découvrir votre niveau de risque ?",
+            CTA_BUTTON: "Faites le test maintenant",
+        } // <-- NON DEVE ESSERCI UNA VIRGOLA QUI, È L'ULTIMA LINGUA
+}; // <--- CHIUDE L'OGGETTO TRANSLATIONS
+
+// =========================================================================
+// 2. LOGICA MULTILINGUA (I18N)
+// =========================================================================
+
+/**
+ * Chiavi che devono esistere in ogni lingua per garantire la coerenza.
+ * Includono le risposte standard e gli assi di rischio.
+ */
+const I18N_KEYS_TO_TRANSLATE = {
+    ANSWER_0: 'Raramente',
+    ANSWER_1: 'A volte',
+    ANSWER_2: 'Spesso',
+    ANSWER_3: 'Sempre',
+    AXIS_Sleep_Rituals: 'Sonno e Rituali',
+    AXIS_Productivity_Focus: 'Produttività e Focus',
+    AXIS_Escape_Emotions: 'Fuga ed Emozioni',
+    AXIS_Habit_Compulsion: 'Abitudine e Compulsione',
+    AXIS_Social_Presence: 'Sociale e Presenza',
+    // Le chiavi delle domande (Q1, Q2...) sono aggiunte dinamicamente
+};
+
+/**
+ * Assicura che ogni lingua abbia tutte le chiavi statiche e dinamiche (domande, risposte).
+ * Previene l'errore "undefined" nel quiz.
+ */
+function ensureAllTranslationsExist() {
+    const defaultLang = TRANSLATIONS[CONFIG.I18N_LOCALE];
+
+    // 1. Assicura che le chiavi I18N_KEYS_TO_TRANSLATE siano in ogni lingua
+    for (const code in TRANSLATIONS) {
+        if (code === CONFIG.I18N_LOCALE) continue; // Salta la lingua di default
+
+        const currentLang = TRANSLATIONS[code];
+        for (const key in I18N_KEYS_TO_TRANSLATE) {
+            if (!currentLang[key]) {
+                // Aggiunge le risposte standard e gli assi mancanti copiando dall'italiano
+                currentLang[key] = defaultLang[key] || I18N_KEYS_TO_TRANSLATE[key];
+            }
+        }
+    }
+
+    // 2. Aggiunge le chiavi delle domande QUIZ_QUESTIONS a tutte le lingue
+    QUIZ_QUESTIONS.forEach((q, index) => {
+        const key = `Q${index + 1}`;
+        for (const code in TRANSLATIONS) {
+            if (!TRANSLATIONS[code][key]) {
+                TRANSLATIONS[code][key] = q.question; // Usa il testo IT come fallback
+            }
+        }
+    });
+}
+
+
+/**
+ * Applica le traduzioni a tutti gli elementi con l'attributo data-i18n.
+ * @param {string} locale - Il codice della lingua.
+ */
+function applyTranslations(locale) {
+    const t = TRANSLATIONS[locale] || TRANSLATIONS[CONFIG.I18N_LOCALE];
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (t[key]) {
+            element.innerHTML = t[key];
+        } else if (key.startsWith('AXIS_') && t[key.replace(/ /g, '_')]) {
+             // Gestisce la traduzione degli assi di rischio (es. AXIS_Sleep & Rituals)
+            element.innerHTML = t[key.replace(/ /g, '_')];
+        }
+    });
+
+    // Aggiorna il valore corrente della lingua salvata
+    CONFIG.I18N_LOCALE = locale;
+
+    // Ricarica il quiz per applicare le traduzioni alle domande generate dinamicamente
+    populateQuizQuestions();
+}
+
+/**
+ * Inizializza il selettore di lingua nell'header.
+ */
+function initLanguageSelector() {
+    const selectorContainer = document.getElementById('language-selector');
+    if (!selectorContainer) return;
+
+    AVAILABLE_LANGUAGES.forEach(lang => {
+        const button = document.createElement('button');
+        button.className = 'lang-btn';
+        button.innerHTML = lang.flag;
+        button.setAttribute('title', lang.name);
+        button.onclick = () => applyTranslations(lang.code);
+        selectorContainer.appendChild(button);
+    });
+
+    // Applica la classe 'active' al bottone della lingua corrente
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.getAttribute('title').includes(TRANSLATIONS[CONFIG.I18N_LOCALE]?.SITE_TITLE.split(' ')[0] || AVAILABLE_LANGUAGES[0].name.split(' ')[0])) {
+             // Il controllo è generico per evitare dipendenza dal nome esatto
+             // In realtà, viene gestito dal applyTranslations chiamato all'avvio
+        }
+    });
+}
+
+// =========================================================================
+// 3. LOGICA QUIZ E REPORT
+// =========================================================================
+
+/**
+ * Popola il contenitore delle domande del quiz.
+ */
+function populateQuizQuestions() {
+    const container = document.getElementById('quiz-questions-container');
+
+    // Se l'elemento non esiste (cioè siamo su scopri.html), esci.
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = ''; // Pulisci il contenitore
+    const currentLocale = CONFIG.I18N_LOCALE;
+    const t = TRANSLATIONS[currentLocale];
+
+    QUIZ_QUESTIONS.forEach((q, index) => {
+        const qIndex = index + 1;
+        const qKey = `Q${qIndex}`;
+
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question-block';
+        questionDiv.innerHTML = `
+            <p class="question-text">${qIndex}. ${t[qKey] || q.question}</p>
+            <div class="radio-group" data-question-index="${index}">
+                <input type="radio" id="q${qIndex}a0" name="q${qIndex}" value="0" required><label for="q${qIndex}a0">${t.ANSWER_0}</label>
+                <input type="radio" id="q${qIndex}a1" name="q${qIndex}" value="1"><label for="q${qIndex}a1">${t.ANSWER_1}</label>
+                <input type="radio" id="q${qIndex}a2" name="q${qIndex}" value="2"><label for="q${qIndex}a2">${t.ANSWER_2}</label>
+                <input type="radio" id="q${qIndex}a3" name="q${qIndex}" value="3"><label for="q${qIndex}a3">${t.ANSWER_3}</label>
+            </div>
+        `;
+        container.appendChild(questionDiv);
+    });
+
+    // Aggiorna l'elemento del punteggio massimo
+    const maxScoreElement = document.getElementById('max-score');
+    if (maxScoreElement) {
+        maxScoreElement.textContent = CONFIG.MAX_SCORE;
+    }
+}
+
+/**
+ * Calcola il livello di rischio in base al punteggio totale.
+ * @param {number} totalScore - Il punteggio totale del quiz.
+ * @returns {{level: string, profileText: string, analysisText: string, cssClass: string, priorityAxis: string}}
+ */
+function getRiskLevel(totalScore, axisScores) {
+    const locale = CONFIG.I18N_LOCALE;
+    let result = null;
+
+    for (const key in RISK_PROFILES_I18N) {
+        const profile = RISK_PROFILES_I18N[key];
+        if (totalScore >= profile.minScore && totalScore <= profile.maxScore) {
+            result = {
+                ...profile[locale],
+                cssClass: profile.cssClass
+            };
+            break;
+        }
+    }
+
+    // Identifica l'asse di rischio con il punteggio più alto
+    const axisNames = Object.keys(axisScores);
+    const priorityAxis = axisNames.reduce((a, b) => axisScores[a] > axisScores[b] ? a : b);
+
+    // Se il risultato è stato trovato, aggiunge l'asse prioritario
+    if (result) {
+        result.priorityAxis = priorityAxis;
+    }
+
+    return result;
+}
+
+/**
+ * Gestisce l'evento di calcolo, raccoglie i dati e visualizza il report o il paywall.
+ */
+function handleCalculate() {
+    const form = document.getElementById('quiz-form');
+    const questions = QUIZ_QUESTIONS.length;
+    const formData = new FormData(form);
+
+    let totalScore = 0;
+    const axisScores = {
+        'Sleep & Rituals': 0,
+        'Productivity & Focus': 0,
+        'Escape & Emotions': 0,
+        'Habit & Compulsion': 0,
+        'Social & Presence': 0
+    };
+    let completedQuestions = 0;
+    const userAnswers = [];
+    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
+
+    for (let i = 1; i <= questions; i++) {
+        const score = formData.get(`q${i}`);
+        if (score !== null) {
+            const numericScore = parseInt(score, 10);
+            totalScore += numericScore;
+            completedQuestions++;
+
+            const axis = QUIZ_QUESTIONS[i - 1].axis;
+            axisScores[axis] += numericScore;
+
+            // Registra la risposta per il report dettagliato
+            userAnswers.push({
+                questionKey: `Q${i}`,
+                answerScore: numericScore
+            });
+        }
+    }
+
+    if (completedQuestions !== questions) {
+        alert(t.ALERT_COMPLETE_QUIZ);
+        return;
+    }
+
+    const userName = formData.get('userName') || t.DEFAULT_USERNAME;
+    const riskData = getRiskLevel(totalScore, axisScores);
+
+    // Salva i risultati in una variabile globale per l'accesso futuro (es. paywall)
+    window.quizResults = {
+        totalScore,
+        userName,
+        riskData,
+        axisScores,
+        userAnswers
+    };
+
+    // Nasconde il quiz e mostra il Paywall
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('paywall').style.display = 'block';
+
+    // Aggiorna l'intestazione del paywall
+    document.getElementById('paywall-h3').innerHTML = t.PAYWALL_H3.replace('!', `, ${userName}!`);
+
+    // Inizializza i bottoni di acquisto
+    initPaywallButtons();
+}
+
+/**
+ * Inizializza i listener per i bottoni Standard e Premium.
+ */
+function initPaywallButtons() {
+    const standardBtn = document.getElementById('btn-standard');
+    const premiumBtn = document.getElementById('btn-premium');
+
+    if (standardBtn) {
+        // Report Standard: mostra il report, nascondendo i contenuti premium
+        standardBtn.onclick = () => showReport(window.quizResults, 'standard');
+    }
+    if (premiumBtn) {
+        // Report Premium: mostra il report, includendo i contenuti premium
+        premiumBtn.onclick = () => showReport(window.quizResults, 'premium');
+    }
+}
+
+/**
+ * Visualizza il report completo e popola tutti i dati.
+ * @param {object} results - I risultati calcolati.
+ * @param {string} planType - 'standard' o 'premium'.
+ */
+function showReport(results, planType) {
+    const { totalScore, userName, riskData, axisScores, userAnswers } = results;
+    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const reportElement = document.getElementById('report');
+
+    // Nasconde il paywall e mostra il report
+    document.getElementById('paywall').style.display = 'none';
+    reportElement.style.display = 'block';
+
+    // 1. Dati Principali
+    const reportHeader = reportElement.querySelector('.report-header h1');
+    reportHeader.innerHTML = `${t.TITLE} - ${userName}`; // Aggiunge il nome nel titolo
+
+    document.getElementById('final-score').textContent = totalScore;
+    document.getElementById('risk-level').textContent = riskData.level;
+    document.getElementById('report-date').textContent = `Data: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
+
+    // 2. Livello di Rischio e Analisi
+    const riskLevelContainer = document.getElementById('risk-level-container');
+    riskLevelContainer.className = `score-box ${riskData.cssClass}`;
+    document.getElementById('profile-text').textContent = riskData.profileText;
+    document.getElementById('analysis-text').textContent = riskData.analysisText;
+
+    // 3. Grafico Radar
+    renderRadarChart(axisScores, riskData.cssClass);
+
+    // 4. Riepilogo Dettagliato dei Punteggi (Impact List)
+    const impactList = document.getElementById('impact-list');
+    impactList.innerHTML = '';
+    const sortedAxes = Object.keys(axisScores).sort((a, b) => axisScores[b] - axisScores[a]);
+
+    sortedAxes.forEach(axis => {
+        const score = axisScores[axis];
+        const maxAxisScore = 3 * (QUIZ_QUESTIONS.filter(q => q.axis === axis).length);
+        const translatedAxis = t[`AXIS_${axis.replace(/ /g, '_')}`] || axis;
+        const listItem = document.createElement('li');
+
+        listItem.innerHTML = `
+            <strong>${translatedAxis}:</strong> ${score}/${maxAxisScore}
+            <div class="score-bar"><div style="width: ${(score / maxAxisScore) * 100}%;"></div></div>
+        `;
+        impactList.appendChild(listItem);
+    });
+
+    // 5. Risposte Dettagliate del Quiz (Tabella)
+    const answersBody = document.getElementById('quiz-answers-body');
+    answersBody.innerHTML = '';
+
+    userAnswers.forEach(answer => {
+        const questionText = t[answer.questionKey] || QUIZ_QUESTIONS.find(q => `Q${userAnswers.indexOf(answer) + 1}` === answer.questionKey).question;
+        const translatedAnswer = t[`ANSWER_${answer.answerScore}`];
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${questionText}</td>
+            <td>${translatedAnswer}</td>
+            <td>${answer.answerScore}</td>
+        `;
+        answersBody.appendChild(row);
+    });
+
+    // 6. Contenuti Premium
+    const premiumContent = document.querySelector('.premium-content');
+    if (premiumContent) {
+        if (planType === 'premium') {
+            premiumContent.style.display = 'block';
+
+            // Dati del piano d'azione prioritario
+            const priorityAxis = riskData.priorityAxis;
+            const priorityPlan = AXIS_PLANS_I18N[priorityAxis];
+            const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE];
+
+            document.getElementById('priority-action').innerHTML = `
+                <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.priorityTitle}</h4>
+                <p>${priorityPlanI18n.priorityDetail}</p>
+            `;
+
+            // Piano 7 giorni
+            const daysPlanList = document.getElementById('days-plan-list');
+            daysPlanList.innerHTML = '';
+            priorityPlanI18n.dayPlan.forEach(step => {
+                const listItem = document.createElement('li');
+                listItem.textContent = step;
+                daysPlanList.appendChild(listItem);
+            });
+
+            // Risorse
+            document.getElementById('resources-text').textContent = RESOURCES_I18N[CONFIG.I18N_LOCALE] || RESOURCES_I18N['it'];
+
+        } else {
+            // Nasconde i contenuti Premium per il piano Standard
+            premiumContent.style.display = 'none';
+        }
+    }
+
+    // Abilita il bottone di download PDF (Placeholder)
+    const downloadBtn = document.getElementById('download-pdf-btn');
+    if(downloadBtn) {
+        downloadBtn.onclick = () => alert('La funzione di download PDF è un placeholder in questa versione.');
+    }
+}
+
+/**
+ * Genera il grafico Radar con i punteggi degli assi.
+ * @param {object} axisScores - I punteggi di ogni asse di rischio.
+ * @param {string} riskCssClass - La classe di rischio (per il colore del grafico).
+ */
+let riskRadarChart = null; // Variabile per mantenere l'istanza del grafico
+
+function renderRadarChart(axisScores, riskCssClass) {
+    const ctx = document.getElementById('riskRadarChart');
+    if (!ctx) return;
+
+    // Distrugge l'istanza precedente se esiste
+    if (riskRadarChart) {
+        riskRadarChart.destroy();
+    }
+
+    // Mappa i nomi degli assi in base alla lingua
+    const translatedLabels = Object.keys(axisScores).map(axis => {
+        return TRANSLATIONS[CONFIG.I18N_LOCALE][`AXIS_${axis.replace(/ /g, '_')}`] || axis;
+    });
+
+    const dataValues = Object.values(axisScores);
+    const maxScore = 3 * (QUIZ_QUESTIONS.length / 5); // 12 punti max per ogni asse (4 domande * 3 punti)
+
+    let borderColor = '#007bff';
+    let backgroundColor = 'rgba(0, 123, 255, 0.2)';
+
+    if (riskCssClass.includes('risk-medium')) {
+        borderColor = '#ffc107';
+        backgroundColor = 'rgba(255, 193, 7, 0.2)';
+    } else if (riskCssClass.includes('risk-high')) {
+        borderColor = '#dc3545';
+        backgroundColor = 'rgba(220, 53, 69, 0.2)';
+    }
+
+    riskRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: translatedLabels,
+            datasets: [{
+                label: 'Punteggio di Impatto',
+                data: dataValues,
+                fill: true,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                pointBackgroundColor: borderColor,
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: borderColor
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                r: {
+                    angleLines: { display: false },
+                    suggestedMin: 0,
+                    suggestedMax: maxScore,
+                    ticks: {
+                        stepSize: 3,
+                        showLabelBackdrop: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+// =========================================================================
+// 4. INIZIALIZZAZIONE GLOBALE
+// =========================================================================
+
+/**
+ * Funzione di inizializzazione che viene eseguita al caricamento del DOM.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 0. Assicura che TUTTE le chiavi di traduzione di base siano presenti
+    ensureAllTranslationsExist();
+
+    // 1. Inizializzazione della logica di traduzione
+    initLanguageSelector();
+    applyTranslations(CONFIG.I18N_LOCALE); // Applica la lingua di default
+
+    // 2. Popola le domande (questa funzione genera il quiz!)
+    populateQuizQuestions();
+
+    // 3. Collega il bottone di calcolo
+    const calculateBtn = document.getElementById('calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', handleCalculate);
+    }
+
+    // 4. Nasconde le sezioni di report all'avvio (gestisce anche scopri.html dove non esistono)
+    const paywall = document.getElementById('paywall');
+    const report = document.getElementById('report');
+
+    if (paywall) paywall.style.display = 'none';
+    if (report) report.style.display = 'none';
+});
 // Continua da 'RADAR'
 
                 TITLE: "Analyse Detailliert nach Risikobereich",
