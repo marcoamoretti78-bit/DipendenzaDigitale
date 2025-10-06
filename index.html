@@ -1,123 +1,143 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dipendenza Digitale – Valuta la tua dipendenza dallo smartphone</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dipendenza Digitale</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
 </head>
 <body>
-  <nav class="navbar">
-  <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo"></a>
-  <span class="title">Dipendenza Digitale</span>
-  <div class="nav-links">
-    <a href="quiz.html">Quiz</a>
-    <a href="/scopri.html">Scopri di più</a>
 
-  </div>
-</nav>
-
-
-  <header class="hero">
-    <h1>Valuta la tua Dipendenza Digitale</h1>
-    <p>Scopri in pochi minuti quanto il tuo smartphone influenza la tua vita quotidiana.</p>
-    <div class="cta">
-      <a href="quiz.html" class="btn primary">Fai il quiz</a>
-      <a href="#scopri" class="btn outline">Scopri di più</a>
-    </div>
-  </header>
-
-  <section class="features">
-    <h2>Perché è importante</h2>
-    <p>La dipendenza da smartphone è in crescita e può incidere su rendimento, relazioni e benessere psicofisico.</p>
-    <div class="cards">
-      <div class="card">
-        <h3>⏰ Perdita di tempo</h3>
-        <p>Scroll infinito e micro-interruzioni erodono ore preziose ogni settimana.</p>
-      </div>
-      <div class="card">
-        <h3>😰 Stress e ansia</h3>
-        <p>Notifiche costanti e FOMO possono aumentare tensione e irrequietezza.</p>
-      </div>
-      <div class="card">
-        <h3>💤 Sonno compromesso</h3>
-        <p>Luce blu serale e iperstimolazione peggiorano qualità e durata del riposo.</p>
-      </div>
-      <div class="card">
-        <h3>🤝 Relazioni</h3>
-        <p>Phubbing e distrazioni riducono la qualità del tempo con gli altri.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="scopri" class="deep-info">
-    <h2>Scopri di più</h2>
-    <p class="lead">Riconoscere i segnali è il primo passo per cambiare abitudini e recuperare focus, sonno e relazioni.</p>
-
-    <div class="grid-2">
-      <div class="panel">
-        <h3>Segnali comuni</h3>
-        <ul class="list">
-          <li>Controllo compulsivo del telefono appena sveglio.</li>
-          <li>Uso durante pasti/conversazioni o mentre si lavora/studia.</li>
-          <li>Ansia/irrequietezza quando non è a portata di mano.</li>
-          <li>Stanchezza mattutina per uso serale/notturno.</li>
-          <li>Sensazione di “non avere tempo” per attività importanti.</li>
-        </ul>
-      </div>
-
-      <div class="panel">
-        <h3>Come funziona il test</h3>
-        <ol class="steps">
-          <li>Rispondi a <strong>20 domande</strong> (2–3 minuti).</li>
-          <li>Calcoliamo il punteggio e la tua <strong>percentuale di rischio</strong>.</li>
-          <li>Puoi acquistare il <strong>Report Premium (1,99 €)</strong> con analisi, grafico e consigli personalizzati.</li>
-        </ol>
-      </div>
+    <div class="navbar">
+        <span class="title" data-i18n="FORM_TITLE">Valutazione della Dipendenza Digitale</span>
     </div>
 
-    <div class="panel highlight">
-      <h3>Cosa include il <span class="badge">Report Premium – 1,99 €</span></h3>
-      <ul class="list">
-        <li>Punteggio, <strong>percentuale di rischio</strong> e interpretazione (basso/medio/alto).</li>
-        <li><strong>Grafico a torta</strong> della distribuzione delle risposte.</li>
-        <li><strong>Consigli pratici</strong> mirati al tuo profilo.</li>
-        <li><strong>Checklist quotidiana</strong> pronta all’uso.</li>
-        <li><strong>Piano Detox 7 giorni</strong> passo-passo.</li>
-        <li>PDF scaricabile e stampabile.</li>
-      </ul>
-      <a href="quiz.html" class="btn primary">Inizia ora</a>
+    <div class="container">
+        <div id="quiz-section">
+            <div class="intro">
+                <h2>Verifica la Tua Relazione con lo Smartphone</h2>
+                <p>Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.</p>
+                
+                <div class="name-field">
+                    <span>Inserisci il tuo nome (opzionale, per personalizzare il report):</span>
+                    <input type="text" id="userName" placeholder="Il tuo nome">
+                </div>
+            </div>
+
+            <form id="quiz-form" class="quiz">
+                <div id="quiz-questions-container">
+                    </div>
+            </form>
+            
+            <div class="actions">
+                <button type="button" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Calcola Risultato</button>
+            </div>
+        </div>
+        
+        <div id="paywall" class="paywall" style="display: none;">
+            <h3 data-i18n="PAYWALL_H3">Il Tuo Risultato è Pronto!</h3>
+            <p data-i18n="PAYWALL_P">Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
+            
+            <div class="paywall-options">
+                <button type="button" id="btn-standard" class="btn standard-btn" data-i18n="BTN_STANDARD">Scarica Report Base (€19.99 - Finto)</button>
+                <button type="button" id="btn-premium" class="btn premium-btn" data-i18n="BTN_PREMIUM">Acquista Report Premium (€49.99 - Finto)</button>
+                <p class="premium-subtitle" data-i18n="BTN_PREMIUM_SUB">(Include: Piano d'Azione, Priorità e Piano 7 Giorni)</p>
+            </div>
+            <p class="secure-note">Transazione simulata a scopo dimostrativo.</p>
+        </div>
+
+
+        <div id="report" class="report-container" style="display: none;">
+            
+            <header class="report-header">
+                <h1 data-i18n="TITLE">Report Personalizzato Digital Detox</h1>
+                <p data-i18n="SUBTITLE">Elaborazione Finale (20 Domande)</p>
+                <span id="report-date" class="date-tag" data-i18n="DATE">Data:</span>
+            </header>
+
+            <section class="result-summary">
+                <h2 data-i18n="RESULT_TITLE">Il Tuo Punteggio</h2>
+                <div class="score-grid">
+                    <div class="score-box total-score">
+                        <span data-i18n="SCORE_LABEL">Punteggio</span>
+                        <div class="score-value">
+                            <span id="final-score">0</span> / <span id="max-score">60</span>
+                        </div>
+                    </div>
+                    <div id="risk-level-container" class="score-box risk-low">
+                        <span data-i18n="RISK_LABEL">Rischio</span>
+                        <div class="risk-value">
+                            <span id="risk-level">Rischio Basso</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="profile-analysis">
+                <h2 data-i18n="PROFILE_TITLE">Il Tuo Profilo di Dipendenza Digitale</h2>
+                <p id="profile-text"></p>
+                <hr>
+                <h3 data-i18n="ANALYSIS_TITLE">Analisi e Consigli Personalizzati</h3>
+                <p id="analysis-text"></p>
+            </section>
+            
+            <section class="radar-section">
+                <h2 data-i18n="RADAR_TITLE">Analisi Dettagliata per Asse di Rischio</h2>
+                <div class="chart-container">
+                    <canvas id="riskRadarChart"></canvas>
+                </div>
+                
+                <h3 data-i18n="IMPACT_TITLE">Riepilogo Dettagliato dei Punteggi di Impatto</h3>
+                <ul id="impact-list" class="impact-list">
+                    </ul>
+            </section>
+
+            <section class="premium-content">
+                <h2 data-i18n="PRIORITY_PLAN_TITLE">Il Tuo Piano d'Azione Prioritizzato</h2>
+                <div id="priority-action">
+                    </div>
+                
+                <h2 data-i18n="DAYS_PLAN_TITLE">Piano Digital Detox di 7 Giorni</h2>
+                <ul id="days-plan-list" class="days-plan">
+                    </ul>
+                
+                <h2 data-i18n="RESOURCES_TITLE">Risorse Consigliate</h2>
+                <div id="resources-text" class="resources-box">
+                    </div>
+            </section>
+
+            <section class="detail-answers">
+                <h2 data-i18n="QUIZ_TITLE">Le Tue Risposte Dettagliate al Quiz</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="QUIZ_Q_COL">Domanda</th>
+                            <th data-i18n="QUIZ_A_COL">Risposta Fornita</th>
+                            <th data-i18n="QUIZ_S_COL">Punteggio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quiz-answers-body">
+                        </tbody>
+                </table>
+            </section>
+
+            <div class="disclaimer-box">
+                <p data-i18n="DISCLAIMER">Disclaimer: Questo report è solo a scopo informativo e non sostituisce una consulenza professionale.</p>
+            </div>
+            
+            <div class="actions">
+                <button id="download-pdf-btn" class="btn primary">Scarica Report PDF</button>
+            </div>
+        </div>
     </div>
 
-    <div class="faq">
-      <h3>Domande frequenti</h3>
-      <details>
-        <summary>Quanto dura il test?</summary>
-        <p>In media 2–3 minuti. Le domande sono rapide e intuitive.</p>
-      </details>
-      <details>
-        <summary>Il risultato è affidabile?</summary>
-        <p>È uno screening orientativo, non una diagnosi clinica. Offre indicazioni pratiche per migliorare le abitudini digitali.</p>
-      </details>
-      <details>
-        <summary>Come avviene il pagamento?</summary>
-        <p>Pagamento sicuro con PayPal. Il PDF è generato subito dopo la conferma.</p>
-      </details>
-      <details>
-        <summary>Come trattate i dati?</summary>
-        <p>Usiamo solo le risposte per calcolare il punteggio. Il nome è facoltativo ed è inserito solo nel PDF.</p>
-      </details>
+    <div class="footer">
+        © 2025 Dipendenza Digitale. Tutti i diritti riservati.
     </div>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2025 Dipendenza Digitale | <a href="mailto:info@dipendenzadigitale.com">info@dipendenzadigitale.com</a></p>
-  </footer>
-  
-
-  <script src="scripts.js?v=3"></script>
-
+    
+    <script src="scripts.final.js"></script>
 </body>
 </html>
