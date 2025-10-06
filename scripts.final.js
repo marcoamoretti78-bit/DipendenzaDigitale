@@ -1,9 +1,64 @@
+// =================================================================
+// 1. VARIABILI GLOBALI E UTILITÀ
+// =================================================================
+
+// Variabile per Chart.js (necessaria per aggiornare il grafico)
+let myRadarChart;
+
+/**
+ * Determina la lingua corrente dai parametri URL, altrimenti usa l'italiano ('it').
+ * @returns {string} Il codice lingua corrente.
+ */
+const getLanguage = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang');
+    return ['it', 'en', 'fr', 'es', 'de'].includes(lang) ? lang : 'it'; 
+};
+
+/**
+ * Mappa che associa ciascuna domanda (q1, q2, ...) alla sua categoria di rischio (Axis).
+ * Totale: 20 domande, 4 per asse. Max Score Totale: 60. Max Score Asse: 12.
+ */
+const QUESTION_MAP = {
+    // Axis 1: Sleep and Rituals (4 questions, Max 12 points)
+    q1: 'Sleep and Rituals', 
+    q7: 'Sleep and Rituals', 
+    q11: 'Sleep and Rituals',
+    q19: 'Sleep and Rituals',
+
+    // Axis 2: Escape and Emotions (4 questions, Max 12 points)
+    q2: 'Escape and Emotions',
+    q5: 'Escape and Emotions',
+    q9: 'Escape and Emotions',
+    q14: 'Escape and Emotions',
+    
+    // Axis 3: Attention and Productivity (4 questions, Max 12 points)
+    q3: 'Attention and Productivity',
+    q8: 'Attention and Productivity',
+    q13: 'Attention and Productivity',
+    q16: 'Attention and Productivity',
+
+    // Axis 4: Relationships and Sociality (4 questions, Max 12 points)
+    q4: 'Relationships and Sociality',
+    q12: 'Relationships and Sociality',
+    q17: 'Relationships and Sociality',
+    q18: 'Relationships and Sociality', // Q18: Nascondere l'uso del telefono è legato a dinamiche sociali
+
+    // Axis 5: Control and Time (4 questions, Max 12 points)
+    q6: 'Control and Time',
+    q10: 'Control and Time',
+    q15: 'Control and Time',
+    q20: 'Control and Time',
+};
+
+
+// =================================================================
+// 2. DATI DI TRADUZIONE (TEXT_DATA) - Blocco Multilingua
+// =================================================================
+
 const TEXT_DATA = {
-    // =================================================================
     // =================== 🇮🇹 ITALIANO (IT) - DEFAULT ==================
-    // =================================================================
     it: {
-        // NOMI DELLE CATEGORIE (USATE PER IL CALCOLO E CHART.JS) - DEVE MATCHARE QUESTIONMAP
         AXES: { 
             'Sleep and Rituals': 'Sonno e Rituali', 
             'Escape and Emotions': 'Fuga ed Emozioni', 
@@ -34,7 +89,7 @@ const TEXT_DATA = {
         PROFILE_HIGH: "Sei un **utente dipendente**. Il tuo smartphone controlla il tuo sonno, le tue relazioni e i tuoi stati d'animo, ed è probabilmente diventato la tua via di fuga primaria dalla noia o dall'ansia. Questo report segna l'inizio del recupero del controllo. Richiede un impegno serio e l'applicazione immediata delle priorità definite, concentrandoti sulla sostituzione delle abitudini digitali con alternative offline che migliorino il tuo benessere fisico e mentale.",
 
         RADAR_TITLE: "Analisi Dettagliata per Asse di Rischio",
-        RADAR_LEGEND: "Punteggio di Rischio (Max 3)",
+        RADAR_LEGEND: "Punteggio di Rischio (Max 12)",
 
         IMPACT_TITLE: "Riepilogo Dettagliato dei Punteggi di Impatto",
         IMPACT_DETAIL: (axis, score) => `• ${axis}: ${score}% (vicinanza al rischio massimo in quest'area)`,
@@ -57,11 +112,11 @@ const TEXT_DATA = {
 
         PRIORITY_PLAN_TITLE: "Il Tuo Piano d'Azione Prioritizzato",
         PRIORITY_NONE: "Nessuna priorità di rischio specifica identificata (punteggio basso). Procedi direttamente al Piano di 7 Giorni.",
-        PRIORITY_SLEEP: "Attiva la modalità “Non Disturbare” alle 22:00 e lascia il telefono fuori dalla camera da letto. Sostituisci lo scrolling serale con la lettura di un libro fisico.",
-        PRIORITY_ESCAPE: "Non usare il telefono per fuggire dalla noia, tristezza o ansia. Stabilisci un “buffer” di 10 minuti: quando senti l’impulso, aspetta 10 minuti e fai qualcosa di non digitale (es. breve passeggiata, bevanda calda).",
-        PRIORITY_ATTENTION: "Usa l'app Benessere Digitale (o Tempo Schermo) per limitare strettamente l'uso delle app più distraenti (es. social, giochi) durante le ore di lavoro/studio.",
-        PRIORITY_RELATIONS: "Stabilisci chiare “Zone Senza Telefono”: durante i pasti, le conversazioni con partner/figli e le riunioni sociali. Metti il telefono in modalità aereo o in un'altra stanza per disconnetterti completamente.",
-        PRIORITY_CONTROL: "Usa timer da 30 minuti (Tecnica del Pomodoro) quando lavori e usa il telefono solo durante le pause. Tieni il telefono fuori dalla vista (in una borsa o cassetto) quando non è strettamente necessario.",
+        PRIORITY_SLEEP_AND_RITUALS: "Attiva la modalità “Non Disturbare” alle 22:00 e lascia il telefono fuori dalla camera da letto. Sostituisci lo scrolling serale con la lettura di un libro fisico.",
+        PRIORITY_ESCAPE_AND_EMOTIONS: "Non usare il telefono per fuggire dalla noia, tristezza o ansia. Stabilisci un “buffer” di 10 minuti: quando senti l’impulso, aspetta 10 minuti e fai qualcosa di non digitale (es. breve passeggiata, bevanda calda).",
+        PRIORITY_ATTENTION_AND_PRODUCTIVITY: "Usa l'app Benessere Digitale (o Tempo Schermo) per limitare strettamente l'uso delle app più distraenti (es. social, giochi) durante le ore di lavoro/studio.",
+        PRIORITY_RELATIONSHIPS_AND_SOCIALITY: "Stabilisci chiare “Zone Senza Telefono”: durante i pasti, le conversazioni con partner/figli e le riunioni sociali. Metti il telefono in modalità aereo o in un'altra stanza per disconnetterti completamente.",
+        PRIORITY_CONTROL_AND_TIME: "Usa timer da 30 minuti (Tecnica del Pomodoro) quando lavori e usa il telefono solo durante le pause. Tieni il telefono fuori dalla vista (in una borsa o cassetto) quando non è strettamente necessario.",
 
         DAYS_PLAN_TITLE: "Piano Digital Detox di 7 Giorni",
         DAYS_PLAN_LOW: [
@@ -137,16 +192,14 @@ const TEXT_DATA = {
             { text: "Ti ritrovi a usare il telefono in auto, anche se non strettamente necessario?", name: "q15", category: "Control and Time" },
             { text: "Controlli il telefono di frequente anche quando non ricevi notifiche?", name: "q16", category: "Attention and Productivity" },
             { text: "Preferisci comunicare online piuttosto che di persona?", name: "q17", category: "Relationships and Sociality" },
-            { text: "Hai mai nascosto l'uso del telefono ad altre persone?", name: "q18", category: "Escape and Emotions" },
+            { text: "Hai mai nascosto l'uso del telefono ad altre persone?", name: "q18", category: "Relationships and Sociality" },
             { text: "Ti addormenti con il telefono in mano o sul letto?", name: "q19", category: "Sleep and Rituals" },
             { text: "Ti senti spesso stanco a causa dell'uso prolungato dello schermo?", name: "q20", category: "Control and Time" },
         ],
         DATE_LOCALE: 'it-IT',
     },
 
-    // =================================================================
     // =================== 🇬🇧 INGLESE (EN) ==============================
-    // =================================================================
     en: {
         AXES: { 
             'Sleep and Rituals': 'Sleep and Rituals', 
@@ -178,7 +231,7 @@ const TEXT_DATA = {
         PROFILE_HIGH: "You are a **dependent user**. Your smartphone controls your sleep, relationships, and moods, and has likely become your primary escape route from boredom or anxiety. This report marks the beginning of taking back control. It requires serious commitment and the immediate application of the defined priorities, focusing on replacing digital habits with offline alternatives that improve your physical and mental well-being.",
 
         RADAR_TITLE: "Detailed Analysis by Risk Axis",
-        RADAR_LEGEND: "Risk Score (Max 3)",
+        RADAR_LEGEND: "Risk Score (Max 12)",
 
         IMPACT_TITLE: "Detailed Summary of Impact Scores",
         IMPACT_DETAIL: (axis, score) => `• ${axis}: ${score}% (proximity to maximum risk in this area)`,
@@ -200,11 +253,11 @@ const TEXT_DATA = {
 
         PRIORITY_PLAN_TITLE: "Your Prioritized Action Plan",
         PRIORITY_NONE: "No specific risk priorities identified (low score). Proceed directly to the 7-Day Plan.",
-        PRIORITY_SLEEP: "Activate 'Do Not Disturb' mode at 10:00 PM and leave your phone out of the bedroom. Replace evening scrolling with reading a physical book.",
-        PRIORITY_ESCAPE: "Do not use your phone to escape boredom, sadness, or anxiety. Establish a 10-minute 'buffer': when you feel the urge, wait 10 minutes and do something non-digital (e.g., short walk, hot drink).",
-        PRIORITY_ATTENTION: "Use the Digital Wellbeing (or Screen Time) app to strictly limit the use of the most distracting apps (e.g., social media, games) during work/study hours.",
-        PRIORITY_RELATIONS: "Establish clear 'Phone-Free Zones': during meals, conversations with partner/children, and social gatherings. Put the phone on airplane mode or in another room to fully disconnect.",
-        PRIORITY_CONTROL: "Use 30-minute timers (Pomodoro Technique) when working and only use the phone during breaks. Keep the phone out of sight (in a bag or drawer) when not strictly necessary.",
+        PRIORITY_SLEEP_AND_RITUALS: "Activate 'Do Not Disturb' mode at 10:00 PM and leave your phone out of the bedroom. Replace evening scrolling with reading a physical book.",
+        PRIORITY_ESCAPE_AND_EMOTIONS: "Do not use your phone to escape boredom, sadness, or anxiety. Establish a 10-minute 'buffer': when you feel the urge, wait 10 minutes and do something non-digital (e.g., short walk, hot drink).",
+        PRIORITY_ATTENTION_AND_PRODUCTIVITY: "Use the Digital Wellbeing (or Screen Time) app to strictly limit the use of the most distracting apps (e.g., social media, games) during work/study hours.",
+        PRIORITY_RELATIONSHIPS_AND_SOCIALITY: "Establish clear 'Phone-Free Zones': during meals, conversations with partner/children, and social gatherings. Put the phone on airplane mode or in another room to fully disconnect.",
+        PRIORITY_CONTROL_AND_TIME: "Use 30-minute timers (Pomodoro Technique) when working and only use the phone during breaks. Keep the phone out of sight (in a bag or drawer) when not strictly necessary.",
 
         DAYS_PLAN_TITLE: "7-Day Digital Detox Plan",
         DAYS_PLAN_LOW: [
@@ -279,16 +332,14 @@ const TEXT_DATA = {
             { text: "Do you find yourself using the phone in the car, even if not strictly necessary?", name: "q15", category: "Control and Time" },
             { text: "Do you check your phone frequently even when you don't receive notifications?", name: "q16", category: "Attention and Productivity" },
             { text: "Do you prefer communicating online rather than in person?", name: "q17", category: "Relationships and Sociality" },
-            { text: "Have you ever hidden your phone use from other people?", name: "q18", category: "Escape and Emotions" },
+            { text: "Have you ever hidden your phone use from other people?", name: "q18", category: "Relationships and Sociality" },
             { text: "Do you fall asleep with the phone in your hand or on your bed?", name: "q19", category: "Sleep and Rituals" },
             { text: "Do you often feel tired due to prolonged screen use?", name: "q20", category: "Control and Time" },
         ],
         DATE_LOCALE: 'en-GB', // Using British English locale for date formatting
     },
 
-    // =================================================================
     // =================== 🇫🇷 FRANCESE (FR) ===========================
-    // =================================================================
     fr: {
         AXES: { 
             'Sleep and Rituals': 'Sommeil et Rituels', 
@@ -316,7 +367,7 @@ const TEXT_DATA = {
         PROFILE_MEDIUM: "Vous êtes un **utilisateur à la croisée des chemins**. Vous avez développé des habitudes qui érodent votre concentration et votre temps libre. C'est le moment idéal pour agir avec un plan ciblé avant de glisser vers un risque élevé et de subir des conséquences plus graves sur le sommeil et les relations. Votre priorité est de rétablir des limites claires et d'appliquer immédiatement les techniques de déconnexion intentionnelle que vous trouverez dans le plan d'action.",
         PROFILE_HIGH: "Vous êtes un **utilisateur dépendant**. Votre smartphone contrôle votre sommeil, vos relations et vos humeurs, et est probablement devenu votre principale voie d'évasion de l'ennui ou de l'anxiété. Ce rapport marque le début de la reprise de contrôle. Il nécessite un engagement sérieux et l'application immédiate des priorités définies, en se concentrant sur le remplacement des habitudes numériques par des alternatives hors ligne qui améliorent votre bien-être physique et mental.",
         RADAR_TITLE: "Analyse détaillée par Axe de Risque",
-        RADAR_LEGEND: "Score de Risque (Max 3)",
+        RADAR_LEGEND: "Score de Risque (Max 12)",
         IMPACT_TITLE: "Résumé détaillé des Scores d'Impact",
         IMPACT_DETAIL: (axis, score) => `• ${axis}: ${score}% (proximité du risque maximal dans ce domaine)`,
         QUIZ_TITLE: "Vos Réponses Détaillées au Quiz",
@@ -332,11 +383,11 @@ const TEXT_DATA = {
         PREMIUM_UPGRADE_TEXT: (standard, premium) => `Vous avez téléchargé la version Basique du rapport (${standard}). Pour débloquer vos 3 Priorités d'Action, le Plan de Désintoxication Numérique de 7 Jours et les Ressources détaillées, passez à la version Premium (${premium}).`,
         PRIORITY_PLAN_TITLE: "Votre Plan d'Action Priorisé",
         PRIORITY_NONE: "Aucune priorité de risque spécifique identifiée (score faible). Procédez directement au Plan de 7 Jours.",
-        PRIORITY_SLEEP: "Activez le mode « Ne Pas Déranger » à 22h00 et laissez votre téléphone en dehors de la chambre. Remplacez le défilement du soir par la lecture d'un livre physique.",
-        PRIORITY_ESCAPE: "N'utilisez pas votre téléphone pour échapper à l'ennui, à la tristesse ou à l'anxiété. Établissez un « tampon » de 10 minutes : lorsque vous ressentez l'envie, attendez 10 minutes et faites quelque chose de non-numérique (ex. courte promenade, boisson chaude).",
-        PRIORITY_ATTENTION: "Utilisez l'application Bien-être Numérique (ou Temps d'Écran) pour limiter strictement l'utilisation des applications les plus distrayantes (ex. réseaux sociaux, jeux) pendant les heures de travail/étude.",
-        PRIORITY_RELATIONS: "Établissez des « Zones sans Téléphone » claires : pendant les repas, les conversations avec le partenaire/les enfants et les réunions sociales. Mettez le téléphone en mode avion ou dans une autre pièce pour vous déconnecter complètement.",
-        PRIORITY_CONTROL: "Utilisez des minuteurs de 30 minutes (Technique Pomodoro) lorsque vous travaillez et n'utilisez le téléphone que pendant les pauses. Gardez le téléphone hors de vue (dans un sac ou un tiroir) lorsque ce n'est pas strictement nécessaire.",
+        PRIORITY_SLEEP_AND_RITUALS: "Activez le mode « Ne Pas Déranger » à 22h00 et laissez votre téléphone en dehors de la chambre. Remplacez le défilement du soir par la lecture d'un livre physique.",
+        PRIORITY_ESCAPE_AND_EMOTIONS: "N'utilisez pas votre téléphone pour échapper à l'ennui, à la tristesse ou à l'anxiété. Établissez un « tampon » de 10 minutes : lorsque vous ressentez l'envie, attendez 10 minutes et faites quelque chose de non-numérique (ex. courte promenade, boisson chaude).",
+        PRIORITY_ATTENTION_AND_PRODUCTIVITY: "Utilisez l'application Bien-être Numérique (ou Temps d'Écran) pour limiter strictement l'utilisation des applications les plus distrayantes (ex. réseaux sociaux, jeux) pendant les heures de travail/étude.",
+        PRIORITY_RELATIONSHIPS_AND_SOCIALITY: "Établissez des « Zones sans Téléphone » claires : pendant les repas, les conversations avec le partenaire/les enfants et les réunions sociales. Mettez le téléphone en mode avion ou dans une autre pièce pour vous déconnecter complètement.",
+        PRIORITY_CONTROL_AND_TIME: "Utilisez des minuteurs de 30 minutes (Technique Pomodoro) lorsque vous travaillez et n'utilisez le téléphone que pendant les pauses. Gardez le téléphone hors de vue (dans un sac ou un tiroir) lorsque ce n'est pas strictement nécessaire.",
         DAYS_PLAN_TITLE: "Plan de Désintoxication Numérique de 7 Jours",
         DAYS_PLAN_LOW: [
             "Jour 1 – Surveillance Consciente : Pendant une journée, notez chaque fois que vous déverrouillez votre téléphone et ce que vous cherchiez.", "Jour 2 – Notifications Sélectives : Désactivez toutes les notifications sauf celles essentielles pour le travail ou la famille. Gardez seulement 3 applications de messagerie actives.", "Jour 3 – Le Repas Sacré : Pendant tous les repas, le téléphone passe en mode avion et hors de vue. Concentrez-vous sur la nourriture et la conversation.", "Jour 4 – Alternative Hors Ligne : Choisissez une activité (ex. lire, dessiner, cuisiner) que vous ferez au lieu de faire défiler votre téléphone pendant 30 minutes par jour.", "Jour 5 – Espace de Travail : Retirez le smartphone de votre champ de vision pendant que vous travaillez/étudiez. Gardez-le dans un tiroir ou une autre pièce.", "Jour 6 – Soirée Sociale : Sortez avec des amis et informez-les que vous garderez votre téléphone dans votre sac/poche. Profitez de l'interaction en direct.", "Jour 7 – Révision et Maintien : Passez en revue vos progrès. Décidez quelles nouvelles habitudes vous conserverez pour la semaine suivante."
@@ -356,7 +407,7 @@ const TEXT_DATA = {
 **Tecniques Avancées :**
 • **Technique Pomodoro (pour la Concentration) :** Consiste à diviser le travail en intervalles intensifs de 25 minutes (Pomodoros) suivis de courtes pauses de 5 minutes. Elle procure un sentiment d'urgence et réduit la tentation de vérifier le téléphone.
 • **Blocs de Travail Profond (Deep Work) :** Consacrez de longues sessions (typiquement 90 minutes) de travail intensif sans aucune distraction. Pendant ces blocs, le téléphone doit être en mode avion et hors de vue.
-• **Journaling du Soir (pour l'Anxiété) :** Écrivez à la main vos pensées, vos inquiétudes et le plan pour le lendemain avant de dormir. Cela « vide l'esprit » et réduit le besoin de prendre le smartphone pour calmer l'anxiété nocturne.
+• **Journaling du Soir (pour l'Ansietée) :** Écrivez à la main vos pensées, vos inquiétudes et le plan pour le lendemain avant de dormir. Cela « vide l'esprit » et réduit le besoin de prendre le smartphone pour calmer l'anxiété nocturne.
 `,
         DISCLAIMER: "Avis de non-responsabilité : ce rapport est à titre informatif uniquement et ne remplace pas une consultation professionnelle.",
         PAYWALL_H3: "Votre résultat est prêt !",
@@ -386,16 +437,14 @@ const TEXT_DATA = {
             { text: "Vous arrive-t-il d'utiliser le téléphone en voiture, même si ce n'est pas strictement nécessaire ?", name: "q15", category: "Control and Time" },
             { text: "Vérifiez-vous souvent votre téléphone même lorsque vous ne recevez pas de notifications ?", name: "q16", category: "Attention and Productivity" },
             { text: "Préférez-vous communiquer en ligne plutôt qu'en personne ?", name: "q17", category: "Relationships and Sociality" },
-            { text: "Avez-vous déjà caché votre utilisation du téléphone à d'autres personnes ?", name: "q18", category: "Escape and Emotions" },
+            { text: "Avez-vous déjà caché votre utilisation du téléphone à d'autres personnes ?", name: "q18", category: "Relationships and Sociality" },
             { text: "Vous endormez-vous avec le téléphone à la main ou sur votre lit ?", name: "q19", category: "Sleep and Rituals" },
             { text: "Vous sentez-vous souvent fatigué à cause de l'utilisation prolongée de l'écran ?", name: "q20", category: "Control and Time" },
         ],
         DATE_LOCALE: 'fr-FR',
     },
 
-    // =================================================================
     // =================== 🇪🇸 SPAGNOLO (ES) ============================
-    // =================================================================
     es: {
         AXES: { 
             'Sleep and Rituals': 'Sueño y Rituales', 
@@ -423,7 +472,7 @@ const TEXT_DATA = {
         PROFILE_MEDIUM: "Eres un **usuario en una encrucijada**. Has desarrollado hábitos que están erosionando tu concentración y tiempo libre. Estás en el momento perfecto para actuar con un plan dirigido antes de caer en un alto riesgo y sufrir consecuencias más graves en el sueño y las relaciones. Tu prioridad es restablecer límites claros y aplicar inmediatamente las técnicas de desconexión intencional que se encuentran en el plan de acción.",
         PROFILE_HIGH: "Eres un **usuario dependiente**. Tu smartphone controla tu sueño, tus relaciones y tus estados de ánimo, y probablemente se ha convertido en tu vía de escape primaria del aburrimiento o la ansiedad. Este informe marca el inicio de la recuperación del control. Requiere un compromiso serio y la aplicación inmediata de las prioridades definidas, centrándose en reemplazar los hábitos digitales con alternativas fuera de línea que mejoren tu bienestar físico y mental.",
         RADAR_TITLE: "Análisis Detallado por Eje de Riesgo",
-        RADAR_LEGEND: "Puntuación de Riesgo (Máx 3)",
+        RADAR_LEGEND: "Puntuación de Riesgo (Máx 12)",
         IMPACT_TITLE: "Resumen Detallado de Puntuaciones de Impacto",
         IMPACT_DETAIL: (axis, score) => `• ${axis}: ${score}% (proximidad al riesgo máximo en esta área)`,
         QUIZ_TITLE: "Tus Respuestas Detalladas al Cuestionario",
@@ -439,11 +488,11 @@ const TEXT_DATA = {
         PREMIUM_UPGRADE_TEXT: (standard, premium) => `Has descargado la versión Básica del informe (${standard}). Para desbloquear tus 3 Prioridades de Acción, el Plan de Desintoxicación Digital de 7 Días y los Recursos detallados, actualiza a la versión Premium (${premium}).`,
         PRIORITY_PLAN_TITLE: "Tu Plan de Acción Priorizado",
         PRIORITY_NONE: "No se identificaron prioridades de riesgo específicas (puntuación baja). Procede directamente al Plan de 7 Días.",
-        PRIORITY_SLEEP: "Activa el modo «No Molestar» a las 22:00 y deja tu teléfono fuera del dormitorio. Reemplaza el desplazamiento nocturno por la lectura de un libro físico.",
-        PRIORITY_ESCAPE: "No uses tu teléfono para escapar del aburrimiento, la tristeza o la ansiedad. Establece un «búfer» de 10 minutos: cuando sientas la necesidad, espera 10 minutos y haz algo no digital (ej. caminata corta, bebida caliente).",
-        PRIORITY_ATTENTION: "Usa la aplicación Bienestar Digital (o Tiempo de Pantalla) para limitar estrictamente el uso de las aplicaciones más distractoras (ej. redes sociales, juegos) durante las horas de trabajo/estudio.",
-        PRIORITY_RELATIONS: "Establece «Zonas sin Teléfono» claras: durante las comidas, conversaciones con pareja/hijos y reuniones sociales. Pon el teléfono en modo avión o en otra habitación para desconectarte por completo.",
-        PRIORITY_CONTROL: "Utiliza temporizadores de 30 minutos (Técnica Pomodoro) cuando trabajes y usa el teléfono solo durante los descansos. Mantén el teléfono fuera de la vista (en una bolsa o cajón) cuando no sea estrictamente necesario.",
+        PRIORITY_SLEEP_AND_RITUALS: "Activa el modo «No Molestar» a las 22:00 y deja tu teléfono fuera del dormitorio. Reemplaza el desplazamiento nocturno por la lectura de un libro físico.",
+        PRIORITY_ESCAPE_AND_EMOTIONS: "No uses tu teléfono para escapar del aburrimiento, la tristeza o la ansiedad. Establece un «búfer» de 10 minutos: cuando sientas la necesidad, espera 10 minutos y haz algo no digital (ej. caminata corta, bebida caliente).",
+        PRIORITY_ATTENTION_AND_PRODUCTIVITY: "Usa la aplicación Bienestar Digital (o Tiempo de Pantalla) para limitar estrictamente el uso de las aplicaciones más distractoras (ej. redes sociales, juegos) durante las horas de trabajo/estudio.",
+        PRIORITY_RELATIONSHIPS_AND_SOCIALITY: "Establece «Zonas sin Teléfono» claras: durante las comidas, conversaciones con pareja/hijos y reuniones sociales. Pon el teléfono en modo avión o en otra habitación para desconectarte por completo.",
+        PRIORITY_CONTROL_AND_TIME: "Utiliza temporizadores de 30 minutos (Técnica Pomodoro) cuando trabajes y usa el teléfono solo durante los descansos. Mantén el teléfono fuera de la vista (en una bolsa o cajón) cuando no sea estrictamente necesario.",
         DAYS_PLAN_TITLE: "Plan de Desintoxicación Digital de 7 Días",
         DAYS_PLAN_LOW: [
             "Día 1 – Monitoreo Consciente: Durante un día, toma nota cada vez que desbloquees tu teléfono y qué estabas buscando.", "Día 2 – Notificaciones Selectivas: Desactiva todas las notificaciones excepto las esenciales para el trabajo o la familia. Mantén solo 3 aplicaciones de mensajería activas.", "Día 3 – La Comida Sagrada: Durante todas las comidas, el teléfono pasa a modo avión y fuera de la vista. Concéntrate en la comida y la conversación.", "Día 4 – Alternativa Fuera de Línea: Elige una actividad (ej. leer, dibujar, cocinar) que harás en lugar de desplazarte por tu teléfono durante 30 minutos al día.", "Día 5 – Espacio de Trabajo: Retira el smartphone de tu línea de visión mientras trabajas/estudias. Guárdalo en un cajón o en otra habitación.", "Día 6 – Noche Social: Sal con amigos e infórmales que mantendrás tu teléfono en tu bolso/bolsillo. Disfruta de la interacción en vivo.", "Día 7 – Revisión y Mantenimiento: Revisa tu progreso. Decide qué nuevos hábitos mantendrás fijos para la próxima semana."
@@ -493,16 +542,14 @@ const TEXT_DATA = {
             { text: "¿Te encuentras usando el teléfono en el coche, aunque no sea estrictamente necesario?", name: "q15", category: "Control and Time" },
             { text: "¿Revisas tu teléfono con frecuencia incluso cuando no recibes notificaciones?", name: "q16", category: "Attention and Productivity" },
             { text: "¿Prefieres comunicarte en línea en lugar de en persona?", name: "q17", category: "Relationships and Sociality" },
-            { text: "¿Alguna vez has ocultado tu uso del teléfono a otras personas?", name: "q18", category: "Escape and Emotions" },
+            { text: "¿Alguna vez has ocultado tu uso del teléfono a otras personas?", name: "q18", category: "Relationships and Sociality" },
             { text: "¿Te duermes con el teléfono en la mano o en tu cama?", name: "q19", category: "Sleep and Rituals" },
             { text: "¿Te sientes a menudo cansado debido al uso prolongado de la pantalla?", name: "q20", category: "Control and Time" },
         ],
         DATE_LOCALE: 'es-ES',
     },
 
-    // =================================================================
     // =================== 🇩🇪 TEDESCO (DE) ============================
-    // =================================================================
     de: {
         AXES: { 
             'Sleep and Rituals': 'Schlaf und Rituale', 
@@ -530,7 +577,7 @@ const TEXT_DATA = {
         PROFILE_MEDIUM: "Sie sind ein **Nutzer am Scheideweg**. Sie haben Gewohnheiten entwickelt, die Ihre Konzentration und Freizeit untergraben. Dies ist der perfekte Zeitpunkt, um mit einem gezielten Plan zu handeln, bevor Sie in ein hohes Risiko abrutschen und ernstere Folgen für Schlaf und Beziehungen erleiden. Ihre Priorität ist es, klare Grenzen wiederherzustellen und die im Aktionsplan enthaltenen intentionalen Trennungstechniken sofort anzuwenden.",
         PROFILE_HIGH: "Sie sind ein **abhängiger Nutzer**. Ihr Smartphone kontrolliert Ihren Schlaf, Ihre Beziehungen und Ihre Stimmungen und ist wahrscheinlich zu Ihrer primären Fluchtmöglichkeit vor Langeweile oder Angst geworden. Dieser Bericht markiert den Beginn der Rückeroberung der Kontrolle. Er erfordert ernsthaftes Engagement und die sofortige Anwendung definierter Prioritäten, wobei der Schwerpunkt auf dem Ersatz digitaler Gewohnheiten durch Offline-Alternativen liegt, die Ihr körperliches und geistiges Wohlbefinden verbessern.",
         RADAR_TITLE: "Detaillierte Analyse nach Risikoachse",
-        RADAR_LEGEND: "Risikopunktzahl (Max 3)",
+        RADAR_LEGEND: "Risikopunktzahl (Max 12)",
         IMPACT_TITLE: "Detaillierte Zusammenfassung der Auswirkungspunkte",
         IMPACT_DETAIL: (axis, score) => `• ${axis}: ${score}% (Nähe zum maximalen Risiko in diesem Bereich)`,
         QUIZ_TITLE: "Ihre Detaillierten Quiz-Antworten",
@@ -540,17 +587,17 @@ const TEXT_DATA = {
         ANSWER_MAP: { '0': 'Nie/Selten', '1': 'Manchmal', '2': 'Oft', '3': 'Immer' },
         ANALYSIS_TITLE: "Personalisierte Analyse und Ratschläge",
         ANALYSIS_LOW: "Ihre Beziehung zu Ihrem Smartphone erscheint ausgewogen. Sie sind ein **bewusster Nutzer**, der Technologie als Werkzeug nutzt, ohne ihr Sklave zu sein. Ihre Herausforderung besteht nicht darin, die Nutzung zu eliminieren, sondern wachsam zu bleiben und die Effizienz weiter zu verbessern, um die Trennung als Wettbewerbsvorteil zu nutzen. **Ratschlag:** Überwachen Sie Ihr Verhalten weiterhin, insbesondere in Stresssituationen, und nutzen Sie Ihre Freizeit für tiefgreifende regenerative Aktivitäten (z. B. Lesen, Sport, manuelle Hobbys).",
-        ANALYSIS_MEDIUM: "Ihr digitales Verhalten zeigt **deutliche Anzeichen einer potenziellen Abhängigkeit**. Sie haben Gewohnheiten entwickelt, die Ihre Konzentration und Freizeit untergraben. Dies ist der perfekte Zeitpunkt, um mit einem gezielten Plan zu handeln, bevor Sie in ein hohes Risiko abrutschen und ernstere Folgen für Schlaf und Beziehungen erleiden. **Ihre Priorität ist es, klare Grenzen wiederherzustellen** und die intentionalen Trennungstechniken, die Sie im Aktionsplan finden, sofort anzuwenden. Handeln Sie jetzt, um die Kontrolle über Ihre Zeit zurückzugzugewinnen.",
-        ANALYSIS_HIGH: "Ihre Punktzahl weist auf eine **signifikante digitale Abhängigkeit** hin. Das Smartphone hat die Kontrolle über Ihren Schlaf, Ihre Beziehungen und Ihre Stimmungen übernommen und ist wahrscheinlich zu Ihrer primären Fluchtmöglichkeit vor Langeweile oder Angst geworden. Dieser Bericht markiert den Beginn der Rückeroberung der Kontrolle. Er erfordert ein **ernsthaftes Engagement** und die sofortige Anwendung definierter Prioritäten, wobei der Schwerpunkt auf dem Ersatz digitaler Gewohnheiten durch Offline-Alternativen liegt, die Ihr körperliches und geistiges Wohlbefinden verbessern. Unterschätzen Sie die Auswirkungen auf Ihr gesamtes Wohlbefinden nicht.",
+        ANALYSIS_MEDIUM: "Ihr digitales Verhalten zeigt **deutliche Anzeichen einer potenziellen Abhängigkeit**. Sie haben Gewohnheiten entwickelt, die Ihre Konzentration und Freizeit untergraben. Dies ist der perfekte Zeitpunkt, um mit einem gezielten Plan zu handeln, bevor Sie in ein hohes Risiko abrutschen und ernstere Folgen für Schlaf und Beziehungen erleiden. **Ihre Priorität ist es, klare Grenzen wiederherzustellen** und die intentionalen Trennungstechniken, die Sie im Aktionsplan finden, sofort anzuwenden. Handeln Sie jetzt, um die Kontrolle über Ihre Zeit zurückzuzugewinnen.",
+        ANALYSIS_HIGH: "Ihre Punktzahl weist auf eine **signifikante digitale Abhängigkeit** hin. Das Smartphone hat die Kontrolle über Ihren Schlaf, Ihre Beziehungen und Ihre Stimmungen übernommen und ist wahrscheinlich zu Ihrer primären Fluchtmöglichkeit vor Langeweile oder Angst geworden. Dieser Bericht markiert den Beginn der Rückeroberung der Kontrolle. Er erfordert ein **ernsthaftes Engagement** und die sofortige Anwendung definierter Prioritäten, wobei der Schwerpunkt auf dem Ersatz digitaler Gewohnheiten durch Offline-Alternativen liegt, die Ihr körperliches und geistiges Wohlbefinden verbessern.",
         PREMIUM_UPGRADE_TITLE: "Upgrade auf Premium",
         PREMIUM_UPGRADE_TEXT: (standard, premium) => `Sie haben die Basisversion des Berichts (${standard}) heruntergeladen. Um Ihre 3 Aktionsprioritäten, den 7-Tage-Digital-Detox-Plan und die detaillierten Trennungsressourcen freizuschalten, führen Sie ein Upgrade auf die Premium-Version (${premium}) durch.`,
         PRIORITY_PLAN_TITLE: "Ihr Priorisierter Aktionsplan",
         PRIORITY_NONE: "Es wurden keine spezifischen Risikoprioritäten identifiziert (niedrige Punktzahl). Fahren Sie direkt mit dem 7-Tage-Plan fort.",
-        PRIORITY_SLEEP: "Aktivieren Sie den Modus „Nicht Stören“ um 22:00 Uhr und lassen Sie Ihr Telefon außerhalb des Schlafzimmers. Ersetzen Sie abendliches Scrollen durch das Lesen eines physischen Buches.",
-        PRIORITY_ESCAPE: "Verwenden Sie Ihr Telefon nicht zur Flucht vor Langeweile, Traurigkeit oder Angst. Richten Sie einen 10-Minuten-„Puffer“ ein: Wenn Sie den Drang verspüren, warten Sie 10 Minuten und tun Sie etwas Nicht-Digitales (z. B. kurzer Spaziergang, heißes Getränk).",
-        PRIORITY_ATTENTION: "Verwenden Sie die Digital Wellbeing (oder Screen Time) App, um die Nutzung der ablenkendsten Apps (z. B. soziale Medien, Spiele) während der Arbeits-/Lernstunden strikt zu begrenzen.",
-        PRIORITY_RELATIONS: "Richten Sie klare „Telefonfreie Zonen“ ein: während der Mahlzeiten, Gesprächen mit Partner/Kindern und gesellschaftlichen Zusammenkünften. Stellen Sie das Telefon in den Flugmodus oder in einen anderen Raum, um vollständig abzuschalten.",
-        PRIORITY_CONTROL: "Verwenden Sie 30-Minuten-Timer (Pomodoro-Technik) bei der Arbeit und nutzen Sie das Telefon nur während der Pausen. Halten Sie das Telefon außer Sicht (in einer Tasche oder Schublade) wenn es nicht unbedingt notwendig ist.",
+        PRIORITY_SLEEP_AND_RITUALS: "Aktivieren Sie den Modus „Nicht Stören“ um 22:00 Uhr und lassen Sie Ihr Telefon außerhalb des Schlafzimmers. Ersetzen Sie abendliches Scrollen durch das Lesen eines physischen Buches.",
+        PRIORITY_ESCAPE_AND_EMOTIONS: "Verwenden Sie Ihr Telefon nicht zur Flucht vor Langeweile, Traurigkeit oder Angst. Richten Sie einen 10-Minuten-„Puffer“ ein: Wenn Sie den Drang verspüren, warten Sie 10 Minuten und tun Sie etwas Nicht-Digitales (z. B. kurzer Spaziergang, heißes Getränk).",
+        PRIORITY_ATTENTION_AND_PRODUCTIVITY: "Verwenden Sie die Digital Wellbeing (oder Screen Time) App, um die Nutzung der ablenkendsten Apps (z. B. soziale Medien, Spiele) während der Arbeits-/Lernstunden strikt zu begrenzen.",
+        PRIORITY_RELATIONSHIPS_AND_SOCIALITY: "Richten Sie klare „Telefonfreie Zonen“ ein: während der Mahlzeiten, Gesprächen mit Partner/Kindern und gesellschaftlichen Zusammenkünften. Stellen Sie das Telefon in den Flugmodus oder in einen anderen Raum, um vollständig abzuschalten.",
+        PRIORITY_CONTROL_AND_TIME: "Verwenden Sie 30-Minuten-Timer (Pomodoro-Technik) bei der Arbeit und nutzen Sie das Telefon nur während der Pausen. Halten Sie das Telefon außer Sicht (in einer Tasche oder Schublade) wenn es nicht unbedingt notwendig ist.",
         DAYS_PLAN_TITLE: "7-Tage-Digital-Detox-Plan",
         DAYS_PLAN_LOW: [
             "Tag 1 – Bewusste Überwachung: Notieren Sie einen Tag lang jedes Mal, wenn Sie Ihr Telefon entsperren und wonach Sie gesucht haben.", "Tag 2 – Selektive Benachrichtigungen: Deaktivieren Sie alle Benachrichtigungen außer den für die Arbeit oder Familie wesentlichen. Halten Sie nur 3 Messaging-Apps aktiv.", "Tag 3 – Die Heilige Mahlzeit: Während aller Mahlzeiten wird das Telefon in den Flugmodus und außer Sichtweite gebracht. Konzentrieren Sie sich auf Essen und Gespräch.", "Tag 4 – Offline-Alternative: Wählen Sie eine Aktivität (z. B. Lesen, Zeichnen, Kochen), die Sie stattdessen 30 Minuten am Tag anstelle des Scrollens auf dem Telefon ausführen werden.", "Tag 5 – Arbeitsbereich: Entfernen Sie das Smartphone aus Ihrem Sichtfeld, während Sie arbeiten/studieren. Bewahren Sie es in einer Schublade oder einem anderen Raum auf.", "Tag 6 – Gesellschaftlicher Abend: Gehen Sie mit Freunden aus und informieren Sie sie, dass Sie Ihr Telefon in Ihrer Tasche/Ihrem Beutel aufbewahren werden. Genießen Sie die Live-Interaktion.", "Tag 7 – Überprüfung und Wartung: Überprüfen Sie Ihre Fortschritte. Entscheiden Sie, welche neuen Gewohnheiten Sie für die nächste Woche beibehalten werden."
@@ -600,14 +647,407 @@ const TEXT_DATA = {
             { text: "Benutzen Sie das Telefon im Auto, auch wenn es nicht unbedingt notwendig ist?", name: "q15", category: "Control and Time" },
             { text: "Überprüfen Sie Ihr Telefon häufig, auch wenn Sie keine Benachrichtigungen erhalten?", name: "q16", category: "Attention and Productivity" },
             { text: "Bevorzugen Sie die Online-Kommunikation gegenüber der persönlichen Kommunikation?", name: "q17", category: "Relationships and Sociality" },
-            { text: "Haben Sie Ihre Handynutzung jemals vor anderen verborgen?", name: "q18", category: "Escape and Emotions" },
+            { text: "Haben Sie Ihre Handynutzung jemals vor anderen verborgen?", name: "q18", category: "Relationships and Sociality" },
             { text: "Schlafen Sie mit dem Telefon in der Hand oder auf Ihrem Bett ein?", name: "q19", category: "Sleep and Rituals" },
             { text: "Fühlen Sie sich aufgrund längerer Bildschirmzeit oft müde?", name: "q20", category: "Control and Time" },
         ],
         DATE_LOCALE: 'de-DE',
     },
 };
+
+// =================================================================
+// 3. LOGICA DI CALCOLO
+// =================================================================
+
+/**
+ * Calcola i risultati totali, i punteggi per asse e la priorità di rischio
+ * a partire dalle risposte inviate dall'utente.
+ */
+const calculateResults = (formData, langData) => {
+    let totalScore = 0;
+    const axisScores = {
+        'Sleep and Rituals': 0,
+        'Escape and Emotions': 0,
+        'Attention and Productivity': 0,
+        'Relationships and Sociality': 0,
+        'Control and Time': 0,
+    };
+    const maxAxisScore = 12; // 4 domande * max 3 punti
+    const maxTotalScore = 60; // 5 assi * 12 punti
+
+    // 1. CALCOLO DEI PUNTEGGI PER ASSE E TOTALE
+    for (const [key, value] of formData.entries()) {
+        if (key.startsWith('q') && QUESTION_MAP[key]) {
+            const score = parseInt(value, 10); 
+            totalScore += score;
+            
+            const axisName = QUESTION_MAP[key];
+            if (axisScores.hasOwnProperty(axisName)) {
+                axisScores[axisName] += score;
+            }
+        }
+    }
+
+    // 2. DETERMINAZIONE DEL LIVELLO DI RISCHIO GLOBALE
+    let riskLevel = langData.RISK_LEVEL_LOW;
+    // Rischio Medio: dal 40% del punteggio max (24/60)
+    if (totalScore >= 24) { 
+        riskLevel = langData.RISK_LEVEL_MEDIUM;
+    }
+    // Rischio Alto: dal 60% del punteggio max (36/60)
+    if (totalScore >= 36) { 
+        riskLevel = langData.RISK_LEVEL_HIGH;
+    }
+
+    // 3. IDENTIFICAZIONE DELL'ASSE DI MASSIMO RISCHIO (PRIORITÀ)
+    let maxRiskScore = -1;
+    let priorityAxisKey = 'NONE'; // Chiave interna per PRIORITY_NONE
+    
+    // Se il rischio è MEDIO o ALTO, trova l'asse più alto
+    if (riskLevel !== langData.RISK_LEVEL_LOW) {
+        for (const [axisKey, score] of Object.entries(axisScores)) {
+            if (score > maxRiskScore) {
+                maxRiskScore = score;
+                // 'Sleep and Rituals' -> 'SLEEP_AND_RITUALS'
+                priorityAxisKey = axisKey.replace(/ /g, '_').toUpperCase(); 
+            }
+        }
+
+        // Se l'asse prioritario non supera il 50% (6/12), non forniamo una priorità specifica
+        if (maxRiskScore / maxAxisScore < 0.5) { 
+             priorityAxisKey = 'NONE';
+        }
+    }
+
+    // 4. PREPARAZIONE DEI DATI FINALI PER IL REPORT
+    const finalAxisData = {};
+    for (const [key, score] of Object.entries(axisScores)) {
+        // Calcola la percentuale di impatto (0-100)
+        const impactPercentage = Math.round((score / maxAxisScore) * 100);
+        const translatedAxisName = langData.AXES[key];
+        finalAxisData[translatedAxisName] = {
+            score: score, 
+            percentage: impactPercentage, 
+        };
+    }
+
+
+    return {
+        totalScore,
+        axisScores: finalAxisData,
+        riskLevel,
+        maxTotalScore,
+        priorityAxis: priorityAxisKey, 
+    };
+};
+
+// =================================================================
+// 4. FUNZIONI DI GENERAZIONE DEL REPORT E AUSILIARIE
+// =================================================================
+
+/** Popola la sezione della priorità d'azione. */
+const populatePriorityPlan = (priorityAxisKey, langData) => {
+    const priorityElement = document.getElementById('priority-action');
+    
+    // Il nome della chiave Priority nel blocco di traduzione (es. PRIORITY_SLEEP_AND_RITUALS)
+    const key = `PRIORITY_${priorityAxisKey.toUpperCase()}`;
+
+    // Controlla se la chiave esiste, altrimenti usa PRIORITY_NONE
+    const text = langData[key] || langData.PRIORITY_NONE;
+
+    if (priorityAxisKey === 'NONE') {
+        priorityElement.innerHTML = `<p>${text}</p>`;
+    } else {
+        // Trova il nome tradotto dell'asse per l'intestazione
+        const internalAxisName = Object.keys(QUESTION_MAP).find(q => QUESTION_MAP[q] === priorityAxisKey.replace(/_/g, ' '));
+        const translatedAxisName = internalAxisName ? langData.AXES[QUESTION_MAP[internalAxisName]] : 'Area di Rischio';
+
+        priorityElement.innerHTML = `
+            <div class="priority-box ${priorityAxisKey.toLowerCase().replace(/_/g, '-')}-bg">
+                <p><strong>${translatedAxisName}:</strong> ${text}</p>
+            </div>
+        `;
+    }
+};
+
+/** Popola la lista del piano di 7 giorni. */
+const populateDaysPlan = (riskLevel, langData) => {
+    const listElement = document.getElementById('days-plan-list');
+    listElement.innerHTML = '';
+    
+    let planArray;
+    if (riskLevel === langData.RISK_LEVEL_LOW) {
+        planArray = langData.DAYS_PLAN_LOW;
+    } else if (riskLevel === langData.RISK_LEVEL_MEDIUM) {
+        planArray = langData.DAYS_PLAN_MEDIUM;
+    } else {
+        planArray = langData.DAYS_PLAN_HIGH;
+    }
+
+    planArray.forEach(dayText => {
+        const item = document.createElement('li');
+        item.textContent = dayText;
+        listElement.appendChild(item);
+    });
+};
+
+/** Rende il grafico Radar utilizzando Chart.js. */
+const renderRadarChart = (axisScores, langData) => {
+    // Prepara i dati per Chart.js
+    const labels = Object.keys(axisScores);
+    const dataPoints = Object.values(axisScores).map(data => data.score);
+    
+    const ctx = document.getElementById('riskRadarChart').getContext('2d');
+    
+    if (myRadarChart) {
+        myRadarChart.destroy();
+    }
+    
+    myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: labels, 
+            datasets: [{
+                label: langData.RADAR_LEGEND,
+                data: dataPoints, 
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1,
+            scales: {
+                r: {
+                    angleLines: { display: false },
+                    suggestedMin: 0,
+                    suggestedMax: 12, // Max Score per asse
+                    pointLabels: { font: { size: 14 } },
+                    ticks: {
+                        stepSize: 3,
+                        display: false 
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: true, position: 'bottom' },
+                tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${context.parsed.r}` } }
+            }
+        }
+    });
+};
+
+
+/**
+ * Genera il report completo e lo visualizza sulla pagina.
+ */
+const generateReport = (results, langData, allAnswers, isPremium) => {
+    // 1. INTESTAZIONE, PUNTEGGIO E LIVELLO DI RISCHIO
+    const today = new Date().toLocaleDateString(langData.DATE_LOCALE, { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('report-date').textContent = `${langData.DATE}: ${today}`;
+    document.getElementById('final-score').textContent = results.totalScore;
+    document.getElementById('max-score').textContent = results.maxTotalScore;
+    document.getElementById('risk-level').textContent = results.riskLevel;
+
+    // Colore del rischio
+    const riskElement = document.getElementById('risk-level-container');
+    riskElement.classList.remove('risk-low', 'risk-medium', 'risk-high');
+    if (results.riskLevel === langData.RISK_LEVEL_LOW) {
+        riskElement.classList.add('risk-low');
+    } else if (results.riskLevel === langData.RISK_LEVEL_MEDIUM) {
+        riskElement.classList.add('risk-medium');
+    } else {
+        riskElement.classList.add('risk-high');
+    }
+
+
+    // 2. PROFILO UTENTE (BASATO SUL LIVELLO DI RISCHIO)
+    let profileText = '';
+    let analysisText = '';
+    if (results.riskLevel === langData.RISK_LEVEL_LOW) {
+        profileText = langData.PROFILE_LOW;
+        analysisText = langData.ANALYSIS_LOW;
+    } else if (results.riskLevel === langData.RISK_LEVEL_MEDIUM) {
+        profileText = langData.PROFILE_MEDIUM;
+        analysisText = langData.ANALYSIS_MEDIUM;
+    } else {
+        profileText = langData.PROFILE_HIGH;
+        analysisText = langData.ANALYSIS_HIGH;
+    }
+    document.getElementById('profile-text').innerHTML = profileText;
+    document.getElementById('analysis-text').innerHTML = analysisText;
+
+
+    // 3. GRAFICO RADAR (RICHIESTO CHART.JS)
+    if (typeof Chart !== 'undefined') {
+        renderRadarChart(results.axisScores, langData);
+    } 
+    
+    // Lista dettagliata degli impatti
+    const impactList = document.getElementById('impact-list');
+    impactList.innerHTML = ''; 
+    Object.entries(results.axisScores).forEach(([axisName, data]) => {
+        const item = document.createElement('li');
+        item.innerHTML = langData.IMPACT_DETAIL(axisName, data.percentage);
+        impactList.appendChild(item);
+    });
+    
+
+    // 4. TABELLA RISPOSTE DETTAGLIATE
+    const quizTableBody = document.getElementById('quiz-answers-body');
+    quizTableBody.innerHTML = '';
+    allAnswers.forEach(answer => {
+        const row = quizTableBody.insertRow();
         
-       
-                       
-           
+        // La risposta viene recuperata direttamente dal form
+        const rawAnswerValue = document.querySelector(`input[name="${answer.name}"]:checked`)?.value || '0'; 
+
+        // Colonna Domanda
+        const cellQ = row.insertCell();
+        cellQ.textContent = answer.text;
+
+        // Colonna Risposta Fornita (deve essere tradotta)
+        const cellA = row.insertCell();
+        cellA.textContent = langData.ANSWER_MAP[rawAnswerValue];
+
+        // Colonna Punteggio
+        const cellS = row.insertCell();
+        cellS.textContent = rawAnswerValue;
+        cellS.className = 'text-center score-col';
+    });
+
+
+    // 5. GESTIONE SEZIONI PREMIUM (PAYWALL)
+    const premiumSections = document.querySelectorAll('.premium-content');
+    const paywallElement = document.getElementById('paywall');
+    const reportElement = document.getElementById('report');
+
+    if (isPremium) {
+        // Versione Premium: mostra il report completo
+        if (paywallElement) paywallElement.style.display = 'none';
+        if (reportElement) reportElement.style.display = 'block';
+
+        premiumSections.forEach(section => section.style.display = 'block');
+        
+        populatePriorityPlan(results.priorityAxis, langData);
+        populateDaysPlan(results.riskLevel, langData);
+        document.getElementById('resources-text').innerHTML = langData.RESOURCES_TEXT;
+
+    } else {
+        // Versione Standard: nasconde il report e mostra solo il paywall
+        if (paywallElement) paywallElement.style.display = 'flex';
+        if (reportElement) reportElement.style.display = 'none';
+        premiumSections.forEach(section => section.style.display = 'none');
+    }
+    
+    // Scrolla al report
+    if (reportElement) {
+        reportElement.scrollIntoView({ behavior: 'smooth' });
+    }
+};
+
+
+// =================================================================
+// 5. FUNZIONI DI INIZIALIZZAZIONE E AVVIO
+// =================================================================
+
+/** Popola gli elementi HTML del quiz con le domande tradotte. */
+const populateQuiz = (questions) => {
+    const quizContainer = document.getElementById('quiz-questions-container');
+    const answerMap = TEXT_DATA[getLanguage()].ANSWER_MAP; 
+    quizContainer.innerHTML = '';
+
+    questions.forEach((q, index) => {
+        const questionHtml = `
+            <div class="question-block">
+                <p><strong>${index + 1}. ${q.text}</strong></p>
+                <div class="answers-group">
+                    ${Object.entries(answerMap).map(([value, label]) => `
+                        <label>
+                            <input type="radio" name="${q.name}" value="${value}" required>
+                            ${label}
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        quizContainer.innerHTML += questionHtml;
+    });
+};
+
+/** Applica tutte le traduzioni statiche dal blocco langData agli elementi con attributo data-i18n. */
+const applyStaticTranslations = (langData) => {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        
+        // Gestione dei bottoni di acquisto con prezzo
+        if (key.startsWith('BTN_')) {
+            const priceStandard = "€19.99";
+            const pricePremium = "€49.99";
+            if (key === 'BTN_STANDARD') {
+                 element.textContent = langData.BTN_STANDARD(priceStandard);
+            } else if (key === 'BTN_PREMIUM') {
+                 element.textContent = langData.BTN_PREMIUM(pricePremium);
+            } else if (langData[key]) {
+                element.textContent = langData[key];
+            }
+        } else if (langData[key]) {
+            element.textContent = langData[key];
+        }
+    });
+};
+
+
+/**
+ * Inizializza l'applicazione, carica i dati, imposta gli eventi e gestisce la visualizzazione.
+ */
+const initApp = () => {
+    const currentLang = getLanguage();
+    const langData = TEXT_DATA[currentLang];
+    
+    // 1. Applica le traduzioni STATICHE e popola il quiz
+    applyStaticTranslations(langData);
+    populateQuiz(langData.quizQuestions);
+
+    // 2. Imposta l'azione al click del pulsante di calcolo principale
+    document.getElementById('calculate-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        
+        // Controllo semplice che tutte le domande siano state risposte
+        const answeredCount = Array.from(formData.keys()).filter(key => key.startsWith('q')).length;
+        if (answeredCount < langData.quizQuestions.length) {
+             alert(currentLang === 'it' ? "Per favore, rispondi a tutte le 20 domande prima di continuare." : "Please answer all 20 questions before continuing.");
+             return;
+        }
+
+        // Simula il click sul pulsante Standard (Report Base)
+        document.getElementById('btn-standard').click();
+    });
+
+    // 3. Gestione dei pulsanti di acquisto (simulazione)
+    document.getElementById('btn-standard').addEventListener('click', () => {
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        const results = calculateResults(formData, langData);
+        alert(langData.ALERT_STANDARD("€19.99"));
+        generateReport(results, langData, langData.quizQuestions, false); // isPremium = false
+    });
+
+    document.getElementById('btn-premium').addEventListener('click', () => {
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        const results = calculateResults(formData, langData);
+        alert(langData.ALERT_PREMIUM("€49.99"));
+        generateReport(results, langData, langData.quizQuestions, true); // isPremium = true
+    });
+};
+
+
+// 6. AVVIO DELL'APP QUANDO IL DOCUMENTO È CARICATO
+document.addEventListener('DOMContentLoaded', initApp);
