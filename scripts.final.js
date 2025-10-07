@@ -202,6 +202,9 @@ const AXIS_PLANS_I18N = {
 const RESOURCES_I18N = {
     it: "Risorse aggiuntive: Consigliamo la lettura di 'Digital Minimalism' di Cal Newport o 'Irresistibile' di Adam Alter. Se la compulsione è forte, valuta di contattare un terapeuta specializzato in dipendenze comportamentali.",
     en: "Additional resources: We recommend reading 'Digital Minimalism' by Cal Newport or 'Irresistible' by Adam Alter. If the compulsion is strong, consider contacting a therapist specializing in behavioral addictions.",
+    es: "Recursos adicionales: Recomendamos la lectura de 'Minimalismo Digital' de Cal Newport o 'Irresistible' de Adam Alter. Si la compulsión es fuerte, considera contactar a un terapeuta especializado en adicciones conductuales.",
+    de: "Zusätzliche Ressourcen: Wir empfehlen die Lektüre von 'Digital Minimalism' von Cal Newport oder 'Irresistible' von Adam Alter. Wenn die Zwanghaftigkeit stark ist, sollten Sie einen auf Verhaltenssüchte spezialisierten Therapeuten kontaktieren.",
+    fr: "Ressources supplémentaires: Nous recommandons la lecture de 'Digital Minimalism' de Cal Newport ou 'Irresistible' d'Adam Alter. Si la compulsion est forte, envisagez de contacter un thérapeute spécialisé dans les dépendances comportementales.",
 };
 
 // =========================================================================
@@ -216,8 +219,8 @@ const TRANSLATIONS = {
         DEFAULT_USERNAME: "Utente",
         PAYWALL_H3: "Il Tuo Risultato è Pronto!",
         PAYWALL_P: "Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:",
-        BTN_STANDARD: "Scarica Report Base (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Acquista Report Premium (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+        BTN_STANDARD: `Scarica Report Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
+        BTN_PREMIUM: `Acquista Report Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM_SUB: "(Include: Piano d'Azione, Priorità e Piano di 7 Giorni)",
         TITLE: "Report Personalizzato Digital Detox",
         SUBTITLE: "Elaborazione Finale (20 Domande)",
@@ -252,7 +255,7 @@ const TRANSLATIONS = {
         CTA_TITLE: "Vuoi scoprire il tuo livello di rischio?",
         CTA_BUTTON: "Fai il test ora",
 
-        // Chiavi per I18N_KEYS_TO_TRANSLATE (Usate come fallback)
+        // Chiavi per I18N_KEYS_TO_TRANSLATE
         ANSWER_0: 'Raramente',
         ANSWER_1: 'A volte',
         ANSWER_2: 'Spesso',
@@ -263,28 +266,12 @@ const TRANSLATIONS = {
         AXIS_Habit_Compulsion: 'Abitudine e Compulsione',
         AXIS_Social_Presence: 'Sociale e Presenza',
         
-        // Domande del quiz (Q1-Q20) come chiavi di traduzione (Fallback sono le stringhe sopra)
-        Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
-        Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
-        Q3: "Ti svegli di notte per controllare le notifiche o i messaggi?",
-        Q4: "Hai difficoltà a stabilire momenti 'senza telefono' (ad esempio, durante i pasti o conversazioni)?",
-        Q5: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?",
-        Q6: "Ti ritrovi a scorrere i social media o a navigare su internet senza un obiettivo specifico, perdendo tempo?",
-        Q7: "Posticipi impegni o attività offline (come la pulizia, l'esercizio fisico) a causa del tempo speso online?",
-        Q8: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?",
-        Q9: "Usare il tuo dispositivo è il tuo meccanismo principale per gestire noia, stress o sentimenti negativi?",
-        Q10: "Ti senti ansioso o irritabile se non puoi accedere al tuo telefono/internet per un periodo di tempo (ad esempio, batteria scarica o assenza di Wi-Fi)?",
-        Q11: "Hai provato a ridurre il tempo trascorso online, ma non ci sei riuscito?",
-        Q12: "Nascondi ad altri il tempo reale che spendi sui dispositivi o su specifiche app?",
-        Q13: "Provi un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?",
-        Q14: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?",
-        Q15: "Senti la FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente a ogni notifica o messaggio?",
-        Q16: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?",
-        Q17: "Ti senti più a tuo agio a comunicare messaggi importanti o sentimenti attraverso la messaggistica piuttosto che di persona?",
-        Q18: "Le tue interazioni virtuali (social media, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
-        Q19: "Ti preoccupi costantemente del tuo aspetto online (profilo, post, 'mi piace' ricevuti)?",
-        Q20: "Usi il telefono durante la guida o mentre cammini, mettendo a rischio la tua sicurezza o quella degli altri?",
-
+        // Domande del quiz (Q1-Q20) (Viene usato il testo IT come fallback)
+        Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
+        Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
+        Q9: QUIZ_QUESTIONS[8].question, Q10: QUIZ_QUESTIONS[9].question, Q11: QUIZ_QUESTIONS[10].question, Q12: QUIZ_QUESTIONS[11].question,
+        Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
+        Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question,
     },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
@@ -293,8 +280,8 @@ const TRANSLATIONS = {
         DEFAULT_USERNAME: "User",
         PAYWALL_H3: "Your Result is Ready!",
         PAYWALL_P: "To unlock your detailed report, choose the purchase option below:",
-        BTN_STANDARD: "Download Basic Report (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Purchase Premium Report (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+        BTN_STANDARD: `Download Basic Report (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
+        BTN_PREMIUM: `Purchase Premium Report (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM_SUB: "(Includes: Action Plan, Priority, and 7-Day Plan)",
         TITLE: "Personalized Digital Detox Report",
         SUBTITLE: "Final Processing (20 Questions)",
@@ -336,8 +323,8 @@ const TRANSLATIONS = {
         DEFAULT_USERNAME: "Usuario",
         PAYWALL_H3: "¡Tu Resultado Está Listo!",
         PAYWALL_P: "Para desbloquear tu informe detallado, elige la opción de compra a continuación:",
-        BTN_STANDARD: "Descargar Informe Básico (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Comprar Informe Premium (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+        BTN_STANDARD: `Descargar Informe Básico (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
+        BTN_PREMIUM: `Comprar Informe Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM_SUB: "(Incluye: Plan de Acción, Prioridad y Plan de 7 Días)",
         TITLE: "Informe Personalizado Digital Detox",
         SUBTITLE: "Procesamiento Final (20 Preguntas)",
@@ -379,8 +366,8 @@ const TRANSLATIONS = {
         DEFAULT_USERNAME: "Benutzer",
         PAYWALL_H3: "Ihr Ergebnis ist Fertig!",
         PAYWALL_P: "Um Ihren detaillierten Bericht freizuschalten, wählen Sie unten die Kaufoption:",
-        BTN_STANDARD: "Basisbericht Herunterladen (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Premium-Bericht Kaufen (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+        BTN_STANDARD: `Basisbericht Herunterladen (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
+        BTN_PREMIUM: `Premium-Bericht Kaufen (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM_SUB: "(Inklusive: Aktionsplan, Priorität und 7-Tage-Plan)",
         TITLE: "Personalisierter Digital Detox Bericht",
         SUBTITLE: "Endgültige Verarbeitung (20 Fragen)",
@@ -406,7 +393,7 @@ const TRANSLATIONS = {
         RISK1: "Reduzierte Konzentration: Schwierigkeiten, die Aufmerksamkeit über längere Zeiträume aufrechtzuerhalten.",
         RISK2: "Schlafprobleme: Die abendliche Nutzung von Geräten stört den zirkadianen Rhythmus.",
         RISK3: "Stress und Angst: Kontinuierliche Benachrichtigungen und Hyperkonnektivität erhöhen den mentalen Druck.",
-        RISK4: "Soziale Isolation: Virtuelle Interaktion ersetzt reale Interaktion.",
+        RISK4: "Soziale Isolation: Virtuelle Interaktion ersetzt reale Interazione.",
         SECTION3_TITLE: "💡 Praktische Tipps",
         TIP1: "Legen Sie tägliche Limits für die am häufigsten verwendeten Apps fest.",
         TIP2: "Deaktivieren Sie nicht essentielle Benachrichtigungen.",
@@ -422,8 +409,8 @@ const TRANSLATIONS = {
         DEFAULT_USERNAME: "Utilisateur",
         PAYWALL_H3: "Votre Résultat est Prêt !",
         PAYWALL_P: "Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous :",
-        BTN_STANDARD: "Télécharger le Rapport de Base (€" + CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',') + ")",
-        BTN_PREMIUM: "Acheter le Rapport Premium (€" + CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',') + ")",
+        BTN_STANDARD: `Télécharger le Rapport de Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
+        BTN_PREMIUM: `Acheter le Rapport Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM_SUB: "(Comprend : Plan d'Action, Priorité et Plan de 7 Jours)",
         TITLE: "Rapport Personnalisé Digital Detox",
         SUBTITLE: "Traitement Final (20 Questions)",
@@ -531,8 +518,11 @@ function applyTranslations(locale) {
     // Aggiorna il valore corrente della lingua salvata
     CONFIG.I18N_LOCALE = locale;
 
-    // Ricarica il quiz per applicare le traduzioni alle domande generate dinamicamente
+    // FIX CRITICO: Ricarica il quiz per applicare le traduzioni alle domande generate dinamicamente
     populateQuizQuestions();
+    
+    // FIX: Ricarica anche i bottoni del paywall per aggiornare i prezzi tradotti
+    initPaywallButtons();
 }
 
 /**
@@ -585,7 +575,7 @@ function populateQuizQuestions() {
         const qIndex = index + 1;
         const qKey = `Q${qIndex}`;
 
-        // Utilizza la traduzione specifica o il fallback (già gestito in ensureAllTranslationsExist)
+        // Utilizza la traduzione specifica o il fallback
         const questionText = t[qKey] || q.question;
 
         const questionDiv = document.createElement('div');
@@ -698,27 +688,37 @@ function handleCalculate(event) {
     document.getElementById('quiz-section').style.display = 'none';
     document.getElementById('paywall').style.display = 'block';
 
-    // Aggiorna l'intestazione del paywall
-    document.getElementById('paywall-h3').innerHTML = t.PAYWALL_H3.replace('!', `, ${userName}!`);
+    // Aggiorna l'intestazione del paywall con il nome utente e la traduzione
+    const paywallH3 = document.getElementById('paywall-h3');
+    if (paywallH3) {
+        paywallH3.innerHTML = t.PAYWALL_H3.replace('!', `, ${userName}!`);
+    }
 
-    // Inizializza i bottoni di acquisto
+    // Inizializza i bottoni di acquisto (essenziale per i listener e la traduzione dei prezzi)
     initPaywallButtons();
 }
 
 /**
- * Inizializza i listener per i bottoni Standard e Premium.
+ * Inizializza i listener per i bottoni Standard e Premium e aggiorna il testo tradotto.
  */
 function initPaywallButtons() {
+    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
     const standardBtn = document.getElementById('btn-standard');
     const premiumBtn = document.getElementById('btn-premium');
+    const premiumSub = document.querySelector('.premium-subtitle');
 
     if (standardBtn) {
-        // Report Standard: mostra il report, nascondendo i contenuti premium
+        // Applica traduzione e listener
+        standardBtn.innerHTML = t.BTN_STANDARD;
         standardBtn.onclick = () => showReport(window.quizResults, 'standard');
     }
     if (premiumBtn) {
-        // Report Premium: mostra il report, includendo i contenuti premium
+        // Applica traduzione e listener
+        premiumBtn.innerHTML = t.BTN_PREMIUM;
         premiumBtn.onclick = () => showReport(window.quizResults, 'premium');
+    }
+    if (premiumSub) {
+        premiumSub.innerHTML = t.BTN_PREMIUM_SUB;
     }
 }
 
@@ -741,7 +741,7 @@ function showReport(results, planType) {
 
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
-    document.getElementById('report-date').textContent = `Data: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
+    document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
 
     // 2. Livello di Rischio e Analisi
     const riskLevelContainer = document.getElementById('risk-level-container');
@@ -753,8 +753,8 @@ function showReport(results, planType) {
     if (typeof Chart !== 'undefined') {
         renderRadarChart(axisScores, riskData.cssClass);
     } else {
-        const radarContainer = document.querySelector('.radar-chart-container');
-        if (radarContainer) radarContainer.innerHTML = `<p>⚠️ ${t.RADAR_TITLE} non disponibile. Manca la libreria Chart.js.</p>`;
+        const radarContainer = document.querySelector('.radar-section h2');
+        if (radarContainer) radarContainer.innerHTML = `<h2>⚠️ ${t.RADAR_TITLE} - Chart non disponibile.</h2>`;
     }
 
 
@@ -826,7 +826,8 @@ function showReport(results, planType) {
 
     const downloadBtn = document.getElementById('download-pdf-btn');
     if(downloadBtn) {
-        downloadBtn.onclick = () => alert('La funzione di download PDF è un placeholder in questa versione.');
+        // Implementazione placeholder, in attesa della vera libreria PDF (es. jsPDF)
+        downloadBtn.onclick = () => alert('La funzione di download PDF è un placeholder in questa versione. Contenuto generato!');
     }
 }
 
@@ -905,6 +906,11 @@ function renderRadarChart(axisScores, riskCssClass) {
 // 5. INIZIALIZZAZIONE GLOBALE
 // =========================================================================
 
+// Variabile globale per salvare i risultati (se non è già presente)
+if (typeof window.quizResults === 'undefined') {
+    window.quizResults = {};
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Assicura che TUTTE le chiavi di traduzione siano presenti
     ensureAllTranslationsExist();
@@ -912,9 +918,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Inizializzazione della logica di traduzione
     initLanguageSelector();
     // Usa la lingua di default o quella salvata, e applica le traduzioni
+    // Questa chiamata avvia anche populateQuizQuestions() e initPaywallButtons()
     applyTranslations(CONFIG.I18N_LOCALE); 
 
-    // 3. Collega il bottone di calcolo al form
+    // 3. Collega il bottone di calcolo al form (l'HTML ora ha type="submit")
     const form = document.getElementById('quiz-form');
     if (form) {
         form.addEventListener('submit', handleCalculate);
