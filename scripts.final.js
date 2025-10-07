@@ -215,9 +215,15 @@ const TRANSLATIONS = {
     it: {
         FORM_TITLE: "Valutazione della Dipendenza Digitale",
         BTN_CALCULATE: "Calcola Risultato",
-        ALERT_COMPLETE_QUIZ: "Per favore, rispondi a tutte le 20 domande prima di calcolare il risultato.",
-        DEFAULT_USERNAME: "Utente",
-        PAYWALL_H3: "Il Tuo Risultato è Pronto!",
+        // ...
+        ALERT_COMPLETE_QUIZ: "Per favore, rispondi a tutte le 20 domande prima di calcolare il risultato.",
+        DEFAULT_USERNAME: "Utente",
+        // NUOVE CHIAVI PER L'INTRODUZIONE:
+        INTRO_H2: "Verifica la Tua Relazione con lo Smartphone",
+        INTRO_P: "Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.",
+        INTRO_NAME_SPAN: "Inserisci il tuo nome (opzionale, per personalizzare il report):",
+        PAYWALL_H3: "Il Tuo Risultato è Pronto!",
+// ...
         PAYWALL_P: "Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:",
         BTN_STANDARD: `Scarica Report Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Acquista Report Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
