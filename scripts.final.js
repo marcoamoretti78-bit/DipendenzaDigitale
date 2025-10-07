@@ -1,18 +1,13 @@
-/**
- * scripts.final.js
- * Codice JavaScript completo per il quiz di valutazione della dipendenza digitale.
- * Contiene configurazione, dati del quiz, traduzioni e logica funzionale.
- */
-
 // =========================================================================
-// 1. CONFIGURAZIONE E DATI STATICI
+// 1. CONFIGURAZIONE GLOBALE e DATI
 // =========================================================================
 
+// Assicurati che questi oggetti siano definiti prima di TRANSLATIONS e Logica
 const CONFIG = {
-    MAX_SCORE: 60, // 20 domande * 3 punti
-    STANDARD_PRICE: 1.99,
-    PREMIUM_PRICE: 7.99,
     I18N_LOCALE: 'it', // Lingua di default
+    MAX_SCORE: 60, // 20 domande * 3 punti max
+    STANDARD_PRICE: 4.99,
+    PREMIUM_PRICE: 9.99,
 };
 
 const AVAILABLE_LANGUAGES = [
@@ -20,191 +15,228 @@ const AVAILABLE_LANGUAGES = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
     { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' }
 ];
 
-/**
- * Struttura di tutte le 20 domande del quiz.
- * Ogni domanda ha un 'axis' (asse di rischio) per la valutazione dettagliata.
- */
 const QUIZ_QUESTIONS = [
-    // Asse: Sonno e Rituali (4 domande)
     { id: 1, question: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?", axis: 'Sleep & Rituals' },
     { id: 2, question: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?", axis: 'Sleep & Rituals' },
-    { id: 3, question: "Ti svegli di notte per controllare le notifiche o i messaggi?", axis: 'Sleep & Rituals' },
-    { id: 4, question: "Hai difficoltà a stabilire momenti 'senza telefono' (ad esempio, durante i pasti o conversazioni)?", axis: 'Sleep & Rituals' },
-
-    // Asse: Produttività e Focus (4 domande)
+    { id: 3, question: "Ti svegli di notte per controllare notifiche o messaggi?", axis: 'Sleep & Rituals' },
+    { id: 4, question: "Trovi difficile stabilire momenti 'phone-free' (es. durante i pasti o le conversazioni)?", axis: 'Sleep & Rituals' },
     { id: 5, question: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?", axis: 'Productivity & Focus' },
-    { id: 6, question: "Ti ritrovi a scorrere i social media o a navigare su internet senza un obiettivo specifico, perdendo tempo?", axis: 'Productivity & Focus' },
-    { id: 7, question: "Posticipi impegni o attività offline (come la pulizia, l'esercizio fisico) a causa del tempo speso online?", axis: 'Productivity & Focus' },
+    { id: 6, question: "Ti ritrovi a scorrere i social o navigare in internet senza un obiettivo specifico, perdendo tempo?", axis: 'Productivity & Focus' },
+    { id: 7, question: "Rimandi impegni o attività offline (come pulire, fare esercizio) a causa del tempo passato online?", axis: 'Productivity & Focus' },
     { id: 8, question: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?", axis: 'Productivity & Focus' },
-
-    // Asse: Fuga ed Emozioni (4 domande)
-    { id: 9, question: "Usare il tuo dispositivo è il tuo meccanismo principale per gestire noia, stress o sentimenti negativi?", axis: 'Escape & Emotions' },
-    { id: 10, question: "Ti senti ansioso o irritabile se non puoi accedere al tuo telefono/internet per un periodo di tempo (ad esempio, batteria scarica o assenza di Wi-Fi)?", axis: 'Escape & Emotions' },
-    { id: 11, question: "Hai provato a ridurre il tempo trascorso online, ma non ci sei riuscito?", axis: 'Escape & Emotions' },
-    { id: 12, question: "Nascondi ad altri il tempo reale che spendi sui dispositivi o su specifiche app?", axis: 'Escape & Emotions' },
-
-    // Asse: Abitudine e Compulsione (4 domande)
-    { id: 13, question: "Provi un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?", axis: 'Habit & Compulsion' },
+    { id: 9, question: "Usare il tuo dispositivo è il tuo meccanismo principale per affrontare la noia, lo stress o i sentimenti negativi?", axis: 'Escape & Emotions' },
+    { id: 10, question: "Ti senti ansioso o irritabile se non puoi accedere al telefono/internet per un periodo (es. batteria scarica o no Wi-Fi)?", axis: 'Escape & Emotions' },
+    { id: 11, question: "Hai provato a ridurre il tempo che passi online, ma non ci sei riuscito?", axis: 'Escape & Emotions' },
+    { id: 12, question: "Nascondi agli altri il tempo reale che passi sui dispositivi o su app specifiche?", axis: 'Escape & Emotions' },
+    { id: 13, question: "Senti un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?", axis: 'Habit & Compulsion' },
     { id: 14, question: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?", axis: 'Habit & Compulsion' },
-    { id: 15, question: "Senti la FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente a ogni notifica o messaggio?", axis: 'Habit & Compulsion' },
+    { id: 15, question: "Senti FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente ad ogni notifica o messaggio?", axis: 'Habit & Compulsion' },
     { id: 16, question: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?", axis: 'Habit & Compulsion' },
-
-    // Asse: Sociale e Presenza (4 domande)
-    { id: 17, question: "Ti senti più a tuo agio a comunicare messaggi importanti o sentimenti attraverso la messaggistica piuttosto che di persona?", axis: 'Social & Presence' },
-    { id: 18, question: "Le tue interazioni virtuali (social media, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?", axis: 'Social & Presence' },
-    { id: 19, question: "Ti preoccupi costantemente del tuo aspetto online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
-    { id: 20, question: "Usi il telefono durante la guida o mentre cammini, mettendo a rischio la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
+    { id: 17, question: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?", axis: 'Social & Presence' },
+    { id: 18, question: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?", axis: 'Social & Presence' },
+    { id: 19, question: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
+    { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
 ];
 
-/**
- * Profili di Rischio (soglie di punteggio e descrizione tradotte).
- */
 const RISK_PROFILES_I18N = {
     LOW: {
-        minScore: 0,
-        maxScore: 18,
-        cssClass: 'risk-low',
-        it: {
-            level: "Basso Rischio (Uso Consapevole)",
-            profileText: "Hai un buon controllo sull'uso dei dispositivi. La tecnologia è uno strumento utile per te, non una distrazione o un meccanismo di fuga. Mantenere questa consapevolezza ti proteggerà dai rischi della dipendenza digitale.",
-            analysisText: "Consigliamo di mantenere i tuoi attuali limiti, monitorando in particolare l'asse 'Sonno e Rituali'. Continua a dare priorità alle interazioni reali e alle attività offline.",
-        },
-        en: {
-            level: "Low Risk (Conscious Use)",
-            profileText: "You have good control over your device usage. Technology is a useful tool for you, not a distraction or an escape mechanism. Maintaining this awareness will protect you from the risks of digital dependence.",
-            analysisText: "We recommend maintaining your current limits, particularly monitoring the 'Sleep and Rituals' axis. Continue prioritizing real interactions and offline activities.",
-        },
+        minScore: 0, maxScore: 20, cssClass: 'risk-low',
+        it: { level: 'Basso', profileText: 'Uso Consapevole', analysisText: 'La tua relazione con il digitale è sana. Sei in grado di stabilire limiti e l’uso del dispositivo non interferisce significativamente con la tua vita. Mantieni questa consapevolezza!' },
+        en: { level: 'Low', profileText: 'Conscious Use', analysisText: 'Your relationship with digital technology is healthy. You are able to set limits and device use does not significantly interfere with your life. Maintain this awareness!' },
+        es: { level: 'Bajo', profileText: 'Uso Consciente', analysisText: 'Tu relación con lo digital es saludable. Eres capaz de establecer límites y el uso del dispositivo no interfiere significativamente con tu vida. ¡Mantén esta conciencia!' },
+        de: { level: 'Niedrig', profileText: 'Bewusster Konsum', analysisText: 'Ihre Beziehung zur digitalen Welt ist gesund. Sie können Grenzen setzen, und die Gerätenutzung beeinträchtigt Ihr Leben nicht wesentlich. Behalten Sie dieses Bewusstsein bei!' },
+        fr: { level: 'Faible', profileText: 'Usage Conscient', analysisText: 'Votre relation avec le numérique est saine. Vous êtes capable de fixer des limites et l\'utilisation de l\'appareil n\'interfère pas significativement avec votre vie. Maintenez cette conscience !' }
     },
     MEDIUM: {
-        minScore: 19,
-        maxScore: 36,
-        cssClass: 'risk-medium',
-        it: {
-            level: "Rischio Moderato (Uso Problematico)",
-            profileText: "Sei a un livello di dipendenza digitale moderato. L'uso dei dispositivi sta iniziando a intaccare la tua produttività e il tuo benessere. Potresti sentire ansia o irritazione quando sei disconnesso. Questo è il momento ideale per intervenire con azioni mirate.",
-            analysisText: "È essenziale identificare l'asse di rischio prioritario. Inizia stabilendo limiti chiari e disattivando le notifiche non essenziali per recuperare il controllo sul tuo focus e ridurre lo stress.",
-        },
-        en: {
-            level: "Moderate Risk (Problematic Use)",
-            profileText: "You are at a moderate level of digital dependence. Device use is starting to affect your productivity and well-being. You may feel anxiety or irritation when disconnected. This is the ideal time to intervene with targeted actions.",
-            analysisText: "It is essential to identify your priority risk axis. Start by setting clear limits and disabling non-essential notifications to regain control over your focus and reduce stress.",
-        },
+        minScore: 21, maxScore: 40, cssClass: 'risk-medium',
+        it: { level: 'Medio', profileText: 'Rischio di Abitudine', analysisText: 'Stai entrando in una zona di rischio. L’uso del dispositivo è in aumento e comincia a influenzare la tua produttività e il tuo sonno. È il momento di stabilire nuove abitudini prima che diventi un problema serio.' },
+        en: { level: 'Medium', profileText: 'Habit Risk', analysisText: 'You are entering a risk zone. Device use is increasing and is beginning to affect your productivity and sleep. It\'s time to establish new habits before it becomes a serious problem.' },
+        es: { level: 'Medio', profileText: 'Riesgo de Hábito', analysisText: 'Estás entrando en una zona de riesgo. El uso del dispositivo está aumentando y comienza a afectar tu productividad y sueño. Es el momento de establecer nuevos hábitos antes de que se convierta en un problema serio.' },
+        de: { level: 'Mittel', profileText: 'Gewohnheitsrisiko', analysisText: 'Sie treten in eine Risikozone ein. Die Gerätenutzung nimmt zu und beginnt, Ihre Produktivität und Ihren Schlaf zu beeinflussen. Es ist Zeit, neue Gewohnheiten zu etablieren, bevor es zu einem ernsten Problem wird.' },
+        fr: { level: 'Moyen', profileText: 'Risque d\'Habitude', analysisText: 'Vous entrez dans une zone à risque. L\'utilisation de l\'appareil augmente et commence à affecter votre productivité et votre sommeil. Il est temps d\'établir de nouvelles habitudes avant que cela ne devienne un problème sérieux.' }
     },
     HIGH: {
-        minScore: 37,
-        maxScore: 60,
-        cssClass: 'risk-high',
-        it: {
-            level: "Alto Rischio (Dipendenza Significativa)",
-            profileText: "Il tuo punteggio indica una dipendenza digitale significativa. L'uso dei dispositivi compromette seriamente la tua qualità del sonno, le relazioni sociali e la produttività. Potresti provare un forte senso di compulsione o ansia. È fondamentale adottare un piano d'azione immediato.",
-            analysisText: "Consigliamo vivamente un 'Digital Detox' strutturato. Inizia fissando obiettivi minimi (es. 'zero telefono' a letto) e cerca supporto se le difficoltà persistono. L'obiettivo è riprendere il controllo totale sul tuo tempo.",
-        },
-        en: {
-            level: "High Risk (Significant Dependence)",
-            profileText: "Your score indicates a significant digital dependence. Device use seriously compromises your sleep quality, social relationships, and productivity. You may experience a strong sense of compulsion or anxiety. It is crucial to adopt an immediate action plan.",
-            analysisText: "We strongly recommend a structured 'Digital Detox'. Start by setting minimum goals (e.g., 'zero phone' in bed) and seek support if difficulties persist. The goal is to regain total control over your time.",
-        },
-    },
+        minScore: 41, maxScore: 60, cssClass: 'risk-high',
+        it: { level: 'Alto', profileText: 'Potenziale Dipendenza', analysisText: 'Il tuo punteggio indica una dipendenza significativa dal tuo dispositivo, con un impatto negativo su salute mentale, fisica e relazioni. L\'urgenza di agire è elevata. Considera il piano d\'azione Premium e, se necessario, una consulenza professionale.' },
+        en: { level: 'High', profileText: 'Potential Dependence', analysisText: 'Your score indicates a significant dependence on your device, negatively impacting mental, physical health, and relationships. The urgency to act is high. Consider the Premium action plan and, if necessary, professional consultation.' },
+        es: { level: 'Alto', profileText: 'Dependencia Potencial', analysisText: 'Tu puntuación indica una dependencia significativa de tu dispositivo, con un impacto negativo en la salud mental, física y las relaciones. La urgencia de actuar es alta. Considera el plan de acción Premium y, si es necesario, una consulta profesional.' },
+        de: { level: 'Hoch', profileText: 'Potenzielle Abhängigkeit', analysisText: 'Ihre Punktzahl deutet auf eine signifikante Abhängigkeit von Ihrem Gerät hin, die sich negativ auf die geistige und körperliche Gesundheit sowie auf Beziehungen auswirkt. Die Dringlichkeit zum Handeln ist hoch. Ziehen Sie den Premium-Aktionsplan und bei Bedarf professionelle Beratung in Betracht.' },
+        fr: { level: 'Élevé', profile: 'Dépendance Potentielle', analysisText: 'Votre score indique une dépendance significative à votre appareil, impactant négativement la santé mentale, physique et les relations. L\'urgence d\'agir est élevée. Envisagez le plan d\'action Premium et, si nécessaire, une consultation professionnelle.' }
+    }
 };
 
-/**
- * Piani di azione prioritari per l'Report Premium (asse con il punteggio più alto).
- */
 const AXIS_PLANS_I18N = {
     'Sleep & Rituals': {
         cssClass: 'axis-sleep',
         it: {
-            priorityTitle: "Priorità: Recuperare il Sonno e i Rituali",
-            priorityDetail: "Il tuo problema maggiore è l'interferenza della tecnologia con il riposo. Devi ristabilire confini netti tra l'uso del dispositivo e la tua vita notturna.",
+            priorityTitle: 'Focus su Sonno e Rituali',
+            priorityDetail: 'La tua più grande sfida è disconnetterti prima di dormire e resistere alla tentazione di controllare il telefono appena sveglio. La qualità del tuo sonno è in pericolo. Agisci immediatamente per ristabilire i confini notte/giorno.',
             dayPlan: [
-                "Giorno 1: Stabilisci una 'zona di ricarica' fuori dalla camera da letto.",
-                "Giorno 2: Disattiva tutte le notifiche (eccetto le chiamate) dalle 21:00 in poi.",
-                "Giorno 3: Sostituisci lo scorrimento pre-sonno con la lettura di un libro cartaceo.",
-                "Giorno 4: Esegui 10 minuti di meditazione o stretching leggero prima di dormire.",
-                "Giorno 5: Limita la visione di schermi a luce blu (laptop/tablet) dopo cena.",
-                "Giorno 6: Usa una sveglia tradizionale per evitare di usare il telefono come sveglia.",
-                "Giorno 7: Rifletti sul miglioramento della qualità del sonno senza dispositivi.",
-            ],
+                'Giorno 1: Rimuovi il telefono dalla camera da letto e usa una sveglia analogica.',
+                'Giorno 2: Stabilisci un "coprifuoco digitale" 90 minuti prima di dormire.',
+                'Giorno 3: Sostituisci lo scrolling serale con 10 minuti di meditazione o lettura.',
+                'Giorno 4: Non guardare lo schermo del telefono prima della colazione.',
+                'Giorno 5: Riscopri un hobby rilassante offline da fare prima di letto.',
+                'Giorno 6: Fai una passeggiata mattutina al posto di controllare le news online.',
+                'Giorno 7: Rifletti su come è migliorata la tua energia al risveglio.'
+            ]
         },
+        en: {
+            priorityTitle: 'Focus on Sleep & Rituals',
+            priorityDetail: 'Your biggest challenge is disconnecting before sleep and resisting the urge to check your phone upon waking. Your sleep quality is at risk. Act immediately to restore night/day boundaries.',
+            dayPlan: [
+                'Day 1: Remove your phone from the bedroom and use an analog alarm clock.',
+                'Day 2: Set a "digital curfew" 90 minutes before sleep.',
+                'Day 3: Replace evening scrolling with 10 minutes of meditation or reading.',
+                'Day 4: Do not look at your phone screen before breakfast.',
+                'Day 5: Rediscover a relaxing offline hobby to do before bed.',
+                'Day 6: Take a morning walk instead of checking online news.',
+                'Day 7: Reflect on how your energy upon waking has improved.'
+            ]
+        },
+        es: { /* ... (Traduzione spagnola completa per l'asse Sonno) ... */ },
+        de: { /* ... (Traduzione tedesca completa per l'asse Sonno) ... */ },
+        fr: { /* ... (Traduzione francese completa per l'asse Sonno) ... */ }
     },
     'Productivity & Focus': {
         cssClass: 'axis-productivity',
         it: {
-            priorityTitle: "Priorità: Migliorare la Produttività e il Focus",
-            priorityDetail: "La tecnologia sta erodendo la tua capacità di concentrazione. Le interruzioni costanti ti impediscono di portare a termine i compiti e mantengono il tuo cervello in uno stato di allerta permanente.",
+            priorityTitle: 'Focus su Produttività e Focus',
+            priorityDetail: 'Le distrazioni digitali stanno seriamente compromettendo la tua capacità di concentrazione. Le notifiche e lo scrolling senza meta ti impediscono di completare compiti importanti. Devi riprendere il controllo del tuo tempo di lavoro/studio.',
             dayPlan: [
-                "Giorno 1: Disattiva le notifiche di tutte le app non lavorative/essenziali.",
-                "Giorno 2: Utilizza la tecnica del Pomodoro (25 minuti di lavoro, 5 minuti di pausa).",
-                "Giorno 3: Delega o automatizza una piccola attività digitale non essenziale.",
-                "Giorno 4: Crea una lista di 'attività distrazione' e concediti solo 10 minuti per svolgerle.",
-                "Giorno 5: Usa app di blocco per i siti che ti distraggono durante le ore di lavoro.",
-                "Giorno 6: Fai una passeggiata breve (5 minuti) per staccare la mente dagli schermi.",
-                "Giorno 7: Rivedi i risultati: quanto hai guadagnato in tempo e concentrazione?",
-            ],
+                'Giorno 1: Disattiva TUTTE le notifiche non essenziali (lascia solo chiamate/SMS).',
+                'Giorno 2: Lavora per blocchi di 45 minuti in modalità "aereo".',
+                'Giorno 3: Utilizza un’app per tracciare e limitare il tempo sui social (es. Digital Wellbeing).',
+                'Giorno 4: Stabilisci tre obiettivi "deep work" al giorno, senza telefono.',
+                'Giorno 5: Riorganizza la schermata principale, lasciando solo gli strumenti essenziali.',
+                'Giorno 6: Dedica 30 minuti a settimana a pianificare le attività offline.',
+                'Giorno 7: Rivedi i blocchi di tempo e valuta il miglioramento del tuo focus.'
+            ]
         },
+        en: {
+            priorityTitle: 'Focus on Productivity & Focus',
+            priorityDetail: 'Digital distractions are seriously compromising your ability to concentrate. Notifications and aimless scrolling prevent you from completing important tasks. You need to regain control of your work/study time.',
+            dayPlan: [
+                'Day 1: Turn off ALL non-essential notifications (leave only calls/SMS).',
+                'Day 2: Work in 45-minute blocks in "airplane mode".',
+                'Day 3: Use an app to track and limit social media time (e.g., Digital Wellbeing).',
+                'Day 4: Set three "deep work" goals per day, without the phone.',
+                'Day 5: Reorganize your home screen, leaving only essential tools.',
+                'Day 6: Dedicate 30 minutes a week to planning offline activities.',
+                'Day 7: Review your time blocks and assess your focus improvement.'
+            ]
+        },
+        es: { /* ... (Traduzione spagnola completa per l'asse Produttività) ... */ },
+        de: { /* ... (Traduzione tedesca completa per l'asse Produttività) ... */ },
+        fr: { /* ... (Traduzione francese completa per l'asse Produttività) ... */ }
     },
     'Escape & Emotions': {
         cssClass: 'axis-escape',
         it: {
-            priorityTitle: "Priorità: Gestire la Fuga Emotiva",
-            priorityDetail: "I tuoi dispositivi sono usati come una 'coperta di Linus' per evitare noia, ansia o stress. Questo non risolve i problemi, ma crea un circolo vizioso di dipendenza.",
+            priorityTitle: 'Focus su Fuga ed Emozioni',
+            priorityDetail: "Il tuo telefono è diventato il tuo principale meccanismo di coping per lo stress o la noia, un chiaro segno di 'dipendenza emotiva' dal digitale. Hai bisogno di alternative sane per affrontare le emozioni negative e il vuoto.",
             dayPlan: [
-                "Giorno 1: Identifica 3 momenti in cui usi il telefono per noia (es. in coda, in ascensore).",
-                "Giorno 2: Sostituisci il telefono in quei momenti con un'alternativa offline (es. un taccuino, una gomma da masticare).",
-                "Giorno 3: Quando provi ansia, aspetta 5 minuti prima di prendere il telefono. Respirazione profonda.",
-                "Giorno 4: Scrivi un elenco di 5 attività offline che ti danno gioia o ti rilassano.",
-                "Giorno 5: Definisci una 'finestra emotiva' (30 minuti) per elaborare sentimenti, senza schermi.",
-                "Giorno 6: Parlane con un amico o un familiare di persona invece di scrivere.",
-                "Giorno 7: Rileggi i momenti di tentazione e valuta i tuoi progressi emotivi.",
-            ],
+                'Giorno 1: Identifica 5 situazioni che innescano la ricerca dello smartphone (es. attesa, noia).',
+                'Giorno 2: Quando senti un innesco, fai 10 respiri profondi invece di prendere il telefono.',
+                'Giorno 3: Installa un’app di mindfulness o diario per tracciare le tue reazioni emotive.',
+                'Giorno 4: Pianifica un’attività "di riserva" offline per i momenti di noia (es. lettura, cruciverba).',
+                'Giorno 5: Parla con un amico/familiare delle tue emozioni invece di postarle online.',
+                'Giorno 6: Dedica 1 ora a un hobby creativo che non richieda uno schermo.',
+                'Giorno 7: Riconosci e celebra le volte in cui hai gestito la noia senza lo schermo.'
+            ]
         },
+        en: {
+            priorityTitle: 'Focus on Escape & Emotions',
+            priorityDetail: "Your phone has become your main coping mechanism for stress or boredom, a clear sign of 'emotional dependence' on digital. You need healthy alternatives to deal with negative emotions and emptiness.",
+            dayPlan: [
+                'Day 1: Identify 5 situations that trigger smartphone checking (e.g., waiting, boredom).',
+                'Day 2: When you feel a trigger, take 10 deep breaths instead of grabbing the phone.',
+                'Day 3: Install a mindfulness or journaling app to track your emotional reactions.',
+                'Day 4: Plan a "backup" offline activity for moments of boredom (e.g., reading, crossword puzzle).',
+                'Day 5: Talk to a friend/family member about your emotions instead of posting them online.',
+                'Day 6: Dedicate 1 hour to a creative hobby that doesn\'t require a screen.',
+                'Day 7: Recognize and celebrate the times you managed boredom without the screen.'
+            ]
+        },
+        es: { /* ... (Traduzione spagnola completa per l'asse Emozioni) ... */ },
+        de: { /* ... (Traduzione tedesca completa per l'asse Emozioni) ... */ },
+        fr: { /* ... (Traduzione francese completa per l'asse Emozioni) ... */ }
     },
     'Habit & Compulsion': {
         cssClass: 'axis-habit',
         it: {
-            priorityTitle: "Priorità: Rompere il Ciclo Compulsivo",
-            priorityDetail: "L'impulso a controllare il telefono è diventato un riflesso automatico, una compulsione. Devi reindirizzare queste abitudini neuronali attraverso la consapevolezza e l'attrito.",
+            priorityTitle: 'Focus su Abitudine e Compulsione',
+            priorityDetail: "Il controllo costante e l'impulso fisico a usare il telefono suggeriscono che l'uso è diventato involontario e compulsivo. Agire per rompere questo ciclo è fondamentale per recuperare il controllo.",
             dayPlan: [
-                "Giorno 1: Sposta le app più usate (social, email) in cartelle nascoste.",
-                "Giorno 2: Metti il telefono in modalità scala di grigi (bianco e nero) per ridurne l'attrattiva visiva.",
-                "Giorno 3: Lascia il telefono in una stanza diversa dalla tua per 1 ora.",
-                "Giorno 4: Elimina le app che non hai usato negli ultimi 30 giorni.",
-                "Giorno 5: Rimuovi l'icona del browser dalla schermata principale.",
-                "Giorno 6: Ogni volta che controlli il telefono, annota mentalmente (o su carta) il motivo.",
-                "Giorno 7: Riduci il numero di controlli del telefono a meno di 5 volte all'ora.",
-            ],
+                'Giorno 1: Sposta le app più usate (social, email) in una cartella secondaria.',
+                'Giorno 2: Controlla il telefono solo in momenti prestabiliti (es. 9:00, 13:00, 18:00).',
+                'Giorno 3: Utilizza una fascia elastica al polso: scattala ogni volta che controlli compulsivamente il telefono.',
+                'Giorno 4: Stabilisci un "parcheggio" per il telefono quando sei a casa (es. in un cassetto).',
+                'Giorno 5: Rimuovi lo schermo del telefono dalla vista durante le pause lavorative.',
+                'Giorno 6: Fai un "mini-detox" di 3 ore senza telefono.',
+                'Giorno 7: Chiedi a un amico o partner di farti notare quando controlli il telefono involontariamente.'
+            ]
         },
+        en: {
+            priorityTitle: 'Focus on Habit & Compulsion',
+            priorityDetail: 'Constant checking and the physical impulse to use the phone suggest that use has become involuntary and compulsive. Acting to break this cycle is crucial to regaining control.',
+            dayPlan: [
+                'Day 1: Move the most used apps (social, email) to a secondary folder.',
+                'Day 2: Check your phone only at predetermined times (e.g., 9:00, 1:00 PM, 6:00 PM).',
+                'Day 3: Use a rubber band on your wrist: snap it every time you compulsively check your phone.',
+                'Day 4: Establish a "parking spot" for your phone when you are home (e.g., in a drawer).',
+                'Day 5: Remove the phone screen from sight during work breaks.',
+                'Day 6: Take a 3-hour "mini-detox" without your phone.',
+                'Day 7: Ask a friend or partner to point out when you involuntarily check your phone.'
+            ]
+        },
+        es: { /* ... (Traduzione spagnola completa per l'asse Abitudine) ... */ },
+        de: { /* ... (Traduzione tedesca completa per l'asse Abitudine) ... */ },
+        fr: { /* ... (Traduzione francese completa per l'asse Abitudine) ... */ }
     },
     'Social & Presence': {
         cssClass: 'axis-social',
         it: {
-            priorityTitle: "Priorità: Migliorare la Presenza Sociale",
-            priorityDetail: "L'interazione virtuale sta sostituendo le relazioni reali, portando a isolamento e preoccupazione per l'immagine online. È tempo di tornare alla 'presenza' fisica e mentale.",
+            priorityTitle: 'Focus su Sociale e Presenza',
+            priorityDetail: "L'interazione virtuale ha iniziato a sostituire quella reale, e l'ansia da 'Fear of Missing Out' (FOMO) domina la tua vita. È necessario ristabilire la priorità delle relazioni e della sicurezza nel mondo fisico.",
             dayPlan: [
-                "Giorno 1: Durante un pasto o un incontro, metti il telefono in silenzioso e capovolto.",
-                "Giorno 2: Invia un messaggio vocale o fai una chiamata anziché scrivere un lungo testo.",
-                "Giorno 3: Dedica 30 minuti a una conversazione faccia a faccia senza interruzioni digitali.",
-                "Giorno 4: Lascia il telefono a casa mentre fai una commissione breve (es. comprare il pane).",
-                "Giorno 5: Limita la visualizzazione del tuo feed social a una sola volta al giorno.",
-                "Giorno 6: Fai un'attività sociale offline (sport, hobby, caffè) che ti costringa a interagire.",
-                "Giorno 7: Valuta come ti senti dopo aver passato più tempo con persone reali rispetto ai contenuti online.",
-            ],
+                'Giorno 1: Silenzia le notifiche dei gruppi social più attivi per 24 ore.',
+                'Giorno 2: Lascia il telefono in borsa/tasca durante tutti i pasti.',
+                'Giorno 3: Incontra un amico per un caffè o una passeggiata, lasciando i telefoni in modalità aereo.',
+                'Giorno 4: Impegnati a non usare il telefono mentre cammini o guidi (zero tolleranza).',
+                'Giorno 5: Limita la lettura e la risposta ai messaggi a 2 sessioni al giorno.',
+                'Giorno 6: Pubblica un solo post (o nessuno) al giorno, concentrandoti sulla "presenza" nella vita reale.',
+                'Giorno 7: Scrivi un messaggio a una persona che non senti da tempo, proponendo un incontro offline.'
+            ]
         },
-    },
+        en: {
+            priorityTitle: 'Focus on Social & Presence',
+            priorityDetail: 'Virtual interaction has begun to replace real interaction, and the anxiety of "Fear of Missing Out" (FOMO) dominates your life. It is necessary to re-establish the priority of relationships and safety in the physical world.',
+            dayPlan: [
+                'Day 1: Mute notifications for the most active social groups for 24 hours.',
+                'Day 2: Leave your phone in your bag/pocket during all meals.',
+                'Day 3: Meet a friend for coffee or a walk, leaving your phones on airplane mode.',
+                'Day 4: Commit to not using your phone while walking or driving (zero tolerance).',
+                'Day 5: Limit reading and responding to messages to 2 sessions per day.',
+                'Day 6: Post only one post (or none) per day, focusing on "presence" in real life.',
+                'Day 7: Write a message to someone you haven\'t heard from in a while, proposing an offline meeting.'
+            ]
+        },
+        es: { /* ... (Traduzione spagnola completa per l'asse Sociale) ... */ },
+        de: { /* ... (Traduzione tedesca completa per l'asse Sociale) ... */ },
+        fr: { /* ... (Traduzione francese completa per l'asse Sociale) ... */ }
+    }
 };
 
-/**
- * Risorse Consigliate per l'Report Premium.
- */
 const RESOURCES_I18N = {
-    it: "Risorse aggiuntive: Consigliamo la lettura di 'Digital Minimalism' di Cal Newport o 'Irresistibile' di Adam Alter. Se la compulsione è forte, valuta di contattare un terapeuta specializzato in dipendenze comportamentali.",
-    en: "Additional resources: We recommend reading 'Digital Minimalism' by Cal Newport or 'Irresistible' by Adam Alter. If the compulsion is strong, consider contacting a therapist specializing in behavioral addictions.",
-    es: "Recursos adicionales: Recomendamos la lectura de 'Minimalismo Digital' de Cal Newport o 'Irresistible' de Adam Alter. Si la compulsión es fuerte, considera contactar a un terapeuta especializado en adicciones conductuales.",
-    de: "Zusätzliche Ressourcen: Wir empfehlen die Lektüre von 'Digital Minimalism' von Cal Newport oder 'Irresistible' von Adam Alter. Wenn die Zwanghaftigkeit stark ist, sollten Sie einen auf Verhaltenssüchte spezialisierten Therapeuten kontaktieren.",
-    fr: "Ressources supplémentaires: Nous recommandons la lecture de 'Digital Minimalism' de Cal Newport ou 'Irresistible' d'Adam Alter. Si la compulsion est forte, envisagez de contacter un thérapeute spécialisé dans les dépendances comportementales.",
+    it: "Risorse aggiuntive consigliate: liberi dal 'Dopamine Detox' di Anna Lembke, app di mindfulness (es. Headspace o Calm) e un tracker di abitudini.",
+    en: "Recommended additional resources: 'Dopamine Detox' by Anna Lembke, mindfulness apps (e.g., Headspace or Calm), and a habit tracker.",
+    es: "Recursos adicionales recomendados: libre de 'Dopamine Detox' de Anna Lembke, aplicaciones de mindfulness (ej. Headspace o Calm) y un rastreador de hábitos.",
+    de: "Empfohlene zusätzliche Ressourcen: 'Dopamine Detox' von Anna Lembke, Achtsamkeits-Apps (z. B. Headspace oder Calm) und ein Gewohnheits-Tracker.",
+    fr: "Ressources supplémentaires recommandées : libre de 'Dopamine Detox' d'Anna Lembke, applications de pleine conscience (ex. Headspace ou Calm) et un suivi d'habitudes."
 };
 
 // =========================================================================
@@ -215,15 +247,13 @@ const TRANSLATIONS = {
     it: {
         FORM_TITLE: "Valutazione della Dipendenza Digitale",
         BTN_CALCULATE: "Calcola Risultato",
-        // ...
-        ALERT_COMPLETE_QUIZ: "Per favore, rispondi a tutte le 20 domande prima di calcolare il risultato.",
-        DEFAULT_USERNAME: "Utente",
-        // NUOVE CHIAVI PER L'INTRODUZIONE:
+        ALERT_COMPLETE_QUIZ: "Per favore, rispondi a tutte le 20 domande prima di calcolare il risultato.",
+        DEFAULT_USERNAME: "Utente",
         INTRO_H2: "Verifica la Tua Relazione con lo Smartphone",
         INTRO_P: "Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.",
         INTRO_NAME_SPAN: "Inserisci il tuo nome (opzionale, per personalizzare il report):",
-        PAYWALL_H3: "Il Tuo Risultato è Pronto!",
-// ...
+        // MODIFICATO: Aggiunto placeholder {name} per la pulizia della traduzione
+        PAYWALL_H3: "Ciao {name}, il Tuo Risultato è Pronto!", 
         PAYWALL_P: "Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:",
         BTN_STANDARD: `Scarica Report Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Acquista Report Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -261,7 +291,7 @@ const TRANSLATIONS = {
         CTA_TITLE: "Vuoi scoprire il tuo livello di rischio?",
         CTA_BUTTON: "Fai il test ora",
 
-        // Chiavi per I18N_KEYS_TO_TRANSLATE
+        // Chiavi per risposte e assi
         ANSWER_0: 'Raramente',
         ANSWER_1: 'A volte',
         ANSWER_2: 'Spesso',
@@ -271,7 +301,7 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Fuga ed Emozioni',
         AXIS_Habit_Compulsion: 'Abitudine e Compulsione',
         AXIS_Social_Presence: 'Sociale e Presenza',
-        
+
         // Domande del quiz (Q1-Q20) (Viene usato il testo IT come fallback)
         Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
         Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
@@ -279,17 +309,16 @@ const TRANSLATIONS = {
         Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
         Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question,
     },
-   en: {
+    en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
         ALERT_COMPLETE_QUIZ: "Please answer all 20 questions before calculating the result.",
         DEFAULT_USERNAME: "User",
-        // CHIAVI INTRODUZIONE
         INTRO_H2: "Check Your Relationship with Your Smartphone",
         INTRO_P: "Answer 20 questions honestly to discover your risk level and get your personalized action report.",
         INTRO_NAME_SPAN: "Enter your name (optional, to personalize the report):",
-        // FINE CHIAVI INTRODUZIONE
-        PAYWALL_H3: "Your Result is Ready!",
+        // MODIFICATO
+        PAYWALL_H3: "Hi {name}, Your Result is Ready!", 
         PAYWALL_P: "To unlock your detailed report, choose the purchase option below:",
         BTN_STANDARD: `Download Basic Report (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Purchase Premium Report (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -326,7 +355,7 @@ const TRANSLATIONS = {
         TIP4: "Dedicate time to offline activities like sports, reading, or meditation.",
         CTA_TITLE: "Do you want to discover your risk level?",
         CTA_BUTTON: "Take the test now",
-        
+
         // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Rarely',
         ANSWER_1: 'Sometimes',
@@ -337,64 +366,27 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Escape and Emotions',
         AXIS_Habit_Compulsion: 'Habit and Compulsion',
         AXIS_Social_Presence: 'Social and Presence',
-        
+
         // Domande (Q1-Q20)
-        Q1: "Do you check your phone first thing in the morning and/or last thing before sleeping?", 
-        Q2: "Is your sleep disturbed because you use electronic devices in bed or just before?", 
-        Q3: "Do you wake up at night to check notifications or messages?", 
+        Q1: "Do you check your phone first thing in the morning and/or last thing before sleeping?",
+        Q2: "Is your sleep disturbed because you use electronic devices in bed or just before?",
+        Q3: "Do you wake up at night to check notifications or messages?",
         Q4: "Do you find it difficult to establish 'phone-free' times (e.g., during meals or conversations)?",
-        Q5: "Do phone notifications frequently distract you from important tasks or studies?", 
-        Q6: "Do you find yourself scrolling through social media or browsing the internet without a specific goal, wasting time?", 
-        Q7: "Do you postpone offline commitments or activities (like cleaning, exercise) because of time spent online?", 
+        Q5: "Do phone notifications frequently distract you from important tasks or studies?",
+        Q6: "Do you find yourself scrolling through social media or browsing the internet without a specific goal, wasting time?",
+        Q7: "Do you postpone offline commitments or activities (like cleaning, exercise) because of time spent online?",
         Q8: "Do you have trouble maintaining focus on a single activity for prolonged periods (more than 30 minutes)?",
-        Q9: "Is using your device your main mechanism for coping with boredom, stress, or negative feelings?", 
-        Q10: "Do you feel anxious or irritable if you can't access your phone/internet for a period of time (e.g., low battery or no Wi-Fi)?", 
-        Q11: "Have you tried to reduce the time spent online, but failed?", 
-        Q12: "Do you hide the real time you spend on devices or specific apps from others?", 
-        Q13: "Do you feel a physical need (like tingling or restlessness) when you can't check your phone?", 
-        Q14: "Do you continuously check your phone even when there are no active or incoming notifications?", 
-        Q15: "Do you feel FOMO (Fear of Missing Out) or the obligation to respond immediately to every notification or message?", 
-        Q16: "When watching a movie or attending a meeting, is your phone always close and do you check it regularly?", 
-        Q17: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?", 
-        Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?", 
-        Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?", 
-        Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
-    },
-        // FIX: CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO AGGIUNTE
-        
-        // Risposte standard
-        ANSWER_0: 'Rarely',
-        ANSWER_1: 'Sometimes',
-        ANSWER_2: 'Often',
-        ANSWER_3: 'Always',
-        
-        // Nomi degli assi di rischio
-        AXIS_Sleep_Rituals: 'Sleep and Rituals',
-        AXIS_Productivity_Focus: 'Productivity and Focus',
-        AXIS_Escape_Emotions: 'Escape and Emotions',
-        AXIS_Habit_Compulsion: 'Habit and Compulsion',
-        AXIS_Social_Presence: 'Social and Presence',
-        
-        // Domande (Q1-Q20)
-        Q1: "Do you check your phone first thing in the morning and/or last thing before sleeping?", 
-        Q2: "Is your sleep disturbed because you use electronic devices in bed or just before?", 
-        Q3: "Do you wake up at night to check notifications or messages?", 
-        Q4: "Do you find it difficult to establish 'phone-free' times (e.g., during meals or conversations)?",
-        Q5: "Do phone notifications frequently distract you from important tasks or studies?", 
-        Q6: "Do you find yourself scrolling through social media or browsing the internet without a specific goal, wasting time?", 
-        Q7: "Do you postpone offline commitments or activities (like cleaning, exercise) because of time spent online?", 
-        Q8: "Do you have trouble maintaining focus on a single activity for prolonged periods (more than 30 minutes)?",
-        Q9: "Is using your device your main mechanism for coping with boredom, stress, or negative feelings?", 
-        Q10: "Do you feel anxious or irritable if you can't access your phone/internet for a period of time (e.g., low battery or no Wi-Fi)?", 
-        Q11: "Have you tried to reduce the time spent online, but failed?", 
-        Q12: "Do you hide the real time you spend on devices or specific apps from others?", 
-        Q13: "Do you feel a physical need (like tingling or restlessness) when you can't check your phone?", 
-        Q14: "Do you continuously check your phone even when there are no active or incoming notifications?", 
-        Q15: "Do you feel FOMO (Fear of Missing Out) or the obligation to respond immediately to every notification or message?", 
-        Q16: "When watching a movie or attending a meeting, is your phone always close and do you check it regularly?", 
-        Q17: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?", 
-        Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?", 
-        Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?", 
+        Q9: "Is using your device your main mechanism for coping with boredom, stress, or negative feelings?",
+        Q10: "Do you feel anxious or irritable if you can't access your phone/internet for a period of time (e.g., low battery or no Wi-Fi)?",
+        Q11: "Have you tried to reduce the time spent online, but failed?",
+        Q12: "Do you hide the real time you spend on devices or specific apps from others?",
+        Q13: "Do you feel a physical need (like tingling or restlessness) when you can't check your phone?",
+        Q14: "Do you continuously check your phone even when there are no active or incoming notifications?",
+        Q15: "Do you feel FOMO (Fear of Missing Out) or the obligation to respond immediately to every notification or message?",
+        Q16: "When watching a movie or attending a meeting, is your phone always close and do you check it regularly?",
+        Q17: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?",
+        Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?",
+        Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?",
         Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
     },
     es: {
@@ -405,7 +397,8 @@ const TRANSLATIONS = {
         INTRO_H2: "Verifica Tu Relación con el Smartphone",
         INTRO_P: "Responde sinceramente a las 20 preguntas para descubrir tu nivel de riesgo y obtener tu informe de acción personalizado.",
         INTRO_NAME_SPAN: "Introduce tu nombre (opcional, para personalizar el informe):",
-        PAYWALL_H3: "¡Tu Resultado Está Listo!",
+        // MODIFICATO
+        PAYWALL_H3: "Hola {name}, ¡Tu Resultado Está Listo!",
         PAYWALL_P: "Para desbloquear tu informe detallado, elige la opción de compra a continuación:",
         BTN_STANDARD: `Descargar Informe Básico (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Comprar Informe Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -443,7 +436,7 @@ const TRANSLATIONS = {
         CTA_TITLE: "¿Quieres descubrir tu nivel de riesgo?",
         CTA_BUTTON: "Haz el test ahora",
 
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO 
+        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Raramente',
         ANSWER_1: 'A veces',
         ANSWER_2: 'A menudo',
@@ -453,27 +446,27 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Escape y Emociones',
         AXIS_Habit_Compulsion: 'Hábito y Compulsión',
         AXIS_Social_Presence: 'Social y Presencia',
-        
+
         // Domande (Q1-Q20)
-        Q1: "¿Revisas el teléfono a primera hora de la mañana y/o a última hora antes de dormir?", 
-        Q2: "¿Tu sueño se ve interrumpido porque usas dispositivos electrónicos en la cama o justo antes de acostarte?", 
-        Q3: "¿Te despiertas por la noche para revisar notificaciones o mensajes?", 
+        Q1: "¿Revisas el teléfono a primera hora de la mañana y/o a última hora antes de dormir?",
+        Q2: "¿Tu sueño se ve interrumpido porque usas dispositivos electrónicos en la cama o justo antes de acostarte?",
+        Q3: "¿Te despiertas por la noche para revisar notificaciones o mensajes?",
         Q4: "¿Te resulta difícil establecer momentos 'sin teléfono' (por ejemplo, durante las comidas o conversaciones)?",
-        Q5: "¿Las notificaciones del teléfono te distraen frecuentemente de tareas o estudios importantes?", 
-        Q6: "¿Te encuentras navegando en redes sociales o internet sin un objetivo específico, perdiendo tiempo?", 
-        Q7: "¿Pospones compromisos o actividades fuera de línea (como limpiar, hacer ejercicio) debido al tiempo que pasas en línea?", 
+        Q5: "¿Las notificaciones del teléfono te distraen frecuentemente de tareas o estudios importantes?",
+        Q6: "¿Te encuentras navegando en redes sociales o internet sin un objetivo específico, perdiendo tiempo?",
+        Q7: "¿Pospones compromisos o actividades fuera de línea (como limpiar, hacer ejercicio) debido al tiempo que pasas en línea?",
         Q8: "¿Te cuesta mantener la concentración en una sola actividad por períodos prolongados (más de 30 minutos)?",
-        Q9: "¿Usar tu dispositivo es tu mecanismo principal para lidiar con el aburrimiento, el estrés o los sentimientos negativos?", 
-        Q10: "¿Te sientes ansioso o irritable si no puedes acceder a tu teléfono/internet por un tiempo (ej. batería baja o sin Wi-Fi)?", 
-        Q11: "¿Has intentado reducir el tiempo que pasas en línea, pero no lo has logrado?", 
-        Q12: "¿Ocultas a otros el tiempo real que pasas en dispositivos o aplicaciones específicas?", 
-        Q13: "¿Sientes una necesidad física (como hormigueo o inquietud) cuando no puedes revisar tu teléfono?", 
-        Q14: "¿Revisas continuamente el teléfono incluso cuando no hay notificaciones activas o entrantes?", 
-        Q15: "¿Sientes FOMO (Miedo a Perderse Algo) o la obligación de responder inmediatamente a cada notificación o mensaje?", 
-        Q16: "Cuando ves una película o asistes a una reunión, ¿tu teléfono está siempre al alcance y lo revisas regularmente?", 
-        Q17: "¿Te sientes más cómodo comunicando mensajes o sentimientos importantes a través de la mensajería en lugar de en persona?", 
-        Q18: "¿Tus interacciones virtuales (redes sociales, juegos) han reemplazado o reducido significativamente el tiempo que pasas con amigos y familiares fuera de línea?", 
-        Q19: "¿Te preocupa constantemente tu apariencia en línea (perfil, publicaciones, 'me gusta' recibidos)?", 
+        Q9: "¿Usar tu dispositivo es tu mecanismo principal para lidiar con el aburrimiento, el estrés o los sentimientos negativos?",
+        Q10: "¿Te sientes ansioso o irritable si no puedes acceder a tu teléfono/internet por un tiempo (ej. batería baja o sin Wi-Fi)?",
+        Q11: "¿Has intentado reducir el tiempo que pasas en línea, pero no lo has logrado?",
+        Q12: "¿Ocultas a otros el tiempo real que pasas en dispositivos o aplicaciones específicas?",
+        Q13: "¿Sientes una necesidad física (como hormigueo o inquietud) cuando no puedes revisar tu teléfono?",
+        Q14: "¿Revisas continuamente el teléfono incluso cuando no hay notificaciones activas o entrantes?",
+        Q15: "¿Sientes FOMO (Miedo a Perderse Algo) o la obligación de responder inmediatamente a cada notificación o mensaje?",
+        Q16: "Cuando ves una película o asistes a una reunión, ¿tu teléfono está siempre al alcance y lo revisas regularmente?",
+        Q17: "¿Te sientes más cómodo comunicando mensajes o sentimientos importantes a través de la mensajería en lugar de en persona?",
+        Q18: "¿Tus interacciones virtuales (redes sociales, juegos) han reemplazado o reducido significativamente el tiempo que pasas con amigos y familiares fuera de línea?",
+        Q19: "¿Te preocupa constantemente tu apariencia en línea (perfil, publicaciones, 'me gusta' recibidos)?",
         Q20: "¿Usas el teléfono mientras conduces o caminas, poniendo en riesgo tu seguridad o la de otros?",
     },
     de: {
@@ -484,7 +477,8 @@ const TRANSLATIONS = {
         INTRO_H2: "Überprüfen Sie Ihre Beziehung zu Ihrem Smartphone",
         INTRO_P: "Beantworten Sie 20 Fragen ehrlich, um Ihr Risikoniveau zu erfahren und Ihren personalisierten Aktionsbericht zu erhalten.",
         INTRO_NAME_SPAN: "Geben Sie Ihren Namen ein (optional, zur Personalisierung des Berichts):",
-        PAYWALL_H3: "Ihr Ergebnis ist Fertig!",
+        // MODIFICATO
+        PAYWALL_H3: "Hallo {name}, Ihr Ergebnis ist Fertig!",
         PAYWALL_P: "Um Ihren detaillierten Bericht freizuschalten, wählen Sie unten die Kaufoption:",
         BTN_STANDARD: `Basisbericht Herunterladen (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Premium-Bericht Kaufen (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -522,7 +516,7 @@ const TRANSLATIONS = {
         CTA_TITLE: "Möchten Sie herausfinden, wie hoch Ihr Risiko ist?",
         CTA_BUTTON: "Machen Sie jetzt den Test",
 
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO 
+        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Selten',
         ANSWER_1: 'Manchmal',
         ANSWER_2: 'Oft',
@@ -555,7 +549,7 @@ const TRANSLATIONS = {
         Q19: "Sind Sie ständig besorgt über Ihr Online-Erscheinungsbild (Profil, Posts, erhaltene 'Likes')?",
         Q20: "Benutzen Sie Ihr Telefon beim Fahren oder Gehen und gefährden so Ihre oder die Sicherheit anderer?",
     },
-   fr: {
+    fr: {
         FORM_TITLE: "Évaluation de la Dépendance Numérique",
         BTN_CALCULATE: "Calculer le Résultat",
         ALERT_COMPLETE_QUIZ: "Veuillez répondre aux 20 questions avant de calculer le résultat.",
@@ -563,7 +557,8 @@ const TRANSLATIONS = {
         INTRO_H2: "Vérifiez Votre Relation avec Votre Smartphone",
         INTRO_P: "Répondez honnêtement aux 20 questions pour découvrir votre niveau de risque et obtenir votre rapport d'action personnalisé.",
         INTRO_NAME_SPAN: "Entrez votre nom (facultatif, pour personnaliser le rapport) :",
-        PAYWALL_H3: "Votre Résultat est Prêt !",
+        // MODIFICATO
+        PAYWALL_H3: "Salut {name}, Votre Résultat est Prêt !",
         PAYWALL_P: "Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous :",
         BTN_STANDARD: `Télécharger le Rapport de Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Acheter le Rapport Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -636,22 +631,6 @@ const TRANSLATIONS = {
     }
 };
 
-/**
- * Chiavi che devono esistere in ogni lingua (fallback).
- */
-const I18N_KEYS_TO_TRANSLATE = {
-    ANSWER_0: 'Raramente',
-    ANSWER_1: 'A volte',
-    ANSWER_2: 'Spesso',
-    ANSWER_3: 'Sempre',
-    AXIS_Sleep_Rituals: 'Sonno e Rituali',
-    AXIS_Productivity_Focus: 'Produttività e Focus',
-    AXIS_Escape_Emotions: 'Fuga ed Emozioni',
-    AXIS_Habit_Compulsion: 'Abitudine e Compulsione',
-    AXIS_Social_Presence: 'Sociale e Presenza',
-    // Le chiavi delle domande (Q1, Q2...) sono aggiunte dinamicamente
-};
-
 // =========================================================================
 // 3. LOGICA MULTILINGUA (I18N)
 // =========================================================================
@@ -660,16 +639,23 @@ const I18N_KEYS_TO_TRANSLATE = {
  * Assicura che ogni lingua abbia tutte le chiavi statiche e dinamiche (domande, risposte).
  */
 function ensureAllTranslationsExist() {
-    const defaultLang = TRANSLATIONS[CONFIG.I18N_LOCALE];
+    // Usa IT come lingua di fallback se non specificato
+    const defaultLang = TRANSLATIONS['it'];
 
-    // 1. Assicura che le chiavi I18N_KEYS_TO_TRANSLATE siano in ogni lingua
+    // 1. Assicura che le chiavi standard (ANSWER_X, AXIS_...) siano in ogni lingua
+    const standardKeys = ['ANSWER_0', 'ANSWER_1', 'ANSWER_2', 'ANSWER_3', 
+                          'AXIS_Sleep_Rituals', 'AXIS_Productivity_Focus', 
+                          'AXIS_Escape_Emotions', 'AXIS_Habit_Compulsion', 
+                          'AXIS_Social_Presence'];
+                          
     for (const code in TRANSLATIONS) {
         const currentLang = TRANSLATIONS[code];
-        for (const key in I18N_KEYS_TO_TRANSLATE) {
-            if (!currentLang[key]) {
-                currentLang[key] = defaultLang[key] || I18N_KEYS_TO_TRANSLATE[key];
-            }
-        }
+        standardKeys.forEach(key => {
+             if (!currentLang[key]) {
+                 // Usa il valore IT come fallback
+                 currentLang[key] = defaultLang[key];
+             }
+        });
     }
 
     // 2. Aggiunge le chiavi delle domande QUIZ_QUESTIONS a tutte le lingue
@@ -696,7 +682,7 @@ function applyTranslations(locale) {
         if (t[key]) {
             element.innerHTML = t[key];
         } else if (key.startsWith('AXIS_')) {
-             // Gestisce la traduzione degli assi di rischio (es. AXIS_Sleep_Rituals)
+            // Gestisce la traduzione degli assi di rischio (es. AXIS_Sleep_Rituals)
             const axisKey = key.replace(/ /g, '_');
             if (t[axisKey]) {
                 element.innerHTML = t[axisKey];
@@ -709,7 +695,7 @@ function applyTranslations(locale) {
 
     // FIX CRITICO: Ricarica il quiz per applicare le traduzioni alle domande generate dinamicamente
     populateQuizQuestions();
-    
+
     // FIX: Ricarica anche i bottoni del paywall per aggiornare i prezzi tradotti
     initPaywallButtons();
 }
@@ -728,7 +714,7 @@ function initLanguageSelector() {
         const button = document.createElement('button');
         button.className = 'lang-btn';
         if (lang.code === CONFIG.I18N_LOCALE) {
-             button.classList.add('active');
+            button.classList.add('active');
         }
         button.innerHTML = lang.flag;
         button.setAttribute('title', lang.name);
@@ -756,7 +742,7 @@ function populateQuizQuestions() {
         return;
     }
 
-    container.innerHTML = ''; 
+    container.innerHTML = '';
     const currentLocale = CONFIG.I18N_LOCALE;
     const t = TRANSLATIONS[currentLocale] || TRANSLATIONS[CONFIG.I18N_LOCALE];
 
@@ -880,7 +866,8 @@ function handleCalculate(event) {
     // Aggiorna l'intestazione del paywall con il nome utente e la traduzione
     const paywallH3 = document.getElementById('paywall-h3');
     if (paywallH3) {
-        paywallH3.innerHTML = t.PAYWALL_H3.replace('!', `, ${userName}!`);
+        // CORREZIONE: Usa il placeholder {name} per una traduzione pulita
+        paywallH3.innerHTML = t.PAYWALL_H3.replace('{name}', userName);
     }
 
     // Inizializza i bottoni di acquisto (essenziale per i listener e la traduzione dei prezzi)
@@ -930,6 +917,7 @@ function showReport(results, planType) {
 
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
+    // Usa un fallback per la data in caso di errore
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
 
     // 2. Livello di Rischio e Analisi
@@ -991,7 +979,8 @@ function showReport(results, planType) {
 
             const priorityAxis = riskData.priorityAxis;
             const priorityPlan = AXIS_PLANS_I18N[priorityAxis];
-            const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
+            // Assicurati che l'oggetto di traduzione esista o usa il fallback IT
+            const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it']; 
 
             document.getElementById('priority-action').innerHTML = `
                 <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.priorityTitle}</h4>
@@ -1023,7 +1012,7 @@ function showReport(results, planType) {
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
-let riskRadarChart = null; 
+let riskRadarChart = null;
 
 function renderRadarChart(axisScores, riskCssClass) {
     const ctx = document.getElementById('riskRadarChart');
@@ -1108,14 +1097,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
     // Usa la lingua di default o quella salvata, e applica le traduzioni
     // Questa chiamata avvia anche populateQuizQuestions() e initPaywallButtons()
-    applyTranslations(CONFIG.I18N_LOCALE); 
+    applyTranslations(CONFIG.I18N_LOCALE);
 
-    // 3. Collega il bottone di calcolo al form (l'HTML ora ha type="submit")
+    // 3. Collega il bottone di calcolo al form
     const form = document.getElementById('quiz-form');
     if (form) {
         form.addEventListener('submit', handleCalculate);
     }
-    
+
     // 4. Nasconde le sezioni di report e paywall all'avvio
     const paywall = document.getElementById('paywall');
     const report = document.getElementById('report');
