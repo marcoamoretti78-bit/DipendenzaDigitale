@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Dipendenza Digitale</title>
     <link rel="stylesheet" href="style.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
 </head>
 <body>
 
     <div class="navbar">
         <img src="assets/logo.png" alt="Logo Dipendenza Digitale" class="navbar-logo">
         <span class="title" data-i18n="FORM_TITLE">Valutazione della Dipendenza Digitale</span>
+        
+        <div id="language-selector"></div> 
     </div>
 
     <div class="container">
@@ -21,21 +20,21 @@
             <div class="intro">
                 <h2>Verifica la Tua Relazione con lo Smartphone</h2>
                 <p>Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.</p>
-                
-                <div class="name-field">
-                    <span>Inserisci il tuo nome (opzionale, per personalizzare il report):</span>
-                    <input type="text" id="userName" placeholder="Il tuo nome">
-                </div>
             </div>
 
             <form id="quiz-form" class="quiz">
+                <div class="name-field">
+                    <span>Inserisci il tuo nome (opzionale, per personalizzare il report):</span>
+                    <input type="text" name="userName" id="userName" placeholder="Il tuo nome">
+                </div>
+
                 <div id="quiz-questions-container">
                     </div>
+                
+                <div class="actions">
+                    <button type="submit" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Calcola Risultato</button>
+                </div>
             </form>
-            
-            <div class="actions">
-                <button type="button" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Calcola Risultato</button>
-            </div>
         </div>
         
         <div id="paywall" class="paywall" style="display: none;">
@@ -50,7 +49,6 @@
             <p class="secure-note">Transazione simulata a scopo dimostrativo.</p>
         </div>
 
-
         <div id="report" class="report-container" style="display: none;">
             
             <header class="report-header">
@@ -60,7 +58,7 @@
             </header>
 
             <section class="result-summary">
-                <h2 data-i18n="RESULT_TITLE">Il Tuo Punteggio</h2>
+                <h2>Il Tuo Punteggio</h2>
                 <div class="score-grid">
                     <div class="score-box total-score">
                         <span data-i18n="SCORE_LABEL">Punteggio</span>
@@ -93,25 +91,25 @@
                 
                 <h3 data-i18n="IMPACT_TITLE">Riepilogo Dettagliato dei Punteggi di Impatto</h3>
                 <ul id="impact-list" class="impact-list">
-                    </ul>
+                </ul>
             </section>
 
             <section class="premium-content">
                 <h2 data-i18n="PRIORITY_PLAN_TITLE">Il Tuo Piano d'Azione Prioritizzato</h2>
                 <div id="priority-action">
-                    </div>
+                </div>
                 
                 <h2 data-i18n="DAYS_PLAN_TITLE">Piano Digital Detox di 7 Giorni</h2>
                 <ul id="days-plan-list" class="days-plan">
-                    </ul>
+                </ul>
                 
                 <h2 data-i18n="RESOURCES_TITLE">Risorse Consigliate</h2>
                 <div id="resources-text" class="resources-box">
-                    </div>
+                </div>
             </section>
 
             <section class="detail-answers">
-                <h2 data-i18n="QUIZ_TITLE">Le Tue Risposte Dettagliate al Quiz</h2>
+                <h2>Le Tue Risposte Dettagliate al Quiz</h2>
                 <table>
                     <thead>
                         <tr>
@@ -121,7 +119,7 @@
                         </tr>
                     </thead>
                     <tbody id="quiz-answers-body">
-                        </tbody>
+                    </tbody>
                 </table>
             </section>
 
@@ -139,6 +137,7 @@
         © 2025 Dipendenza Digitale. Tutti i diritti riservati.
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
     <script src="scripts.final.js"></script>
 </body>
 </html>
