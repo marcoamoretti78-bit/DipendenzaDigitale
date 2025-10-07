@@ -284,6 +284,11 @@ const TRANSLATIONS = {
         BTN_CALCULATE: "Calculate Result",
         ALERT_COMPLETE_QUIZ: "Please answer all 20 questions before calculating the result.",
         DEFAULT_USERNAME: "User",
+        // CHIAVI INTRODUZIONE
+        INTRO_H2: "Check Your Relationship with Your Smartphone",
+        INTRO_P: "Answer 20 questions honestly to discover your risk level and get your personalized action report.",
+        INTRO_NAME_SPAN: "Enter your name (optional, to personalize the report):",
+        // FINE CHIAVI INTRODUZIONE
         PAYWALL_H3: "Your Result is Ready!",
         PAYWALL_P: "To unlock your detailed report, choose the purchase option below:",
         BTN_STANDARD: `Download Basic Report (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
@@ -322,6 +327,39 @@ const TRANSLATIONS = {
         CTA_TITLE: "Do you want to discover your risk level?",
         CTA_BUTTON: "Take the test now",
         
+        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
+        ANSWER_0: 'Rarely',
+        ANSWER_1: 'Sometimes',
+        ANSWER_2: 'Often',
+        ANSWER_3: 'Always',
+        AXIS_Sleep_Rituals: 'Sleep and Rituals',
+        AXIS_Productivity_Focus: 'Productivity and Focus',
+        AXIS_Escape_Emotions: 'Escape and Emotions',
+        AXIS_Habit_Compulsion: 'Habit and Compulsion',
+        AXIS_Social_Presence: 'Social and Presence',
+        
+        // Domande (Q1-Q20)
+        Q1: "Do you check your phone first thing in the morning and/or last thing before sleeping?", 
+        Q2: "Is your sleep disturbed because you use electronic devices in bed or just before?", 
+        Q3: "Do you wake up at night to check notifications or messages?", 
+        Q4: "Do you find it difficult to establish 'phone-free' times (e.g., during meals or conversations)?",
+        Q5: "Do phone notifications frequently distract you from important tasks or studies?", 
+        Q6: "Do you find yourself scrolling through social media or browsing the internet without a specific goal, wasting time?", 
+        Q7: "Do you postpone offline commitments or activities (like cleaning, exercise) because of time spent online?", 
+        Q8: "Do you have trouble maintaining focus on a single activity for prolonged periods (more than 30 minutes)?",
+        Q9: "Is using your device your main mechanism for coping with boredom, stress, or negative feelings?", 
+        Q10: "Do you feel anxious or irritable if you can't access your phone/internet for a period of time (e.g., low battery or no Wi-Fi)?", 
+        Q11: "Have you tried to reduce the time spent online, but failed?", 
+        Q12: "Do you hide the real time you spend on devices or specific apps from others?", 
+        Q13: "Do you feel a physical need (like tingling or restlessness) when you can't check your phone?", 
+        Q14: "Do you continuously check your phone even when there are no active or incoming notifications?", 
+        Q15: "Do you feel FOMO (Fear of Missing Out) or the obligation to respond immediately to every notification or message?", 
+        Q16: "When watching a movie or attending a meeting, is your phone always close and do you check it regularly?", 
+        Q17: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?", 
+        Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?", 
+        Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?", 
+        Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
+    },
         // FIX: CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO AGGIUNTE
         
         // Risposte standard
