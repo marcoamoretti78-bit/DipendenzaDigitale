@@ -1002,13 +1002,58 @@ function showReport(results, planType) {
         }
     }
 
+    // Implementazione Reale del Download PDF
     const downloadBtn = document.getElementById('download-pdf-btn');
-    if(downloadBtn) {
-        // Implementazione placeholder, in attesa della vera libreria PDF (es. jsPDF)
-        downloadBtn.onclick = () => alert('La funzione di download PDF è un placeholder in questa versione. Contenuto generato!');
-    }
-}
+    if (downloadBtn) {
+        downloadBtn.onclick = () => {
+            // Verifica se le librerie sono caricate prima di procedere
+            if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
+                alert('Le librerie di download PDF non sono caricate. Controlla il tuo HTML!');
+                return;
+            }
 
+            const input = document.getElementById('report');
+            // Nome del file tradotto e personalizzato
+            const pdfName = `${t.TITLE}_${userName}_Report.pdf`; 
+
+            // Nascondi temporaneamente gli elementi che non devono apparire nel PDF (es. il bottone stesso e il disclaimer)
+            downloadBtn.style.display = 'none'; 
+            const disclaimer = document.getElementById('report-disclaimer');
+            if (disclaimer) disclaimer.style.display = 'none';
+
+            // Cattura l'HTML della sezione Report e convertilo in canvas
+            html2canvas(input, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                const imgWidth = 210;
+                const pageHeight = 297;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                // Aggiungi la prima pagina
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                // Gestisci il contenuto su più pagine
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save(pdfName);
+
+                // Ripristina la visualizzazione normale dopo il download
+                downloadBtn.style.display = 'block';
+                if (disclaimer) disclaimer.style.display = 'block';
+            });
+        };
+    }
+} // Non dimenticare questa parentesi graffa finale!
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
