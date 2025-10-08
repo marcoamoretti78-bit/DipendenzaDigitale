@@ -899,6 +899,7 @@ function initPaywallButtons() {
 }
 
 /**
+/**
  * Visualizza il report completo e popola tutti i dati.
  * @param {object} results - I risultati calcolati.
  * @param {string} planType - 'standard' o 'premium'.
@@ -913,11 +914,11 @@ function showReport(results, planType) {
 
     // 1. Dati Principali
     const reportHeader = reportElement.querySelector('.report-header h1');
-    reportHeader.innerHTML = `${t.TITLE} - ${userName}`;
+    // Usa l'operatore OR per assicurare che userName non sia 'undefined' nel report
+    reportHeader.innerHTML = `${t.TITLE} - ${userName || t.GUEST}`; 
 
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
-    // Usa un fallback per la data in caso di errore
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
 
     // 2. Livello di Rischio e Analisi
@@ -934,7 +935,6 @@ function showReport(results, planType) {
         if (radarContainer) radarContainer.innerHTML = `<h2>⚠️ ${t.RADAR_TITLE} - Chart non disponibile.</h2>`;
     }
 
-
     // 4. Riepilogo Dettagliato dei Punteggi (Impact List)
     const impactList = document.getElementById('impact-list');
     impactList.innerHTML = '';
@@ -943,7 +943,8 @@ function showReport(results, planType) {
     sortedAxes.forEach(axis => {
         const score = axisScores[axis];
         // 4 domande per asse * 3 punti max = 12
-        const maxAxisScore = QUIZ_QUESTIONS.filter(q => q.axis === axis).length * 3;
+        const questionsOnAxis = QUIZ_QUESTIONS.filter(q => q.axis === axis).length;
+        const maxAxisScore = questionsOnAxis * 3;
         const translatedAxis = t[`AXIS_${axis.replace(/ /g, '_')}`] || axis;
         const listItem = document.createElement('li');
 
@@ -1002,26 +1003,23 @@ function showReport(results, planType) {
         }
     }
 
-    // Implementazione Reale del Download PDF
+    // 7. Implementazione Reale del Download PDF (Versione Anti-CSP)
     const downloadBtn = document.getElementById('download-pdf-btn');
     if (downloadBtn) {
         downloadBtn.onclick = () => {
-            // Verifica se le librerie sono caricate prima di procedere
             if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
-                alert('Le librerie di download PDF non sono caricate. Controlla il tuo HTML!');
+                alert('ERRORE: Le librerie di download PDF non sono caricate. Controlla il tuo HTML!');
                 return;
             }
 
             const input = document.getElementById('report');
-            // Nome del file tradotto e personalizzato
-            const pdfName = `${t.TITLE}_${userName}_Report.pdf`; 
+            const pdfName = `${t.TITLE}_${userName}_Report.pdf`;
 
-            // Nascondi temporaneamente gli elementi che non devono apparire nel PDF (es. il bottone stesso e il disclaimer)
-            downloadBtn.style.display = 'none'; 
-            const disclaimer = document.getElementById('report-disclaimer');
+            // Nascondi elementi temporaneamente
+            downloadBtn.style.display = 'none';
+            const disclaimer = document.querySelector('.disclaimer-box');
             if (disclaimer) disclaimer.style.display = 'none';
 
-            // Cattura l'HTML della sezione Report e convertilo in canvas
             html2canvas(input, { scale: 2 }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
@@ -1045,15 +1043,20 @@ function showReport(results, planType) {
                     heightLeft -= pageHeight;
                 }
 
-                pdf.save(pdfName);
-
+                // ********** CAMBIAMENTO ANTI-CSP **********
+                // Usa output per generare il PDF come stringa e aprirlo in una nuova finestra.
+                // Questo aggira i blocchi di sicurezza del server (Content Security Policy).
+                const pdfOutput = pdf.output('dataurlnewwindow', { filename: pdfName });
+                window.open(pdfOutput);
+                // *******************************************
+                
                 // Ripristina la visualizzazione normale dopo il download
                 downloadBtn.style.display = 'block';
                 if (disclaimer) disclaimer.style.display = 'block';
             });
         };
     }
-} // Non dimenticare questa parentesi graffa finale!
+}
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
