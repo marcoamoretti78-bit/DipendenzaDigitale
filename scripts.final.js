@@ -898,8 +898,6 @@ function initPaywallButtons() {
     }
 }
 
-/**
-/**
  * Visualizza il report completo e popola tutti i dati.
  * @param {object} results - I risultati calcolati.
  * @param {string} planType - 'standard' o 'premium'.
