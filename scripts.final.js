@@ -1046,8 +1046,7 @@ function showReport(results, planType) {
                 // ********** CAMBIAMENTO ANTI-CSP **********
                 // Usa output per generare il PDF come stringa e aprirlo in una nuova finestra.
                 // Questo aggira i blocchi di sicurezza del server (Content Security Policy).
-                const pdfOutput = pdf.output('dataurlnewwindow', { filename: pdfName });
-                window.open(pdfOutput);
+                pdf.save(pdfName);
                 // *******************************************
                 
                 // Ripristina la visualizzazione normale dopo il download
