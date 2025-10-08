@@ -1003,59 +1003,27 @@ function showReport(results, planType) {
         }
     }
 
-    // 7. Implementazione Reale del Download PDF (Versione Anti-CSP)
+    // 7. Implementazione: Stampa del Report (Soluzione GitHub Pages)
     const downloadBtn = document.getElementById('download-pdf-btn');
     if (downloadBtn) {
         downloadBtn.onclick = () => {
-            if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
-                alert('ERRORE: Le librerie di download PDF non sono caricate. Controlla il tuo HTML!');
-                return;
-            }
-
-            const input = document.getElementById('report');
-            const pdfName = `${t.TITLE}_${userName}_Report.pdf`;
-
-            // Nascondi elementi temporaneamente
+            // Nasconde il pulsante per evitare che compaia nel PDF di stampa/salvataggio.
             downloadBtn.style.display = 'none';
+
+            // Nascondi anche il disclaimer se necessario
             const disclaimer = document.querySelector('.disclaimer-box');
             if (disclaimer) disclaimer.style.display = 'none';
 
-            html2canvas(input, { scale: 2 }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                
-                const imgWidth = 210;
-                const pageHeight = 297;
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-                let heightLeft = imgHeight;
-                let position = 0;
+            // Chiama la funzione di stampa nativa del browser (funziona su mobile).
+            window.print(); 
 
-                // Aggiungi la prima pagina
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                // Gestisci il contenuto su più pagine
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-
-                // ********** CAMBIAMENTO ANTI-CSP **********
-                // Usa output per generare il PDF come stringa e aprirlo in una nuova finestra.
-                // Questo aggira i blocchi di sicurezza del server (Content Security Policy).
-                pdf.save(pdfName);
-                // *******************************************
-                
-                // Ripristina la visualizzazione normale dopo il download
-                downloadBtn.style.display = 'block';
-                if (disclaimer) disclaimer.style.display = 'block';
-            });
+            // Ripristina la visualizzazione normale dopo la stampa
+            downloadBtn.style.display = 'block';
+            if (disclaimer) disclaimer.style.display = 'block';
         };
     }
-}
+} 
+// **QUI DEVE ESSERCI SOLO LA FINE DELLA FUNZIONE showReport. Non altro codice qui sotto.**
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
