@@ -6,8 +6,8 @@
 const CONFIG = {
     I18N_LOCALE: 'it', // Lingua di default
     MAX_SCORE: 60, // 20 domande * 3 punti max
-    STANDARD_PRICE: 4.99,
-    PREMIUM_PRICE: 9.99,
+    STANDARD_PRICE: 1.99,
+    PREMIUM_PRICE: 7.99,
 };
 
 const AVAILABLE_LANGUAGES = [
