@@ -1023,7 +1023,7 @@ function showReport(results, planType) {
         };
     }
 } 
-// **QUI DEVE ESSERCI SOLO LA FINE DELLA FUNZIONE showReport. Non altro codice qui sotto.**
+
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
