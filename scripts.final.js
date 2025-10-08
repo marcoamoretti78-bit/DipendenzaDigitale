@@ -1023,7 +1023,6 @@ function showReport(results, planType) {
         };
     }
 } 
-
 /**
  * Genera il grafico Radar con i punteggi degli assi.
  */
