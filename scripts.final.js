@@ -84,7 +84,7 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Pianifica come mantenere la routine stabilita per il prossimo mese.'
             ]
         },
-        'en': { /* ... */ } // Non toccare le altre lingue
+        'en': { /* ... */ }
     },
     'Productivity & Focus': {
         cssClass: 'risk-low',
