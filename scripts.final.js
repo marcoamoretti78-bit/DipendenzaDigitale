@@ -360,18 +360,15 @@ const TRANSLATIONS = {
         TIP4: "Dedica tempo ad attività offline come sport, lettura o meditazione.",
         CTA_TITLE: "Vuoi scoprire il tuo livello di rischio?",
         CTA_BUTTON: "Fai il test ora",
-
         ANSWER_0: 'Raramente',
         ANSWER_1: 'A volte',
         ANSWER_2: 'Spesso',
         ANSWER_3: 'Sempre',
-
         AXIS_Sleep_&_Rituals: 'Sonno e Rituali',
         AXIS_Productivity_&_Focus: 'Produttività e Concentrazione',
         AXIS_Escape_&_Emotions: 'Fuga ed Emozioni',
         AXIS_Habit_&_Compulsion: 'Abitudine e Compulsione',
         AXIS_Social_&_Presence: 'Socialità e Presenza',
-
         Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
         Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
         Q3: "Ti svegli di notte per controllare notifiche o messaggi?",
@@ -392,9 +389,7 @@ const TRANSLATIONS = {
         Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
         Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
         Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
-    }
-    
-};
+    },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
@@ -403,8 +398,7 @@ const TRANSLATIONS = {
         INTRO_H2: "Check Your Relationship with Your Smartphone",
         INTRO_P: "Answer 20 questions honestly to discover your risk level and get your personalized action report.",
         INTRO_NAME_SPAN: "Enter your name (optional, to personalize the report):",
-        // MODIFICATO
-        PAYWALL_H3: "Hi {name}, Your Result is Ready!", 
+        PAYWALL_H3: "Hi {name}, Your Result is Ready!",
         PAYWALL_P: "To unlock your detailed report, choose the purchase option below:",
         BTN_STANDARD: `Download Basic Report (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Purchase Premium Report (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -441,8 +435,6 @@ const TRANSLATIONS = {
         TIP4: "Dedicate time to offline activities like sports, reading, or meditation.",
         CTA_TITLE: "Do you want to discover your risk level?",
         CTA_BUTTON: "Take the test now",
-
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Rarely',
         ANSWER_1: 'Sometimes',
         ANSWER_2: 'Often',
@@ -452,8 +444,6 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Escape and Emotions',
         AXIS_Habit_Compulsion: 'Habit and Compulsion',
         AXIS_Social_Presence: 'Social and Presence',
-
-        // Domande (Q1-Q20)
         Q1: "Do you check your phone first thing in the morning and/or last thing before sleeping?",
         Q2: "Is your sleep disturbed because you use electronic devices in bed or just before?",
         Q3: "Do you wake up at night to check notifications or messages?",
@@ -473,7 +463,7 @@ const TRANSLATIONS = {
         Q17: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?",
         Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?",
         Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?",
-        Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
+        Q20: "Do you use your phone while driving or walking, risking your safety or that of others?"
     },
     es: {
         FORM_TITLE: "Evaluación de la Dependencia Digital",
@@ -483,7 +473,6 @@ const TRANSLATIONS = {
         INTRO_H2: "Verifica Tu Relación con el Smartphone",
         INTRO_P: "Responde sinceramente a las 20 preguntas para descubrir tu nivel de riesgo y obtener tu informe de acción personalizado.",
         INTRO_NAME_SPAN: "Introduce tu nombre (opcional, para personalizar el informe):",
-        // MODIFICATO
         PAYWALL_H3: "Hola {name}, ¡Tu Resultado Está Listo!",
         PAYWALL_P: "Para desbloquear tu informe detallado, elige la opción de compra a continuación:",
         BTN_STANDARD: `Descargar Informe Básico (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
@@ -521,8 +510,6 @@ const TRANSLATIONS = {
         TIP4: "Dedica tiempo a actividades fuera de línea como deportes, lectura o meditación.",
         CTA_TITLE: "¿Quieres descubrir tu nivel de riesgo?",
         CTA_BUTTON: "Haz el test ahora",
-
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Raramente',
         ANSWER_1: 'A veces',
         ANSWER_2: 'A menudo',
@@ -532,8 +519,6 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Escape y Emociones',
         AXIS_Habit_Compulsion: 'Hábito y Compulsión',
         AXIS_Social_Presence: 'Social y Presencia',
-
-        // Domande (Q1-Q20)
         Q1: "¿Revisas el teléfono a primera hora de la mañana y/o a última hora antes de dormir?",
         Q2: "¿Tu sueño se ve interrumpido porque usas dispositivos electrónicos en la cama o justo antes de acostarte?",
         Q3: "¿Te despiertas por la noche para revisar notificaciones o mensajes?",
@@ -553,7 +538,7 @@ const TRANSLATIONS = {
         Q17: "¿Te sientes más cómodo comunicando mensajes o sentimientos importantes a través de la mensajería en lugar de en persona?",
         Q18: "¿Tus interacciones virtuales (redes sociales, juegos) han reemplazado o reducido significativamente el tiempo que pasas con amigos y familiares fuera de línea?",
         Q19: "¿Te preocupa constantemente tu apariencia en línea (perfil, publicaciones, 'me gusta' recibidos)?",
-        Q20: "¿Usas el teléfono mientras conduces o caminas, poniendo en riesgo tu seguridad o la de otros?",
+        Q20: "¿Usas el teléfono mientras conduces o caminas, poniendo en riesgo tu seguridad o la de otros?"
     },
     de: {
         FORM_TITLE: "Bewertung der Digitalen Abhängigkeit",
@@ -563,7 +548,6 @@ const TRANSLATIONS = {
         INTRO_H2: "Überprüfen Sie Ihre Beziehung zu Ihrem Smartphone",
         INTRO_P: "Beantworten Sie 20 Fragen ehrlich, um Ihr Risikoniveau zu erfahren und Ihren personalisierten Aktionsbericht zu erhalten.",
         INTRO_NAME_SPAN: "Geben Sie Ihren Namen ein (optional, zur Personalisierung des Berichts):",
-        // MODIFICATO
         PAYWALL_H3: "Hallo {name}, Ihr Ergebnis ist Fertig!",
         PAYWALL_P: "Um Ihren detaillierten Bericht freizuschalten, wählen Sie unten die Kaufoption:",
         BTN_STANDARD: `Basisbericht Herunterladen (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
@@ -601,8 +585,6 @@ const TRANSLATIONS = {
         TIP4: "Widmen Sie Zeit Offline-Aktivitäten wie Sport, Lesen oder Meditation.",
         CTA_TITLE: "Möchten Sie herausfinden, wie hoch Ihr Risiko ist?",
         CTA_BUTTON: "Machen Sie jetzt den Test",
-
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Selten',
         ANSWER_1: 'Manchmal',
         ANSWER_2: 'Oft',
@@ -612,8 +594,6 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Flucht und Emotionen',
         AXIS_Habit_Compulsion: 'Gewohnheit und Zwang',
         AXIS_Social_Presence: 'Soziales und Präsenz',
-
-        // Domande (Q1-Q20)
         Q1: "Überprüfen Sie Ihr Telefon als Erstes am Morgen und/oder als Letztes vor dem Schlafengehen?",
         Q2: "Ist Ihr Schlaf gestört, weil Sie elektronische Geräte im Bett oder kurz vor dem Schlafengehen benutzen?",
         Q3: "Wachen Sie nachts auf, um Benachrichtigungen oder Nachrichten zu überprüfen?",
@@ -633,7 +613,7 @@ const TRANSLATIONS = {
         Q17: "Fühlen Sie sich wohler dabei, wichtige Nachrichten oder Gefühle per Messaging anstatt persönlich zu kommunizieren?",
         Q18: "Haben Ihre virtuellen Interaktionen (soziale Medien, Spiele) die Zeit mit Freunden und Familie offline ersetzt oder erheblich reduziert?",
         Q19: "Sind Sie ständig besorgt über Ihr Online-Erscheinungsbild (Profil, Posts, erhaltene 'Likes')?",
-        Q20: "Benutzen Sie Ihr Telefon beim Fahren oder Gehen und gefährden so Ihre oder die Sicherheit anderer?",
+        Q20: "Benutzen Sie Ihr Telefon beim Fahren oder Gehen und gefährden so Ihre oder die Sicherheit anderer?"
     },
     fr: {
         FORM_TITLE: "Évaluation de la Dépendance Numérique",
@@ -643,7 +623,6 @@ const TRANSLATIONS = {
         INTRO_H2: "Vérifiez Votre Relation avec Votre Smartphone",
         INTRO_P: "Répondez honnêtement aux 20 questions pour découvrir votre niveau de risque et obtenir votre rapport d'action personnalisé.",
         INTRO_NAME_SPAN: "Entrez votre nom (facultatif, pour personnaliser le rapport) :",
-        // MODIFICATO
         PAYWALL_H3: "Salut {name}, Votre Résultat est Prêt !",
         PAYWALL_P: "Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous :",
         BTN_STANDARD: `Télécharger le Rapport de Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
@@ -681,8 +660,6 @@ const TRANSLATIONS = {
         TIP4: "Consacrez du temps à des activités hors ligne comme le sport, la lecture ou la méditation.",
         CTA_TITLE: "Voulez-vous découvrir votre niveau de risque ?",
         CTA_BUTTON: "Faites le test maintenant",
-
-        // CHIAVI DEL QUIZ E DEGLI ASSI DI RISCHIO
         ANSWER_0: 'Rarement',
         ANSWER_1: 'Parfois',
         ANSWER_2: 'Souvent',
@@ -692,8 +669,6 @@ const TRANSLATIONS = {
         AXIS_Escape_Emotions: 'Évasion et Émotions',
         AXIS_Habit_Compulsion: 'Habitude et Compulsion',
         AXIS_Social_Presence: 'Social et Présence',
-
-        // Domande (Q1-Q20)
         Q1: "Vérifiez-vous votre téléphone dès le matin et/ou en dernier avant de dormir?",
         Q2: "Votre sommeil est-il perturbé car vous utilisez des appareils électroniques au lit ou juste avant de vous coucher?",
         Q3: "Vous réveillez-vous la nuit pour vérifier les notifications ou les messages?",
@@ -713,10 +688,9 @@ const TRANSLATIONS = {
         Q17: "Êtes-vous plus à l'aise pour communiquer des messages importants ou des sentiments par messagerie plutôt qu'en personne?",
         Q18: "Vos interactions virtuelles (médias sociaux, jeux) ont-elles remplacé ou réduit significativement le temps passé avec des amis et la famille hors ligne?",
         Q19: "Êtes-vous constamment préoccupé par votre apparence en ligne (profil, publications, 'j'aime' reçus)?",
-        Q20: "Utilisez-vous votre téléphone en conduisant ou en marchant, risquant votre sécurité ou celle des autres?",
+        Q20: "Utilisez-vous votre téléphone en conduisant ou en marchant, risquant votre sécurité ou celle des autres?"
     }
 };
-
 // =========================================================================
 // 3. LOGICA MULTILINGUA (I18N)
 // =========================================================================
