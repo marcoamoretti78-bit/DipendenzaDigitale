@@ -154,7 +154,7 @@ const AXIS_PLANS_I18N = {
         },
         'en': { /* ... */ }
     }
-};
+},
         en: {
             priorityTitle: 'Focus on Sleep & Rituals',
             priorityDetail: 'Your biggest challenge is disconnecting before sleep and resisting the urge to check your phone upon waking. Your sleep quality is at risk. Act immediately to restore night/day boundaries.',
