@@ -153,8 +153,8 @@ const AXIS_PLANS_I18N = {
             ]
         },
         'en': { /* ... */ }
-    }
-},
+    },
+    'Sleep & Rituals': {
         en: {
             priorityTitle: 'Focus on Sleep & Rituals',
             priorityDetail: 'Your biggest challenge is disconnecting before sleep and resisting the urge to check your phone upon waking. Your sleep quality is at risk. Act immediately to restore night/day boundaries.',
@@ -366,11 +366,11 @@ const TRANSLATIONS = {
         ANSWER_2: 'Spesso',
         ANSWER_3: 'Sempre',
 
-        AXIS_Sleep_&_Rituals: 'Sonno e Rituali',
-        AXIS_Productivity_&_Focus: 'Produttività e Concentrazione',
-        AXIS_Escape_&_Emotions: 'Fuga ed Emozioni',
-        AXIS_Habit_&_Compulsion: 'Abitudine e Compulsione',
-        AXIS_Social_&_Presence: 'Socialità e Presenza',
+        'AXIS_Sleep_&_Rituals': 'Sonno e Rituali',
+        'AXIS_Productivity_&_Focus': 'Produttività e Concentrazione',
+        'AXIS_Escape_&_Emotions': 'Fuga ed Emozioni',
+        'AXIS_Habit_&_Compulsion': 'Abitudine e Compulsione',
+        'AXIS_Social_&_Presence': 'Socialità e Presenza',
 
         Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
         Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
@@ -392,9 +392,7 @@ const TRANSLATIONS = {
         Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
         Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
         Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
-    }
-    
-};
+    },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
