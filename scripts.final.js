@@ -366,25 +366,39 @@ const TRANSLATIONS = {
 
 {
     // Chiavi per risposte e assi
+   it: {
     ANSWER_0: 'Raramente',
     ANSWER_1: 'A volte',
     ANSWER_2: 'Spesso',
     ANSWER_3: 'Sempre',
 
-    // Traduzione dei nomi degli assi per il report
-    'AXIS_Sleep_&_Rituals': 'Sonno e Rituali',
-    'AXIS_Productivity_&_Focus': 'Produttività e Concentrazione',
-    'AXIS_Escape_&_Emotions': 'Fuga ed Emozioni',
-    'AXIS_Habit_&_Compulsion': 'Abitudine e Compulsione',
-    'AXIS_Social_&_Presence': 'Socialità e Presenza',
+    AXIS_Sleep_&_Rituals: 'Sonno e Rituali',
+    AXIS_Productivity_&_Focus: 'Produttività e Concentrazione',
+    AXIS_Escape_&_Emotions: 'Fuga ed Emozioni',
+    AXIS_Habit_&_Compulsion: 'Abitudine e Compulsione',
+    AXIS_Social_&_Presence: 'Socialità e Presenza',
 
-    // Domande del quiz (Q1-Q20)
-    Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
-    Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
-    Q9: QUIZ_QUESTIONS[8].question, Q10: QUIZ_QUESTIONS[9].question, Q11: QUIZ_QUESTIONS[10].question, Q12: QUIZ_QUESTIONS[11].question,
-    Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
-    Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question
-} // Chiusura corretta di TRANSLATIONS['it'] (senza virgola finale)
+    Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
+    Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
+    Q3: "Ti svegli di notte per controllare notifiche o messaggi?",
+    Q4: "Trovi difficile stabilire momenti 'phone-free' (es. durante i pasti o le conversazioni)?",
+    Q5: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?",
+    Q6: "Ti ritrovi a scorrere i social o navigare in internet senza un obiettivo specifico, perdendo tempo?",
+    Q7: "Rimandi impegni o attività offline (come pulire, fare esercizio) a causa del tempo passato online?",
+    Q8: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?",
+    Q9: "Usare il tuo dispositivo è il tuo meccanismo principale per affrontare la noia, lo stress o i sentimenti negativi?",
+    Q10: "Ti senti ansioso o irritabile se non puoi accedere al telefono/internet per un periodo (es. batteria scarica o no Wi-Fi)?",
+    Q11: "Hai provato a ridurre il tempo che passi online, ma non ci sei riuscito?",
+    Q12: "Nascondi agli altri il tempo reale che passi sui dispositivi o su app specifiche?",
+    Q13: "Senti un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?",
+    Q14: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?",
+    Q15: "Senti FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente ad ogni notifica o messaggio?",
+    Q16: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?",
+    Q17: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?",
+    Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
+    Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
+    Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
+}
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
