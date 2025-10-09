@@ -70,20 +70,91 @@ const RISK_PROFILES_I18N = {
 
 const AXIS_PLANS_I18N = {
     'Sleep & Rituals': {
-        cssClass: 'axis-sleep',
-        it: {
+        cssClass: 'risk-medium',
+        'it': {
             priorityTitle: 'Focus su Sonno e Rituali',
-            priorityDetail: 'La tua più grande sfida è disconnetterti prima di dormire e resistere alla tentazione di controllare il telefono appena sveglio. La qualità del tuo sonno è in pericolo. Agisci immediatamente per ristabilire i confini notte/giorno.',
+            priorityDetail: 'La tua azione prioritaria è stabilire una routine serale e mattutina per limitare l\'uso dello smartphone. Inizia a spegnere lo schermo almeno un\'ora prima di dormire per migliorare la qualità del sonno.',
             dayPlan: [
-                'Giorno 1: Rimuovi il telefono dalla camera da letto e usa una sveglia analogica.',
-                'Giorno 2: Stabilisci un "coprifuoco digitale" 90 minuti prima di dormire.',
-                'Giorno 3: Sostituisci lo scrolling serale con 10 minuti di meditazione o lettura.',
-                'Giorno 4: Non guardare lo schermo del telefono prima della colazione.',
-                'Giorno 5: Riscopri un hobby rilassante offline da fare prima di letto.',
-                'Giorno 6: Fai una passeggiata mattutina al posto di controllare le news online.',
-                'Giorno 7: Rifletti su come è migliorata la tua energia al risveglio.'
+                'Giorno 1: Imposta la modalità "Non Disturbare" a partire dalle 22:00 (o 1 ora prima di dormire).',
+                'Giorno 2: Tieni lo smartphone fuori dalla camera da letto e usa una sveglia analogica.',
+                'Giorno 3: Usa il telefono per ascoltare un podcast o musica rilassante per 15 minuti prima di dormire, poi mettilo via.',
+                'Giorno 4: Dedica i primi 30 minuti del mattino a un\'attività offline (colazione, lettura, stretching).',
+                'Giorno 5: Rivedi i tuoi progressi sui 3 giorni precedenti e aggiusta gli orari di sonno se necessario.',
+                'Giorno 6: Fai un "Digital Detox" di 2 ore prima di andare a letto.',
+                'Giorno 7: Pianifica come mantenere la routine stabilita per il prossimo mese.'
             ]
         },
+        'en': { /* ... */ } // Non toccare le altre lingue
+    },
+    'Productivity & Focus': {
+        cssClass: 'risk-low',
+        'it': {
+            priorityTitle: 'Focus su Produttività e Concentrazione',
+            priorityDetail: 'Il tuo punteggio indica che le interruzioni digitali stanno limitando la tua capacità di concentrazione. L\'obiettivo è strutturare i momenti di lavoro/studio senza distrazioni.',
+            dayPlan: [
+                'Giorno 1: Identifica le tue 3 attività più importanti della giornata e disattiva tutte le notifiche durante la loro esecuzione.',
+                'Giorno 2: Utilizza la Tecnica del Pomodoro (25 minuti di focus, 5 minuti di pausa) con il telefono in un\'altra stanza.',
+                'Giorno 3: Disattiva le notifiche per tutte le app non essenziali (social media, giochi).',
+                'Giorno 4: Crea una "zona di lavoro" senza telefono per almeno un\'ora al giorno.',
+                'Giorno 5: Fai un riepilogo della settimana: quante volte hai ceduto alla distrazione?',
+                'Giorno 6: Limita il controllo delle email/messaggi a 3 orari fissi durante la giornata.',
+                'Giorno 7: Valuta l\'efficacia del tuo lavoro in blocco e pianifica gli obiettivi per la settimana successiva.'
+            ]
+        },
+        'en': { /* ... */ }
+    },
+    'Escape & Emotions': {
+        cssClass: 'risk-high',
+        'it': {
+            priorityTitle: 'Focus su Fuga ed Emozioni',
+            priorityDetail: 'Il tuo punteggio suggerisce che utilizzi il telefono come principale meccanismo di fuga dallo stress o dalle emozioni negative. L\'obiettivo è sostituire l\'uso del telefono con strategie di coping emotive più salutari.',
+            dayPlan: [
+                'Giorno 1: Identifica le tue 3 app "di fuga" principali e mettile in una cartella secondaria.',
+                'Giorno 2: Quando senti l\'impulso di usare il telefono per sfuggire, prova la tecnica dei 5 minuti di meditazione o journaling.',
+                'Giorno 3: Scrivi una lista di 5 attività offline che ti danno gioia e usale come alternativa quando sei annoiato.',
+                'Giorno 4: Invece di controllare i social, chiama o incontra un amico per un supporto reale.',
+                'Giorno 5: Rivedi le tue emozioni: quali scatenano il bisogno di "fuga" digitale?',
+                'Giorno 6: Dedica 30 minuti a un hobby che non coinvolge lo schermo (es. disegnare, suonare, cucinare).',
+                'Giorno 7: Pianifica un\'uscita o un\'attività sociale senza telefono.'
+            ]
+        },
+        'en': { /* ... */ }
+    },
+    'Habit & Compulsion': {
+        cssClass: 'risk-medium',
+        'it': {
+            priorityTitle: 'Focus su Abitudine e Compulsione',
+            priorityDetail: 'Il tuo punteggio evidenzia un forte modello di controllo compulsivo. La tua azione prioritaria è interrompere le abitudini automatiche e ritrovare il controllo sui tuoi gesti.',
+            dayPlan: [
+                'Giorno 1: Sposta le app che usi compulsivamente in un posto scomodo (es. l\'ultima schermata del telefono).',
+                'Giorno 2: Controlla l\'ora usando un orologio da polso o un orologio da muro, non il telefono.',
+                'Giorno 3: Metti lo smartphone in modalità "scala di grigi" (bianco e nero) per un giorno intero.',
+                'Giorno 4: Scarica un\'app di tracciamento per monitorare quanto tempo trascorri sulle app a cui sei più legato.',
+                'Giorno 5: Scegli 3 momenti in cui metti il telefono completamente in silenzioso (es. pranzo, corsa, cena).',
+                'Giorno 6: Rimuovi lo smartphone da una situazione in cui lo usi abitualmente (es. bagno, in fila al supermercato).',
+                'Giorno 7: Rimuovi la barra di ricerca rapida o i widget che ti portano a navigare senza scopo.'
+            ]
+        },
+        'en': { /* ... */ }
+    },
+    'Social & Presence': {
+        cssClass: 'risk-low',
+        'it': {
+            priorityTitle: 'Focus su Socialità e Presenza',
+            priorityDetail: 'Le tue risposte indicano che la presenza online sta interferendo con la tua vita sociale e la tua capacità di goderti il momento. La priorità è bilanciare il tempo sullo schermo con interazioni e vita reale.',
+            dayPlan: [
+                'Giorno 1: Quando sei con altre persone, metti il telefono in modalità silenziosa, capovolto e fuori dalla vista.',
+                'Giorno 2: Lascia il telefono a casa o in macchina durante un pasto o un\'uscita di 1-2 ore.',
+                'Giorno 3: Quando scatti foto, resisti alla tentazione di pubblicarle subito sui social media.',
+                'Giorno 4: Fai un "check-in" consapevole con te stesso/a: "Sono pienamente presente in ciò che sto facendo ora?".',
+                'Giorno 5: Pianifica un\'attività con gli amici o la famiglia in cui sia vietato l\'uso del telefono.',
+                'Giorno 6: Limita il tempo sui social media a 30 minuti totali (o meno) per l\'intera giornata.',
+                'Giorno 7: Valuta i benefici che hai tratto da una maggiore presenza nel mondo reale.'
+            ]
+        },
+        'en': { /* ... */ }
+    }
+};
         en: {
             priorityTitle: 'Focus on Sleep & Rituals',
             priorityDetail: 'Your biggest challenge is disconnecting before sleep and resisting the urge to check your phone upon waking. Your sleep quality is at risk. Act immediately to restore night/day boundaries.',
