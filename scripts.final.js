@@ -71,7 +71,7 @@ const RISK_PROFILES_I18N = {
 const AXIS_PLANS_I18N = {
     'Sleep & Rituals': {
         cssClass: 'risk-medium',
-        'it': {
+        it: {
             priorityTitle: 'Focus su Sonno e Rituali',
             priorityDetail: 'La tua azione prioritaria è stabilire una routine serale e mattutina per limitare l\'uso dello smartphone. Inizia a spegnere lo schermo almeno un\'ora prima di dormire per migliorare la qualità del sonno.',
             dayPlan: [
@@ -84,11 +84,62 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Pianifica come mantenere la routine stabilita per il prossimo mese.'
             ]
         },
-        'en': { /* ... */ }
+        en: {
+            priorityTitle: 'Focus on Sleep & Rituals',
+            priorityDetail: 'Your main priority is to establish an evening and morning routine to limit smartphone use. Start by turning off your screen at least one hour before sleep to improve sleep quality.',
+            dayPlan: [
+                'Day 1: Set "Do Not Disturb" mode starting at 10 PM (or 1 hour before sleep).',
+                'Day 2: Keep your smartphone out of the bedroom and use an analog alarm clock.',
+                'Day 3: Use your phone to listen to a podcast or relaxing music for 15 minutes before bed, then put it away.',
+                'Day 4: Spend the first 30 minutes of the morning on an offline activity (breakfast, reading, stretching).',
+                'Day 5: Review your progress over the previous 3 days and adjust your sleep times if necessary.',
+                'Day 6: Do a "Digital Detox" for 2 hours before going to bed.',
+                'Day 7: Plan how to maintain the routine you’ve established for next month.'
+            ]
+        },
+        es: {
+            priorityTitle: 'Enfoque en Sueño y Rituales',
+            priorityDetail: 'Tu acción prioritaria es establecer una rutina nocturna y matutina para limitar el uso del smartphone. Comienza apagando la pantalla al menos una hora antes de dormir para mejorar la calidad del sueño.',
+            dayPlan: [
+                'Día 1: Activa el modo "No Molestar" a partir de las 22:00 (o 1 hora antes de dormir).',
+                'Día 2: Deja el smartphone fuera del dormitorio y utiliza un despertador analógico.',
+                'Día 3: Usa el teléfono para escuchar un podcast o música relajante durante 15 minutos antes de dormir, luego guárdalo.',
+                'Día 4: Dedica los primeros 30 minutos de la mañana a una actividad offline (desayuno, lectura, estiramientos).',
+                'Día 5: Revisa tus progresos de los 3 días anteriores y ajusta tus horarios de sueño si es necesario.',
+                'Día 6: Haz un "Digital Detox" de 2 horas antes de ir a dormir.',
+                'Día 7: Planifica cómo mantener la rutina establecida para el próximo mes.'
+            ]
+        },
+        de: {
+            priorityTitle: 'Fokus auf Schlaf und Rituale',
+            priorityDetail: 'Ihre Priorität ist es, eine abendliche und morgendliche Routine zu etablieren, um die Smartphone-Nutzung zu begrenzen. Schalten Sie den Bildschirm mindestens eine Stunde vor dem Schlafengehen aus, um die Schlafqualität zu verbessern.',
+            dayPlan: [
+                'Tag 1: Aktivieren Sie den "Nicht stören"-Modus ab 22:00 Uhr (oder 1 Stunde vor dem Schlafengehen).',
+                'Tag 2: Legen Sie das Smartphone außerhalb des Schlafzimmers und verwenden Sie einen analogen Wecker.',
+                'Tag 3: Nutzen Sie das Handy, um einen Podcast oder entspannende Musik für 15 Minuten vor dem Schlafengehen zu hören, legen Sie es dann weg.',
+                'Tag 4: Verbringen Sie die ersten 30 Minuten des Morgens mit einer Offline-Aktivität (Frühstück, Lesen, Dehnen).',
+                'Tag 5: Überprüfen Sie Ihre Fortschritte der letzten 3 Tage und passen Sie ggf. Ihre Schlafzeiten an.',
+                'Tag 6: Machen Sie ein "Digital Detox" von 2 Stunden vor dem Schlafengehen.',
+                'Tag 7: Planen Sie, wie Sie die etablierte Routine für den nächsten Monat aufrechterhalten.'
+            ]
+        },
+        fr: {
+            priorityTitle: 'Focus sur Sommeil et Rituels',
+            priorityDetail: 'Votre action prioritaire est d\'établir une routine du soir et du matin pour limiter l\'utilisation du smartphone. Commencez par éteindre l\'écran au moins une heure avant de dormir pour améliorer la qualité du sommeil.',
+            dayPlan: [
+                'Jour 1 : Activez le mode "Ne pas déranger" à partir de 22h (ou 1 heure avant de dormir).',
+                'Jour 2 : Laissez le smartphone hors de la chambre et utilisez un réveil analogique.',
+                'Jour 3 : Utilisez le téléphone pour écouter un podcast ou de la musique relaxante pendant 15 minutes avant de dormir, puis rangez-le.',
+                'Jour 4 : Consacrez les 30 premières minutes du matin à une activité hors ligne (petit-déjeuner, lecture, étirements).',
+                'Jour 5 : Passez en revue vos progrès des 3 jours précédents et ajustez vos horaires de sommeil si nécessaire.',
+                'Jour 6 : Faites un "Digital Detox" de 2 heures avant de vous coucher.',
+                'Jour 7 : Planifiez comment maintenir la routine établie pour le mois prochain.'
+            ]
+        }
     },
     'Productivity & Focus': {
         cssClass: 'risk-low',
-        'it': {
+        it: {
             priorityTitle: 'Focus su Produttività e Concentrazione',
             priorityDetail: 'Il tuo punteggio indica che le interruzioni digitali stanno limitando la tua capacità di concentrazione. L\'obiettivo è strutturare i momenti di lavoro/studio senza distrazioni.',
             dayPlan: [
@@ -101,13 +152,64 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Valuta l\'efficacia del tuo lavoro in blocco e pianifica gli obiettivi per la settimana successiva.'
             ]
         },
-        'en': { /* ... */ }
+        en: {
+            priorityTitle: 'Focus on Productivity & Focus',
+            priorityDetail: 'Your score indicates digital interruptions are limiting your ability to concentrate. Structure work/study times without distractions.',
+            dayPlan: [
+                'Day 1: Identify your 3 most important tasks of the day and turn off all notifications during them.',
+                'Day 2: Use the Pomodoro Technique (25 min focus, 5 min break) with the phone in another room.',
+                'Day 3: Deactivate notifications for all non-essential apps (social media, games).',
+                'Day 4: Create a "work zone" without your phone for at least one hour per day.',
+                'Day 5: Review your week: how many times did you give in to distractions?',
+                'Day 6: Limit checking email/messages to 3 fixed times per day.',
+                'Day 7: Evaluate your block work effectiveness and plan your goals for the next week.'
+            ]
+        },
+        es: {
+            priorityTitle: 'Enfoque en Productividad y Concentración',
+            priorityDetail: 'Tu puntuación indica que las interrupciones digitales están limitando tu capacidad de concentración. Estructura momentos de trabajo/estudio sin distracciones.',
+            dayPlan: [
+                'Día 1: Identifica tus 3 actividades más importantes del día y desactiva todas las notificaciones durante su realización.',
+                'Día 2: Utiliza la Técnica Pomodoro (25 min de enfoque, 5 min de descanso) con el teléfono en otra habitación.',
+                'Día 3: Desactiva las notificaciones de todas las apps no esenciales (redes sociales, juegos).',
+                'Día 4: Crea una "zona de trabajo" sin teléfono al menos una hora al día.',
+                'Día 5: Haz un resumen semanal: ¿cuántas veces has caído en la distracción?',
+                'Día 6: Limita la comprobación de emails/mensajes a 3 horarios fijos durante el día.',
+                'Día 7: Evalúa la efectividad de tu trabajo en bloques y planifica los objetivos para la semana siguiente.'
+            ]
+        },
+        de: {
+            priorityTitle: 'Fokus auf Produktivität und Konzentration',
+            priorityDetail: 'Ihre Punktzahl zeigt, dass digitale Unterbrechungen Ihre Konzentrationsfähigkeit einschränken. Strukturieren Sie Arbeits-/Lernzeiten ohne Ablenkungen.',
+            dayPlan: [
+                'Tag 1: Identifizieren Sie Ihre 3 wichtigsten Aufgaben des Tages und deaktivieren Sie währenddessen alle Benachrichtigungen.',
+                'Tag 2: Nutzen Sie die Pomodoro-Technik (25 min Fokus, 5 min Pause) mit dem Handy in einem anderen Raum.',
+                'Tag 3: Deaktivieren Sie Benachrichtigungen für alle nicht essenziellen Apps (soziale Medien, Spiele).',
+                'Tag 4: Schaffen Sie eine "Arbeitszone" ohne Handy für mindestens eine Stunde am Tag.',
+                'Tag 5: Wochenrückblick: Wie oft haben Sie sich ablenken lassen?',
+                'Tag 6: Begrenzen Sie das Abrufen von E-Mails/Nachrichten auf 3 feste Zeiten am Tag.',
+                'Tag 7: Bewerten Sie die Effektivität Ihrer Blockarbeit und planen Sie die Ziele für die nächste Woche.'
+            ]
+        },
+        fr: {
+            priorityTitle: 'Focus sur Productivité et Concentration',
+            priorityDetail: 'Votre score indique que les interruptions digitales limitent votre capacité de concentration. Structurez vos périodes de travail/étude sans distractions.',
+            dayPlan: [
+                'Jour 1 : Identifiez vos 3 tâches les plus importantes de la journée et désactivez toutes les notifications pendant leur réalisation.',
+                'Jour 2 : Utilisez la Technique Pomodoro (25 min de concentration, 5 min de pause) avec le téléphone dans une autre pièce.',
+                'Jour 3 : Désactivez les notifications de toutes les applications non essentielles (réseaux sociaux, jeux).',
+                'Jour 4 : Créez une "zone de travail" sans téléphone pendant au moins une heure par jour.',
+                'Jour 5 : Faites un bilan de la semaine : combien de fois avez-vous cédé à la distraction ?',
+                'Jour 6 : Limitez la vérification des emails/messages à 3 horaires fixes dans la journée.',
+                'Jour 7 : Évaluez l\'efficacité de votre travail par bloc et planifiez vos objectifs pour la semaine suivante.'
+            ]
+        }
     },
     'Escape & Emotions': {
         cssClass: 'risk-high',
-        'it': {
+        it: {
             priorityTitle: 'Focus su Fuga ed Emozioni',
-            priorityDetail: 'Il tuo punteggio suggerisce che utilizzi il telefono come principale meccanismo di fuga dallo stress o dalle emozioni negative. L\'obiettivo è sostituire l\'uso del telefono con strategie di coping emotive più salutari.',
+            priorityDetail: 'Il tuo punteggio suggerisce che utilizzi il telefono come principale meccanismo di fuga dallo stress o dalle emozioni negative. L\'obiettivo è sostituire l\'uso del dispositivo con strategie più sane.',
             dayPlan: [
                 'Giorno 1: Identifica le tue 3 app "di fuga" principali e mettile in una cartella secondaria.',
                 'Giorno 2: Quando senti l\'impulso di usare il telefono per sfuggire, prova la tecnica dei 5 minuti di meditazione o journaling.',
@@ -118,13 +220,64 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Pianifica un\'uscita o un\'attività sociale senza telefono.'
             ]
         },
-        'en': { /* ... */ }
+        en: {
+            priorityTitle: 'Focus on Escape & Emotions',
+            priorityDetail: 'Your score suggests you use your phone mainly to escape stress or negative emotions. The goal is to replace device use with healthier strategies.',
+            dayPlan: [
+                'Day 1: Identify your top 3 "escape" apps and put them in a secondary folder.',
+                'Day 2: When you feel the urge to use your phone to escape, try 5 minutes of meditation or journaling.',
+                'Day 3: Write down 5 offline activities that bring you joy and use them as alternatives when bored.',
+                'Day 4: Instead of checking social media, call or meet a friend for real support.',
+                'Day 5: Review your emotions: which ones trigger digital escape?',
+                'Day 6: Dedicate 30 minutes to a hobby that doesn\'t involve a screen (drawing, playing, cooking).',
+                'Day 7: Plan an outing or social activity without your phone.'
+            ]
+        },
+        es: {
+            priorityTitle: 'Enfoque en Escape y Emociones',
+            priorityDetail: 'Tu puntuación sugiere que usas el teléfono principalmente para escapar del estrés o emociones negativas. El objetivo es sustituir el uso del dispositivo por estrategias más saludables.',
+            dayPlan: [
+                'Día 1: Identifica tus 3 apps principales de "escape" y colócalas en una carpeta secundaria.',
+                'Día 2: Cuando sientas el impulso de usar el teléfono para escapar, prueba 5 minutos de meditación o diario.',
+                'Día 3: Escribe una lista de 5 actividades offline que te den alegría y úsalas como alternativa cuando estés aburrido.',
+                'Día 4: En vez de revisar redes sociales, llama o queda con un amigo para recibir apoyo real.',
+                'Día 5: Revisa tus emociones: ¿cuáles desencadenan la necesidad de "escape" digital?',
+                'Día 6: Dedica 30 minutos a un hobby que no implique pantalla (dibujar, tocar, cocinar).',
+                'Día 7: Planifica una salida o actividad social sin teléfono.'
+            ]
+        },
+        de: {
+            priorityTitle: 'Fokus auf Flucht und Emotionen',
+            priorityDetail: 'Ihre Punktzahl legt nahe, dass Sie Ihr Telefon hauptsächlich nutzen, um Stress oder negative Emotionen zu entkommen. Ziel ist es, die Gerätenutzung durch gesündere Strategien zu ersetzen.',
+            dayPlan: [
+                'Tag 1: Identifizieren Sie Ihre 3 wichtigsten "Flucht"-Apps und legen Sie sie in einen sekundären Ordner.',
+                'Tag 2: Wenn Sie den Drang verspüren, Ihr Telefon zur Flucht zu benutzen, versuchen Sie 5 Minuten Meditation oder Tagebuchschreiben.',
+                'Tag 3: Schreiben Sie eine Liste von 5 Offline-Aktivitäten auf, die Ihnen Freude bereiten, und nutzen Sie sie als Alternative bei Langeweile.',
+                'Tag 4: Anstatt soziale Medien zu checken, rufen Sie einen Freund an oder treffen Sie sich für echte Unterstützung.',
+                'Tag 5: Überprüfen Sie Ihre Emotionen: Welche lösen die digitale Flucht aus?',
+                'Tag 6: Widmen Sie 30 Minuten einem Hobby, das keinen Bildschirm erfordert (zeichnen, spielen, kochen).',
+                'Tag 7: Planen Sie einen Ausflug oder eine soziale Aktivität ohne Telefon.'
+            ]
+        },
+        fr: {
+            priorityTitle: 'Focus sur Évasion et Émotions',
+            priorityDetail: 'Votre score suggère que vous utilisez votre téléphone principalement pour échapper au stress ou aux émotions négatives. L\'objectif est de remplacer cette utilisation par des stratégies plus saines.',
+            dayPlan: [
+                'Jour 1 : Identifiez vos 3 principales applications "d\'évasion" et mettez-les dans un dossier secondaire.',
+                'Jour 2 : Lorsque vous ressentez l\'envie d\'utiliser votre téléphone pour vous évader, essayez 5 minutes de méditation ou d\'écriture.',
+                'Jour 3 : Écrivez une liste de 5 activités hors ligne qui vous procurent de la joie et utilisez-les comme alternative en cas d\'ennui.',
+                'Jour 4 : Au lieu de consulter les réseaux sociaux, appelez ou rencontrez un ami pour un soutien réel.',
+                'Jour 5 : Passez en revue vos émotions : lesquelles déclenchent le besoin d\'évasion numérique ?',
+                'Jour 6 : Consacrez 30 minutes à un hobby sans écran (dessiner, jouer, cuisiner).',
+                'Jour 7 : Préparez une sortie ou une activité sociale sans téléphone.'
+            ]
+        }
     },
     'Habit & Compulsion': {
         cssClass: 'risk-medium',
-        'it': {
+        it: {
             priorityTitle: 'Focus su Abitudine e Compulsione',
-            priorityDetail: 'Il tuo punteggio evidenzia un forte modello di controllo compulsivo. La tua azione prioritaria è interrompere le abitudini automatiche e ritrovare il controllo sui tuoi gesti.',
+            priorityDetail: 'Il tuo punteggio evidenzia un forte modello di controllo compulsivo. La tua azione prioritaria è interrompere le abitudini automatiche e ritrovare il controllo sui tuoi tempi digitali.',
             dayPlan: [
                 'Giorno 1: Sposta le app che usi compulsivamente in un posto scomodo (es. l\'ultima schermata del telefono).',
                 'Giorno 2: Controlla l\'ora usando un orologio da polso o un orologio da muro, non il telefono.',
@@ -135,13 +288,64 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Rimuovi la barra di ricerca rapida o i widget che ti portano a navigare senza scopo.'
             ]
         },
-        'en': { /* ... */ }
+        en: {
+            priorityTitle: 'Focus on Habit & Compulsion',
+            priorityDetail: 'Your score shows a strong pattern of compulsive control. The priority is to break automatic habits and regain control over your digital time.',
+            dayPlan: [
+                'Day 1: Move compulsive apps to an inconvenient place (e.g. last phone screen).',
+                'Day 2: Check the time using a wristwatch or wall clock, not your phone.',
+                'Day 3: Set your smartphone to "grayscale" mode for an entire day.',
+                'Day 4: Download a tracking app to monitor how much time you spend on your most-used apps.',
+                'Day 5: Choose 3 moments to put your phone completely on silent (e.g. lunch, running, dinner).',
+                'Day 6: Remove your phone from a situation where you habitually use it (e.g. bathroom, waiting in line).',
+                'Day 7: Remove the quick search bar or widgets that lead you to aimless browsing.'
+            ]
+        },
+        es: {
+            priorityTitle: 'Enfoque en Hábito y Compulsión',
+            priorityDetail: 'Tu puntuación muestra un fuerte patrón de control compulsivo. La prioridad es romper los hábitos automáticos y recuperar el control sobre tu tiempo digital.',
+            dayPlan: [
+                'Día 1: Mueve las apps que usas compulsivamente a un lugar incómodo (por ejemplo, la última pantalla del teléfono).',
+                'Día 2: Consulta la hora usando un reloj de pulsera o de pared, no el teléfono.',
+                'Día 3: Pon el smartphone en modo "escala de grises" (blanco y negro) durante todo un día.',
+                'Día 4: Descarga una app de seguimiento para monitorizar cuánto tiempo pasas en las apps que más usas.',
+                'Día 5: Elige 3 momentos en los que pongas el teléfono completamente en silencio (por ejemplo, comida, correr, cena).',
+                'Día 6: Elimina el smartphone de una situación en la que lo uses habitualmente (por ejemplo, baño, en la cola del supermercado).',
+                'Día 7: Elimina la barra de búsqueda rápida o los widgets que te llevan a navegar sin propósito.'
+            ]
+        },
+        de: {
+            priorityTitle: 'Fokus auf Gewohnheit und Zwang',
+            priorityDetail: 'Ihre Punktzahl zeigt ein starkes Muster von zwanghaftem Verhalten. Die Priorität ist, automatische Gewohnheiten zu durchbrechen und die Kontrolle über Ihre digitale Zeit zurückzugewinnen.',
+            dayPlan: [
+                'Tag 1: Verschieben Sie zwanghafte Apps an einen unbequemen Ort (z. B. die letzte Bildschirmseite).',
+                'Tag 2: Sehen Sie auf die Uhr mit einer Armbanduhr oder Wand-Uhr, nicht mit dem Handy.',
+                'Tag 3: Stellen Sie Ihr Smartphone für einen Tag auf "Graustufen"-Modus.',
+                'Tag 4: Laden Sie eine Tracking-App herunter, um zu überwachen, wie viel Zeit Sie auf den meistgenutzten Apps verbringen.',
+                'Tag 5: Wählen Sie 3 Zeitpunkte, um Ihr Handy komplett lautlos zu stellen (z. B. Mittagessen, Sport, Abendessen).',
+                'Tag 6: Entfernen Sie Ihr Smartphone aus einer Situation, in der Sie es gewohnheitsmäßig benutzen (z. B. Bad, Warteschlange).',
+                'Tag 7: Entfernen Sie die Schnell-Suchleiste oder Widgets, die Sie zum ziellosen Surfen verleiten.'
+            ]
+        },
+        fr: {
+            priorityTitle: 'Focus sur Habitude et Compulsion',
+            priorityDetail: 'Votre score indique un fort schéma de contrôle compulsif. La priorité est de rompre les habitudes automatiques et de reprendre le contrôle de votre temps numérique.',
+            dayPlan: [
+                'Jour 1 : Déplacez les applications compulsives dans un endroit peu pratique (par exemple, la dernière page du téléphone).',
+                'Jour 2 : Regardez l\'heure avec une montre ou une horloge murale, pas avec votre téléphone.',
+                'Jour 3 : Passez votre smartphone en mode "niveaux de gris" pendant une journée entière.',
+                'Jour 4 : Téléchargez une application de suivi pour surveiller le temps passé sur vos applications les plus utilisées.',
+                'Jour 5 : Choisissez 3 moments où mettre le téléphone complètement en silencieux (par exemple, repas, course, dîner).',
+                'Jour 6 : Retirez le smartphone d\'une situation où vous l\'utilisez habituellement (par exemple, salle de bain, file d\'attente).',
+                'Jour 7 : Supprimez la barre de recherche rapide ou les widgets qui vous mènent à une navigation sans but.'
+            ]
+        }
     },
     'Social & Presence': {
         cssClass: 'risk-low',
-        'it': {
+        it: {
             priorityTitle: 'Focus su Socialità e Presenza',
-            priorityDetail: 'Le tue risposte indicano che la presenza online sta interferendo con la tua vita sociale e la tua capacità di goderti il momento. La priorità è bilanciare il tempo sullo schermo con interazioni e vita reale.',
+            priorityDetail: 'Le tue risposte indicano che la presenza online sta interferendo con la tua vita sociale e la tua capacità di goderti il momento. La priorità è bilanciare il tempo tra virtuale e reale.',
             dayPlan: [
                 'Giorno 1: Quando sei con altre persone, metti il telefono in modalità silenziosa, capovolto e fuori dalla vista.',
                 'Giorno 2: Lascia il telefono a casa o in macchina durante un pasto o un\'uscita di 1-2 ore.',
@@ -152,156 +356,60 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Valuta i benefici che hai tratto da una maggiore presenza nel mondo reale.'
             ]
         },
-        'en': { /* ... */ }
-    }
-},
-        en: {
-            priorityTitle: 'Focus on Sleep & Rituals',
-            priorityDetail: 'Your biggest challenge is disconnecting before sleep and resisting the urge to check your phone upon waking. Your sleep quality is at risk. Act immediately to restore night/day boundaries.',
-            dayPlan: [
-                'Day 1: Remove your phone from the bedroom and use an analog alarm clock.',
-                'Day 2: Set a "digital curfew" 90 minutes before sleep.',
-                'Day 3: Replace evening scrolling with 10 minutes of meditation or reading.',
-                'Day 4: Do not look at your phone screen before breakfast.',
-                'Day 5: Rediscover a relaxing offline hobby to do before bed.',
-                'Day 6: Take a morning walk instead of checking online news.',
-                'Day 7: Reflect on how your energy upon waking has improved.'
-            ]
-        },
-        es: { /* ... (Traduzione spagnola completa per l'asse Sonno) ... */ },
-        de: { /* ... (Traduzione tedesca completa per l'asse Sonno) ... */ },
-        fr: { /* ... (Traduzione francese completa per l'asse Sonno) ... */ }
-    },
-    'Productivity & Focus': {
-        cssClass: 'axis-productivity',
-        it: {
-            priorityTitle: 'Focus su Produttività e Focus',
-            priorityDetail: 'Le distrazioni digitali stanno seriamente compromettendo la tua capacità di concentrazione. Le notifiche e lo scrolling senza meta ti impediscono di completare compiti importanti. Devi riprendere il controllo del tuo tempo di lavoro/studio.',
-            dayPlan: [
-                'Giorno 1: Disattiva TUTTE le notifiche non essenziali (lascia solo chiamate/SMS).',
-                'Giorno 2: Lavora per blocchi di 45 minuti in modalità "aereo".',
-                'Giorno 3: Utilizza un’app per tracciare e limitare il tempo sui social (es. Digital Wellbeing).',
-                'Giorno 4: Stabilisci tre obiettivi "deep work" al giorno, senza telefono.',
-                'Giorno 5: Riorganizza la schermata principale, lasciando solo gli strumenti essenziali.',
-                'Giorno 6: Dedica 30 minuti a settimana a pianificare le attività offline.',
-                'Giorno 7: Rivedi i blocchi di tempo e valuta il miglioramento del tuo focus.'
-            ]
-        },
-        en: {
-            priorityTitle: 'Focus on Productivity & Focus',
-            priorityDetail: 'Digital distractions are seriously compromising your ability to concentrate. Notifications and aimless scrolling prevent you from completing important tasks. You need to regain control of your work/study time.',
-            dayPlan: [
-                'Day 1: Turn off ALL non-essential notifications (leave only calls/SMS).',
-                'Day 2: Work in 45-minute blocks in "airplane mode".',
-                'Day 3: Use an app to track and limit social media time (e.g., Digital Wellbeing).',
-                'Day 4: Set three "deep work" goals per day, without the phone.',
-                'Day 5: Reorganize your home screen, leaving only essential tools.',
-                'Day 6: Dedicate 30 minutes a week to planning offline activities.',
-                'Day 7: Review your time blocks and assess your focus improvement.'
-            ]
-        },
-        es: { /* ... (Traduzione spagnola completa per l'asse Produttività) ... */ },
-        de: { /* ... (Traduzione tedesca completa per l'asse Produttività) ... */ },
-        fr: { /* ... (Traduzione francese completa per l'asse Produttività) ... */ }
-    },
-    'Escape & Emotions': {
-        cssClass: 'axis-escape',
-        it: {
-            priorityTitle: 'Focus su Fuga ed Emozioni',
-            priorityDetail: "Il tuo telefono è diventato il tuo principale meccanismo di coping per lo stress o la noia, un chiaro segno di 'dipendenza emotiva' dal digitale. Hai bisogno di alternative sane per affrontare le emozioni negative e il vuoto.",
-            dayPlan: [
-                'Giorno 1: Identifica 5 situazioni che innescano la ricerca dello smartphone (es. attesa, noia).',
-                'Giorno 2: Quando senti un innesco, fai 10 respiri profondi invece di prendere il telefono.',
-                'Giorno 3: Installa un’app di mindfulness o diario per tracciare le tue reazioni emotive.',
-                'Giorno 4: Pianifica un’attività "di riserva" offline per i momenti di noia (es. lettura, cruciverba).',
-                'Giorno 5: Parla con un amico/familiare delle tue emozioni invece di postarle online.',
-                'Giorno 6: Dedica 1 ora a un hobby creativo che non richieda uno schermo.',
-                'Giorno 7: Riconosci e celebra le volte in cui hai gestito la noia senza lo schermo.'
-            ]
-        },
-        en: {
-            priorityTitle: 'Focus on Escape & Emotions',
-            priorityDetail: "Your phone has become your main coping mechanism for stress or boredom, a clear sign of 'emotional dependence' on digital. You need healthy alternatives to deal with negative emotions and emptiness.",
-            dayPlan: [
-                'Day 1: Identify 5 situations that trigger smartphone checking (e.g., waiting, boredom).',
-                'Day 2: When you feel a trigger, take 10 deep breaths instead of grabbing the phone.',
-                'Day 3: Install a mindfulness or journaling app to track your emotional reactions.',
-                'Day 4: Plan a "backup" offline activity for moments of boredom (e.g., reading, crossword puzzle).',
-                'Day 5: Talk to a friend/family member about your emotions instead of posting them online.',
-                'Day 6: Dedicate 1 hour to a creative hobby that doesn\'t require a screen.',
-                'Day 7: Recognize and celebrate the times you managed boredom without the screen.'
-            ]
-        },
-        es: { /* ... (Traduzione spagnola completa per l'asse Emozioni) ... */ },
-        de: { /* ... (Traduzione tedesca completa per l'asse Emozioni) ... */ },
-        fr: { /* ... (Traduzione francese completa per l'asse Emozioni) ... */ }
-    },
-    'Habit & Compulsion': {
-        cssClass: 'axis-habit',
-        it: {
-            priorityTitle: 'Focus su Abitudine e Compulsione',
-            priorityDetail: "Il controllo costante e l'impulso fisico a usare il telefono suggeriscono che l'uso è diventato involontario e compulsivo. Agire per rompere questo ciclo è fondamentale per recuperare il controllo.",
-            dayPlan: [
-                'Giorno 1: Sposta le app più usate (social, email) in una cartella secondaria.',
-                'Giorno 2: Controlla il telefono solo in momenti prestabiliti (es. 9:00, 13:00, 18:00).',
-                'Giorno 3: Utilizza una fascia elastica al polso: scattala ogni volta che controlli compulsivamente il telefono.',
-                'Giorno 4: Stabilisci un "parcheggio" per il telefono quando sei a casa (es. in un cassetto).',
-                'Giorno 5: Rimuovi lo schermo del telefono dalla vista durante le pause lavorative.',
-                'Giorno 6: Fai un "mini-detox" di 3 ore senza telefono.',
-                'Giorno 7: Chiedi a un amico o partner di farti notare quando controlli il telefono involontariamente.'
-            ]
-        },
-        en: {
-            priorityTitle: 'Focus on Habit & Compulsion',
-            priorityDetail: 'Constant checking and the physical impulse to use the phone suggest that use has become involuntary and compulsive. Acting to break this cycle is crucial to regaining control.',
-            dayPlan: [
-                'Day 1: Move the most used apps (social, email) to a secondary folder.',
-                'Day 2: Check your phone only at predetermined times (e.g., 9:00, 1:00 PM, 6:00 PM).',
-                'Day 3: Use a rubber band on your wrist: snap it every time you compulsively check your phone.',
-                'Day 4: Establish a "parking spot" for your phone when you are home (e.g., in a drawer).',
-                'Day 5: Remove the phone screen from sight during work breaks.',
-                'Day 6: Take a 3-hour "mini-detox" without your phone.',
-                'Day 7: Ask a friend or partner to point out when you involuntarily check your phone.'
-            ]
-        },
-        es: { /* ... (Traduzione spagnola completa per l'asse Abitudine) ... */ },
-        de: { /* ... (Traduzione tedesca completa per l'asse Abitudine) ... */ },
-        fr: { /* ... (Traduzione francese completa per l'asse Abitudine) ... */ }
-    },
-    'Social & Presence': {
-        cssClass: 'axis-social',
-        it: {
-            priorityTitle: 'Focus su Sociale e Presenza',
-            priorityDetail: "L'interazione virtuale ha iniziato a sostituire quella reale, e l'ansia da 'Fear of Missing Out' (FOMO) domina la tua vita. È necessario ristabilire la priorità delle relazioni e della sicurezza nel mondo fisico.",
-            dayPlan: [
-                'Giorno 1: Silenzia le notifiche dei gruppi social più attivi per 24 ore.',
-                'Giorno 2: Lascia il telefono in borsa/tasca durante tutti i pasti.',
-                'Giorno 3: Incontra un amico per un caffè o una passeggiata, lasciando i telefoni in modalità aereo.',
-                'Giorno 4: Impegnati a non usare il telefono mentre cammini o guidi (zero tolleranza).',
-                'Giorno 5: Limita la lettura e la risposta ai messaggi a 2 sessioni al giorno.',
-                'Giorno 6: Pubblica un solo post (o nessuno) al giorno, concentrandoti sulla "presenza" nella vita reale.',
-                'Giorno 7: Scrivi un messaggio a una persona che non senti da tempo, proponendo un incontro offline.'
-            ]
-        },
         en: {
             priorityTitle: 'Focus on Social & Presence',
-            priorityDetail: 'Virtual interaction has begun to replace real interaction, and the anxiety of "Fear of Missing Out" (FOMO) dominates your life. It is necessary to re-establish the priority of relationships and safety in the physical world.',
+            priorityDetail: 'Your answers indicate that online presence is interfering with your social life and ability to enjoy the moment. The priority is to balance time between virtual and real.',
             dayPlan: [
-                'Day 1: Mute notifications for the most active social groups for 24 hours.',
-                'Day 2: Leave your phone in your bag/pocket during all meals.',
-                'Day 3: Meet a friend for coffee or a walk, leaving your phones on airplane mode.',
-                'Day 4: Commit to not using your phone while walking or driving (zero tolerance).',
-                'Day 5: Limit reading and responding to messages to 2 sessions per day.',
-                'Day 6: Post only one post (or none) per day, focusing on "presence" in real life.',
-                'Day 7: Write a message to someone you haven\'t heard from in a while, proposing an offline meeting.'
+                'Day 1: When with other people, put your phone on silent, face down, and out of sight.',
+                'Day 2: Leave your phone at home or in the car during a meal or outing of 1-2 hours.',
+                'Day 3: When taking photos, resist the urge to post them immediately on social media.',
+                'Day 4: Do a mindful "check-in" with yourself: "Am I fully present in what I\'m doing now?"',
+                'Day 5: Plan an activity with friends or family where phone use is prohibited.',
+                'Day 6: Limit social media time to 30 minutes total (or less) for the whole day.',
+                'Day 7: Evaluate the benefits you\'ve gained from greater real-world presence.'
             ]
         },
-        es: { /* ... (Traduzione spagnola completa per l'asse Sociale) ... */ },
-        de: { /* ... (Traduzione tedesca completa per l'asse Sociale) ... */ },
-        fr: { /* ... (Traduzione francese completa per l'asse Sociale) ... */ }
+        es: {
+            priorityTitle: 'Enfoque en Socialidad y Presencia',
+            priorityDetail: 'Tus respuestas indican que la presencia online está interfiriendo en tu vida social y tu capacidad de disfrutar el momento. La prioridad es equilibrar el tiempo entre lo virtual y lo real.',
+            dayPlan: [
+                'Día 1: Cuando estés con otras personas, pon el teléfono en modo silencioso, boca abajo y fuera de la vista.',
+                'Día 2: Deja el teléfono en casa o en el coche durante una comida o salida de 1-2 horas.',
+                'Día 3: Al tomar fotos, resiste la tentación de publicarlas inmediatamente en redes sociales.',
+                'Día 4: Haz un "check-in" consciente contigo mismo/a: "¿Estoy plenamente presente en lo que hago ahora?".',
+                'Día 5: Planifica una actividad con amigos o familiares donde esté prohibido usar el teléfono.',
+                'Día 6: Limita el tiempo en redes sociales a 30 minutos totales (o menos) durante todo el día.',
+                'Día 7: Evalúa los beneficios que has obtenido de una mayor presencia en el mundo real.'
+            ]
+        },
+        de: {
+            priorityTitle: 'Fokus auf Soziales und Präsenz',
+            priorityDetail: 'Ihre Antworten zeigen, dass die Online-Präsenz Ihr Sozialleben und Ihre Fähigkeit, den Moment zu genießen, beeinträchtigt. Die Priorität ist, die Zeit zwischen virtuell und real auszubalancieren.',
+            dayPlan: [
+                'Tag 1: Wenn Sie mit anderen zusammen sind, stellen Sie Ihr Handy auf lautlos, legen Sie es mit dem Display nach unten und außer Sichtweite.',
+                'Tag 2: Lassen Sie das Handy bei einer Mahlzeit oder einem Ausflug 1-2 Stunden zu Hause oder im Auto.',
+                'Tag 3: Wenn Sie Fotos machen, widerstehen Sie dem Drang, sie sofort in sozialen Medien zu posten.',
+                'Tag 4: Machen Sie ein bewusstes "Check-in" mit sich selbst: "Bin ich jetzt wirklich präsent bei dem, was ich tue?"',
+                'Tag 5: Planen Sie eine Aktivität mit Freunden oder Familie, bei der die Handynutzung verboten ist.',
+                'Tag 6: Begrenzen Sie die Zeit in sozialen Medien auf insgesamt 30 Minuten (oder weniger) am Tag.',
+                'Tag 7: Bewerten Sie die Vorteile, die Sie durch mehr Präsenz in der realen Welt gewonnen haben.'
+            ]
+        },
+        fr: {
+            priorityTitle: 'Focus sur Socialité et Présence',
+            priorityDetail: 'Vos réponses indiquent que la présence en ligne interfère avec votre vie sociale et votre capacité à profiter du moment. La priorité est de trouver un équilibre entre le virtuel et le réel.',
+            dayPlan: [
+                'Jour 1 : Lorsque vous êtes avec d\'autres personnes, mettez le téléphone en silencieux, face cachée et hors de vue.',
+                'Jour 2 : Laissez le téléphone à la maison ou dans la voiture lors d\'un repas ou d\'une sortie de 1 à 2 heures.',
+                'Jour 3 : Lorsque vous prenez des photos, résistez à l\'envie de les publier immédiatement sur les réseaux sociaux.',
+                'Jour 4 : Faites un "check-in" conscient avec vous-même : "Suis-je pleinement présent dans ce que je fais maintenant ?".',
+                'Jour 5 : Planifiez une activité avec des amis ou la famille où l\'utilisation du téléphone est interdite.',
+                'Jour 6 : Limitez le temps sur les réseaux sociaux à 30 minutes maximum (ou moins) pour toute la journée.',
+                'Jour 7 : Évaluez les bénéfices apportés par une plus grande présence dans le monde réel.'
+            ]
+        }
     }
 };
-
 const RESOURCES_I18N = {
     it: "Risorse aggiuntive consigliate: liberi dal 'Dopamine Detox' di Anna Lembke, app di mindfulness (es. Headspace o Calm) e un tracker di abitudini.",
     en: "Recommended additional resources: 'Dopamine Detox' by Anna Lembke, mindfulness apps (e.g., Headspace or Calm), and a habit tracker.",
