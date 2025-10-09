@@ -379,7 +379,7 @@ const TRANSLATIONS = {
     'AXIS_Productivity_&_Focus': 'Produttività e Concentrazione',
     'AXIS_Escape_&_Emotions': 'Fuga ed Emozioni',
     'AXIS_Habit_&_Compulsion': 'Abitudine e Compulsione',
-    'AXIS_Social_&_Presence': 'Socialità e Presenza',
+    'AXIS_Social_&_Presence': 'Socialità e Presenza'
     },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
