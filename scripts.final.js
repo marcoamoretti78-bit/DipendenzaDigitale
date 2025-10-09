@@ -323,8 +323,7 @@ const TRANSLATIONS = {
         INTRO_H2: "Verifica la Tua Relazione con lo Smartphone",
         INTRO_P: "Rispondi sinceramente alle 20 domande per scoprire il tuo livello di rischio e ottenere il tuo report d'azione personalizzato.",
         INTRO_NAME_SPAN: "Inserisci il tuo nome (opzionale, per personalizzare il report):",
-        // MODIFICATO: Aggiunto placeholder {name} per la pulizia della traduzione
-        PAYWALL_H3: "Ciao {name}, il Tuo Risultato è Pronto!", 
+        PAYWALL_H3: "Ciao {name}, il Tuo Risultato è Pronto!",
         PAYWALL_P: "Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:",
         BTN_STANDARD: `Scarica Report Base (€${CONFIG.STANDARD_PRICE.toFixed(2).replace('.', ',')})`,
         BTN_PREMIUM: `Acquista Report Premium (€${CONFIG.PREMIUM_PRICE.toFixed(2).replace('.', ',')})`,
@@ -362,43 +361,40 @@ const TRANSLATIONS = {
         CTA_TITLE: "Vuoi scoprire il tuo livello di rischio?",
         CTA_BUTTON: "Fai il test ora",
 
-        // Devi sostituire TUTTO il contenuto del blocco TRANSLATIONS['it'] con questo:
+        ANSWER_0: 'Raramente',
+        ANSWER_1: 'A volte',
+        ANSWER_2: 'Spesso',
+        ANSWER_3: 'Sempre',
 
-{
-    // Chiavi per risposte e assi
-   it: {
-    ANSWER_0: 'Raramente',
-    ANSWER_1: 'A volte',
-    ANSWER_2: 'Spesso',
-    ANSWER_3: 'Sempre',
+        AXIS_Sleep_&_Rituals: 'Sonno e Rituali',
+        AXIS_Productivity_&_Focus: 'Produttività e Concentrazione',
+        AXIS_Escape_&_Emotions: 'Fuga ed Emozioni',
+        AXIS_Habit_&_Compulsion: 'Abitudine e Compulsione',
+        AXIS_Social_&_Presence: 'Socialità e Presenza',
 
-    AXIS_Sleep_&_Rituals: 'Sonno e Rituali',
-    AXIS_Productivity_&_Focus: 'Produttività e Concentrazione',
-    AXIS_Escape_&_Emotions: 'Fuga ed Emozioni',
-    AXIS_Habit_&_Compulsion: 'Abitudine e Compulsione',
-    AXIS_Social_&_Presence: 'Socialità e Presenza',
-
-    Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
-    Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
-    Q3: "Ti svegli di notte per controllare notifiche o messaggi?",
-    Q4: "Trovi difficile stabilire momenti 'phone-free' (es. durante i pasti o le conversazioni)?",
-    Q5: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?",
-    Q6: "Ti ritrovi a scorrere i social o navigare in internet senza un obiettivo specifico, perdendo tempo?",
-    Q7: "Rimandi impegni o attività offline (come pulire, fare esercizio) a causa del tempo passato online?",
-    Q8: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?",
-    Q9: "Usare il tuo dispositivo è il tuo meccanismo principale per affrontare la noia, lo stress o i sentimenti negativi?",
-    Q10: "Ti senti ansioso o irritabile se non puoi accedere al telefono/internet per un periodo (es. batteria scarica o no Wi-Fi)?",
-    Q11: "Hai provato a ridurre il tempo che passi online, ma non ci sei riuscito?",
-    Q12: "Nascondi agli altri il tempo reale che passi sui dispositivi o su app specifiche?",
-    Q13: "Senti un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?",
-    Q14: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?",
-    Q15: "Senti FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente ad ogni notifica o messaggio?",
-    Q16: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?",
-    Q17: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?",
-    Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
-    Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
-    Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
-}
+        Q1: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?",
+        Q2: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?",
+        Q3: "Ti svegli di notte per controllare notifiche o messaggi?",
+        Q4: "Trovi difficile stabilire momenti 'phone-free' (es. durante i pasti o le conversazioni)?",
+        Q5: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?",
+        Q6: "Ti ritrovi a scorrere i social o navigare in internet senza un obiettivo specifico, perdendo tempo?",
+        Q7: "Rimandi impegni o attività offline (come pulire, fare esercizio) a causa del tempo passato online?",
+        Q8: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?",
+        Q9: "Usare il tuo dispositivo è il tuo meccanismo principale per affrontare la noia, lo stress o i sentimenti negativi?",
+        Q10: "Ti senti ansioso o irritabile se non puoi accedere al telefono/internet per un periodo (es. batteria scarica o no Wi-Fi)?",
+        Q11: "Hai provato a ridurre il tempo che passi online, ma non ci sei riuscito?",
+        Q12: "Nascondi agli altri il tempo reale che passi sui dispositivi o su app specifiche?",
+        Q13: "Senti un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?",
+        Q14: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?",
+        Q15: "Senti FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente ad ogni notifica o messaggio?",
+        Q16: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?",
+        Q17: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?",
+        Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
+        Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
+        Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
+    }
+    
+};
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
