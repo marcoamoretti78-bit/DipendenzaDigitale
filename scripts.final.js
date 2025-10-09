@@ -362,25 +362,29 @@ const TRANSLATIONS = {
         CTA_TITLE: "Vuoi scoprire il tuo livello di rischio?",
         CTA_BUTTON: "Fai il test ora",
 
-        // Chiavi per risposte e assi
-        ANSWER_0: 'Raramente',
-        ANSWER_1: 'A volte',
-        ANSWER_2: 'Spesso',
-        ANSWER_3: 'Sempre',
-        
-        // Domande del quiz (Q1-Q20) (Viene usato il testo IT come fallback)
-        Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
-        Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
-        Q9: QUIZ_QUESTIONS[8].question, Q10: QUIZ_QUESTIONS[9].question, Q11: QUIZ_QUESTIONS[10].question, Q12: QUIZ_QUESTIONS[11].question,
-        Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
-        Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question,
-        // Aggiungere queste 5 righe nell'oggetto TRANSLATIONS['it']
+        // Devi sostituire TUTTO il contenuto del blocco TRANSLATIONS['it'] con questo:
+
+{
+    // Chiavi per risposte e assi
+    ANSWER_0: 'Raramente',
+    ANSWER_1: 'A volte',
+    ANSWER_2: 'Spesso',
+    ANSWER_3: 'Sempre',
+
+    // Traduzione dei nomi degli assi per il report
     'AXIS_Sleep_&_Rituals': 'Sonno e Rituali',
     'AXIS_Productivity_&_Focus': 'Produttività e Concentrazione',
     'AXIS_Escape_&_Emotions': 'Fuga ed Emozioni',
     'AXIS_Habit_&_Compulsion': 'Abitudine e Compulsione',
-    'AXIS_Social_&_Presence': 'Socialità e Presenza'
-    },
+    'AXIS_Social_&_Presence': 'Socialità e Presenza',
+
+    // Domande del quiz (Q1-Q20)
+    Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
+    Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
+    Q9: QUIZ_QUESTIONS[8].question, Q10: QUIZ_QUESTIONS[9].question, Q11: QUIZ_QUESTIONS[10].question, Q12: QUIZ_QUESTIONS[11].question,
+    Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
+    Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question
+} // Chiusura corretta di TRANSLATIONS['it'] (senza virgola finale)
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
         BTN_CALCULATE: "Calculate Result",
