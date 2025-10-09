@@ -308,6 +308,12 @@ const TRANSLATIONS = {
         Q9: QUIZ_QUESTIONS[8].question, Q10: QUIZ_QUESTIONS[9].question, Q11: QUIZ_QUESTIONS[10].question, Q12: QUIZ_QUESTIONS[11].question,
         Q13: QUIZ_QUESTIONS[12].question, Q14: QUIZ_QUESTIONS[13].question, Q15: QUIZ_QUESTIONS[14].question, Q16: QUIZ_QUESTIONS[15].question,
         Q17: QUIZ_QUESTIONS[16].question, Q18: QUIZ_QUESTIONS[17].question, Q19: QUIZ_QUESTIONS[18].question, Q20: QUIZ_QUESTIONS[19].question,
+        // Aggiungere queste 5 righe nell'oggetto TRANSLATIONS['it']
+    'AXIS_Sleep_&_Rituals': 'Sonno e Rituali',
+    'AXIS_Productivity_&_Focus': 'Produttività e Concentrazione',
+    'AXIS_Escape_&_Emotions': 'Fuga ed Emozioni',
+    'AXIS_Habit_&_Compulsion': 'Abitudine e Compulsione',
+    'AXIS_Social_&_Presence': 'Socialità e Presenza',
     },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
