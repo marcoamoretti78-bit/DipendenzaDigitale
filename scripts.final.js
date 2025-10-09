@@ -367,12 +367,7 @@ const TRANSLATIONS = {
         ANSWER_1: 'A volte',
         ANSWER_2: 'Spesso',
         ANSWER_3: 'Sempre',
-        AXIS_Sleep_Rituals: 'Sonno e Rituali',
-        AXIS_Productivity_Focus: 'Produttività e Focus',
-        AXIS_Escape_Emotions: 'Fuga ed Emozioni',
-        AXIS_Habit_Compulsion: 'Abitudine e Compulsione',
-        AXIS_Social_Presence: 'Sociale e Presenza',
-
+        
         // Domande del quiz (Q1-Q20) (Viene usato il testo IT come fallback)
         Q1: QUIZ_QUESTIONS[0].question, Q2: QUIZ_QUESTIONS[1].question, Q3: QUIZ_QUESTIONS[2].question, Q4: QUIZ_QUESTIONS[3].question,
         Q5: QUIZ_QUESTIONS[4].question, Q6: QUIZ_QUESTIONS[5].question, Q7: QUIZ_QUESTIONS[6].question, Q8: QUIZ_QUESTIONS[7].question,
