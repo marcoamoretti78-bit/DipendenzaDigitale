@@ -1086,7 +1086,25 @@ function showReport(results, planType) {
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
+// Aggiorna punteggio e rischio
+document.getElementById('final-score').textContent = score;
+document.getElementById('risk-level').textContent = livelloRischio;
 
+// ---> QUI AGGIUNGI LA PROGRESS BAR <---
+const maxScore = Number(document.getElementById('max-score').textContent); // di solito 60
+const riskPercent = Math.round((score / maxScore) * 100);
+
+const bar = document.getElementById('risk-progress-bar');
+bar.style.width = riskPercent + '%';
+
+// Cambia colore in base al rischio
+if (riskPercent < 35) {
+    bar.style.background = '#4caf50'; // verde
+} else if (riskPercent < 70) {
+    bar.style.background = '#ff9800'; // arancione
+} else {
+    bar.style.background = '#f44336'; // rosso
+}
     // 2. Livello di Rischio e Analisi
     const riskLevelContainer = document.getElementById('risk-level-container');
     riskLevelContainer.className = `score-box ${riskData.cssClass}`;
