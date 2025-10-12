@@ -1085,6 +1085,17 @@ function showReport(results, planType) {
 
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
+    const badge = document.getElementById('risk-badge');
+if (riskData.level === 'Basso') {
+    badge.textContent = '🟢 Basso';
+    badge.className = 'risk-badge risk-low';
+} else if (riskData.level === 'Medio') {
+    badge.textContent = '🟠 Medio';
+    badge.className = 'risk-badge risk-medium';
+} else {
+    badge.textContent = '🔴 Alto';
+    badge.className = 'risk-badge risk-high';
+}
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
     
 
