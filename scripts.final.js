@@ -1085,7 +1085,8 @@ function showReport(results, planType) {
 
     document.getElementById('final-score').textContent = totalScore;
     document.getElementById('risk-level').textContent = riskData.level;
-    const badge = document.getElementById('risk-badge');
+    // Aggiorna il badge rischio come già fatto
+const badge = document.getElementById('risk-badge');
 if (riskData.level === 'Basso') {
     badge.textContent = '🟢 Basso';
     badge.className = 'risk-badge risk-low';
@@ -1096,6 +1097,9 @@ if (riskData.level === 'Basso') {
     badge.textContent = '🔴 Alto';
     badge.className = 'risk-badge risk-high';
 }
+
+// Svuota il testo nel risk-level per evitare doppioni
+document.getElementById('risk-level').textContent = '';
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
     
 
