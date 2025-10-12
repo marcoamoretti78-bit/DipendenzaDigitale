@@ -1087,9 +1087,6 @@ function showReport(results, planType) {
     document.getElementById('risk-level').textContent = riskData.level;
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
     
-// Aggiorna punteggio e rischio
-document.getElementById('final-score').textContent = score;
-document.getElementById('risk-level').textContent = livelloRischio;
 
 // ---> QUI AGGIUNGI LA PROGRESS BAR <---
 const maxScore = Number(document.getElementById('max-score').textContent); // di solito 60
