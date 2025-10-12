@@ -369,3 +369,14 @@ th {
         max-width: none;
     }
 }
+@media print {
+    .navbar {
+        background: #142b37 !important; /* colore che vuoi */
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .navbar-logo {
+        filter: none !important;
+    }
+}
