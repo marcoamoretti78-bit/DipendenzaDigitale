@@ -391,3 +391,9 @@ th {
 .risk-low { background: #4caf50; color: #fff; }
 .risk-medium { background: #ff9800; color: #fff; }
 .risk-high { background: #dc2626; color: #fff; }
+.motivational-text {
+  font-size: 1.15em;
+  font-style: italic;
+  margin-top: 10px;
+  color: #00796b;
+}
