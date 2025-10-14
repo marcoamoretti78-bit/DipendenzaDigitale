@@ -1097,6 +1097,14 @@ if (riskData.level === 'Basso') {
     badge.textContent = '🔴 Alto';
     badge.className = 'risk-badge risk-high';
 }
+    const motivationalText = document.getElementById('motivational-text');
+if (riskData.level === 'Basso') {
+    motivationalText.textContent = 'Ottimo lavoro! Continua così per mantenere un rapporto sano con la tecnologia.';
+} else if (riskData.level === 'Medio') {
+    motivationalText.textContent = 'Sei sulla buona strada, ma puoi migliorare con piccoli accorgimenti!';
+} else {
+    motivationalText.textContent = 'Attenzione! Il rischio è alto, ma con il piano d\'azione puoi migliorare facilmente.';
+}
 
 // Svuota il testo nel risk-level per evitare doppioni
 document.getElementById('risk-level').textContent = '';
