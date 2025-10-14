@@ -1135,11 +1135,11 @@ function initPaywallButtons() {
 // Traduzione dinamica badge rischio e frase motivazionale
 const lang = CONFIG.I18N_LOCALE || 'it';
 const badge = document.getElementById('risk-badge');
-badge.textContent = TRANSLATIONS[lang].badge[riskData.level] || TRANSLATIONS['it'].badge[riskData.level];
+badge.textContent = translations[lang].badge[riskData.level] || translations['it'].badge[riskData.level];
 badge.className = 'risk-badge risk-' + riskData.level.toLowerCase();
 
 const motivationalText = document.getElementById('motivational-text');
-motivationalText.textContent = TRANSLATIONS[lang].motivational[riskData.level] || TRANSLATIONS['it'].motivational[riskData.level];
+motivationalText.textContent = translations[lang].motivational[riskData.level] || translations['it'].motivational[riskData.level];
 
 // Svuota il testo nel risk-level per evitare doppioni
 document.getElementById('risk-level').textContent = '';
