@@ -1135,15 +1135,17 @@ function initPaywallButtons() {
 // Traduzione dinamica badge rischio e frase motivazionale
 const lang = CONFIG.I18N_LOCALE || 'it';
 const badge = document.getElementById('risk-badge');
-badge.textContent = translations[lang].badge[riskData.level] || translations['it'].badge[riskData.level];
+badge.textContent = TRANSLATIONS[lang].badge[riskData.level] || TRANSLATIONS['it'].badge[riskData.level];
 badge.className = 'risk-badge risk-' + riskData.level.toLowerCase();
 
 const motivationalText = document.getElementById('motivational-text');
-motivationalText.textContent = translations[lang].motivational[riskData.level] || translations['it'].motivational[riskData.level];
+motivationalText.textContent = TRANSLATIONS[lang].motivational[riskData.level] || TRANSLATIONS['it'].motivational[riskData.level];
+
 // Svuota il testo nel risk-level per evitare doppioni
 document.getElementById('risk-level').textContent = '';
-    document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
-    
+
+// Data report tradotta
+document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
 
 // ---> QUI AGGIUNGI LA PROGRESS BAR <---
 const maxScore = Number(document.getElementById('max-score').textContent); // di solito 60
@@ -1160,12 +1162,12 @@ if (riskPercent < 35) {
 } else {
     bar.style.background = '#f44336'; // rosso
 }
-    // 2. Livello di Rischio e Analisi
-    const riskLevelContainer = document.getElementById('risk-level-container');
-    riskLevelContainer.className = `score-box ${riskData.cssClass}`;
-    document.getElementById('profile-text').textContent = riskData.profileText;
-    document.getElementById('analysis-text').textContent = riskData.analysisText;
 
+// Livello di Rischio e Analisi
+const riskLevelContainer = document.getElementById('risk-level-container');
+riskLevelContainer.className = `score-box ${riskData.cssClass}`;
+document.getElementById('profile-text').textContent = riskData.profileText;
+document.getElementById('analysis-text').textContent = riskData.analysisText;
     // 3. Grafico Radar (Richiede la libreria Chart.js nell'HTML!)
     if (typeof Chart !== 'undefined') {
         renderRadarChart(axisScores, riskData.cssClass);
