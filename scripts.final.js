@@ -1134,12 +1134,14 @@ function initPaywallButtons() {
  */
 // Traduzione dinamica badge rischio e frase motivazionale
 const lang = CONFIG.I18N_LOCALE || 'it';
+const t = translations[lang] || translations['it'];
+
 const badge = document.getElementById('risk-badge');
-badge.textContent = translations[lang].badge[riskData.level] || translations['it'].badge[riskData.level];
+badge.textContent = t.badge[riskData.level];
 badge.className = 'risk-badge risk-' + riskData.level.toLowerCase();
 
 const motivationalText = document.getElementById('motivational-text');
-motivationalText.textContent = translations[lang].motivational[riskData.level] || translations['it'].motivational[riskData.level];
+motivationalText.textContent = t.motivational[riskData.level];
 
 // Svuota il testo nel risk-level per evitare doppioni
 document.getElementById('risk-level').textContent = '';
@@ -1168,14 +1170,14 @@ const riskLevelContainer = document.getElementById('risk-level-container');
 riskLevelContainer.className = `score-box ${riskData.cssClass}`;
 document.getElementById('profile-text').textContent = riskData.profileText;
 document.getElementById('analysis-text').textContent = riskData.analysisText;
-    // 3. Grafico Radar (Richiede la libreria Chart.js nell'HTML!)
-    if (typeof Chart !== 'undefined') {
-        renderRadarChart(axisScores, riskData.cssClass);
-    } else {
-        const radarContainer = document.querySelector('.radar-section h2');
-        if (radarContainer) radarContainer.innerHTML = `<h2>⚠️ ${t.RADAR_TITLE} - Chart non disponibile.</h2>`;
-    }
 
+// Grafico Radar
+if (typeof Chart !== 'undefined') {
+    renderRadarChart(axisScores, riskData.cssClass);
+} else {
+    const radarContainer = document.querySelector('.radar-section h2');
+    if (radarContainer) radarContainer.innerHTML = `<h2>⚠️ ${t.RADAR_TITLE} - Chart non disponibile.</h2>`;
+}
     // 4. Riepilogo Dettagliato dei Punteggi (Impact List)
     const impactList = document.getElementById('impact-list');
     impactList.innerHTML = '';
