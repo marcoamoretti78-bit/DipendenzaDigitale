@@ -1132,42 +1132,14 @@ function initPaywallButtons() {
  * @param {object} results - I risultati calcolati.
  * @param {string} planType - 'standard' o 'premium'.
  */
-function showReport(results, planType) {
-    const { totalScore, userName, riskData, axisScores, userAnswers } = results;
-    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
-    const reportElement = document.getElementById('report');
-
-    document.getElementById('paywall').style.display = 'none';
-    reportElement.style.display = 'block';
-
-    // 1. Dati Principali
-    const reportHeader = reportElement.querySelector('.report-header h1');
-    // Usa l'operatore OR per assicurare che userName non sia 'undefined' nel report
-    reportHeader.innerHTML = `${t.TITLE} - ${userName || t.GUEST}`; 
-
-    document.getElementById('final-score').textContent = totalScore;
-    document.getElementById('risk-level').textContent = riskData.level;
-    // Aggiorna il badge rischio come già fatto
+// Traduzione dinamica badge rischio e frase motivazionale
+const lang = CONFIG.I18N_LOCALE || 'it';
 const badge = document.getElementById('risk-badge');
-if (riskData.level === 'Basso') {
-    badge.textContent = '🟢 Basso';
-    badge.className = 'risk-badge risk-low';
-} else if (riskData.level === 'Medio') {
-    badge.textContent = '🟠 Medio';
-    badge.className = 'risk-badge risk-medium';
-} else {
-    badge.textContent = '🔴 Alto';
-    badge.className = 'risk-badge risk-high';
-}
-    const motivationalText = document.getElementById('motivational-text');
-if (riskData.level === 'Basso') {
-    motivationalText.textContent = 'Ottimo lavoro! Continua così per mantenere un rapporto sano con la tecnologia.';
-} else if (riskData.level === 'Medio') {
-    motivationalText.textContent = 'Sei sulla buona strada, ma puoi migliorare con piccoli accorgimenti!';
-} else {
-    motivationalText.textContent = 'Attenzione! Il rischio è alto, ma con il piano d\'azione puoi migliorare facilmente.';
-}
+badge.textContent = translations[lang].badge[riskData.level] || translations['it'].badge[riskData.level];
+badge.className = 'risk-badge risk-' + riskData.level.toLowerCase();
 
+const motivationalText = document.getElementById('motivational-text');
+motivationalText.textContent = translations[lang].motivational[riskData.level] || translations['it'].motivational[riskData.level];
 // Svuota il testo nel risk-level per evitare doppioni
 document.getElementById('risk-level').textContent = '';
     document.getElementById('report-date').textContent = `${t.DATE || 'Data'}: ${new Date().toLocaleDateString(CONFIG.I18N_LOCALE)}`;
