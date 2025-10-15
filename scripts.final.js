@@ -40,68 +40,6 @@ const QUIZ_QUESTIONS = [
     { id: 19, question: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
     { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
 ];
-const translations = {
-    it: {
-        badge: {
-            Basso: '🟢 Basso',
-            Medio: '🟠 Medio',
-            Alto: '🔴 Alto'
-        },
-        motivational: {
-            Basso: 'Ottimo lavoro! Continua così per mantenere un rapporto sano con la tecnologia.',
-            Medio: 'Sei sulla buona strada, ma puoi migliorare con piccoli accorgimenti!',
-            Alto: 'Attenzione! Il rischio è alto, ma con il piano d\'azione puoi migliorare facilmente.'
-        }
-    },
-    en: {
-        badge: {
-            Basso: '🟢 Low',
-            Medio: '🟠 Medium',
-            Alto: '🔴 High'
-        },
-        motivational: {
-            Basso: 'Great job! Keep it up to maintain a healthy relationship with technology.',
-            Medio: 'You are on the right track, but small changes can help you improve!',
-            Alto: 'Warning! Your risk is high, but you can improve with the action plan.'
-        }
-    },
-    fr: {
-        badge: {
-            Basso: '🟢 Faible',
-            Medio: '🟠 Moyen',
-            Alto: '🔴 Élevé'
-        },
-        motivational: {
-            Basso: 'Excellent travail ! Continuez ainsi pour maintenir une relation saine avec la technologie.',
-            Medio: 'Vous êtes sur la bonne voie, mais de petits changements peuvent vous aider à progresser !',
-            Alto: 'Attention ! Le risque est élevé, mais vous pouvez vous améliorer grâce au plan d’action.'
-        }
-    },
-    de: {
-        badge: {
-            Basso: '🟢 Niedrig',
-            Medio: '🟠 Mittel',
-            Alto: '🔴 Hoch'
-        },
-        motivational: {
-            Basso: 'Sehr gut! Mach weiter so, um eine gesunde Beziehung zur Technologie zu erhalten.',
-            Medio: 'Du bist auf dem richtigen Weg, kleine Änderungen können dir helfen, dich zu verbessern!',
-            Alto: 'Achtung! Dein Risiko ist hoch, aber mit dem Aktionsplan kannst du dich leicht verbessern.'
-        }
-    },
-    es: {
-        badge: {
-            Basso: '🟢 Bajo',
-            Medio: '🟠 Medio',
-            Alto: '🔴 Alto'
-        },
-        motivational: {
-            Basso: '¡Muy bien! Sigue así para mantener una relación sana con la tecnología.',
-            Medio: 'Vas por buen camino, ¡puedes mejorar con pequeños cambios!',
-            Alto: '¡Atención! El riesgo es alto, pero puedes mejorar fácilmente con el plan de acción.'
-        }
-    }
-};
 
 const RISK_PROFILES_I18N = {
     LOW: {
