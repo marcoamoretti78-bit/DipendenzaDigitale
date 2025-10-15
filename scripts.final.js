@@ -484,7 +484,7 @@ const RESOURCES_I18N = {
 // 2. TRADUZIONI (I18N)
 // =========================================================================
 
-const TRANSLATIONS = {
+const translations = {
     it: {
         FORM_TITLE: "Valutazione della Dipendenza Digitale",
         BTN_CALCULATE: "Calcola Risultato",
