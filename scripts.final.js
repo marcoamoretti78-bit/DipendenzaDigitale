@@ -84,6 +84,16 @@ const AXIS_PLANS_I18N = {
                 'Giorno 7: Pianifica come mantenere la routine stabilita per il prossimo mese.'
             ]
         },
+        badge: {
+    Basso: '🟢 Basso',
+    Medio: '🟠 Medio',
+    Alto: '🔴 Alto'
+},
+motivational: {
+    Basso: 'Ottimo lavoro! Continua così per mantenere un rapporto sano con la tecnologia.',
+    Medio: 'Sei sulla buona strada, ma puoi migliorare con piccoli accorgimenti!',
+    Alto: 'Attenzione! Il rischio è alto, ma con il piano d\'azione puoi migliorare facilmente.'
+}
         en: {
             priorityTitle: 'Focus on Sleep & Rituals',
             priorityDetail: 'Your main priority is to establish an evening and morning routine to limit smartphone use. Start by turning off your screen at least one hour before sleep to improve sleep quality.',
@@ -97,6 +107,16 @@ const AXIS_PLANS_I18N = {
                 'Day 7: Plan how to maintain the routine you’ve established for next month.'
             ]
         },
+badge: {
+    Basso: '🟢 Low',
+    Medio: '🟠 Medium',
+    Alto: '🔴 High'
+},
+motivational: {
+    Basso: 'Great job! Keep it up to maintain a healthy relationship with technology.',
+    Medio: 'You are on the right track, but small changes can help you improve!',
+    Alto: 'Warning! Your risk is high, but you can improve with the action plan.'
+}
         es: {
             priorityTitle: 'Enfoque en Sueño y Rituales',
             priorityDetail: 'Tu acción prioritaria es establecer una rutina nocturna y matutina para limitar el uso del smartphone. Comienza apagando la pantalla al menos una hora antes de dormir para mejorar la calidad del sueño.',
@@ -110,6 +130,16 @@ const AXIS_PLANS_I18N = {
                 'Día 7: Planifica cómo mantener la rutina establecida para el próximo mes.'
             ]
         },
+badge: {
+    Basso: '🟢 Bajo',
+    Medio: '🟠 Medio',
+    Alto: '🔴 Alto'
+},
+motivational: {
+    Basso: '¡Muy bien! Sigue así para mantener una relación sana con la tecnología.',
+    Medio: 'Vas por buen camino, ¡puedes mejorar con pequeños cambios!',
+    Alto: '¡Atención! El riesgo es alto, pero puedes mejorar fácilmente con el plan de acción.'
+}
         de: {
             priorityTitle: 'Fokus auf Schlaf und Rituale',
             priorityDetail: 'Ihre Priorität ist es, eine abendliche und morgendliche Routine zu etablieren, um die Smartphone-Nutzung zu begrenzen. Schalten Sie den Bildschirm mindestens eine Stunde vor dem Schlafengehen aus, um die Schlafqualität zu verbessern.',
@@ -123,6 +153,16 @@ const AXIS_PLANS_I18N = {
                 'Tag 7: Planen Sie, wie Sie die etablierte Routine für den nächsten Monat aufrechterhalten.'
             ]
         },
+badge: {
+    Basso: '🟢 Niedrig',
+    Medio: '🟠 Mittel',
+    Alto: '🔴 Hoch'
+},
+motivational: {
+    Basso: 'Sehr gut! Mach weiter so, um eine gesunde Beziehung zur Technologie zu erhalten.',
+    Medio: 'Du bist auf dem richtigen Weg, kleine Änderungen können dir helfen, dich zu verbessern!',
+    Alto: 'Achtung! Dein Risiko ist hoch, aber mit dem Aktionsplan kannst du dich leicht verbessern.'
+}
         fr: {
             priorityTitle: 'Focus sur Sommeil et Rituels',
             priorityDetail: 'Votre action prioritaire est d\'établir une routine du soir et du matin pour limiter l\'utilisation du smartphone. Commencez par éteindre l\'écran au moins une heure avant de dormir pour améliorer la qualité du sommeil.',
@@ -137,6 +177,16 @@ const AXIS_PLANS_I18N = {
             ]
         }
     },
+badge: {
+    Basso: '🟢 Faible',
+    Medio: '🟠 Moyen',
+    Alto: '🔴 Élevé'
+},
+motivational: {
+    Basso: 'Excellent travail ! Continuez ainsi pour maintenir une relation saine avec la technologie.',
+    Medio: 'Vous êtes sur la bonne voie, mais de petits changements peuvent vous aider à progresser !',
+    Alto: 'Attention ! Le risque est élevé, mais vous pouvez vous améliorer grâce au plan d’action.'
+}
     'Productivity & Focus': {
         cssClass: 'risk-low',
         it: {
