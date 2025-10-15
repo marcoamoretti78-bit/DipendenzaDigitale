@@ -2,7 +2,7 @@
 // 1. CONFIGURAZIONE GLOBALE e DATI
 // =========================================================================
 
-// Assicurati che questi oggetti siano definiti prima di TRANSLATIONS e Logica
+// Assicurati che questi oggetti siano definiti prima di translations e Logica
 const CONFIG = {
     I18N_LOCALE: 'it', // Lingua di default
     MAX_SCORE: 60, // 20 domande * 3 punti max
@@ -879,7 +879,7 @@ function ensureAllTranslationsExist() {
     // 2. Aggiunge le chiavi delle domande QUIZ_QUESTIONS a tutte le lingue
     QUIZ_QUESTIONS.forEach((q, index) => {
         const key = `Q${index + 1}`;
-        for (const code in TRANSLATIONS) {
+        for (const code in translations) {
             if (!translations[code][key]) {
                 // Se la traduzione per la domanda non c'è, usa il testo IT come fallback
                 translations[code][key] = q.question;
