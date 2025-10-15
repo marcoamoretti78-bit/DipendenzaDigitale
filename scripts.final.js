@@ -870,7 +870,7 @@ const TRANSLATIONS = {
  */
 function ensureAllTranslationsExist() {
     // Usa IT come lingua di fallback se non specificato
-    const defaultLang = TRANSLATIONS['it'];
+    const defaultLang = translations['it'];
 
     // 1. Assicura che le chiavi standard (ANSWER_X, AXIS_...) siano in ogni lingua
     const standardKeys = ['ANSWER_0', 'ANSWER_1', 'ANSWER_2', 'ANSWER_3', 
@@ -878,8 +878,8 @@ function ensureAllTranslationsExist() {
                           'AXIS_Escape_Emotions', 'AXIS_Habit_Compulsion', 
                           'AXIS_Social_Presence'];
                           
-    for (const code in TRANSLATIONS) {
-        const currentLang = TRANSLATIONS[code];
+    for (const code in translations) {
+        const currentLang = translations[code];
         standardKeys.forEach(key => {
              if (!currentLang[key]) {
                  // Usa il valore IT come fallback
@@ -892,9 +892,9 @@ function ensureAllTranslationsExist() {
     QUIZ_QUESTIONS.forEach((q, index) => {
         const key = `Q${index + 1}`;
         for (const code in TRANSLATIONS) {
-            if (!TRANSLATIONS[code][key]) {
+            if (!translations[code][key]) {
                 // Se la traduzione per la domanda non c'è, usa il testo IT come fallback
-                TRANSLATIONS[code][key] = q.question;
+                translations[code][key] = q.question;
             }
         }
     });
@@ -906,7 +906,7 @@ function ensureAllTranslationsExist() {
  * @param {string} locale - Il codice della lingua.
  */
 function applyTranslations(locale) {
-    const t = TRANSLATIONS[locale] || TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const t = translations[locale] || translations[CONFIG.I18N_LOCALE];
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (t[key]) {
@@ -974,7 +974,7 @@ function populateQuizQuestions() {
 
     container.innerHTML = '';
     const currentLocale = CONFIG.I18N_LOCALE;
-    const t = TRANSLATIONS[currentLocale] || TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const t = translations[currentLocale] || translations[CONFIG.I18N_LOCALE];
 
     QUIZ_QUESTIONS.forEach((q, index) => {
         const qIndex = index + 1;
@@ -1053,7 +1053,7 @@ function handleCalculate(event) {
     };
     let completedQuestions = 0;
     const userAnswers = [];
-    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const t = translations[CONFIG.I18N_LOCALE];
 
     for (let i = 1; i <= questions; i++) {
         const score = formData.get(`q${i}`);
@@ -1279,7 +1279,7 @@ function renderRadarChart(axisScores, riskCssClass) {
         riskRadarChart.destroy();
     }
 
-    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const t = translations[CONFIG.I18N_LOCALE];
     const translatedLabels = Object.keys(axisScores).map(axis => {
         return t[`AXIS_${axis.replace(/ /g, '_')}`] || axis;
     });
