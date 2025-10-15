@@ -1,1 +1,0 @@
-[versione integrale del file originale con blocco AXIS_PLANS_I18N completo, tutti gli assi, tutte le lingue, badge e motivational]
