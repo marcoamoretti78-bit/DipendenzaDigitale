@@ -39,6 +39,7 @@ const QUIZ_QUESTIONS = [
     { id: 18, question: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?", axis: 'Social & Presence' },
     { id: 19, question: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
     { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
+    
 ];
 
 const RISK_PROFILES_I18N = {
@@ -392,6 +393,8 @@ const TRANSLATIONS = {
         Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
         Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
         Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
+        score_title: "Il Tuo Punteggio",
+        answers_title: "Le Tue Risposte Dettagliate al Quiz"
     },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
@@ -472,6 +475,8 @@ const TRANSLATIONS = {
         Q18: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?",
         Q19: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?",
         Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
+            score_title: "Your Score",
+        answers_title: "Your Detailed Quiz Answers"
     },
     es: {
         FORM_TITLE: "Evaluación de la Dependencia Digital",
@@ -552,6 +557,8 @@ const TRANSLATIONS = {
         Q18: "¿Tus interacciones virtuales (redes sociales, juegos) han reemplazado o reducido significativamente el tiempo que pasas con amigos y familiares fuera de línea?",
         Q19: "¿Te preocupa constantemente tu apariencia en línea (perfil, publicaciones, 'me gusta' recibidos)?",
         Q20: "¿Usas el teléfono mientras conduces o caminas, poniendo en riesgo tu seguridad o la de otros?",
+            score_title: "Tu Puntuación",
+        answers_title: "Tus respuestas detalladas del cuestionario"
     },
     de: {
         FORM_TITLE: "Bewertung der Digitalen Abhängigkeit",
@@ -632,6 +639,8 @@ const TRANSLATIONS = {
         Q18: "Haben Ihre virtuellen Interaktionen (soziale Medien, Spiele) die Zeit mit Freunden und Familie offline ersetzt oder erheblich reduziert?",
         Q19: "Sind Sie ständig besorgt über Ihr Online-Erscheinungsbild (Profil, Posts, erhaltene 'Likes')?",
         Q20: "Benutzen Sie Ihr Telefon beim Fahren oder Gehen und gefährden so Ihre oder die Sicherheit anderer?",
+            score_title: "Dein Ergebnis",
+        answers_title: "Deine detaillierten Quiz-Antworten"
     },
     fr: {
         FORM_TITLE: "Évaluation de la Dépendance Numérique",
@@ -712,6 +721,9 @@ const TRANSLATIONS = {
         Q18: "Vos interactions virtuelles (médias sociaux, jeux) ont-elles remplacé ou réduit significativement le temps passé avec des amis et la famille hors ligne?",
         Q19: "Êtes-vous constamment préoccupé par votre apparence en ligne (profil, publications, 'j'aime' reçus)?",
         Q20: "Utilisez-vous votre téléphone en conduisant ou en marchant, risquant votre sécurité ou celle des autres?",
+            score_title: "Votre Score",
+        answers_title: "Vos réponses détaillées au quiz"
+        
     }
 };
 
