@@ -392,7 +392,7 @@ const TRANSLATIONS = {
         Q17: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?",
         Q18: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?",
         Q19: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?",
-        Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?"
+        Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?",
         score_title: "Il Tuo Punteggio",
         answers_title: "Le Tue Risposte Dettagliate al Quiz",
     },
