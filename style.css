@@ -285,9 +285,9 @@ body {
 }
 
 /* Stili essenziali per i livelli di rischio (RISOLTO) */
-.risk-low { background-color: #5cb85c; color: white; }
-.risk-medium { background-color: #f0ad4e; color: white; }
-.risk-high { background-color: var(--danger); color: white; }
+.score-box.risk-low { background-color: #5cb85c; color: white; }
+.score-box.risk-medium { background-color: #f0ad4e; color: white; }
+.score-box.risk-high { background-color: #dc2626; color: white; }
 
 
 /* Premium Content */
