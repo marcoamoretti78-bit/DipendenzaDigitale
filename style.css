@@ -388,9 +388,9 @@ th {
   font-weight: bold;
   font-size: 1em;
 }
-.risk-low { background: #4caf50; color: #fff; }
-.risk-medium { background: #ff9800; color: #fff; }
-.risk-high { background: #dc2626; color: #fff; }
+.risk-badge.risk-low { background: #4caf50; color: #fff; }
+.risk-badge.risk-medium { background: #ff9800; color: #fff; }
+.risk-badge.risk-high { background: #dc2626; color: #fff; }
 .motivational-text {
   font-size: 1.15em;
   font-style: italic;
