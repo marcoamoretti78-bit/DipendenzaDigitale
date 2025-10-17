@@ -1023,6 +1023,8 @@ function showReport(results, planType) {
     // 2. Livello di Rischio e Analisi
     const riskLevelContainer = document.getElementById('risk-level-container');
     riskLevelContainer.className = `score-box ${riskData.cssClass}`;
+    const riskBadge = document.getElementById('risk-badge');
+riskBadge.className = `risk-badge ${riskData.cssClass}`;
     document.getElementById('profile-text').textContent = riskData.profileText;
     document.getElementById('analysis-text').textContent = riskData.analysisText;
 
