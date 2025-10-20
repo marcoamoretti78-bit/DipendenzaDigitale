@@ -731,7 +731,12 @@ const TRANSLATIONS = {
         
     }
 };
-
+const AXIS_KEY_MAP = {
+  "Sonno e Rituali": "Sleep & Rituals",
+  "Produttività e Concentrazione": "Productivity & Focus",
+  "Fuga ed Emozioni": "Escape & Emotions"
+  // aggiungi altri se servono
+};
 // =========================================================================
 // 3. LOGICA MULTILINGUA (I18N)
 // =========================================================================
@@ -1080,14 +1085,18 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
             premiumContent.style.display = 'block';
 
             const priorityAxis = riskData.priorityAxis;
-            const priorityPlan = AXIS_PLANS_I18N[priorityAxis];
-            // Assicurati che l'oggetto di traduzione esista o usa il fallback IT
-            const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it']; 
+const axisKey = AXIS_KEY_MAP[priorityAxis] || priorityAxis;
+const priorityPlan = AXIS_PLANS_I18N[axisKey];
 
-            document.getElementById('priority-action').innerHTML = `
-                <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.priorityTitle}</h4>
-                <p>${priorityPlanI18n.priorityDetail}</p>
-            `;
+if (priorityPlan) {
+    const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
+    document.getElementById('priority-action').innerHTML = `
+        <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.priorityTitle}</h4>
+        <p>${priorityPlanI18n.priorityDetail}</p>
+    `;
+} else {
+    document.getElementById('priority-action').innerHTML = `<p style="color:red">Errore: piano prioritario non trovato!</p>`;
+}
 
             const daysPlanList = document.getElementById('days-plan-list');
             daysPlanList.innerHTML = '';
