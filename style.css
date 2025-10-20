@@ -381,16 +381,19 @@ th {
     }
 }
 .risk-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
   display: inline-block;
-  margin-left: 10px;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1em;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: #eee;
+  border: 2px solid #ccc;
+  /* il colore di sfondo sarà sovrascritto dalle classi risk-low/medium/high */
 }
-.risk-badge.risk-low { background: #4caf50; color: #fff; }
-.risk-badge.risk-medium { background: #ff9800; color: #fff; }
-.risk-badge.risk-high { background: #dc2626; color: #fff; }
+.risk-badge.risk-low    { background: #4caf50; border-color: #4caf50; color: #fff; }
+.risk-badge.risk-medium { background: #ff9800; border-color: #ff9800; color: #fff; }
+.risk-badge.risk-high   { background: #dc2626; border-color: #dc2626; color: #fff; }
 .motivational-text {
   font-size: 1.15em;
   font-style: italic;
