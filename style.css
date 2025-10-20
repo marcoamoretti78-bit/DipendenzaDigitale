@@ -271,13 +271,18 @@ body {
 }
 
 .score-box {
-    flex: 1;
-    padding: 20px;
+    height: 40px; /* banda spessa e visibile */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 12px;
+    background: #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 0 20px;
 }
-
 .score-value, .risk-value {
     font-size: 2.5em;
     font-weight: bold;
