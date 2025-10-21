@@ -41,7 +41,14 @@ const QUIZ_QUESTIONS = [
     { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
     
 ];
-
+const priorityPlanI18n = {
+    it: "Piano d'Azione Prioritizzato",
+    en: "Priority Action Plan",
+    es: "Plan de Acción Prioritario",
+    fr: "Plan d'action prioritaire",
+    de: "Priorisierter Aktionsplan"
+    // aggiungi altre lingue qui se ti servono
+};
 const RISK_PROFILES_I18N = {
     LOW: {
         minScore: 0, maxScore: 20, cssClass: 'risk-low',
