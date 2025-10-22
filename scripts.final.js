@@ -1090,6 +1090,13 @@ function showReport(results, planType) {
     const riskLevelContainer = document.getElementById('risk-level-container');
     riskLevelContainer.className = `score-box ${riskData.cssClass}`;
     const riskBadge = document.getElementById('risk-badge');
+    const riskProgressBar = document.getElementById('risk-progress-bar');
+let barColor = '#4caf50';
+if (riskData.cssClass === 'risk-medium') barColor = '#ff9800';
+if (riskData.cssClass === 'risk-high') barColor = '#dc2626';
+const percent = Math.round((totalScore / CONFIG.MAX_SCORE) * 100);
+riskProgressBar.style.width = percent + '%';
+riskProgressBar.style.background = barColor;
 riskBadge.className = `risk-badge ${riskData.cssClass}`;
     document.getElementById('profile-text').textContent = riskData.profileText;
     document.getElementById('analysis-text').textContent = riskData.analysisText;
