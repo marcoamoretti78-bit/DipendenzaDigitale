@@ -42,6 +42,17 @@ const QUIZ_QUESTIONS = [
     
 ];
 const priorityPlanI18n = {
+    dayPlan: [
+        "Giorno 1: Limita l’uso del telefono a 2 ore",
+        "Giorno 2: Disattiva notifiche non essenziali",
+        "Giorno 3: Fai una passeggiata senza smartphone",
+        "Giorno 4: Usa la modalità aereo per 2 ore al giorno",
+        "Giorno 5: Dedicati a un hobby offline",
+        "Giorno 6: Cena senza dispositivi",
+        "Giorno 7: Rifletti su cosa hai imparato"
+    ]
+};
+const priorityPlanI18n = {
     it: "Piano d'Azione Prioritizzato",
     en: "Priority Action Plan",
     es: "Plan de Acción Prioritario",
