@@ -42,23 +42,66 @@ const QUIZ_QUESTIONS = [
     
 ];
 const priorityPlanI18n = {
-    dayPlan: [
-        "Giorno 1: Limita l’uso del telefono a 2 ore",
-        "Giorno 2: Disattiva notifiche non essenziali",
-        "Giorno 3: Fai una passeggiata senza smartphone",
-        "Giorno 4: Usa la modalità aereo per 2 ore al giorno",
-        "Giorno 5: Dedicati a un hobby offline",
-        "Giorno 6: Cena senza dispositivi",
-        "Giorno 7: Rifletti su cosa hai imparato"
-    ]
-};
-const priorityPlanI18n = {
-    it: "Piano d'Azione Prioritizzato",
-    en: "Priority Action Plan",
-    es: "Plan de Acción Prioritario",
-    fr: "Plan d'action prioritaire",
-    de: "Priorisierter Aktionsplan"
-    // aggiungi altre lingue qui se ti servono
+    it: {
+        title: "Piano d'Azione Prioritizzato",
+        dayPlan: [
+            "Giorno 1: Limita l’uso del telefono a 2 ore",
+            "Giorno 2: Disattiva notifiche non essenziali",
+            "Giorno 3: Fai una passeggiata senza smartphone",
+            "Giorno 4: Usa la modalità aereo per 2 ore al giorno",
+            "Giorno 5: Dedicati a un hobby offline",
+            "Giorno 6: Cena senza dispositivi",
+            "Giorno 7: Rifletti su cosa hai imparato"
+        ]
+    },
+    en: {
+        title: "Priority Action Plan",
+        dayPlan: [
+            "Day 1: Limit phone use to 2 hours",
+            "Day 2: Turn off non-essential notifications",
+            "Day 3: Take a walk without your smartphone",
+            "Day 4: Use airplane mode for 2 hours",
+            "Day 5: Do an offline hobby",
+            "Day 6: Dinner without devices",
+            "Day 7: Reflect on what you learned"
+        ]
+    },
+    es: {
+        title: "Plan de Acción Prioritario",
+        dayPlan: [
+            "Día 1: Limita el uso del teléfono a 2 horas",
+            "Día 2: Desactiva notificaciones no esenciales",
+            "Día 3: Da un paseo sin smartphone",
+            "Día 4: Usa el modo avión durante 2 horas",
+            "Día 5: Dedícate a un hobby offline",
+            "Día 6: Cena sin dispositivos",
+            "Día 7: Reflexiona sobre lo que has aprendido"
+        ]
+    },
+    fr: {
+        title: "Plan d'action prioritaire",
+        dayPlan: [
+            "Jour 1 : Limitez l'utilisation du téléphone à 2 heures",
+            "Jour 2 : Désactivez les notifications non essentielles",
+            "Jour 3 : Faites une promenade sans smartphone",
+            "Jour 4 : Utilisez le mode avion pendant 2 heures",
+            "Jour 5 : Pratiquez un loisir hors ligne",
+            "Jour 6 : Dînez sans appareils",
+            "Jour 7 : Réfléchissez à ce que vous avez appris"
+        ]
+    },
+    de: {
+        title: "Priorisierter Aktionsplan",
+        dayPlan: [
+            "Tag 1: Begrenze die Handynutzung auf 2 Stunden",
+            "Tag 2: Deaktiviere nicht essentielle Benachrichtigungen",
+            "Tag 3: Mache einen Spaziergang ohne Smartphone",
+            "Tag 4: Nutze den Flugmodus für 2 Stunden",
+            "Tag 5: Widme dich einem Offline-Hobby",
+            "Tag 6: Abendessen ohne Geräte",
+            "Tag 7: Reflektiere, was du gelernt hast"
+        ]
+    }
 };
 const RISK_PROFILES_I18N = {
     LOW: {
