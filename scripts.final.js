@@ -570,6 +570,8 @@ const TRANSLATIONS = {
         Q20: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?",
         score_title: "Il Tuo Punteggio",
         answers_title: "Le Tue Risposte Dettagliate al Quiz",
+                DAYS_PLAN_TITLE: "Piano Digital Detox di 7 Giorni",
+        RESOURCES_TITLE: "Risorse Consigliate"
     },
     en: {
         FORM_TITLE: "Digital Dependence Assessment",
@@ -653,6 +655,8 @@ const TRANSLATIONS = {
         Q20: "Do you use your phone while driving or walking, risking your safety or that of others?",
             score_title: "Your Score",
         answers_title: "Your Detailed Quiz Answers",
+                DAYS_PLAN_TITLE: "7-Day Digital Detox Plan",
+        RESOURCES_TITLE: "Recommended Resources"
     },
     es: {
         FORM_TITLE: "Evaluación de la Dependencia Digital",
@@ -736,6 +740,8 @@ const TRANSLATIONS = {
         Q20: "¿Usas el teléfono mientras conduces o caminas, poniendo en riesgo tu seguridad o la de otros?",
             score_title: "Tu Puntuación",
         answers_title: "Tus respuestas detalladas del cuestionario",
+         DAYS_PLAN_TITLE: "Plan Digital Detox de 7 Días",
+    RESOURCES_TITLE: "Recursos Recomendados"
     },
     de: {
         FORM_TITLE: "Bewertung der Digitalen Abhängigkeit",
@@ -819,6 +825,8 @@ const TRANSLATIONS = {
         Q20: "Benutzen Sie Ihr Telefon beim Fahren oder Gehen und gefährden so Ihre oder die Sicherheit anderer?",
             score_title: "Dein Ergebnis",
         answers_title: "Deine detaillierten Quiz-Antworten",
+        DAYS_PLAN_TITLE: "7-Tage Digital Detox Plan",
+    RESOURCES_TITLE: "Empfohlene Ressourcen"
     },
     fr: {
         FORM_TITLE: "Évaluation de la Dépendance Numérique",
@@ -902,7 +910,8 @@ const TRANSLATIONS = {
         Q20: "Utilisez-vous votre téléphone en conduisant ou en marchant, risquant votre sécurité ou celle des autres?",
             score_title: "Votre Score",
         answers_title: "Vos réponses détaillées au quiz",
-        
+        DAYS_PLAN_TITLE: "Plan Digital Detox de 7 Jours",
+    RESOURCES_TITLE: "Ressources recommandées"
     }
 };
 const AXIS_KEY_MAP = {
