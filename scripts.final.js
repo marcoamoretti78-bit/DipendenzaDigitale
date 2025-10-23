@@ -1155,7 +1155,10 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
             const priorityAxis = riskData.priorityAxis;
 const axisKey = AXIS_KEY_MAP[priorityAxis] || priorityAxis;
 const priorityPlan = AXIS_PLANS_I18N[axisKey];
-
+console.log("priorityAxis:", priorityAxis);
+console.log("axisKey:", axisKey);
+console.log("priorityPlan:", priorityPlan);
+console.log("priorityPlanI18n:", priorityPlanI18n);
 if (priorityPlan) {
     const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
     document.getElementById('priority-action').innerHTML = `
