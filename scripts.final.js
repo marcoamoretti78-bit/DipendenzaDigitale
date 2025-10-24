@@ -1244,11 +1244,12 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
     });
 
     // 6. Contenuti Premium
-   if (premiumContent) {
+   const premiumContent = document.querySelector('.premium-content');
+if (premiumContent) {
     if (planType === 'premium') {
         premiumContent.style.display = 'block';
 
-        const priorityAxis = riskData.priorityAxis;
+        const priorityAxis = results.riskData.priorityAxis;
         const axisKey = AXIS_KEY_MAP[priorityAxis] || priorityAxis;
         const priorityPlan = AXIS_PLANS_I18N[axisKey];
 
