@@ -1259,10 +1259,20 @@ console.log("priorityPlanI18n:", priorityPlanI18n);
 if (priorityPlan) {
     const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
     document.getElementById('priority-action').innerHTML = `
-        <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.priorityTitle}</h4>
-        <p>${priorityPlanI18n.priorityDetail}</p>
-    `;
+  <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
+  <p>${priorityPlanI18n.priorityDetail || ""}</p>
+`;
+  const daysPlanList = document.getElementById('days-plan-list');
+daysPlanList.innerHTML = '';
+priorityPlanI18n.dayPlan.forEach(step => {
+  const listItem = document.createElement('li');
+  listItem.textContent = step;
+  daysPlanList.appendChild(listItem);
+});  
 } else {
+    const priorityAxis = window.quizResults?.riskData?.priorityAxis || "Social & Presence"; // Fallback per test
+const priorityPlan = AXIS_PLANS_I18N[priorityAxis];
+const priorityPlanI18n = priorityPlan?.[CONFIG.I18N_LOCALE] || priorityPlan?.it;
     document.getElementById('priority-action').innerHTML = `
   <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
   <p>${priorityPlanI18n.priorityDetail || ''}</p>
