@@ -1225,7 +1225,7 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
         `;
         impactList.appendChild(listItem);
     });
-    renderPieChart(axisScores);
+    
     if (typeof Chart !== 'undefined') {
     renderRadarChart(axisScores, riskData.cssClass);
     
