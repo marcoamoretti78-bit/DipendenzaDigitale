@@ -1263,7 +1263,10 @@ if (priorityPlan) {
         <p>${priorityPlanI18n.priorityDetail}</p>
     `;
 } else {
-    document.getElementById('priority-action').innerHTML = `<p style="color:red">Errore: piano prioritario non trovato!</p>`;
+    document.getElementById('priority-action').innerHTML = `
+  <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
+  <p>${priorityPlanI18n.priorityDetail || ''}</p>
+`;
 }
 
             const daysPlanList = document.getElementById('days-plan-list');
