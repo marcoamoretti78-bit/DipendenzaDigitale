@@ -1225,7 +1225,52 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
         `;
         impactList.appendChild(listItem);
     });
+let riskPieChart = null;
 
+function renderPieChart(axisScores) {
+    const ctx = document.getElementById('riskPieChart');
+    if (!ctx) return;
+
+    // Distruggi il grafico precedente se presente
+    if (riskPieChart) {
+        riskPieChart.destroy();
+    }
+
+    // Etichette multilingua
+    const t = TRANSLATIONS[CONFIG.I18N_LOCALE];
+    const axes = Object.keys(axisScores);
+    const labels = axes.map(axis => t[`AXIS_${axis.replace(/ /g, '_')}`] || axis);
+    const dataValues = axes.map(axis => axisScores[axis]);
+
+    riskPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: dataValues,
+                backgroundColor: [
+                    '#4caf50', '#ff9800', '#dc2626', '#2196f3', '#fbc02d'
+                ]
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            // Etichetta tradotta + valore
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            return `${label}: ${value}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
     // 5. Risposte Dettagliate del Quiz (Tabella)
     const answersBody = document.getElementById('quiz-answers-body');
     answersBody.innerHTML = '';
