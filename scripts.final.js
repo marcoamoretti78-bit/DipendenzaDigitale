@@ -1244,40 +1244,21 @@ riskBadge.className = `risk-badge ${riskData.cssClass}`;
     });
 
     // 6. Contenuti Premium
-    const premiumContent = document.querySelector('.premium-content');
-    if (premiumContent) {
-        if (planType === 'premium') {
-            premiumContent.style.display = 'block';
+   if (premiumContent) {
+    if (planType === 'premium') {
+        premiumContent.style.display = 'block';
 
-            const priorityAxis = riskData.priorityAxis;
-const axisKey = AXIS_KEY_MAP[priorityAxis] || priorityAxis;
-const priorityPlan = AXIS_PLANS_I18N[axisKey];
-console.log("priorityAxis:", priorityAxis);
-console.log("axisKey:", axisKey);
-console.log("priorityPlan:", priorityPlan);
-console.log("priorityPlanI18n:", priorityPlanI18n);
-if (priorityPlan) {
-    const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
-    document.getElementById('priority-action').innerHTML = `
-  <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
-  <p>${priorityPlanI18n.priorityDetail || ""}</p>
-`;
-  const daysPlanList = document.getElementById('days-plan-list');
-daysPlanList.innerHTML = '';
-priorityPlanI18n.dayPlan.forEach(step => {
-  const listItem = document.createElement('li');
-  listItem.textContent = step;
-  daysPlanList.appendChild(listItem);
-});  
-} else {
-    const priorityAxis = window.quizResults?.riskData?.priorityAxis || "Social & Presence"; // Fallback per test
-const priorityPlan = AXIS_PLANS_I18N[priorityAxis];
-const priorityPlanI18n = priorityPlan?.[CONFIG.I18N_LOCALE] || priorityPlan?.it;
-    document.getElementById('priority-action').innerHTML = `
-  <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
-  <p>${priorityPlanI18n.priorityDetail || ''}</p>
-`;
-}
+        const priorityAxis = riskData.priorityAxis;
+        const axisKey = AXIS_KEY_MAP[priorityAxis] || priorityAxis;
+        const priorityPlan = AXIS_PLANS_I18N[axisKey];
+
+        if (priorityPlan) {
+            const priorityPlanI18n = priorityPlan[CONFIG.I18N_LOCALE] || priorityPlan['it'];
+
+            document.getElementById('priority-action').innerHTML = `
+                <h4 class="${priorityPlan.cssClass}">🔥 ${priorityPlanI18n.title}</h4>
+                <p>${priorityPlanI18n.priorityDetail || ""}</p>
+            `;
 
             const daysPlanList = document.getElementById('days-plan-list');
             daysPlanList.innerHTML = '';
@@ -1286,14 +1267,17 @@ const priorityPlanI18n = priorityPlan?.[CONFIG.I18N_LOCALE] || priorityPlan?.it;
                 listItem.textContent = step;
                 daysPlanList.appendChild(listItem);
             });
-
-            document.getElementById('resources-text').textContent = RESOURCES_I18N[CONFIG.I18N_LOCALE] || RESOURCES_I18N['it'];
-
         } else {
-            premiumContent.style.display = 'none';
+            document.getElementById('priority-action').innerHTML = `<p style="color:red">Errore: piano prioritario non trovato!</p>`;
+            document.getElementById('days-plan-list').innerHTML = '';
         }
-    }
 
+        document.getElementById('resources-text').textContent = RESOURCES_I18N[CONFIG.I18N_LOCALE] || RESOURCES_I18N['it'];
+
+    } else {
+        premiumContent.style.display = 'none';
+    }
+}
     // 7. Implementazione: Stampa del Report (Soluzione GitHub Pages)
     const downloadBtn = document.getElementById('download-pdf-btn');
     if (downloadBtn) {
