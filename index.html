@@ -46,12 +46,12 @@
 
         <section class="cta-section">
             <h2 data-i18n="CTA_DISCOVER">Scopri il Tuo Livello di Rischio</h2>
-            <p data-i18n="CTA_PRICING">Test rapido da 3 minuti • Report base €1,99 • Report premium €7,99</p>
-            <button id="start-quiz-btn" class="btn-cta-green" data-i18n="CTA_START_TEST">🎯 Inizia il Test (3 minuti)</button>
+            <p data-i18n="CTA_DESCRIPTION">Test rapido da 3 minuti • Scopri il tuo livello di rischio</p>
+            <button id="scroll-to-quiz-btn" class="btn-cta-green" data-i18n="CTA_START_TEST">🎯 Fai il Test Ora</button>
         </section>
         
         <!-- ⭐ QUIZ SECTION ⭐ -->
-        <div id="quiz-section" style="display: none;">
+        <div id="quiz-section">
             <form id="quiz-form">
                 <div class="intro">
                     <h2 data-i18n="INTRO_H2">🎯 Test Dipendenza Digitale</h2>
@@ -211,29 +211,22 @@
     <!-- ⭐ AGGIUNGI QUI IL JAVASCRIPT ⭐ -->
     <script>
     // Funzione per il pulsante CTA homepage
-    document.addEventListener('DOMContentLoaded', function() {
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        const heroSection = document.querySelector('.hero-section');
-        const infoSection = document.querySelector('.info-section');
-        const ctaSection = document.querySelector('.cta-section');
-        const quizSection = document.getElementById('quiz-section');
+    <script>
+// Smooth scroll al quiz (SENZA show/hide)
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollToQuizBtn = document.getElementById('scroll-to-quiz-btn');
+    const quizSection = document.getElementById('quiz-section');
 
-        if (startQuizBtn) {
-            startQuizBtn.addEventListener('click', function() {
-                // Nasconde le sezioni homepage
-                if (heroSection) heroSection.style.display = 'none';
-                if (infoSection) infoSection.style.display = 'none';
-                if (ctaSection) ctaSection.style.display = 'none';
-                
-                // Mostra il quiz
-                if (quizSection) quizSection.style.display = 'block';
-                
-                // Scroll al quiz
-                quizSection.scrollIntoView({ behavior: 'smooth' });
+    if (scrollToQuizBtn && quizSection) {
+        scrollToQuizBtn.addEventListener('click', function() {
+            // Solo smooth scroll - quiz sempre visibile
+            quizSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
             });
-        }
-    });
-    </script>
-    
+        });
+    }
+});
+</script>
 </body>
 </html>
