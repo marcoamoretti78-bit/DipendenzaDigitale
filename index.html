@@ -211,9 +211,37 @@
         © 2025 Dipendenza Digitale. Tutti i diritti riservati.
     </div>
     
-    <!-- Carica Chart.js per il grafico Radar -->
+       <!-- Carica Chart.js per il grafico Radar -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
     
     <script src="scripts.final.js?v=20251008"></script>
+    
+    <!-- ⭐ AGGIUNGI QUI IL JAVASCRIPT ⭐ -->
+    <script>
+    // Funzione per il pulsante CTA homepage
+    document.addEventListener('DOMContentLoaded', function() {
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const heroSection = document.querySelector('.hero-section');
+        const infoSection = document.querySelector('.info-section');
+        const ctaSection = document.querySelector('.cta-section');
+        const quizSection = document.getElementById('quiz-section');
+
+        if (startQuizBtn) {
+            startQuizBtn.addEventListener('click', function() {
+                // Nasconde le sezioni homepage
+                if (heroSection) heroSection.style.display = 'none';
+                if (infoSection) infoSection.style.display = 'none';
+                if (ctaSection) ctaSection.style.display = 'none';
+                
+                // Mostra il quiz
+                if (quizSection) quizSection.style.display = 'block';
+                
+                // Scroll al quiz
+                quizSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    });
+    </script>
+    
 </body>
 </html>
