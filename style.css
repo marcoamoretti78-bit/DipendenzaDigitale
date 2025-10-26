@@ -488,3 +488,34 @@ th {
     flex-shrink: 0;
     opacity: 0.7;
 }
+.distribution-bar {
+    height: 8px;
+    background-color: currentColor;
+    border-radius: 4px;
+    margin-left: 10px;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+/* --- Intro Section --- */
+.intro {
+    text-align: center;
+    padding: 25px 20px;
+    margin-bottom: 25px;
+    background-color: var(--secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.intro h2 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.intro p {
+    color: var(--text-color);
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
