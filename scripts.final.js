@@ -477,6 +477,8 @@ const TRANSLATIONS = {
 "RISK_ITEM_4": "😰 Ansia senza smartphone",
 "CTA_DISCOVER": "Scopri il Tuo Livello di Rischio",
 "CTA_DESCRIPTION": "Test rapido da 3 minuti • Scopri il tuo livello di rischio",
+        "CTA_START_TEST": "🎯 Fai il Test Ora",
+"QUIZ_ANONYMOUS": "💡 Il test è completamente anonimo",
         ALERT_COMPLETE_QUIZ: "Per favore, rispondi a tutte le 20 domande prima di calcolare il risultato.",
         DEFAULT_USERNAME: "Utente",
         INTRO_H2: "Verifica la Tua Relazione con lo Smartphone",
