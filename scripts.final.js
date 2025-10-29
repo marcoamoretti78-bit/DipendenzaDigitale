@@ -1470,8 +1470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // PayPal Integration
 function initializePayPal() {
-    document.getElementById('user-name-display').textContent = document.getElementById('userName').value || '';
-     updateUserNameInPaywall(); 
+updateUserNameInPaywall(); 
     // PayPal Button for Base Report (€1.99)
     paypal.Buttons({
         createOrder: function(data, actions) {
