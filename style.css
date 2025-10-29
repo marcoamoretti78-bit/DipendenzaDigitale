@@ -587,3 +587,47 @@ th {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+/* PayPal Payment Options */
+.payment-option {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #0070ba;
+    box-shadow: 0 4px 12px rgba(0, 112, 186, 0.2);
+}
+
+.payment-option h4 {
+    color: #333;
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.premium-subtitle {
+    color: #666;
+    font-size: 0.9em;
+    margin: 10px 0 15px 0;
+    font-style: italic;
+}
+
+/* PayPal Button Container */
+#paypal-button-base,
+#paypal-button-premium {
+    margin-top: 15px;
+    min-height: 50px;
+}
+
+.secure-note {
+    text-align: center;
+    color: #28a745;
+    font-size: 0.9em;
+    margin-top: 20px;
+    font-weight: bold;
+}
