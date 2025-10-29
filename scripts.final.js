@@ -1464,3 +1464,94 @@ document.addEventListener('DOMContentLoaded', () => {
     if (paywall) paywall.style.display = 'none';
     if (report) report.style.display = 'none';
 });
+// ========================================
+// PAYPAL INTEGRATION - INIZIO BLOCCO
+// ========================================
+
+// PayPal Integration
+function initializePayPal() {
+    // PayPal Button for Base Report (€1.99)
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '1.99',
+                        currency_code: 'EUR'
+                    },
+                    description: 'Report Base - Test Dipendenza Digitale'
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                console.log('Pagamento Base completato:', details);
+                alert('Pagamento completato! Transaction ID: ' + details.id);
+                showReport('base');
+            });
+        },
+        onError: function(err) {
+            console.error('Errore PayPal:', err);
+            alert('Errore nel pagamento. Riprova.');
+        }
+    }).render('#paypal-button-base');
+
+    // PayPal Button for Premium Report (€7.99)
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '7.99',
+                        currency_code: 'EUR'
+                    },
+                    description: 'Report Premium - Test Dipendenza Digitale'
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                console.log('Pagamento Premium completato:', details);
+                alert('Pagamento Premium completato! Transaction ID: ' + details.id);
+                showReport('premium');
+            });
+        },
+        onError: function(err) {
+            console.error('Errore PayPal:', err);
+            alert('Errore nel pagamento. Riprova.');
+        }
+    }).render('#paypal-button-premium');
+}
+
+// Funzione per mostrare il report dopo il pagamento
+function showReport(type) {
+    document.getElementById('paywall').style.display = 'none';
+    document.getElementById('report').style.display = 'block';
+    
+    if (type === 'premium') {
+        console.log('Mostrando report premium completo');
+    } else {
+        console.log('Mostrando report base');
+    }
+}
+
+// Inizializza PayPal quando il paywall è mostrato
+document.addEventListener('DOMContentLoaded', function() {
+    const paywall = document.getElementById('paywall');
+    if (paywall) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    if (paywall.style.display !== 'none') {
+                        setTimeout(initializePayPal, 100);
+                    }
+                }
+            });
+        });
+        observer.observe(paywall, { attributes: true });
+    }
+});
+
+// ========================================
+// PAYPAL INTEGRATION - FINE BLOCCO
+// ========================================
