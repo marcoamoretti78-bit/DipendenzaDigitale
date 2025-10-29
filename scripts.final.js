@@ -1554,13 +1554,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // Aggiorna il nome nell'header del paywall
 function updateUserNameInPaywall() {
-    const userNameField = document.getElementById('user-name') || document.querySelector('input[placeholder*="nome"]');
+    const userNameField = document.getElementById('userName');
     const displayElement = document.getElementById('user-name-display');
     
-    if (userNameField && displayElement && userNameField.value.trim()) {
-        displayElement.textContent = userNameField.value.trim();
-    } else if (displayElement) {
-        displayElement.textContent = '';
+    if (userNameField && displayElement) {
+        const userName = userNameField.value.trim();
+        if (userName) {
+            displayElement.textContent = userName;
+        } else {
+            displayElement.textContent = '';
+        }
     }
 }
 
