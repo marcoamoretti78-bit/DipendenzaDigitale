@@ -1470,6 +1470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // PayPal Integration
 function initializePayPal() {
+     updateUserNameInPaywall(); 
     // PayPal Button for Base Report (€1.99)
     paypal.Buttons({
         createOrder: function(data, actions) {
@@ -1551,6 +1552,17 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(paywall, { attributes: true });
     }
 });
+// Aggiorna il nome nell'header del paywall
+function updateUserNameInPaywall() {
+    const userNameField = document.getElementById('user-name') || document.querySelector('input[placeholder*="nome"]');
+    const displayElement = document.getElementById('user-name-display');
+    
+    if (userNameField && displayElement && userNameField.value.trim()) {
+        displayElement.textContent = userNameField.value.trim();
+    } else if (displayElement) {
+        displayElement.textContent = '';
+    }
+}
 
 // ========================================
 // PAYPAL INTEGRATION - FINE BLOCCO
