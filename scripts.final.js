@@ -1524,14 +1524,26 @@ function initializePayPal() {
 }
 
 // Funzione per mostrare il report dopo il pagamento
+// Funzione per mostrare il report dopo il pagamento
 function showReport(type) {
+    // Prima calcola il report con i dati del quiz
+    if (typeof calculateAndShowReport === 'function') {
+        calculateAndShowReport(); // Usa la funzione esistente del quiz
+    }
+    
     document.getElementById('paywall').style.display = 'none';
     document.getElementById('report').style.display = 'block';
     
     if (type === 'premium') {
         console.log('Mostrando report premium completo');
+        // Mostra sezioni premium
+        const premiumContent = document.querySelector('.premium-content');
+        if (premiumContent) premiumContent.style.display = 'block';
     } else {
         console.log('Mostrando report base');
+        // Nascondi sezioni premium
+        const premiumContent = document.querySelector('.premium-content');
+        if (premiumContent) premiumContent.style.display = 'none';
     }
 }
 
