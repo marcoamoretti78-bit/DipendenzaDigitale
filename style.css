@@ -633,28 +633,58 @@ th {
 }
 /* CSS per stampa PDF */
 @media print {
-    /* Forza la visualizzazione delle barre di progresso */
-    .progress-bar div,
-    .score-bar div,
-    .distribution-bar {
-        background: #333 !important;
+    /* Forza i colori per tutti i browser */
+    * {
         -webkit-print-color-adjust: exact !important;
         color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     
-    /* Colori specifici per rischio */
+    /* Barre di progresso - COLORI FORZATI */
+    .progress-bar div {
+        background: #ff9800 !important;
+        color: #ff9800 !important;
+    }
+    
+    .score-bar div {
+        background: #333 !important;
+        color: #333 !important;
+    }
+    
+    .distribution-bar {
+        background: #ddd !important;
+        color: #ddd !important;
+    }
+    
+    /* Colori specifici per livello di rischio */
     .risk-low .progress-bar div,
     .risk-low .score-bar div {
         background: #4caf50 !important;
+        color: #4caf50 !important;
     }
     
     .risk-medium .progress-bar div,
     .risk-medium .score-bar div {
         background: #ff9800 !important;
+        color: #ff9800 !important;
     }
     
     .risk-high .progress-bar div,
     .risk-high .score-bar div {
+        background: #dc2626 !important;
+        color: #dc2626 !important;
+    }
+    
+    /* Distribuzione popolazione */
+    .distribution-item.risk-low .distribution-bar {
+        background: #4caf50 !important;
+    }
+    
+    .distribution-item.risk-medium .distribution-bar {
+        background: #ff9800 !important;
+    }
+    
+    .distribution-item.risk-high .distribution-bar {
         background: #dc2626 !important;
     }
     
