@@ -631,3 +631,38 @@ th {
     margin-top: 20px;
     font-weight: bold;
 }
+/* CSS per stampa PDF */
+@media print {
+    /* Forza la visualizzazione delle barre di progresso */
+    .progress-bar div,
+    .score-bar div,
+    .distribution-bar {
+        background: #333 !important;
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+    
+    /* Colori specifici per rischio */
+    .risk-low .progress-bar div,
+    .risk-low .score-bar div {
+        background: #4caf50 !important;
+    }
+    
+    .risk-medium .progress-bar div,
+    .risk-medium .score-bar div {
+        background: #ff9800 !important;
+    }
+    
+    .risk-high .progress-bar div,
+    .risk-high .score-bar div {
+        background: #dc2626 !important;
+    }
+    
+    /* Statistiche popolazione visibili */
+    .benchmark-stats,
+    .stat-value,
+    .distribution-item {
+        color: #000 !important;
+        background: #fff !important;
+    }
+}
