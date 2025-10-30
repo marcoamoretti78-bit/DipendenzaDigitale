@@ -1348,16 +1348,14 @@ if (premiumContent) {
             // Nasconde il pulsante per evitare che compaia nel PDF di stampa/salvataggio.
             downloadBtn.style.display = 'none';
 
-            // Nascondi anche il disclaimer se necessario
-            const disclaimer = document.querySelector('.disclaimer-box');
-            if (disclaimer) disclaimer.style.display = 'none';
+            
 
             // Chiama la funzione di stampa nativa del browser (funziona su mobile).
             window.print(); 
 
             // Ripristina la visualizzazione normale dopo la stampa
             downloadBtn.style.display = 'block';
-            if (disclaimer) disclaimer.style.display = 'block';
+        
         };
     }
 } 
