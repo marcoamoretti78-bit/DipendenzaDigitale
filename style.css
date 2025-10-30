@@ -640,10 +640,12 @@ th {
         print-color-adjust: exact !important;
     }
     
-    /* Barre di progresso - COLORI FORZATI */
-    .progress-bar div {
-        background: #ff9800 !important;
-        color: #ff9800 !important;
+    /* Barre di progresso - MANTIENI COLORI DINAMICI */
+#risk-progress-bar {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
     }
     
     .score-bar div {
