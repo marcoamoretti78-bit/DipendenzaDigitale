@@ -1487,7 +1487,7 @@ function initializePayPal() {
             return actions.order.capture().then(function(details) {
                 console.log('Pagamento Base completato:', details);
                 alert('Pagamento completato! Transaction ID: ' + details.id);
-                showReport('base');
+                showReport(window.quizResults, 'standard');
             });
         },
         onError: function(err) {
@@ -1513,7 +1513,7 @@ function initializePayPal() {
             return actions.order.capture().then(function(details) {
                 console.log('Pagamento Premium completato:', details);
                 alert('Pagamento Premium completato! Transaction ID: ' + details.id);
-                showReport('premium');
+                showReport(window.quizResults, 'premium');
             });
         },
         onError: function(err) {
@@ -1524,33 +1524,7 @@ function initializePayPal() {
 }
 
 
-// Funzione per mostrare il report dopo il pagamento
-function showReport(type) {
-    // Triggera il submit del form per calcolare il report
-    const form = document.getElementById('quiz-form');
-    const calculateBtn = document.getElementById('calculate-btn');
-    
-    if (form && calculateBtn) {
-        // Simula il click del bottone calcola
-        calculateBtn.click();
-        
-        // Dopo un breve delay, nascondi il paywall e mostra il report
-        setTimeout(() => {
-            document.getElementById('paywall').style.display = 'none';
-            document.getElementById('report').style.display = 'block';
-            
-            if (type === 'premium') {
-                console.log('Mostrando report premium completo');
-                const premiumContent = document.querySelector('.premium-content');
-                if (premiumContent) premiumContent.style.display = 'block';
-            } else {
-                console.log('Mostrando report base');
-                const premiumContent = document.querySelector('.premium-content');
-                if (premiumContent) premiumContent.style.display = 'none';
-            }
-        }, 500);
-    }
-}
+
 // Inizializza PayPal quando il paywall è mostrato
 document.addEventListener('DOMContentLoaded', function() {
     const paywall = document.getElementById('paywall');
