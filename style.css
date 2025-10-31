@@ -797,3 +797,28 @@ th {
         flex: 1;
     }
 }
+/* Fix Stripe Element Overlapping - FORZATO */
+.StripeElement {
+    padding: 25px !important;
+    min-height: 60px !important;
+    font-size: 18px !important;
+    line-height: 2 !important;
+    box-sizing: border-box !important;
+}
+
+.StripeElement--focus {
+    border-color: #635bff !important;
+}
+
+.StripeElement iframe {
+    min-height: 60px !important;
+}
+
+/* Forza stili per il contenuto interno di Stripe */
+#card-element-base,
+#card-element-premium {
+    min-height: 70px !important;
+    padding: 25px !important;
+    font-size: 18px !important;
+    line-height: 2 !important;
+}
