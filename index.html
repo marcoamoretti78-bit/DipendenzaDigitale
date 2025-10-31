@@ -17,6 +17,8 @@
 <meta property="og:image" content="assets/logo.png">
     <link rel="stylesheet" href="style.css">
         <script src="https://www.paypal.com/sdk/js?client-id=Acf1u1z8pMmmFMgjRwffsAo_URKgpPbl1QiyZl2F2I-VfxnFXYVdaVJKzmx4WRqQzm6_rvjRZj1SecsD&currency=EUR"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=Acf1u1z8pMmmFMgjRwffsAo_URKgpPbl1QiyZl2F2I-VfxnFXYVdaVJKzmx4WRqQzm6_rvjRZj1SecsD&currency=EUR"></script>
+<script src="https://js.stripe.com/v3/"></script>
 </head> 
 
 <body> 
@@ -77,15 +79,33 @@
             <h3 data-i18n="PAYWALL_H3">Ciao <span id="user-name-display"></span>, il Tuo Risultato è Pronto!</h3>
             <p data-i18n="PAYWALL_P">Per sbloccare il tuo report dettagliato, scegli l'opzione di acquisto qui sotto:</p>
             
-                        <div class="paywall-options">
+                                    <div class="paywall-options">
                 <div class="payment-option">
                     <h4 data-i18n="BTN_STANDARD">Report Base (€1.99)</h4>
-                    <div id="paypal-button-base"></div>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-base"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-base-btn" class="stripe-button">💳 Carta di Credito</button>
+                            <div id="stripe-base-form" class="stripe-form" style="display:none;">
+                                <div id="card-element-base"></div>
+                                <button id="stripe-base-submit" class="stripe-submit">Paga €1.99</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="payment-option">
                     <h4 data-i18n="BTN_PREMIUM">Report Premium (€7.99)</h4>
                     <p class="premium-subtitle" data-i18n="BTN_PREMIUM_SUB">(Include: Piano d'Azione, Priorità e Piano 7 Giorni)</p>
-                    <div id="paypal-button-premium"></div>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-premium"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-premium-btn" class="stripe-button">💳 Carta di Credito</button>
+                            <div id="stripe-premium-form" class="stripe-form" style="display:none;">
+                                <div id="card-element-premium"></div>
+                                <button id="stripe-premium-submit" class="stripe-submit">Paga €7.99</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p class="secure-note">🔒 Pagamenti sicuri con PayPal - Modalità Test</p>
