@@ -741,16 +741,18 @@ th {
 
 #card-element-base,
 #card-element-premium {
-    padding: 20px;
+    padding: 25px;
     border: 2px solid #ddd;
     border-radius: 8px;
     background: white;
     margin-bottom: 20px;
-    min-height: 50px;
-    font-size: 16px;
-    line-height: 1.5;
+    min-height: 80px;     /* ← PIÙ ALTO */
+    font-size: 18px;      /* ← PIÙ GRANDE */
+    line-height: 2;       /* ← PIÙ SPAZIO TRA LE RIGHE */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: border-color 0.3s ease;
+    display: flex;
+    align-items: center;  /* ← CENTRA IL CONTENUTO */
 }
 
 #card-element-base:focus-within,
