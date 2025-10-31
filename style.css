@@ -698,3 +698,91 @@ th {
         background: #fff !important;
     }
 }
+
+
+/* Stripe Integration Styles */
+.payment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stripe-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    background: #fafafa;
+}
+
+.stripe-button {
+    width: 100%;
+    padding: 12px 20px;
+    background: #635bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stripe-button:hover {
+    background: #5a52e8;
+    transform: translateY(-1px);
+}
+
+.stripe-form {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+#card-element-base,
+#card-element-premium {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    margin-bottom: 15px;
+}
+
+.stripe-submit {
+    width: 100%;
+    padding: 12px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stripe-submit:hover {
+    background: #218838;
+}
+
+.stripe-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .payment-buttons {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .stripe-section {
+        flex: 1;
+    }
+    
+    #paypal-button-base,
+    #paypal-button-premium {
+        flex: 1;
+    }
+}
