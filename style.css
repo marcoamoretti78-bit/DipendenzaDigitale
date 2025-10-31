@@ -746,13 +746,12 @@ th {
     border-radius: 8px;
     background: white;
     margin-bottom: 20px;
-    min-height: 80px;     /* ← PIÙ ALTO */
-    font-size: 18px;      /* ← PIÙ GRANDE */
-    line-height: 2;       /* ← PIÙ SPAZIO TRA LE RIGHE */
+    min-height: 70px;        /* Solo un po' più alto */
+    font-size: 16px;         /* Mantieni il font originale */
+    line-height: 1.5;        /* Line-height originale */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: border-color 0.3s ease;
-    display: flex;
-    align-items: center;  /* ← CENTRA IL CONTENUTO */
+    /* RIMUOVI display: flex e align-items: center */
 }
 
 #card-element-base:focus-within,
