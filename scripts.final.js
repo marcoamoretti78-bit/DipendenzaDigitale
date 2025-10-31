@@ -1544,3 +1544,145 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 // PAYPAL INTEGRATION - FINE BLOCCO
 // ========================================
+
+// ========================================
+// STRIPE INTEGRATION - INIZIO BLOCCO
+// ========================================
+
+// Inizializza Stripe
+const stripe = Stripe('pk_test_51SOCyNHv79M7lqpnrPIQLt3ZkY211p2OImBGmhsLrCaXaCMgzGo6ekiv8r4UTCiROOzO60ziCDu4oI0gsZ0hmvwv00YqH5N8Se');
+
+let cardElementBase = null;
+let cardElementPremium = null;
+
+// Inizializza Stripe Elements
+function initializeStripe() {
+    // Elements per report base
+    if (document.getElementById('card-element-base')) {
+        const elementsBase = stripe.elements();
+        cardElementBase = elementsBase.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#424770',
+                    '::placeholder': {
+                        color: '#aab7c4',
+                    },
+                },
+            },
+        });
+        cardElementBase.mount('#card-element-base');
+    }
+
+    // Elements per report premium
+    if (document.getElementById('card-element-premium')) {
+        const elementsPremium = stripe.elements();
+        cardElementPremium = elementsPremium.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#424770',
+                    '::placeholder': {
+                        color: '#aab7c4',
+                    },
+                },
+            },
+        });
+        cardElementPremium.mount('#card-element-premium');
+    }
+
+    // Event listeners per bottoni Stripe
+    const stripeBaseBtn = document.getElementById('stripe-base-btn');
+    const stripePremiumBtn = document.getElementById('stripe-premium-btn');
+
+    if (stripeBaseBtn) {
+        stripeBaseBtn.addEventListener('click', () => {
+            const form = document.getElementById('stripe-base-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    if (stripePremiumBtn) {
+        stripePremiumBtn.addEventListener('click', () => {
+            const form = document.getElementById('stripe-premium-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    // Event listeners per submit
+    const stripeBaseSubmit = document.getElementById('stripe-base-submit');
+    const stripePremiumSubmit = document.getElementById('stripe-premium-submit');
+
+    if (stripeBaseSubmit) {
+        stripeBaseSubmit.addEventListener('click', () => handleStripePayment('base', 199)); // €1.99 in centesimi
+    }
+
+    if (stripePremiumSubmit) {
+        stripePremiumSubmit.addEventListener('click', () => handleStripePayment('premium', 799)); // €7.99 in centesimi
+    }
+}
+
+// Gestisce il pagamento Stripe
+async function handleStripePayment(type, amount) {
+    const cardElement = type === 'base' ? cardElementBase : cardElementPremium;
+    const submitBtn = document.getElementById(`stripe-${type}-submit`);
+    
+    if (!cardElement) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Elaborando...';
+
+    try {
+        // Crea Payment Intent
+        const response = await fetch('/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                currency: 'eur'
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Errore server');
+        }
+
+        const { client_secret } = await response.json();
+
+        // Conferma il pagamento
+        const { error, paymentIntent } = await stripe.confirmCardPayment(client_secret, {
+            payment_method: {
+                card: cardElement,
+            }
+        });
+
+        if (error) {
+            console.error('Errore Stripe:', error);
+            alert('Errore nel pagamento: ' + error.message);
+        } else {
+            console.log('Pagamento Stripe completato:', paymentIntent);
+            alert('Pagamento completato! ID: ' + paymentIntent.id);
+            showReport(window.quizResults, type);
+        }
+    } catch (error) {
+        console.error('Errore:', error);
+        alert('Errore di connessione. Usa PayPal per ora.');
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = type === 'base' ? 'Paga €1.99' : 'Paga €7.99';
+}
+
+// Modifica l'inizializzazione per includere Stripe
+const originalInitializePayPal = initializePayPal;
+initializePayPal = function() {
+    originalInitializePayPal();
+    setTimeout(initializeStripe, 200);
+};
+
+// ========================================
+// STRIPE INTEGRATION - FINE BLOCCO
+// ========================================
+
