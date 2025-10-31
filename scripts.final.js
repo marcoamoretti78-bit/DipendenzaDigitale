@@ -1560,15 +1560,28 @@ function initializeStripe() {
     // Elements per report base
     if (document.getElementById('card-element-base')) {
         const elementsBase = stripe.elements();
-        cardElementBase = elementsBase.create('card', {
+                cardElementBase = elementsBase.create('card', {
             style: {
                 base: {
-                    fontSize: '16px',
-                    color: '#424770',
+                    fontSize: '18px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#333',
+                    lineHeight: '1.8',
+                    padding: '15px',
                     '::placeholder': {
-                        color: '#aab7c4',
+                        color: '#999',
+                        fontSize: '16px'
                     },
+                    iconColor: '#666'
                 },
+                invalid: {
+                    color: '#dc2626',
+                    iconColor: '#dc2626'
+                },
+                complete: {
+                    color: '#28a745',
+                    iconColor: '#28a745'
+                }
             },
         });
         cardElementBase.mount('#card-element-base');
@@ -1577,15 +1590,28 @@ function initializeStripe() {
     // Elements per report premium
     if (document.getElementById('card-element-premium')) {
         const elementsPremium = stripe.elements();
-        cardElementPremium = elementsPremium.create('card', {
+                cardElementPremium = elementsPremium.create('card', {
             style: {
                 base: {
-                    fontSize: '16px',
-                    color: '#424770',
+                    fontSize: '18px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#333',
+                    lineHeight: '1.8',
+                    padding: '15px',
                     '::placeholder': {
-                        color: '#aab7c4',
+                        color: '#999',
+                        fontSize: '16px'
                     },
+                    iconColor: '#666'
                 },
+                invalid: {
+                    color: '#dc2626',
+                    iconColor: '#dc2626'
+                },
+                complete: {
+                    color: '#28a745',
+                    iconColor: '#28a745'
+                }
             },
         });
         cardElementPremium.mount('#card-element-premium');
