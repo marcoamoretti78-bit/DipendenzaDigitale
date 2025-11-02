@@ -1559,6 +1559,7 @@ let cardElementPremium = null;
 function initializeStripe() {
     // Elements per report base
     if (document.getElementById('card-element-base')) {
+        const elementsBase = stripe.elements();
        cardElementBase = elementsBase.create('card', {
     style: {
         base: {
