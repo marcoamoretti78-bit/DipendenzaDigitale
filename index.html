@@ -87,9 +87,22 @@
                         <div class="stripe-section">
                             <button id="stripe-base-btn" class="stripe-button">💳 Carta di Credito</button>
                             <div id="stripe-base-form" class="stripe-form" style="display:none;">
-                                <div id="card-element-base"></div>
-                                <button id="stripe-base-submit" class="stripe-submit">Paga €1.99</button>
-                            </div>
+    <div class="stripe-field">
+        <label>Numero carta</label>
+        <div id="card-number-base"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/AA</label>
+            <div id="card-expiry-base"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-base"></div>
+        </div>
+    </div>
+    <button id="stripe-base-submit" class="stripe-submit">Paga €1.99</button>
+</div>
                         </div>
                     </div>
                 </div>
@@ -101,9 +114,22 @@
                         <div class="stripe-section">
                             <button id="stripe-premium-btn" class="stripe-button">💳 Carta di Credito</button>
                             <div id="stripe-premium-form" class="stripe-form" style="display:none;">
-                                <div id="card-element-premium"></div>
-                                <button id="stripe-premium-submit" class="stripe-submit">Paga €7.99</button>
-                            </div>
+    <div class="stripe-field">
+        <label>Numero carta</label>
+        <div id="card-number-premium"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/AA</label>
+            <div id="card-expiry-premium"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-premium"></div>
+        </div>
+    </div>
+    <button id="stripe-premium-submit" class="stripe-submit">Paga €7.99</button>
+</div>
                         </div>
                     </div>
                 </div>
