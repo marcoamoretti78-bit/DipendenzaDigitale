@@ -739,27 +739,6 @@ th {
     border-top: 1px solid #e0e0e0;
 }
 
-#card-element-base,
-#card-element-premium {
-    padding: 25px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    margin-bottom: 20px;
-    min-height: 70px;        /* Solo un po' più alto */
-    font-size: 16px;         /* Mantieni il font originale */
-    line-height: 1.5;        /* Line-height originale */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: border-color 0.3s ease;
-    /* RIMUOVI display: flex e align-items: center */
-}
-
-#card-element-base:focus-within,
-#card-element-premium:focus-within {
-    border-color: #635bff;
-    box-shadow: 0 2px 8px rgba(99, 91, 255, 0.2);
-}
-
 .stripe-submit {
     width: 100%;
     padding: 12px 20px;
@@ -771,6 +750,7 @@ th {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 15px;
 }
 
 .stripe-submit:hover {
@@ -780,6 +760,55 @@ th {
 .stripe-submit:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+
+/* Stili per i campi Stripe verticali */
+.stripe-field {
+    margin-bottom: 15px;
+}
+
+.stripe-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+.stripe-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.stripe-row .stripe-field {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Container per gli elementi Stripe individuali */
+#card-number-base,
+#card-expiry-base, 
+#card-cvc-base,
+#card-number-premium,
+#card-expiry-premium,
+#card-cvc-premium {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    min-height: 45px;
+    transition: border-color 0.3s ease;
+}
+
+#card-number-base:focus-within,
+#card-expiry-base:focus-within,
+#card-cvc-base:focus-within,
+#card-number-premium:focus-within,
+#card-expiry-premium:focus-within,
+#card-cvc-premium:focus-within {
+    border-color: #635bff;
+    box-shadow: 0 2px 8px rgba(99, 91, 255, 0.2);
 }
 
 /* Responsive */
@@ -797,29 +826,4 @@ th {
     #paypal-button-premium {
         flex: 1;
     }
-}
-/* Fix Stripe Element Overlapping - FORZATO */
-.StripeElement {
-    padding: 25px !important;
-    min-height: 60px !important;
-    font-size: 18px !important;
-    line-height: 2 !important;
-    box-sizing: border-box !important;
-}
-
-.StripeElement--focus {
-    border-color: #635bff !important;
-}
-
-.StripeElement iframe {
-    min-height: 60px !important;
-}
-
-/* Forza stili per il contenuto interno di Stripe */
-#card-element-base,
-#card-element-premium {
-    min-height: 70px !important;
-    padding: 25px !important;
-    font-size: 18px !important;
-    line-height: 2 !important;
 }
