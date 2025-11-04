@@ -1557,64 +1557,95 @@ let cardElementPremium = null;
 
 // Inizializza Stripe Elements
 function initializeStripe() {
-    // Elements per report base
-    if (document.getElementById('card-element-base')) {
+    // Elements per report base - SEPARATI
+    if (document.getElementById('card-number-base')) {
         const elementsBase = stripe.elements();
-       cardElementBase = elementsBase.create('card', {
-    style: {
-        base: {
-            fontSize: '16px',
-            fontFamily: 'Arial, sans-serif', 
-            color: '#424770',
-            lineHeight: '1.4',
-            '::placeholder': {
-                color: '#aab7c4',
-                fontSize: '14px'
-            },
-            iconColor: '#666'
-        },
-        invalid: {
-            color: '#dc2626',
-            iconColor: '#dc2626'
-        },
-        complete: {
-            color: '#28a745',
-            iconColor: '#28a745'
-        }
-    },
-    hidePostalCode: true
-});
-        cardElementBase.mount('#card-element-base');
+        
+        // Numero carta
+        const cardNumberBase = elementsBase.create('cardNumber', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        // Data scadenza
+        const cardExpiryBase = elementsBase.create('cardExpiry', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        // CVC
+        const cardCvcBase = elementsBase.create('cardCvc', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        cardNumberBase.mount('#card-number-base');
+        cardExpiryBase.mount('#card-expiry-base');
+        cardCvcBase.mount('#card-cvc-base');
+        
+        cardElementBase = cardNumberBase;
     }
 
-    // Elements per report premium
-    if (document.getElementById('card-element-premium')) {
+    // Elements per report premium - SEPARATI
+    if (document.getElementById('card-number-premium')) {
         const elementsPremium = stripe.elements();
-                cardElementPremium = elementsPremium.create('card', {
-    style: {
-        base: {
-            fontSize: '16px',
-            fontFamily: 'Arial, sans-serif', 
-            color: '#424770',
-            lineHeight: '1.4',
-            '::placeholder': {
-                color: '#aab7c4',
-                fontSize: '14px'
-            },
-            iconColor: '#666'
-        },
-        invalid: {
-            color: '#dc2626',
-            iconColor: '#dc2626'
-        },
-        complete: {
-            color: '#28a745',
-            iconColor: '#28a745'
-        }
-    },
-    hidePostalCode: true
-});
-        cardElementPremium.mount('#card-element-premium');
+        
+        const cardNumberPremium = elementsPremium.create('cardNumber', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        const cardExpiryPremium = elementsPremium.create('cardExpiry', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        const cardCvcPremium = elementsPremium.create('cardCvc', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#424770',
+                    '::placeholder': { color: '#aab7c4' }
+                }
+            }
+        });
+        
+        cardNumberPremium.mount('#card-number-premium');
+        cardExpiryPremium.mount('#card-expiry-premium');
+        cardCvcPremium.mount('#card-cvc-premium');
+        
+        cardElementPremium = cardNumberPremium;
     }
 
     // Event listeners per bottoni Stripe
@@ -1640,11 +1671,11 @@ function initializeStripe() {
     const stripePremiumSubmit = document.getElementById('stripe-premium-submit');
 
     if (stripeBaseSubmit) {
-        stripeBaseSubmit.addEventListener('click', () => handleStripePayment('base', 199)); // €1.99 in centesimi
+        stripeBaseSubmit.addEventListener('click', () => handleStripePayment('base', 199));
     }
 
     if (stripePremiumSubmit) {
-        stripePremiumSubmit.addEventListener('click', () => handleStripePayment('premium', 799)); // €7.99 in centesimi
+        stripePremiumSubmit.addEventListener('click', () => handleStripePayment('premium', 799));
     }
 }
 
@@ -1711,4 +1742,3 @@ initializePayPal = function() {
 // ========================================
 // STRIPE INTEGRATION - FINE BLOCCO
 // ========================================
-
