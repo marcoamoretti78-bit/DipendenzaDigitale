@@ -1549,6 +1549,25 @@ document.addEventListener('DOMContentLoaded', function() {
 // STRIPE INTEGRATION - INIZIO BLOCCO
 // ========================================
 
+// Simula il backend creando direttamente PaymentIntent
+async function createPaymentIntentDirect(amount) {
+    // Per testing su GitHub Pages, simuliamo la creazione del PaymentIntent
+    // In produzione, questo dovrebbe essere fatto nel backend
+    
+    try {
+        // Simula il backend per testing senza chiamate API reali
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simula elaborazione
+        
+        // Crea un client_secret simulato per il testing
+        const mockClientSecret = `pi_test_${Date.now()}_secret_${Math.random().toString(36).substr(2, 9)}`;
+        
+        return { client_secret: mockClientSecret };
+        
+    } catch (error) {
+        console.error('Errore creazione PaymentIntent:', error);
+        throw new Error('Impossibile creare il pagamento');
+    }
+}
 // Inizializza Stripe
 const stripe = Stripe('pk_test_51SOCyNHv79M7lqpnrPIQLt3ZkY211p2OImBGmhsLrCaXaCMgzGo6ekiv8r4UTCiROOzO60ziCDu4oI0gsZ0hmvwv00YqH5N8Se');
 
@@ -1690,24 +1709,8 @@ async function handleStripePayment(type, amount) {
     submitBtn.textContent = 'Elaborando...';
 
     try {
-        // Crea Payment Intent
-        const response = await fetch('/create-payment-intent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                amount: amount,
-                currency: 'eur'
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Errore server');
-        }
-
-        const { client_secret } = await response.json();
-
+        // SIMULAZIONE: Crea Payment Intent direttamente con Stripe
+        const { client_secret } = await createPaymentIntentDirect(amount);
         // Conferma il pagamento
         const { error, paymentIntent } = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
