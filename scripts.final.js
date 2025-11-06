@@ -1698,7 +1698,7 @@ function initializeStripe() {
     }
 }
 
-// Gestisce il pagamento Stripe
+// Gestisce il pagamento Stripe (VERSIONE SIMULATA PER TESTING)
 async function handleStripePayment(type, amount) {
     const cardElement = type === 'base' ? cardElementBase : cardElementPremium;
     const submitBtn = document.getElementById(`stripe-${type}-submit`);
@@ -1709,23 +1709,21 @@ async function handleStripePayment(type, amount) {
     submitBtn.textContent = 'Elaborando...';
 
     try {
-        // SIMULAZIONE: Crea Payment Intent direttamente con Stripe
-        const { client_secret } = await createPaymentIntentDirect(amount);
-        // Conferma il pagamento
-        const { error, paymentIntent } = await stripe.confirmCardPayment(client_secret, {
-            payment_method: {
-                card: cardElement,
-            }
-        });
-
-        if (error) {
-            console.error('Errore Stripe:', error);
-            alert('Errore nel pagamento: ' + error.message);
-        } else {
-            console.log('Pagamento Stripe completato:', paymentIntent);
-            alert('Pagamento completato! ID: ' + paymentIntent.id);
-            showReport(window.quizResults, type);
-        }
+        // SIMULAZIONE COMPLETA per GitHub Pages - NO chiamate API reali
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula elaborazione 2 secondi
+        
+        // Simula un pagamento sempre riuscito per testing
+        const mockPaymentIntent = {
+            id: `pi_test_${Date.now()}`,
+            status: 'succeeded',
+            amount: amount,
+            currency: 'eur'
+        };
+        
+        console.log('Pagamento Stripe simulato completato:', mockPaymentIntent);
+        alert(`Pagamento di €${(amount/100).toFixed(2)} completato! ID: ${mockPaymentIntent.id}`);
+        showReport(window.quizResults, type === 'base' ? 'standard' : 'premium');
+        
     } catch (error) {
         console.error('Errore:', error);
         alert('Errore di connessione. Usa PayPal per ora.');
@@ -1734,7 +1732,6 @@ async function handleStripePayment(type, amount) {
     submitBtn.disabled = false;
     submitBtn.textContent = type === 'base' ? 'Paga €1.99' : 'Paga €7.99';
 }
-
 // Modifica l'inizializzazione per includere Stripe
 const originalInitializePayPal = initializePayPal;
 initializePayPal = function() {
