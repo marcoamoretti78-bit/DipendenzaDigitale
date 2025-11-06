@@ -1551,17 +1551,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Simula il backend creando direttamente PaymentIntent
 async function createPaymentIntentDirect(amount) {
-    // Per testing su GitHub Pages, simuliamo la creazione del PaymentIntent
-    // In produzione, questo dovrebbe essere fatto nel backend
-    
     try {
-        // Simula il backend per testing senza chiamate API reali
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Simula elaborazione
-        
-        // Crea un client_secret simulato per il testing
-        const mockClientSecret = `pi_test_${Date.now()}_secret_${Math.random().toString(36).substr(2, 9)}`;
-        
-        return { client_secret: mockClientSecret };
+        // Chiamata alla funzione Netlify reale
+        const response = await fetch('https://startling-pothos-ce75f3.netlify.app/.netlify/functions/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount, // Il valore è già in centesimi
+                currency: 'eur',
+                metadata: {
+                    product: amount === 199 ? 'basic_report' : 'premium_report',
+                    timestamp: new Date().toISOString()
+                }
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Network response was not ok');
+        }
+
+        const data = await response.json();
+        return {
+            client_secret: data.clientSecret,
+            payment_intent_id: data.paymentIntentId
+        };
         
     } catch (error) {
         console.error('Errore creazione PaymentIntent:', error);
@@ -1698,7 +1714,7 @@ function initializeStripe() {
     }
 }
 
-// Gestisce il pagamento Stripe (VERSIONE SIMULATA PER TESTING)
+// Gestisce il pagamento Stripe (VERSIONE REALE CON NETLIFY FUNCTIONS)
 async function handleStripePayment(type, amount) {
     const cardElement = type === 'base' ? cardElementBase : cardElementPremium;
     const submitBtn = document.getElementById(`stripe-${type}-submit`);
@@ -1709,28 +1725,54 @@ async function handleStripePayment(type, amount) {
     submitBtn.textContent = 'Elaborando...';
 
     try {
-        // SIMULAZIONE COMPLETA per GitHub Pages - NO chiamate API reali
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula elaborazione 2 secondi
+        // Crea il PaymentIntent tramite Netlify Functions
+        const { client_secret, payment_intent_id } = await createPaymentIntentDirect(amount);
         
-        // Simula un pagamento sempre riuscito per testing
-        const mockPaymentIntent = {
-            id: `pi_test_${Date.now()}`,
-            status: 'succeeded',
-            amount: amount,
-            currency: 'eur'
-        };
-        
-        console.log('Pagamento Stripe simulato completato:', mockPaymentIntent);
-        alert(`Pagamento di €${(amount/100).toFixed(2)} completato! ID: ${mockPaymentIntent.id}`);
-        showReport(window.quizResults, type === 'base' ? 'standard' : 'premium');
+        // Conferma il pagamento con Stripe Elements
+        const { error, paymentIntent } = await stripe.confirmCardPayment(client_secret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: window.quizResults?.userName || 'Cliente Quiz Dipendenza Digitale',
+                },
+            }
+        });
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        if (paymentIntent.status === 'succeeded') {
+            console.log('Pagamento Stripe completato:', paymentIntent);
+            alert(`Pagamento di €${(amount/100).toFixed(2)} completato! ID: ${paymentIntent.id}`);
+            showReport(window.quizResults, type === 'base' ? 'standard' : 'premium');
+            
+            // Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'purchase', {
+                    transaction_id: paymentIntent.id,
+                    value: amount/100,
+                    currency: 'EUR',
+                    items: [{
+                        item_id: type + '_report',
+                        item_name: type === 'base' ? 'Report Base' : 'Report Premium',
+                        category: 'Digital Report',
+                        quantity: 1,
+                        price: amount/100
+                    }]
+                });
+            }
+        } else {
+            throw new Error('Il pagamento non è stato completato correttamente');
+        }
         
     } catch (error) {
-        console.error('Errore:', error);
-        alert('Errore di connessione. Usa PayPal per ora.');
+        console.error('Errore nel pagamento Stripe:', error);
+        alert(`Errore nel pagamento: ${error.message}`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = type === 'base' ? 'Paga €1.99' : 'Paga €7.99';
     }
-
-    submitBtn.disabled = false;
-    submitBtn.textContent = type === 'base' ? 'Paga €1.99' : 'Paga €7.99';
 }
 // Modifica l'inizializzazione per includere Stripe
 const originalInitializePayPal = initializePayPal;
