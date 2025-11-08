@@ -1585,7 +1585,7 @@ async function createPaymentIntentDirect(amount) {
     }
 }
 // Inizializza Stripe
-const stripe = Stripe('pk_test_51SOCyNHv79M7lqpnrPIQLt3ZkY211p2OImBGmhsLrCaXaCMgzGo6ekiv8r4UTCiROOzO60ziCDu4oI0gsZ0hmvwv00YqH5N8Se');
+const stripe = Stripe('pk_live_51SOCy8H5Ur2FzId0h69aoH0AM2GWynOE2VbH6oZkGdBWgdbOn5vO03LccAgMnDFnRIQGZife19IuOyHCMBdh4t6C00QHopKY3o');
 
 let cardElementBase = null;
 let cardElementPremium = null;
