@@ -1553,7 +1553,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function createPaymentIntentDirect(amount) {
     try {
         // Chiamata alla funzione Netlify reale
-        const response = await fetch('https://euphonious-buttercream-ca532d.netlify.app/.netlify/functions/create-payment-intent', {
+        const response = await fetch('https://animated-chebakia-dcfdd3.netlify.app/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
