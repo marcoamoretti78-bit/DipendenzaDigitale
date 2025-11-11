@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Sucht Test - Entdecke dein Smartphone und Social Media Abhängigkeits-Level</title>
+        <!-- SEO Meta Tags -->
+<meta name="description" content="Professioneller Test zur Bewertung der digitalen Sucht. Entdecke dein Risiko-Level mit 20 Fragen und erhalte einen personalisierten Bericht mit praktischen Tipps.">
+<meta name="keywords" content="digital sucht test, smartphone sucht, digital detox, sucht bewertung, nomophobie">
+<meta name="author" content="Digitale Sucht">
+
+<!-- Open Graph für Social Media -->
+<meta property="og:title" content="Digital Sucht Test - Bewerte deine Smartphone-Beziehung">
+<meta property="og:description" content="Kostenloses 20-Fragen-Quiz um dein digitales Sucht-Level zu entdecken. Personalisierter Bericht inklusive.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dipendenzadigitale.com/index-de.html">
+<meta property="og:image" content="https://dipendenzadigitale.com/assets/logo.png">
+    <link rel="stylesheet" href="style.css">
+        <script src="https://www.paypal.com/sdk/js?client-id=AaUPlr54eLzW3R2tmVyAmVzYTRjtuqwNoR0yR4gt4U4fQsQVDdoa0molLdpZW1ykWOB8wAvU5o9y_g1e&currency=EUR"></script>
+<script src="https://js.stripe.com/v3/"></script>
+</head> 
+
+<body> 
+    <div class="navbar">
+        <img src="assets/logo.png" alt="Digitale Sucht Logo" class="navbar-logo">
+        <span class="title" data-i18n="FORM_TITLE">Bewertung der Digitalen Sucht</span>
+        
+        <div id="language-selector"></div> 
+    </div>
+
+       <div class="container">
+        
+        <!-- ⭐ HOMEPAGE BEREICHE ⭐ -->
+        <section class="hero-section">
+            <h1 data-i18n="HERO_TITLE">🧠 Entdecke deine Digitale Beziehung</h1>
+            <p class="hero-subtitle" data-i18n="HERO_SUBTITLE">Wissenschaftlicher Test zur Bewertung deines digitalen Sucht-Levels</p>
+        </section>
+
+        <section class="info-section">
+            <h2 data-i18n="RISK_QUESTION">⚠️ Bist du gefährdet für digitale Sucht?</h2>
+            <div class="risk-grid">
+                <div class="risk-item" data-i18n="RISK_ITEM_1">📱 Ständiges Handy-Checken</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_2">😴 Schlaf gestört durch Benachrichtigungen</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_3">🧠 Konzentrationsschwierigkeiten</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_4">😰 Angst ohne Smartphone</div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 data-i18n="CTA_DISCOVER">Entdecke dein Risiko-Level</h2>
+            <p data-i18n="CTA_DESCRIPTION">Schneller 3-Minuten-Test • Entdecke dein Risiko-Level</p>
+            <button id="scroll-to-quiz-btn" class="btn-cta-green" data-i18n="CTA_START_TEST">🎯 Test Jetzt Starten</button>
+        </section>
+               
+               
+           <!-- SEO INHALT -->
+
+        <!-- Einfaches Navigationsmenü -->
+        <div class="nav-menu" style="text-align: center; margin: 20px 0; padding: 15px 0; border-bottom: 1px solid #eee;">
+            <a href="index-de.html" style="text-decoration: none; color: #333; font-weight: 500;">🏠 Startseite</a> 
+            <span style="margin: 0 15px; color: #ccc;">|</span>
+            <a href="about-de.html" style="text-decoration: none; color: #333; font-weight: 500;">👥 Über Uns</a>
+        </div>
+
+        <section class="seo-content-section">
+            <h2>🧠 Wie der Digital Sucht Test Funktioniert</h2>
+            <p>Die <strong>digitale Sucht</strong> ist ein immer weiter verbreitetes Phänomen, das Millionen von Menschen betrifft. Unser <strong>Smartphone-Sucht-Test</strong> verwendet wissenschaftliche Kriterien zur Bewertung von:</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h3>📱 Nomophobie</h3>
+                    <p>Angst davor, ohne Smartphone oder Internetverbindung zu sein</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>🧠 Zwanghafter Kontroll</h3>
+                    <p>Häufigkeit des Überprüfens von Benachrichtigungen und sozialen Medien</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>😴 Schlaf-Auswirkungen</h3>
+                    <p>Schlafqualität und nächtliche Gerätenutzung</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>🎯 Konzentration</h3>
+                    <p>Fähigkeit zur Fokussierung ohne digitale Ablenkungen</p>
+                </div>
+            </div>
+            
+            <h3>Warum ist es wichtig, digitale Sucht zu bewerten?</h3>
+            <p>Laut aktuellen Studien kann der übermäßige Gebrauch von Smartphones und sozialen Medien verursachen:</p>
+            <ul>
+                <li><strong>Angst und Stress</strong> bei Verbindungslosigkeit</li>
+                <li><strong>Schlafstörungen</strong> und Konzentrationsschwierigkeiten</li>
+                <li><strong>Soziale Isolation</strong> und Beziehungsprobleme</li>
+                <li><strong>Verringerte Produktivität</strong> bei Arbeit und Schule</li>
+            </ul>
+            
+            <p>Unser <strong>Digital-Detox-Test</strong> hilft dir, problematische Verhaltensweisen zu identifizieren und bietet <strong>personalisierte Strategien</strong> zur Verbesserung deines digitalen Wohlbefindens.</p>
+        </section>
+
+        <!-- ⭐ FAQ SEO ⭐ -->
+        <section class="faq-section">
+            <h2>🤔 Häufig gestellte Fragen zum Digital Sucht Test</h2>
+            
+            <div class="faq-item">
+                <h3>Wie lange dauert der Digital Sucht Test?</h3>
+                <p>Der Test dauert etwa <strong>3-5 Minuten</strong> und besteht aus 20 wissenschaftlich validierten Fragen zur Bewertung deiner Beziehung zur Technologie.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Was ist Nomophobie?</h3>
+                <p><strong>Nomophobie</strong> (no-mobile-phone phobia) ist die irrationale Angst, ohne Handy oder Internetverbindung zu sein. Sie betrifft etwa 66% der erwachsenen Bevölkerung.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Wie heilt man Smartphone-Sucht?</h3>
+                <p>Smartphone-Sucht kann bewältigt werden mit: <strong>schrittweisem Digital-Detox</strong>, Zeitlimits setzen, nicht-essentielle Benachrichtigungen deaktivieren und alternative Offline-Aktivitäten.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Was sind die Symptome digitaler Sucht?</h3>
+                <p>Zu den Symptomen gehören: zwanghaftes Handy-Überprüfen, Angst bei Verbindungslosigkeit, Schlafstörungen, Konzentrationsschwierigkeiten und soziale Isolation.</p>
+            </div>
+        </section>
+               
+        <!-- ⭐ QUIZ BEREICH ⭐ -->
+        <div id="quiz-section">
+            <form id="quiz-form">
+                <div class="intro">
+                    <h2 data-i18n="INTRO_H2">🎯 Digital Sucht Test</h2>
+                    <p data-i18n="INTRO_P">Beantworte ehrlich die 20 Fragen, um dein Risiko-Level zu entdecken und deinen personalisierten Aktions-Bericht zu erhalten. Der Test dauert etwa 3-5 Minuten.</p>
+                    <p><strong data-i18n="QUIZ_ANONYMOUS">💡 Der Test ist völlig anonym</strong></p>
+                </div>
+
+                <div class="name-field">
+                    <span data-i18n="INTRO_NAME_SPAN">Gib deinen Namen ein (optional, um den Bericht zu personalisieren):</span>
+                    <input type="text" name="userName" id="userName" placeholder="Dein Name" autocomplete="name">
+                </div>
+                <div id="quiz-questions-container">
+                    </div>
+                
+                <div class="actions">
+                    <button type="submit" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Ergebnis Berechnen</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="paywall" class="paywall" style="display: none;">
+            <h3 data-i18n="PAYWALL_H3">Hallo <span id="user-name-display"></span>, dein Ergebnis ist bereit!</h3>
+            <p data-i18n="PAYWALL_P">Um deinen detaillierten Bericht freizuschalten, wähle die Kaufoption unten:</p>
+            
+                                    <div class="paywall-options">
+                <div class="payment-option">
+                    <h4 data-i18n="BTN_STANDARD">Basis Bericht (€1.99)</h4>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-base"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-base-btn" class="stripe-button">💳 Kreditkarte</button>
+                            <div id="stripe-base-form" class="stripe-form" style="display:none;">
+    <div class="stripe-field">
+        <label>Kartennummer</label>
+        <div id="card-number-base"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/JJ</label>
+            <div id="card-expiry-base"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-base"></div>
+        </div>
+    </div>
+    <button id="stripe-base-submit" class="stripe-submit">Zahle €1.99</button>
+</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-option">
+                    <h4 data-i18n="BTN_PREMIUM">Premium Bericht (€7.99)</h4>
+                    <p class="premium-subtitle" data-i18n="BTN_PREMIUM_SUB">(Enthält: Aktionsplan, Prioritäten und 7-Tage-Plan)</p>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-premium"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-premium-btn" class="stripe-button">💳 Kreditkarte</button>
+                            <div id="stripe-premium-form" class="stripe-form" style="display:none;">
+    <div class="stripe-field">
+        <label>Kartennummer</label>
+        <div id="card-number-premium"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/JJ</label>
+            <div id="card-expiry-premium"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-premium"></div>
+        </div>
+    </div>
+    <button id="stripe-premium-submit" class="stripe-submit">Zahle €7.99</button>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="secure-note">🔒 Sichere Zahlungen mit PayPal - Live Modus</p>
+        </div>
+
+        <div id="report" class="report-container" style="display: none;">
+            
+            <header class="report-header">
+                <h1 data-i18n="TITLE">Personalisierter Digital Detox Bericht</h1>
+                <p data-i18n="SUBTITLE">Finale Analyse (20 Fragen)</p>
+                <span id="report-date" class="date-tag" data-i18n="DATE">Datum:</span>
+            </header>
+
+            <section class="result-summary">
+                <h2 data-i18n="score_title">Deine Punktzahl</h2>
+                <div class="score-grid">
+                        <p id="motivational-text" class="motivational-text"></p>
+                    <div class="score-box total-score">
+                        <span data-i18n="SCORE_LABEL">Punktzahl</span>
+                        <div class="score-value">
+                            <span id="final-score">0</span> / <span id="max-score">60</span>
+                        </div>
+                    </div>
+                    <div id="risk-level-container" class="score-box risk-low">
+                        <span data-i18n="RISK_LABEL">Risiko</span>
+                        <div class="risk-value">
+                            <span id="risk-level">Geringes Risiko</span>
+                                <span id="risk-badge" class="risk-badge"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="progress-bar-container">
+    <span data-i18n="RISK_VISUAL_LABEL">Risiko-Level (visuell):</span>
+    <div class="progress-bar" style="background:#eee; border-radius:8px; width:100%; height:24px; margin:8px 0;">
+        <div id="risk-progress-bar" style="width:0%; height:24px; border-radius:8px;"></div>
+    </div>
+</div>
+                            <section class="population-benchmark">
+                <h3 data-i18n="BENCHMARK_TITLE">📊 Bevölkerungsvergleich</h3>
+                <div class="benchmark-stats">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="POPULATION_AVERAGE">Durchschnittliche Bevölkerungspunktzahl:</span>
+                        <span class="stat-value">28/60 Punkte</span>
+                    </div>
+                    <div class="benchmark-distribution">
+                        <div class="distribution-item risk-low">
+                            <span data-i18n="BENCHMARK_LOW">35% - Geringes Risiko</span>
+                            <div class="distribution-bar" style="width: 35%;"></div>
+                        </div>
+                        <div class="distribution-item risk-medium">
+                            <span data-i18n="BENCHMARK_MEDIUM">45% - Mittleres Risiko</span>
+                            <div class="distribution-bar" style="width: 45%;"></div>
+                        </div>
+                        <div class="distribution-item risk-high">
+                            <span data-i18n="BENCHMARK_HIGH">20% - Hohes Risiko</span>
+                            <div class="distribution-bar" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="profile-analysis">
+                <h2 data-i18n="PROFILE_TITLE">Dein Digitales Sucht-Profil</h2>
+                                
+                <p id="profile-text"></p>
+                <hr>
+                <h3 data-i18n="ANALYSIS_TITLE">Analyse und Personalisierte Ratschläge</h3>
+                <p id="analysis-text"></p>
+            </section>
+            
+            <section class="radar-section">
+                <h2 data-i18n="RADAR_TITLE">Detaillierte Analyse nach Risikobereich</h2>
+                <div class="chart-container">
+                    <canvas id="riskRadarChart"></canvas>
+                </div>
+                
+                <h3 data-i18n="IMPACT_TITLE">Detaillierte Zusammenfassung der Auswirkungspunkte</h3>
+                <ul id="impact-list" class="impact-list">
+                </ul>
+            </section>
+
+            <section class="premium-content">
+                <h2 data-i18n="PRIORITY_PLAN_TITLE">Dein Priorisierter Aktionsplan</h2>
+                <div id="priority-action">
+                </div>
+                
+                <h2 data-i18n="DAYS_PLAN_TITLE">7-Tage Digital Detox Plan</h2>
+                <ul id="days-plan-list" class="days-plan">
+                </ul>
+                
+                <h2 data-i18n="RESOURCES_TITLE">Empfohlene Ressourcen</h2>
+                <div id="resources-text" class="resources-box">
+                </div>
+            </section>
+
+            <section class="detail-answers">
+                <h2 data-i18n="answers_title">Deine Detaillierten Quiz-Antworten</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="QUIZ_Q_COL">Frage</th>
+                            <th data-i18n="QUIZ_A_COL">Gegebene Antwort</th>
+                            <th data-i18n="QUIZ_S_COL">Punktzahl</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quiz-answers-body">
+                    </tbody>
+                </table>
+            </section>
+
+            <div class="disclaimer-box">
+                <p data-i18n="DISCLAIMER">Haftungsausschluss: Dieser Bericht dient nur zu Informationszwecken und ersetzt keine professionelle Beratung.</p>
+            </div>
+            
+            <div class="actions">
+                <button id="download-pdf-btn" class="btn primary">PDF-Bericht Herunterladen</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 Digitale Sucht. Alle Rechte vorbehalten. | <a href="index-de.html">Startseite</a> | <a href="about-de.html">Über Uns</a>
+    </div>
+    
+       <!-- Chart.js für Radar-Diagramm laden -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
+    
+    <script src="scripts.final.js?v=20251008"></script>
+    
+  
+    
+    <script>
+// Sanftes Scrollen zum Quiz (OHNE show/hide)
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollToQuizBtn = document.getElementById('scroll-to-quiz-btn');
+    const quizSection = document.getElementById('quiz-section');
+
+    if (scrollToQuizBtn && quizSection) {
+        scrollToQuizBtn.addEventListener('click', function() {
+            // Nur sanftes Scrollen - Quiz immer sichtbar
+            quizSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    }
+});
+</script>
+</body>
+</html>
