@@ -1062,21 +1062,28 @@ function initLanguageSelector() {
         button.innerHTML = lang.flag;
         button.setAttribute('title', lang.name);
         
-        button.onclick = () => {
-            let targetFile;
+                button.onclick = () => {
+            // PRIMA: Applica sempre la traduzione alla pagina corrente
+            applyTranslations(lang.code);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
             
-            // Costruisce il nome del file target
-            if (lang.code === 'it') {
-                // Italiano - file senza suffisso
-                targetFile = isAboutPage ? 'about.html' : 'index.html';
-            } else {
-                // Altre lingue - file con suffisso
-                const baseName = isAboutPage ? 'about' : 'index';
-                targetFile = `${baseName}-${lang.code}.html`;
+            // SECONDA: Se non siamo già sulla lingua italiana, reindirizza al file completo
+            if (lang.code !== 'it') {
+                setTimeout(() => {
+                    let targetFile;
+                    const baseName = isAboutPage ? 'about' : 'index';
+                    targetFile = `${baseName}-${lang.code}.html`;
+                    window.location.href = targetFile;
+                }, 500); // Delay di 500ms per vedere la traduzione
             }
-            
-            // Reindirizza al file appropriato
-            window.location.href = targetFile;
+            // Se clicchiamo italiano da una pagina tradotta, torniamo alla versione italiana
+            else if (!isItalianPage) {
+                setTimeout(() => {
+                    const targetFile = isAboutPage ? 'about.html' : 'index.html';
+                    window.location.href = targetFile;
+                }, 500);
+            }
         };
         
         selectorContainer.appendChild(button);
