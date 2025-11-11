@@ -1063,9 +1063,12 @@ function initLanguageSelector() {
         button.setAttribute('title', lang.name);
         
            button.onclick = () => {
-    applyTranslations(lang.code);
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
+    // Redirect diretto alle pagine complete
+    if (lang.code === 'it') {
+        window.location.href = 'index.html';
+    } else {
+        window.location.href = `index-${lang.code}.html`;
+    }
 };
         
         selectorContainer.appendChild(button);
