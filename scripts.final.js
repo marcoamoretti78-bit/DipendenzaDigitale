@@ -1023,6 +1023,7 @@ function applyTranslations(locale) {
 
 /**
  * Inizializza il selettore di lingua nell'header.
+ * Ora reindirizza ai file HTML specifici per lingua.
  */
 function initLanguageSelector() {
     const selectorContainer = document.getElementById('language-selector');
@@ -1034,21 +1035,53 @@ function initLanguageSelector() {
     AVAILABLE_LANGUAGES.forEach(lang => {
         const button = document.createElement('button');
         button.className = 'lang-btn';
-        if (lang.code === CONFIG.I18N_LOCALE) {
+        
+        // Determina la pagina corrente per mantenere il contesto
+        const currentPage = window.location.pathname;
+        const isAboutPage = currentPage.includes('about');
+        
+        // Determina se siamo sulla pagina italiana (default)
+        const isItalianPage = !currentPage.includes('index-en') && 
+                             !currentPage.includes('index-es') && 
+                             !currentPage.includes('index-de') && 
+                             !currentPage.includes('index-fr') &&
+                             !currentPage.includes('about-en') &&
+                             !currentPage.includes('about-es') &&
+                             !currentPage.includes('about-de') &&
+                             !currentPage.includes('about-fr');
+        
+        // Segna come attiva la lingua corrente
+        if ((lang.code === 'it' && isItalianPage) || 
+            (lang.code === 'en' && currentPage.includes('-en')) ||
+            (lang.code === 'es' && currentPage.includes('-es')) ||
+            (lang.code === 'de' && currentPage.includes('-de')) ||
+            (lang.code === 'fr' && currentPage.includes('-fr'))) {
             button.classList.add('active');
         }
+        
         button.innerHTML = lang.flag;
         button.setAttribute('title', lang.name);
+        
         button.onclick = () => {
-            applyTranslations(lang.code);
-            // Aggiorna la classe 'active'
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+            let targetFile;
+            
+            // Costruisce il nome del file target
+            if (lang.code === 'it') {
+                // Italiano - file senza suffisso
+                targetFile = isAboutPage ? 'about.html' : 'index.html';
+            } else {
+                // Altre lingue - file con suffisso
+                const baseName = isAboutPage ? 'about' : 'index';
+                targetFile = `${baseName}-${lang.code}.html`;
+            }
+            
+            // Reindirizza al file appropriato
+            window.location.href = targetFile;
         };
+        
         selectorContainer.appendChild(button);
     });
 }
-
 // =========================================================================
 // 4. LOGICA QUIZ E REPORT
 // =========================================================================
