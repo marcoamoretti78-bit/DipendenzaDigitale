@@ -1062,28 +1062,10 @@ function initLanguageSelector() {
         button.innerHTML = lang.flag;
         button.setAttribute('title', lang.name);
         
-                button.onclick = () => {
-            // PRIMA: Applica sempre la traduzione alla pagina corrente
+                       button.onclick = () => {
             applyTranslations(lang.code);
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            
-            // SECONDA: Se non siamo già sulla lingua italiana, reindirizza al file completo
-            if (lang.code !== 'it') {
-                setTimeout(() => {
-                    let targetFile;
-                    const baseName = isAboutPage ? 'about' : 'index';
-                    targetFile = `${baseName}-${lang.code}.html`;
-                    window.location.href = targetFile;
-                }, 500); // Delay di 500ms per vedere la traduzione
-            }
-            // Se clicchiamo italiano da una pagina tradotta, torniamo alla versione italiana
-            else if (!isItalianPage) {
-                setTimeout(() => {
-                    const targetFile = isAboutPage ? 'about.html' : 'index.html';
-                    window.location.href = targetFile;
-                }, 500);
-            }
         };
         
         selectorContainer.appendChild(button);
