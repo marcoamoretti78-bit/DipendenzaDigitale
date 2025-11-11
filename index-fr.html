@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dépendance Numérique - Découvrez votre Niveau de Dépendance au Smartphone et Réseaux Sociaux</title>
+        <!-- SEO Meta Tags -->
+<meta name="description" content="Test professionnel pour évaluer la dépendance numérique. Découvrez votre niveau de risque avec 20 questions et recevez un rapport personnalisé avec des conseils pratiques.">
+<meta name="keywords" content="test dépendance numérique, dépendance smartphone, détox numérique, évaluation dépendance, nomophobie">
+<meta name="author" content="Dépendance Numérique">
+
+<!-- Open Graph pour les Réseaux Sociaux -->
+<meta property="og:title" content="Test Dépendance Numérique - Évaluez votre relation avec le smartphone">
+<meta property="og:description" content="Quiz gratuit de 20 questions pour découvrir votre niveau de dépendance numérique. Rapport personnalisé inclus.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dipendenzadigitale.com/index-fr.html">
+<meta property="og:image" content="https://dipendenzadigitale.com/assets/logo.png">
+    <link rel="stylesheet" href="style.css">
+        <script src="https://www.paypal.com/sdk/js?client-id=AaUPlr54eLzW3R2tmVyAmVzYTRjtuqwNoR0yR4gt4U4fQsQVDdoa0molLdpZW1ykWOB8wAvU5o9y_g1e&currency=EUR"></script>
+<script src="https://js.stripe.com/v3/"></script>
+</head> 
+
+<body> 
+    <div class="navbar">
+        <img src="assets/logo.png" alt="Logo Dépendance Numérique" class="navbar-logo">
+        <span class="title" data-i18n="FORM_TITLE">Évaluation de la Dépendance Numérique</span>
+        
+        <div id="language-selector"></div> 
+    </div>
+
+       <div class="container">
+        
+        <!-- ⭐ SECTIONS HOMEPAGE ⭐ -->
+        <section class="hero-section">
+            <h1 data-i18n="HERO_TITLE">🧠 Découvrez votre Relation avec le Numérique</h1>
+            <p class="hero-subtitle" data-i18n="HERO_SUBTITLE">Test scientifique pour évaluer votre niveau de dépendance numérique</p>
+        </section>
+
+        <section class="info-section">
+            <h2 data-i18n="RISK_QUESTION">⚠️ Êtes-vous à risque de dépendance numérique ?</h2>
+            <div class="risk-grid">
+                <div class="risk-item" data-i18n="RISK_ITEM_1">📱 Vérifiez toujours le téléphone</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_2">😴 Sommeil perturbé par les notifications</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_3">🧠 Difficultés de concentration</div>
+                <div class="risk-item" data-i18n="RISK_ITEM_4">😰 Anxiété sans smartphone</div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 data-i18n="CTA_DISCOVER">Découvrez votre Niveau de Risque</h2>
+            <p data-i18n="CTA_DESCRIPTION">Test rapide de 3 minutes • Découvrez votre niveau de risque</p>
+            <button id="scroll-to-quiz-btn" class="btn-cta-green" data-i18n="CTA_START_TEST">🎯 Faites le Test Maintenant</button>
+        </section>
+               
+               
+           <!-- CONTENU SEO -->
+
+        <!-- Menu de navigation simple -->
+        <div class="nav-menu" style="text-align: center; margin: 20px 0; padding: 15px 0; border-bottom: 1px solid #eee;">
+            <a href="index-fr.html" style="text-decoration: none; color: #333; font-weight: 500;">🏠 Accueil</a> 
+            <span style="margin: 0 15px; color: #ccc;">|</span>
+            <a href="about-fr.html" style="text-decoration: none; color: #333; font-weight: 500;">👥 Qui Sommes-Nous</a>
+        </div>
+
+        <section class="seo-content-section">
+            <h2>🧠 Comment Fonctionne le Test de Dépendance Numérique</h2>
+            <p>La <strong>dépendance numérique</strong> est un phénomène de plus en plus répandu qui affecte des millions de personnes. Notre <strong>test dépendance smartphone</strong> utilise des critères scientifiques pour évaluer :</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h3>📱 Nomophobie</h3>
+                    <p>Peur d'être sans smartphone ou connexion internet</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>🧠 Contrôle Compulsif</h3>
+                    <p>Fréquence de vérification des notifications et réseaux sociaux</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>😴 Impact sur le Sommeil</h3>
+                    <p>Qualité du repos et usage nocturne des appareils</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>🎯 Concentration</h3>
+                    <p>Capacité de focus sans distractions numériques</p>
+                </div>
+            </div>
+            
+            <h3>Pourquoi est-il Important d'Évaluer la Dépendance Numérique ?</h3>
+            <p>Selon des études récentes, l'usage excessif des smartphones et réseaux sociaux peut causer :</p>
+            <ul>
+                <li><strong>Anxiété et stress</strong> lors de déconnexion</li>
+                <li><strong>Troubles du sommeil</strong> et difficultés de concentration</li>
+                <li><strong>Isolement social</strong> et problèmes relationnels</li>
+                <li><strong>Diminution de la productivité</strong> au travail et à l'école</li>
+            </ul>
+            
+            <p>Notre <strong>test détox numérique</strong> vous aide à identifier les comportements problématiques et fournit des <strong>stratégies personnalisées</strong> pour améliorer votre bien-être numérique.</p>
+        </section>
+
+        <!-- ⭐ FAQ SEO ⭐ -->
+        <section class="faq-section">
+            <h2>🤔 Questions Fréquentes sur le Test de Dépendance Numérique</h2>
+            
+            <div class="faq-item">
+                <h3>Combien de temps nécessite le test de dépendance numérique ?</h3>
+                <p>Le test nécessite environ <strong>3-5 minutes</strong> et consiste en 20 questions scientifiquement validées pour évaluer votre relation avec la technologie.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Qu'est-ce que la nomophobie ?</h3>
+                <p>La <strong>nomophobie</strong> (no-mobile-phone phobia) est la peur irrationnelle d'être sans téléphone portable ou connexion internet. Elle affecte environ 66% de la population adulte.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Comment soigner la dépendance au smartphone ?</h3>
+                <p>La dépendance au smartphone peut être gérée avec : <strong>détox numérique graduelle</strong>, définition de limites de temps, désactivation des notifications non essentielles, et activités alternatives hors ligne.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Quels sont les symptômes de la dépendance numérique ?</h3>
+                <p>Les symptômes incluent : contrôle compulsif du téléphone, anxiété lors de déconnexion, troubles du sommeil, difficultés de concentration, et isolement social.</p>
+            </div>
+        </section>
+               
+        <!-- ⭐ SECTION QUIZ ⭐ -->
+        <div id="quiz-section">
+            <form id="quiz-form">
+                <div class="intro">
+                    <h2 data-i18n="INTRO_H2">🎯 Test Dépendance Numérique</h2>
+                    <p data-i18n="INTRO_P">Répondez sincèrement aux 20 questions pour découvrir votre niveau de risque et obtenir votre rapport d'action personnalisé. Le test nécessite environ 3-5 minutes.</p>
+                    <p><strong data-i18n="QUIZ_ANONYMOUS">💡 Le test est complètement anonyme</strong></p>
+                </div>
+
+                <div class="name-field">
+                    <span data-i18n="INTRO_NAME_SPAN">Entrez votre nom (facultatif, pour personnaliser le rapport) :</span>
+                    <input type="text" name="userName" id="userName" placeholder="Votre nom" autocomplete="name">
+                </div>
+                <div id="quiz-questions-container">
+                    </div>
+                
+                <div class="actions">
+                    <button type="submit" id="calculate-btn" class="btn primary" data-i18n="BTN_CALCULATE">Calculer le Résultat</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="paywall" class="paywall" style="display: none;">
+            <h3 data-i18n="PAYWALL_H3">Bonjour <span id="user-name-display"></span>, votre Résultat est Prêt !</h3>
+            <p data-i18n="PAYWALL_P">Pour débloquer votre rapport détaillé, choisissez l'option d'achat ci-dessous :</p>
+            
+                                    <div class="paywall-options">
+                <div class="payment-option">
+                    <h4 data-i18n="BTN_STANDARD">Rapport de Base (€1.99)</h4>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-base"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-base-btn" class="stripe-button">💳 Carte de Crédit</button>
+                            <div id="stripe-base-form" class="stripe-form" style="display:none;">
+    <div class="stripe-field">
+        <label>Numéro de carte</label>
+        <div id="card-number-base"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/AA</label>
+            <div id="card-expiry-base"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-base"></div>
+        </div>
+    </div>
+    <button id="stripe-base-submit" class="stripe-submit">Payer €1.99</button>
+</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-option">
+                    <h4 data-i18n="BTN_PREMIUM">Rapport Premium (€7.99)</h4>
+                    <p class="premium-subtitle" data-i18n="BTN_PREMIUM_SUB">(Inclut : Plan d'Action, Priorités et Plan 7 Jours)</p>
+                    <div class="payment-buttons">
+                        <div id="paypal-button-premium"></div>
+                        <div class="stripe-section">
+                            <button id="stripe-premium-btn" class="stripe-button">💳 Carte de Crédit</button>
+                            <div id="stripe-premium-form" class="stripe-form" style="display:none;">
+    <div class="stripe-field">
+        <label>Numéro de carte</label>
+        <div id="card-number-premium"></div>
+    </div>
+    <div class="stripe-row">
+        <div class="stripe-field">
+            <label>MM/AA</label>
+            <div id="card-expiry-premium"></div>
+        </div>
+        <div class="stripe-field">
+            <label>CVC</label>
+            <div id="card-cvc-premium"></div>
+        </div>
+    </div>
+    <button id="stripe-premium-submit" class="stripe-submit">Payer €7.99</button>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="secure-note">🔒 Paiements sécurisés avec PayPal - Mode Live</p>
+        </div>
+
+        <div id="report" class="report-container" style="display: none;">
+            
+            <header class="report-header">
+                <h1 data-i18n="TITLE">Rapport Personnalisé Détox Numérique</h1>
+                <p data-i18n="SUBTITLE">Analyse Finale (20 Questions)</p>
+                <span id="report-date" class="date-tag" data-i18n="DATE">Date :</span>
+            </header>
+
+            <section class="result-summary">
+                <h2 data-i18n="score_title">Votre Score</h2>
+                <div class="score-grid">
+                        <p id="motivational-text" class="motivational-text"></p>
+                    <div class="score-box total-score">
+                        <span data-i18n="SCORE_LABEL">Score</span>
+                        <div class="score-value">
+                            <span id="final-score">0</span> / <span id="max-score">60</span>
+                        </div>
+                    </div>
+                    <div id="risk-level-container" class="score-box risk-low">
+                        <span data-i18n="RISK_LABEL">Risque</span>
+                        <div class="risk-value">
+                            <span id="risk-level">Risque Faible</span>
+                                <span id="risk-badge" class="risk-badge"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="progress-bar-container">
+    <span data-i18n="RISK_VISUAL_LABEL">Niveau de risque (visuel) :</span>
+    <div class="progress-bar" style="background:#eee; border-radius:8px; width:100%; height:24px; margin:8px 0;">
+        <div id="risk-progress-bar" style="width:0%; height:24px; border-radius:8px;"></div>
+    </div>
+</div>
+                            <section class="population-benchmark">
+                <h3 data-i18n="BENCHMARK_TITLE">📊 Comparaison avec la Population</h3>
+                <div class="benchmark-stats">
+                    <div class="stat-item">
+                        <span class="stat-label" data-i18n="POPULATION_AVERAGE">Score moyen de la population :</span>
+                        <span class="stat-value">28/60 points</span>
+                    </div>
+                    <div class="benchmark-distribution">
+                        <div class="distribution-item risk-low">
+                            <span data-i18n="BENCHMARK_LOW">35% - Risque Faible</span>
+                            <div class="distribution-bar" style="width: 35%;"></div>
+                        </div>
+                        <div class="distribution-item risk-medium">
+                            <span data-i18n="BENCHMARK_MEDIUM">45% - Risque Moyen</span>
+                            <div class="distribution-bar" style="width: 45%;"></div>
+                        </div>
+                        <div class="distribution-item risk-high">
+                            <span data-i18n="BENCHMARK_HIGH">20% - Risque Élevé</span>
+                            <div class="distribution-bar" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="profile-analysis">
+                <h2 data-i18n="PROFILE_TITLE">Votre Profil de Dépendance Numérique</h2>
+                                
+                <p id="profile-text"></p>
+                <hr>
+                <h3 data-i18n="ANALYSIS_TITLE">Analyse et Conseils Personnalisés</h3>
+                <p id="analysis-text"></p>
+            </section>
+            
+            <section class="radar-section">
+                <h2 data-i18n="RADAR_TITLE">Analyse Détaillée par Axe de Risque</h2>
+                <div class="chart-container">
+                    <canvas id="riskRadarChart"></canvas>
+                </div>
+                
+                <h3 data-i18n="IMPACT_TITLE">Résumé Détaillé des Scores d'Impact</h3>
+                <ul id="impact-list" class="impact-list">
+                </ul>
+            </section>
+
+            <section class="premium-content">
+                <h2 data-i18n="PRIORITY_PLAN_TITLE">Votre Plan d'Action Priorisé</h2>
+                <div id="priority-action">
+                </div>
+                
+                <h2 data-i18n="DAYS_PLAN_TITLE">Plan Détox Numérique de 7 Jours</h2>
+                <ul id="days-plan-list" class="days-plan">
+                </ul>
+                
+                <h2 data-i18n="RESOURCES_TITLE">Ressources Recommandées</h2>
+                <div id="resources-text" class="resources-box">
+                </div>
+            </section>
+
+            <section class="detail-answers">
+                <h2 data-i18n="answers_title">Vos Réponses Détaillées au Quiz</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="QUIZ_Q_COL">Question</th>
+                            <th data-i18n="QUIZ_A_COL">Réponse Fournie</th>
+                            <th data-i18n="QUIZ_S_COL">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quiz-answers-body">
+                    </tbody>
+                </table>
+            </section>
+
+            <div class="disclaimer-box">
+                <p data-i18n="DISCLAIMER">Avertissement : Ce rapport est uniquement à des fins informatives et ne remplace pas une consultation professionnelle.</p>
+            </div>
+            
+            <div class="actions">
+                <button id="download-pdf-btn" class="btn primary">Télécharger le Rapport PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 Dépendance Numérique. Tous droits réservés. | <a href="index-fr.html">Accueil</a> | <a href="about-fr.html">Qui Sommes-Nous</a>
+    </div>
+    
+       <!-- Charger Chart.js pour le graphique Radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script> 
+    
+    <script src="scripts.final.js?v=20251008"></script>
+    
+  
+    
+    <script>
+// Défilement fluide vers le quiz (SANS show/hide)
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollToQuizBtn = document.getElementById('scroll-to-quiz-btn');
+    const quizSection = document.getElementById('quiz-section');
+
+    if (scrollToQuizBtn && quizSection) {
+        scrollToQuizBtn.addEventListener('click', function() {
+            // Seulement défilement fluide - quiz toujours visible
+            quizSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    }
+});
+</script>
+</body>
+</html>
