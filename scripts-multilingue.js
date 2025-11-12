@@ -480,7 +480,151 @@ function renderRadarChart(axisScores, riskCssClass) {
         }
     });
 }
+// =========================================================================
+// FUNZIONI PRINCIPALI DEL QUIZ
+// =========================================================================
 
+function showSection(sectionId) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    });
+
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.style.display = 'block';
+    }
+}
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    quizAnswers = [];
+    showSection('quiz');
+    displayQuestion();
+}
+
+function displayQuestion() {
+    if (currentQuestionIndex >= QUIZ_QUESTIONS.length) {
+        calculateResults();
+        return;
+    }
+
+    const question = QUIZ_QUESTIONS[currentQuestionIndex];
+    const questionText = document.getElementById('questionText');
+    const answersContainer = document.getElementById('answersContainer');
+    const currentQuestionSpan = document.getElementById('currentQuestion');
+    const totalQuestionsSpan = document.getElementById('totalQuestions');
+    const progressFill = document.querySelector('.progress-fill');
+
+    if (questionText) questionText.textContent = question.question;
+    if (currentQuestionSpan) currentQuestionSpan.textContent = currentQuestionIndex + 1;
+    if (totalQuestionsSpan) totalQuestionsSpan.textContent = QUIZ_QUESTIONS.length;
+
+    if (progressFill) {
+        const progress = ((currentQuestionIndex + 1) / QUIZ_QUESTIONS.length) * 100;
+        progressFill.style.width = progress + '%';
+    }
+
+    if (answersContainer) {
+        answersContainer.innerHTML = '';
+        const answers = ['Mai', 'Raramente', 'Spesso', 'Sempre'];
+        answers.forEach((answer, index) => {
+            const label = document.createElement('label');
+            label.className = 'answer-option';
+            
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'answer';
+            input.value = index;
+            
+            if (quizAnswers[currentQuestionIndex] !== undefined && quizAnswers[currentQuestionIndex] === index) {
+                input.checked = true;
+            }
+            
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(answer));
+            answersContainer.appendChild(label);
+        });
+    }
+}
+
+function nextQuestion() {
+    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+    if (!selectedAnswer) {
+        alert('Seleziona una risposta prima di continuare.');
+        return;
+    }
+
+    quizAnswers[currentQuestionIndex] = parseInt(selectedAnswer.value);
+    currentQuestionIndex++;
+    displayQuestion();
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        displayQuestion();
+    }
+}
+
+function calculateResults() {
+    const totalScore = quizAnswers.reduce((sum, answer) => sum + answer, 0);
+    const maxScore = QUIZ_QUESTIONS.length * 3;
+    const percentage = Math.round((totalScore / maxScore) * 100);
+
+    window.quizResults = {
+        totalScore: totalScore,
+        maxScore: maxScore,
+        percentage: percentage,
+        answers: quizAnswers
+    };
+
+    let level = 'basso';
+    if (percentage >= 70) level = 'alto';
+    else if (percentage >= 40) level = 'moderato';
+
+    displayResults(level, percentage);
+}
+
+function displayResults(level, percentage) {
+    showSection('results');
+    
+    const addictionLevel = document.getElementById('addictionLevel');
+    const levelDescription = document.getElementById('levelDescription');
+    const levelBar = document.getElementById('levelBar');
+    
+    if (addictionLevel) {
+        const levelNames = {
+            'basso': 'Low Risk',
+            'moderato': 'Moderate Risk', 
+            'alto': 'High Risk'
+        };
+        addictionLevel.textContent = levelNames[level] || 'Unknown';
+    }
+    
+    if (levelDescription) {
+        const descriptions = {
+            'basso': 'You have a balanced relationship with technology.',
+            'moderato': 'You might benefit from some strategies for more conscious use.',
+            'alto': 'It is advisable to review your digital habits.'
+        };
+        levelDescription.textContent = descriptions[level] || 'Result not available';
+    }
+    
+    if (levelBar) {
+        levelBar.style.width = percentage + '%';
+        levelBar.style.backgroundColor = level === 'alto' ? '#e74c3c' : 
+                                       level === 'moderato' ? '#f39c12' : '#27ae60';
+    }
+}
+
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    quizAnswers = [];
+    showSection('intro');
+}
 // =========================================================================
 // 4. INIZIALIZZAZIONE
 // =========================================================================
@@ -491,19 +635,39 @@ if (typeof window.quizResults === 'undefined') {
 
 document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
-    populateQuizQuestions();
-
-    const form = document.getElementById('quiz-form');
-    if (form) {
-        form.addEventListener('submit', handleCalculate);
+    
+    const startTestBtn = document.getElementById('startTest');
+    if (startTestBtn) {
+        startTestBtn.addEventListener('click', startQuiz);
     }
 
-    const paywall = document.getElementById('paywall');
-    const report = document.getElementById('report');
-    if (paywall) paywall.style.display = 'none';
-    if (report) report.style.display = 'none';
-});
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextQuestion);
+    }
 
+    const prevBtn = document.getElementById('prevBtn');
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevQuestion);
+    }
+
+    const restartBtn = document.getElementById('restartBtn');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', restartQuiz);
+    }
+
+    const getReportBtn = document.getElementById('getReportBtn');
+    if (getReportBtn) {
+        getReportBtn.addEventListener('click', () => showSection('payment'));
+    }
+
+    const backToResultsBtn = document.getElementById('backToResultsBtn');
+    if (backToResultsBtn) {
+        backToResultsBtn.addEventListener('click', () => showSection('results'));
+    }
+
+    showSection('intro');
+});
 // =========================================================================
 // 5. INTEGRAZIONE PAGAMENTI (PayPal e Stripe)
 // =========================================================================
