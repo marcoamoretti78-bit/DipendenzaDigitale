@@ -47,6 +47,12 @@ const QUIZ_QUESTIONS = [
     { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
 ];
 
+// =========================================================================
+// VARIABILI GLOBALI DEL QUIZ
+// =========================================================================
+let currentQuestionIndex = 0;
+let quizAnswers = [];
+
 const RISK_PROFILES_I18N = {
     LOW: {
         minScore: 0, maxScore: 20, cssClass: 'risk-low',
