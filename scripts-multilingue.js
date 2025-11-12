@@ -636,10 +636,10 @@ if (typeof window.quizResults === 'undefined') {
 document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
     
-    const startTestBtn = document.getElementById('startTest');
-    if (startTestBtn) {
-        startTestBtn.addEventListener('click', startQuiz);
-    }
+   const startTestBtn = document.getElementById('scroll-to-quiz-btn');
+if (startTestBtn) {
+    startTestBtn.addEventListener('click', startQuiz);
+}
 
     const nextBtn = document.getElementById('nextBtn');
     if (nextBtn) {
