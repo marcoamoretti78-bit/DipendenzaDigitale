@@ -203,6 +203,37 @@ function populateQuizQuestions() {
     const container = document.getElementById('quiz-questions-container');
     if (!container) return;
     
+    container.innerHTML = '';
+    
+    QUIZ_QUESTIONS.forEach((question, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question-group';
+        questionDiv.innerHTML = `
+            <div class="question">
+                <h3>${index + 1}. ${question.question}</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q${question.id}" value="0" required>
+                        <span>Never</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q${question.id}" value="1" required>
+                        <span>Rarely</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q${question.id}" value="2" required>
+                        <span>Often</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q${question.id}" value="3" required>
+                        <span>Always</span>
+                    </label>
+                </div>
+            </div>
+        `;
+        container.appendChild(questionDiv);
+    });
+    
     const maxScoreElement = document.getElementById('max-score');
     if (maxScoreElement) {
         maxScoreElement.textContent = CONFIG.MAX_SCORE;
