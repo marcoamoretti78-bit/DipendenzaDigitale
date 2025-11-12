@@ -666,6 +666,7 @@ if (typeof window.quizResults === 'undefined') {
 
 document.addEventListener('DOMContentLoaded', () => {
     initLanguageSelector();
+     populateQuizQuestions();
     
    const startTestBtn = document.getElementById('scroll-to-quiz-btn');
 if (startTestBtn) {
