@@ -728,25 +728,23 @@ function prevQuestion() {
 }
 
 function calculateResults() {
-    const totalScore = quizAnswers.reduce((sum, answer) => sum + answer, 0);
-    const maxScore = QUIZ_QUESTIONS.length * 3;
-    const percentage = Math.round((totalScore / maxScore) * 100);
-
-    window.quizResults = {
-        totalScore: totalScore,
-        maxScore: maxScore,
-        percentage: percentage,
-        answers: quizAnswers
-    };
-
-    let level = 'basso';
-    if (percentage >= 70) level = 'alto';
-    else if (percentage >= 40) level = 'moderato';
-
-    displayResults(level, percentage);
+    // Simula FormData per compatibilità con handleCalculate
+    const form = document.createElement('form');
+    const formData = new FormData();
+    
+    // Aggiunge le risposte al FormData
+    quizAnswers.forEach((answer, index) => {
+        formData.append(`q${index + 1}`, answer.toString());
+    });
+    
+    // Chiama la funzione pagamenti esistente
+    const fakeEvent = { preventDefault: () => {} };
+    handleCalculate.call({ id: 'quiz-form' }, fakeEvent);
 }
 
 function displayResults(level, percentage) {
+    // DISABILITATA - ora usiamo handleCalculate per i pagamenti
+    /*
     showSection('results');
     
     const addictionLevel = document.getElementById('addictionLevel');
@@ -776,8 +774,8 @@ function displayResults(level, percentage) {
         levelBar.style.backgroundColor = level === 'alto' ? '#e74c3c' : 
                                        level === 'moderato' ? '#f39c12' : '#27ae60';
     }
+    */
 }
-
 function restartQuiz() {
     currentQuestionIndex = 0;
     quizAnswers = [];
