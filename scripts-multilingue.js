@@ -46,7 +46,128 @@ const QUIZ_QUESTIONS = [
     { id: 19, question: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
     { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' },
 ];
+// Domande del quiz tradotte in tutte le lingue
+const QUIZ_QUESTIONS_I18N = {
+    it: [
+        { id: 1, question: "Controlli il telefono come prima cosa al mattino e/o come ultima cosa prima di dormire?", axis: 'Sleep & Rituals' },
+        { id: 2, question: "Il tuo sonno è disturbato perché usi dispositivi elettronici a letto o poco prima di coricarti?", axis: 'Sleep & Rituals' },
+        { id: 3, question: "Ti svegli di notte per controllare notifiche o messaggi?", axis: 'Sleep & Rituals' },
+        { id: 4, question: "Trovi difficile stabilire momenti 'phone-free' (es. durante i pasti o le conversazioni)?", axis: 'Sleep & Rituals' },
+        { id: 5, question: "Le notifiche del telefono ti distraggono frequentemente da compiti o studi importanti?", axis: 'Productivity & Focus' },
+        { id: 6, question: "Ti ritrovi a scorrere i social o navigare in internet senza un obiettivo specifico, perdendo tempo?", axis: 'Productivity & Focus' },
+        { id: 7, question: "Rimandi impegni o attività offline (come pulire, fare esercizio) a causa del tempo passato online?", axis: 'Productivity & Focus' },
+        { id: 8, question: "Hai difficoltà a mantenere la concentrazione su una singola attività per periodi prolungati (più di 30 minuti)?", axis: 'Productivity & Focus' },
+        { id: 9, question: "Usare il tuo dispositivo è il tuo meccanismo principale per affrontare la noia, lo stress o i sentimenti negativi?", axis: 'Escape & Emotions' },
+        { id: 10, question: "Ti senti ansioso o irritabile se non puoi accedere al telefono/internet per un periodo (es. batteria scarica o no Wi-Fi)?", axis: 'Escape & Emotions' },
+        { id: 11, question: "Hai provato a ridurre il tempo che passi online, ma non ci sei riuscito?", axis: 'Escape & Emotions' },
+        { id: 12, question: "Nascondi agli altri il tempo reale che passi sui dispositivi o su app specifiche?", axis: 'Escape & Emotions' },
+        { id: 13, question: "Senti un bisogno fisico (come formicolio o irrequietezza) quando non puoi controllare il telefono?", axis: 'Habit & Compulsion' },
+        { id: 14, question: "Controlli continuamente il telefono anche quando non ci sono notifiche attive o in arrivo?", axis: 'Habit & Compulsion' },
+        { id: 15, question: "Senti FOMO (Fear of Missing Out) o l'obbligo di rispondere immediatamente ad ogni notifica o messaggio?", axis: 'Habit & Compulsion' },
+        { id: 16, question: "Quando guardi un film o partecipi a una riunione, il tuo telefono è sempre a portata di mano e lo controlli regolarmente?", axis: 'Habit & Compulsion' },
+        { id: 17, question: "Ti senti più a tuo agio a comunicare messaggi o sentimenti importanti tramite messaggistica piuttosto che di persona?", axis: 'Social & Presence' },
+        { id: 18, question: "Le tue interazioni virtuali (social, giochi) hanno sostituito o ridotto significativamente il tempo trascorso con amici e familiari offline?", axis: 'Social & Presence' },
+        { id: 19, question: "Sei costantemente preoccupato per la tua apparenza online (profilo, post, 'mi piace' ricevuti)?", axis: 'Social & Presence' },
+        { id: 20, question: "Usi il telefono mentre guidi o cammini, rischiando la tua sicurezza o quella degli altri?", axis: 'Social & Presence' }
+    ],
+    en: [
+        { id: 1, question: "Do you check your phone as the first thing in the morning and/or last thing before sleeping?", axis: 'Sleep & Rituals' },
+        { id: 2, question: "Is your sleep disturbed because you use electronic devices in bed or shortly before going to bed?", axis: 'Sleep & Rituals' },
+        { id: 3, question: "Do you wake up at night to check notifications or messages?", axis: 'Sleep & Rituals' },
+        { id: 4, question: "Do you find it difficult to establish 'phone-free' moments (e.g., during meals or conversations)?", axis: 'Sleep & Rituals' },
+        { id: 5, question: "Do phone notifications frequently distract you from important tasks or studies?", axis: 'Productivity & Focus' },
+        { id: 6, question: "Do you find yourself scrolling social media or browsing the internet without a specific goal, wasting time?", axis: 'Productivity & Focus' },
+        { id: 7, question: "Do you postpone offline commitments or activities (like cleaning, exercising) because of time spent online?", axis: 'Productivity & Focus' },
+        { id: 8, question: "Do you have difficulty maintaining focus on a single activity for extended periods (more than 30 minutes)?", axis: 'Productivity & Focus' },
+        { id: 9, question: "Is using your device your primary mechanism for dealing with boredom, stress, or negative feelings?", axis: 'Escape & Emotions' },
+        { id: 10, question: "Do you feel anxious or irritable if you can't access your phone/internet for a period (e.g., dead battery or no Wi-Fi)?", axis: 'Escape & Emotions' },
+        { id: 11, question: "Have you tried to reduce the time you spend online but failed to do so?", axis: 'Escape & Emotions' },
+        { id: 12, question: "Do you hide from others the real time you spend on devices or specific apps?", axis: 'Escape & Emotions' },
+        { id: 13, question: "Do you feel a physical need (like tingling or restlessness) when you can't check your phone?", axis: 'Habit & Compulsion' },
+        { id: 14, question: "Do you continuously check your phone even when there are no active or incoming notifications?", axis: 'Habit & Compulsion' },
+        { id: 15, question: "Do you feel FOMO (Fear of Missing Out) or the obligation to respond immediately to every notification or message?", axis: 'Habit & Compulsion' },
+        { id: 16, question: "When watching a movie or attending a meeting, is your phone always within reach and do you check it regularly?", axis: 'Habit & Compulsion' },
+        { id: 17, question: "Do you feel more comfortable communicating important messages or feelings through messaging rather than in person?", axis: 'Social & Presence' },
+        { id: 18, question: "Have your virtual interactions (social media, games) replaced or significantly reduced time spent with friends and family offline?", axis: 'Social & Presence' },
+        { id: 19, question: "Are you constantly worried about your online appearance (profile, posts, 'likes' received)?", axis: 'Social & Presence' },
+        { id: 20, question: "Do you use your phone while driving or walking, risking your safety or that of others?", axis: 'Social & Presence' }
+    ],
+    es: [
+        { id: 1, question: "¿Revisas tu teléfono como primera cosa por la mañana y/o como última cosa antes de dormir?", axis: 'Sleep & Rituals' },
+        { id: 2, question: "¿Tu sueño se ve perturbado porque usas dispositivos electrónicos en la cama o poco antes de acostarte?", axis: 'Sleep & Rituals' },
+        { id: 3, question: "¿Te despiertas por la noche para revisar notificaciones o mensajes?", axis: 'Sleep & Rituals' },
+        { id: 4, question: "¿Te resulta difícil establecer momentos 'sin teléfono' (ej. durante las comidas o conversaciones)?", axis: 'Sleep & Rituals' },
+        { id: 5, question: "¿Las notificaciones del teléfono te distraen frecuentemente de tareas o estudios importantes?", axis: 'Productivity & Focus' },
+        { id: 6, question: "¿Te encuentras desplazándote por las redes sociales o navegando por internet sin un objetivo específico, perdiendo tiempo?", axis: 'Productivity & Focus' },
+        { id: 7, question: "¿Pospones compromisos o actividades fuera de línea (como limpiar, hacer ejercicio) debido al tiempo pasado en línea?", axis: 'Productivity & Focus' },
+        { id: 8, question: "¿Tienes dificultad para mantener la concentración en una sola actividad por períodos prolongados (más de 30 minutos)?", axis: 'Productivity & Focus' },
+        { id: 9, question: "¿Usar tu dispositivo es tu mecanismo principal para lidiar con el aburrimiento, estrés o sentimientos negativos?", axis: 'Escape & Emotions' },
+        { id: 10, question: "¿Te sientes ansioso o irritable si no puedes acceder a tu teléfono/internet por un período (ej. batería agotada o sin Wi-Fi)?", axis: 'Escape & Emotions' },
+        { id: 11, question: "¿Has intentado reducir el tiempo que pasas en línea pero no has logrado hacerlo?", axis: 'Escape & Emotions' },
+        { id: 12, question: "¿Ocultas a otros el tiempo real que pasas en dispositivos o aplicaciones específicas?", axis: 'Escape & Emotions' },
+        { id: 13, question: "¿Sientes una necesidad física (como hormigueo o inquietud) cuando no puedes revisar tu teléfono?", axis: 'Habit & Compulsion' },
+        { id: 14, question: "¿Revisas continuamente tu teléfono incluso cuando no hay notificaciones activas o entrantes?", axis: 'Habit & Compulsion' },
+        { id: 15, question: "¿Sientes FOMO (Miedo a Perderse Algo) o la obligación de responder inmediatamente a cada notificación o mensaje?", axis: 'Habit & Compulsion' },
+        { id: 16, question: "¿Cuando ves una película o participas en una reunión, tu teléfono está siempre al alcance y lo revisas regularmente?", axis: 'Habit & Compulsion' },
+        { id: 17, question: "¿Te sientes más cómodo comunicando mensajes o sentimientos importantes a través de mensajería que en persona?", axis: 'Social & Presence' },
+        { id: 18, question: "¿Tus interacciones virtuales (redes sociales, juegos) han reemplazado o reducido significativamente el tiempo pasado con amigos y familia fuera de línea?", axis: 'Social & Presence' },
+        { id: 19, question: "¿Estás constantemente preocupado por tu apariencia en línea (perfil, publicaciones, 'me gusta' recibidos)?", axis: 'Social & Presence' },
+        { id: 20, question: "¿Usas tu teléfono mientras conduces o caminas, arriesgando tu seguridad o la de otros?", axis: 'Social & Presence' }
+    ],
+    de: [
+        { id: 1, question: "Überprüfen Sie Ihr Telefon als erstes am Morgen und/oder als letztes vor dem Schlafengehen?", axis: 'Sleep & Rituals' },
+        { id: 2, question: "Ist Ihr Schlaf gestört, weil Sie elektronische Geräte im Bett oder kurz vor dem Schlafengehen verwenden?", axis: 'Sleep & Rituals' },
+        { id: 3, question: "Wachen Sie nachts auf, um Benachrichtigungen oder Nachrichten zu überprüfen?", axis: 'Sleep & Rituals' },
+        { id: 4, question: "Fällt es Ihnen schwer, 'handyfreie' Momente zu etablieren (z.B. während der Mahlzeiten oder Gespräche)?", axis: 'Sleep & Rituals' },
+        { id: 5, question: "Lenken Sie Telefonbenachrichtigungen häufig von wichtigen Aufgaben oder Studien ab?", axis: 'Productivity & Focus' },
+        { id: 6, question: "Erwischen Sie sich dabei, wie Sie durch soziale Medien scrollen oder im Internet surfen ohne ein spezifisches Ziel und dabei Zeit verschwenden?", axis: 'Productivity & Focus' },
+        { id: 7, question: "Verschieben Sie Offline-Verpflichtungen oder Aktivitäten (wie Putzen, Sport) aufgrund der Zeit, die Sie online verbringen?", axis: 'Productivity & Focus' },
+        { id: 8, question: "Haben Sie Schwierigkeiten, sich für längere Zeiträume (mehr als 30 Minuten) auf eine einzige Aktivität zu konzentrieren?", axis: 'Productivity & Focus' },
+        { id: 9, question: "Ist die Verwendung Ihres Geräts Ihr Hauptmechanismus, um mit Langeweile, Stress oder negativen Gefühlen umzugehen?", axis: 'Escape & Emotions' },
+        { id: 10, question: "Fühlen Sie sich ängstlich oder gereizt, wenn Sie für eine Zeit nicht auf Ihr Telefon/Internet zugreifen können (z.B. leere Batterie oder kein WLAN)?", axis: 'Escape & Emotions' },
+        { id: 11, question: "Haben Sie versucht, die Zeit, die Sie online verbringen, zu reduzieren, sind aber gescheitert?", axis: 'Escape & Emotions' },
+        { id: 12, question: "Verbergen Sie vor anderen die tatsächliche Zeit, die Sie mit Geräten oder bestimmten Apps verbringen?", axis: 'Escape & Emotions' },
+        { id: 13, question: "Verspüren Sie ein körperliches Bedürfnis (wie Kribbeln oder Unruhe), wenn Sie Ihr Telefon nicht überprüfen können?", axis: 'Habit & Compulsion' },
+        { id: 14, question: "Überprüfen Sie Ihr Telefon kontinuierlich, auch wenn keine aktiven oder eingehenden Benachrichtigungen vorhanden sind?", axis: 'Habit & Compulsion' },
+        { id: 15, question: "Verspüren Sie FOMO (Angst, etwas zu verpassen) oder die Verpflichtung, sofort auf jede Benachrichtigung oder Nachricht zu antworten?", axis: 'Habit & Compulsion' },
+        { id: 16, question: "Ist Ihr Telefon beim Anschauen eines Films oder der Teilnahme an einem Meeting immer in Reichweite und überprüfen Sie es regelmäßig?", axis: 'Habit & Compulsion' },
+        { id: 17, question: "Fühlen Sie sich wohler dabei, wichtige Nachrichten oder Gefühle über Messaging zu kommunizieren als persönlich?", axis: 'Social & Presence' },
+        { id: 18, question: "Haben Ihre virtuellen Interaktionen (soziale Medien, Spiele) die Zeit mit Freunden und Familie offline ersetzt oder erheblich reduziert?", axis: 'Social & Presence' },
+        { id: 19, question: "Sind Sie ständig besorgt über Ihr Online-Erscheinungsbild (Profil, Posts, erhaltene 'Likes')?", axis: 'Social & Presence' },
+        { id: 20, question: "Verwenden Sie Ihr Telefon beim Fahren oder Gehen und riskieren dabei Ihre Sicherheit oder die anderer?", axis: 'Social & Presence' }
+    ],
+    fr: [
+        { id: 1, question: "Vérifiez-vous votre téléphone comme première chose le matin et/ou comme dernière chose avant de dormir?", axis: 'Sleep & Rituals' },
+        { id: 2, question: "Votre sommeil est-il perturbé parce que vous utilisez des appareils électroniques au lit ou peu avant de vous coucher?", axis: 'Sleep & Rituals' },
+        { id: 3, question: "Vous réveillez-vous la nuit pour vérifier les notifications ou les messages?", axis: 'Sleep & Rituals' },
+        { id: 4, question: "Trouvez-vous difficile d'établir des moments 'sans téléphone' (ex. pendant les repas ou les conversations)?", axis: 'Sleep & Rituals' },
+        { id: 5, question: "Les notifications du téléphone vous distraient-elles fréquemment de tâches ou d'études importantes?", axis: 'Productivity & Focus' },
+        { id: 6, question: "Vous retrouvez-vous à faire défiler les réseaux sociaux ou naviguer sur internet sans objectif spécifique, perdant du temps?", axis: 'Productivity & Focus' },
+        { id: 7, question: "Reportez-vous des engagements ou activités hors ligne (comme nettoyer, faire de l'exercice) à cause du temps passé en ligne?", axis: 'Productivity & Focus' },
+        { id: 8, question: "Avez-vous des difficultés à maintenir la concentration sur une seule activité pendant des périodes prolongées (plus de 30 minutes)?", axis: 'Productivity & Focus' },
+        { id: 9, question: "Utiliser votre appareil est-il votre mécanisme principal pour faire face à l'ennui, au stress ou aux sentiments négatifs?", axis: 'Escape & Emotions' },
+        { id: 10, question: "Vous sentez-vous anxieux ou irritable si vous ne pouvez pas accéder à votre téléphone/internet pendant une période (ex. batterie déchargée ou pas de Wi-Fi)?", axis: 'Escape & Emotions' },
+        { id: 11, question: "Avez-vous essayé de réduire le temps que vous passez en ligne mais avez échoué à le faire?", axis: 'Escape & Emotions' },
+        { id: 12, question: "Cachez-vous aux autres le temps réel que vous passez sur les appareils ou applications spécifiques?", axis: 'Escape & Emotions' },
+        { id: 13, question: "Ressentez-vous un besoin physique (comme des picotements ou de l'agitation) quand vous ne pouvez pas vérifier votre téléphone?", axis: 'Habit & Compulsion' },
+        { id: 14, question: "Vérifiez-vous continuellement votre téléphone même quand il n'y a pas de notifications actives ou entrantes?", axis: 'Habit & Compulsion' },
+        { id: 15, question: "Ressentez-vous FOMO (Peur de Manquer Quelque Chose) ou l'obligation de répondre immédiatement à chaque notification ou message?", axis: 'Habit & Compulsion' },
+        { id: 16, question: "Quand vous regardez un film ou participez à une réunion, votre téléphone est-il toujours à portée de main et le vérifiez-vous régulièrement?", axis: 'Habit & Compulsion' },
+        { id: 17, question: "Vous sentez-vous plus à l'aise pour communiquer des messages ou sentiments importants via la messagerie plutôt qu'en personne?", axis: 'Social & Presence' },
+        { id: 18, question: "Vos interactions virtuelles (réseaux sociaux, jeux) ont-elles remplacé ou significativement réduit le temps passé avec amis et famille hors ligne?", axis: 'Social & Presence' },
+        { id: 19, question: "Êtes-vous constamment préoccupé par votre apparence en ligne (profil, publications, 'j'aime' reçus)?", axis: 'Social & Presence' },
+        { id: 20, question: "Utilisez-vous votre téléphone en conduisant ou en marchant, risquant votre sécurité ou celle des autres?", axis: 'Social & Presence' }
+    ]
+};
 
+// Testi delle risposte tradotti
+const ANSWER_TEXTS_I18N = {
+    it: { never: 'Mai', rarely: 'Raramente', often: 'Spesso', always: 'Sempre' },
+    en: { never: 'Never', rarely: 'Rarely', often: 'Often', always: 'Always' },
+    es: { never: 'Nunca', rarely: 'Raramente', often: 'A menudo', always: 'Siempre' },
+    de: { never: 'Nie', rarely: 'Selten', often: 'Oft', always: 'Immer' },
+    fr: { never: 'Jamais', rarely: 'Rarement', often: 'Souvent', always: 'Toujours' }
+};
 // =========================================================================
 // VARIABILI GLOBALI DEL QUIZ
 // =========================================================================
@@ -203,9 +324,16 @@ function populateQuizQuestions() {
     const container = document.getElementById('quiz-questions-container');
     if (!container) return;
     
+    // Rileva la lingua corrente
+    const currentLang = detectLanguageFromURL();
+    
+    // Usa le domande tradotte o fallback a italiano
+    const questions = QUIZ_QUESTIONS_I18N[currentLang] || QUIZ_QUESTIONS_I18N.it;
+    const answerTexts = ANSWER_TEXTS_I18N[currentLang] || ANSWER_TEXTS_I18N.it;
+    
     container.innerHTML = '';
     
-    QUIZ_QUESTIONS.forEach((question, index) => {
+    questions.forEach((question, index) => {
         const questionDiv = document.createElement('div');
         questionDiv.className = 'question-group';
         questionDiv.innerHTML = `
@@ -214,19 +342,19 @@ function populateQuizQuestions() {
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q${question.id}" value="0" required>
-                        <span>Never</span>
+                        <span>${answerTexts.never}</span>
                     </label>
                     <label class="option">
                         <input type="radio" name="q${question.id}" value="1" required>
-                        <span>Rarely</span>
+                        <span>${answerTexts.rarely}</span>
                     </label>
                     <label class="option">
                         <input type="radio" name="q${question.id}" value="2" required>
-                        <span>Often</span>
+                        <span>${answerTexts.often}</span>
                     </label>
                     <label class="option">
                         <input type="radio" name="q${question.id}" value="3" required>
-                        <span>Always</span>
+                        <span>${answerTexts.always}</span>
                     </label>
                 </div>
             </div>
@@ -239,7 +367,6 @@ function populateQuizQuestions() {
         maxScoreElement.textContent = CONFIG.MAX_SCORE;
     }
 }
-
 function getRiskLevel(totalScore, axisScores) {
     const locale = CONFIG.I18N_LOCALE;
     let result = null;
