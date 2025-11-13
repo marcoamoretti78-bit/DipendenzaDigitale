@@ -521,19 +521,25 @@ function showReport(results, planType) {
     answersBody.innerHTML = '';
 
     userAnswers.forEach((answer, index) => {
-        const questionText = QUIZ_QUESTIONS[index].question;
-        const answerLabels = ['Rarely', 'Sometimes', 'Often', 'Always'];
-        const translatedAnswer = answerLabels[answer.answerScore];
+    // Usa le domande tradotte nella lingua corrente
+    const currentLang = CONFIG.I18N_LOCALE;
+    const translatedQuestions = QUIZ_QUESTIONS_I18N[currentLang] || QUIZ_QUESTIONS_I18N.it;
+    const questionText = translatedQuestions[index].question;
+    
+    // Usa anche le risposte tradotte
+    const answerTexts = ANSWER_TEXTS_I18N[currentLang] || ANSWER_TEXTS_I18N.it;
+    const answerLabels = [answerTexts.never, answerTexts.rarely, answerTexts.often, answerTexts.always];
+    const translatedAnswer = answerLabels[answer.answerScore];
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${questionText}</td>
-            <td>${translatedAnswer}</td>
-            <td>${answer.answerScore}</td>
-        `;
-        answersBody.appendChild(row);
-    });
-
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${questionText}</td>
+        <td>${translatedAnswer}</td>
+        <td>${answer.answerScore}</td>
+    `;
+    answersBody.appendChild(row);
+});
+    
     const premiumContent = document.querySelector('.premium-content');
     if (premiumContent) {
         if (planType === 'premium') {
