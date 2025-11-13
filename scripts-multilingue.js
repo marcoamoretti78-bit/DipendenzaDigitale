@@ -818,10 +818,7 @@ if (startTestBtn) {
         getReportBtn.addEventListener('click', () => showSection('payment'));
     }
 
-    const backToResultsBtn = document.getElementById('backToResultsBtn');
-    if (backToResultsBtn) {
-        backToResultsBtn.addEventListener('click', () => showSection('results'));
-    }
+   
     const backToResultsBtn = document.getElementById('backToResultsBtn');
     if (backToResultsBtn) {
         backToResultsBtn.addEventListener('click', () => showSection('results'));
@@ -854,8 +851,7 @@ if (startTestBtn) {
 
     showSection('intro');
 });
-    showSection('intro');
-});
+   
 // =========================================================================
 // 5. INTEGRAZIONE PAGAMENTI (PayPal e Stripe)
 // =========================================================================
