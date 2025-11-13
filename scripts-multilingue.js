@@ -822,7 +822,38 @@ if (startTestBtn) {
     if (backToResultsBtn) {
         backToResultsBtn.addEventListener('click', () => showSection('results'));
     }
+    const backToResultsBtn = document.getElementById('backToResultsBtn');
+    if (backToResultsBtn) {
+        backToResultsBtn.addEventListener('click', () => showSection('results'));
+    }
 
+    // AGGIUNGI QUI IL NUOVO CODICE ⬇️
+    const calculateBtn = document.getElementById('calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Calculate button cliccato!');
+            
+            // Raccogli tutte le risposte
+            const answers = [];
+            for (let i = 1; i <= 20; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    answers.push(parseInt(selected.value));
+                } else {
+                    alert(`Please answer question ${i}`);
+                    return;
+                }
+            }
+            
+            console.log('Risposte raccolte:', answers);
+            quizAnswers = answers;
+            calculateResults();
+        });
+    }
+
+    showSection('intro');
+});
     showSection('intro');
 });
 // =========================================================================
