@@ -521,8 +521,9 @@ function showReport(results, planType) {
     answersBody.innerHTML = '';
 
     userAnswers.forEach((answer, index) => {
+        
     // Usa le domande tradotte nella lingua corrente
-    const currentLang = CONFIG.I18N_LOCALE;
+    const currentLang = detectLanguageFromURL();
     const translatedQuestions = QUIZ_QUESTIONS_I18N[currentLang] || QUIZ_QUESTIONS_I18N.it;
     const questionText = translatedQuestions[index].question;
     
