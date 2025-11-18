@@ -159,8 +159,8 @@ class CookieManager {
                     <button id="customize" class="btn-outline">${texts.customize}</button>
                 </div>
                 <div class="cookie-links">
-                    <a href="privacy-${this.currentLang === 'it' ? '' : this.currentLang + '.'}html">${texts.privacyPolicy}</a>
-                    <a href="cookie-${this.currentLang === 'it' ? '' : this.currentLang + '.'}html">${texts.cookiePolicy}</a>
+                    <a href="privacy${this.currentLang === 'it' ? '' : '-' + this.currentLang}.html">${texts.privacyPolicy}</a>
+                    <a href="cookie-policy${this.currentLang === 'it' ? '' : '-' + this.currentLang}.html">${texts.cookiePolicy}</a>
                 </div>
             </div>
             <div id="cookie-customize" class="cookie-customize" style="display:none;">
