@@ -282,11 +282,11 @@ class CookieManager {
             }
         }
 
-        // Analytics (da implementare quando serve)
-        if (this.cookieConsent.analytics) {
-            // this.loadGoogleAnalytics();
-            console.log('Analytics cookies accepted');
-        }
+       // Analytics (GDPR: carica solo dopo consenso)
+if (this.cookieConsent.analytics) {
+    this.loadGoogleAnalytics();
+    console.log('Analytics cookies accepted');
+}
 
         // Marketing (da implementare quando serve) 
         if (this.cookieConsent.marketing) {
@@ -296,6 +296,19 @@ class CookieManager {
         }
     }
 
+    loadGoogleAnalytics() {
+    if (window.gaLoaded) return; // Evita doppio caricamento
+    window.gaLoaded = true;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // <-- inserisci qui il tuo ID
+    document.head.appendChild(script);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true }); // <-- inserisci qui il tuo ID
+}
     // Nascondi banner
     hideBanner() {
         const banner = document.getElementById('cookie-banner');
