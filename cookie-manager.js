@@ -296,18 +296,18 @@ if (this.cookieConsent.analytics) {
         }
     }
 
-    loadGoogleAnalytics() {
-    if (window.gaLoaded) return; // Evita doppio caricamento
+   loadGoogleAnalytics() {
+    if (window.gaLoaded) return;
     window.gaLoaded = true;
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // <-- inserisci qui il tuo ID
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-YRH4R87YVV';
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true }); // <-- inserisci qui il tuo ID
+    gtag('config', 'G-YRH4R87YVV', { anonymize_ip: true });
 }
     // Nascondi banner
     hideBanner() {
